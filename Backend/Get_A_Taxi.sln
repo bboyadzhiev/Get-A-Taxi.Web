@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Get_A_Taxi.WebAPI", "Get_A_Taxi.WebAPI\Get_A_Taxi.WebAPI.csproj", "{F9F447DB-05AD-40C8-B324-0C5110265C1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Get_A_Taxi.Models", "Get_A_Taxi.Models\Get_A_Taxi.Models.csproj", "{10E14B13-F56E-4EF6-A7F7-0FA02CFE3F77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Get_A_Taxi.Data", "Get_A_Taxi.Data\Get_A_Taxi.Data.csproj", "{B72829A9-8623-42CE-A8FE-15AEE8A4FB53}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F9F447DB-05AD-40C8-B324-0C5110265C1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9F447DB-05AD-40C8-B324-0C5110265C1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9F447DB-05AD-40C8-B324-0C5110265C1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9F447DB-05AD-40C8-B324-0C5110265C1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10E14B13-F56E-4EF6-A7F7-0FA02CFE3F77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10E14B13-F56E-4EF6-A7F7-0FA02CFE3F77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10E14B13-F56E-4EF6-A7F7-0FA02CFE3F77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10E14B13-F56E-4EF6-A7F7-0FA02CFE3F77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B72829A9-8623-42CE-A8FE-15AEE8A4FB53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B72829A9-8623-42CE-A8FE-15AEE8A4FB53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B72829A9-8623-42CE-A8FE-15AEE8A4FB53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B72829A9-8623-42CE-A8FE-15AEE8A4FB53}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
