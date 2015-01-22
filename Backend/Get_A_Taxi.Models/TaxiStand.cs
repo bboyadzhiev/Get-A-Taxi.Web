@@ -18,10 +18,14 @@ namespace Get_A_Taxi.Models
         //public virtual Location Location { get; set; }
         [Required]
         public double Lattitude { get; set; }
+
         [Required]
         public double Longitude { get; set; }
+
+         [StringLength(50)]
         public string Address { get; set; }
 
+         [StringLength(50)]
         public string Alias { get; set; }
     }
 }

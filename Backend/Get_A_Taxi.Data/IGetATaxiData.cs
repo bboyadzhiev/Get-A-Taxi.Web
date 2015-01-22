@@ -11,6 +11,7 @@
         IRepository<Taxi> Taxies { get; }
         IRepository<TaxiStand> Stands { get; }
         IRepository<Order> Orders { get; }
+        IRepository<Photo> Photos { get; }
         int SaveChanges();
     }
 }

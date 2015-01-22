@@ -13,16 +13,16 @@ namespace Get_A_Taxi.Data
         private readonly IGetATaxiDbContext context;
         private readonly IDictionary<Type, object> repositories;
 
-        public GetATaxiData()
-            :this(new GetATaxiDbContext())
-        {
+        //public GetATaxiData()
+        //    :this(new GetATaxiDbContext())
+        //{
 
-        }
-        public GetATaxiData(string connectionString)
-            :this(new GetATaxiDbContext(connectionString))
-        {
+        //}
+        //public GetATaxiData(string connectionString)
+        //    :this(new GetATaxiDbContext(connectionString))
+        //{
 
-        }
+        //}
 
         public GetATaxiData(IGetATaxiDbContext ctx)
         {
@@ -59,6 +59,14 @@ namespace Get_A_Taxi.Data
             get
             {
                 return this.GetRepository<Order>();
+            }
+        }
+
+        public IRepository<Photo> Photos
+        {
+            get
+            {
+                return this.GetRepository<Photo>();
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -22,12 +23,17 @@ namespace Get_A_Taxi.Models
         
         [Required]
         public int Luggage { get; set; }
+
+        [DefaultValue(true)]
         public bool Available { get; set; }
         //public virtual Location Location { get; set; }
         public double Lattitude { get; set; }
         public double Longitude { get; set; }
+
+        [StringLength(50)]
         public string Address { get; set; }
 
+        public string DriverId { get; set; }
         public virtual ApplicationUser Driver { get; set; }
     }
 }

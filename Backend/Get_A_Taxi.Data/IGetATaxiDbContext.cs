@@ -11,10 +11,10 @@ namespace Get_A_Taxi.Data
 {
     public interface IGetATaxiDbContext
     {
-        IDbSet<ApplicationUser> Users { get; set; }
         IDbSet<Taxi> Taxies { get; set; }
         IDbSet<Order> Orders { get; set; }
         IDbSet<TaxiStand> Stands { get; set; }
+        IDbSet<Photo> Photos { get; set; }
         IDbSet<T> Set<T>() where T : class;
         DbEntityEntry<T> Entry<T>(T entity) where T : class;
         int SaveChanges();

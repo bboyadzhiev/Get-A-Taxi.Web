@@ -3,12 +3,13 @@
     using System.Data.Entity;
     using Get_A_Taxi.Data.Migrations;
     using Get_A_Taxi.Models;
+    using Microsoft.AspNet.Identity.EntityFramework;
 
-    public class GetATaxiDbContext : DbContext, IGetATaxiDbContext
+    public class GetATaxiDbContext : IdentityDbContext<ApplicationUser>, IGetATaxiDbContext
     {
-        public GetATaxiDbContext()
-        {
-        }
+        //public GetATaxiDbContext()
+        //{
+        //}
 
         public GetATaxiDbContext(string connectionString)
             : base(connectionString)
@@ -22,13 +23,12 @@
             return new GetATaxiDbContext(Config.ConnectionString);
         }
 
-        public IDbSet<ApplicationUser> Users { get; set; }
-
         public IDbSet<Taxi> Taxies { get; set; }
 
         public IDbSet<TaxiStand> Stands { get; set; }
 
         public IDbSet<Order> Orders { get; set; }
+        public IDbSet<Photo> Photos { get; set; }
 
         public new IDbSet<T> Set<T>() where T : class
         {
