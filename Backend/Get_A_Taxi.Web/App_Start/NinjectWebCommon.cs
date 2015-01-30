@@ -12,21 +12,23 @@ namespace Get_A_Taxi.Web.App_Start
     using Ninject.Web.Common;
     using Get_A_Taxi.Data.Migrations;
     using Get_A_Taxi.Data;
+    using Get_A_Taxi.Web.Infrastructure.Services;
+    using Get_A_Taxi.Web.Infrastructure.Services.Contracts;
 
-    public static class NinjectWebCommon 
+    public static class NinjectWebCommon
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
         /// <summary>
         /// Starts the application
         /// </summary>
-        public static void Start() 
+        public static void Start()
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
             bootstrapper.Initialize(CreateKernel);
         }
-        
+
         /// <summary>
         /// Stops the application.
         /// </summary>
@@ -34,7 +36,7 @@ namespace Get_A_Taxi.Web.App_Start
         {
             bootstrapper.ShutDown();
         }
-        
+
         /// <summary>
         /// Creates the kernel that will manage your application.
         /// </summary>
@@ -63,12 +65,18 @@ namespace Get_A_Taxi.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            var sqlServerPath = @".\SQLEXPRESS";
-            Config.SetConnectionString("GetATaxi", sqlServerPath);
-            var contextFactory = new MigrationsContextFactory();
-            var db = new GetATaxiData(contextFactory.Create());
-            kernel.Bind<IGetATaxiData>().To<GetATaxiData>()
-                .WithConstructorArgument("data", d => db);
-        }        
+            ////var sqlServerPath = @".\SQLEXPRESS";
+            //// Config.SetConnectionString("GetATaxi", sqlServerPath);
+            // var contextFactory = new MigrationsContextFactory();
+            // var db = new GetATaxiData(contextFactory.Create());
+            kernel.Bind<IGetATaxiDbContext>().To<GetATaxiDbContext>()
+                .WithConstructorArgument("connectionString", Config.ConnectionString);
+            kernel.Bind<IGetATaxiData>().To<GetATaxiData>();
+            //   .WithConstructorArgument("data", d => db);
+            kernel.Bind<IOrdersListService>().To<OrdersListService>();
+            kernel.Bind<IAccountService>().To<AccountService>();
+            kernel.Bind<ITaxiService>().To<TaxiService>();
+            kernel.Bind<IOperatorService>().To<OperatorService>();
+        }
     }
 }

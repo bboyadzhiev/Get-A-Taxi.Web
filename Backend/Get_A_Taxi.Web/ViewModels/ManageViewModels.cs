@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace Get_A_Taxi.Web.Models
+namespace Get_A_Taxi.Web.ViewModels
 {
     public class IndexViewModel
     {

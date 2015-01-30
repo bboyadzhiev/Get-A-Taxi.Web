@@ -1,0 +1,53 @@
+﻿@model Get_A_Taxi.Web.ViewModels.TaxiViewModel
+
+<fieldset>
+    <legend>Taxi Details</legend>
+    <table>
+        <tr>
+            <th>@Html.LabelFor(model => model.Plate)</th>
+            <td>@Html.DisplayFor(model => model.Plate)</td>
+        </tr>
+        <tr>
+            <th>@Html.LabelFor(model => model.Seats)</th>
+            <td>@Html.DisplayFor(model => model.Seats)</td>
+        </tr>
+        <tr>
+            <th>@Html.LabelFor(model => model.Luggage)</th>
+            <td>@Html.DisplayFor(model => model.Luggage)</td>
+        </tr>
+        <tr>
+            <th>@Html.LabelFor(model => model.Available)</th>
+            <td>@Html.DisplayFor(model => model.Available)</td>
+        </tr>
+    </table>
+</fieldset>
+
+<fieldset>
+    <legend>Taxi Driver Details</legend>
+    @if (String.IsNullOrEmpty(Model.DriverId))
+    {
+        <p>No driver assigned!</p>
+        @*<input id="Search for driver" type="button" value="button" onclick="showDriverSearch()" />*@
+        using (Ajax.BeginForm("SearchDriver", null, new AjaxOptions
+        {
+            UpdateTargetId = "driversResults",
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST"
+        }, new { id = "driverSearchForm" }))
+        {
+            <p>Search for a driver:</p>
+            <input type="text" name="driverName" oninput="changed()" title="Driver Name" />
+            <input type="text" name="district" oninput="changed()" title="District" />
+        }
+    }
+    else
+    {
+
+    }
+</fieldset>
+
+<script>
+    function changed() {
+        $("#driverSearchForm").submit();
+    }
+</script>

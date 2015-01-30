@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Get_A_Taxi.Web.Models;
+using Get_A_Taxi.Web.ViewModels;
 using Get_A_Taxi.Models;
 
 namespace Get_A_Taxi.Web.Controllers
@@ -155,7 +155,7 @@ namespace Get_A_Taxi.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, PhoneNumber = model.PhoneNumber };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

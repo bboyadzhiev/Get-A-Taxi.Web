@@ -1,0 +1,77 @@
+﻿@model Get_A_Taxi.Web.Areas.Administration.ViewModels.RolesAdministrationVM
+@{
+    ViewBag.Title = "Manage User Roles";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+@using (Ajax.BeginForm("Search", null, new AjaxOptions
+{
+    UpdateTargetId = "results",
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "POST"
+}, new { id = "searchForm" }))
+{
+    <p>Search:</p><input type="text" name="query" oninput="changed()"/>
+}
+
+
+
+
+<script>
+    function changed() {
+        $("#searchForm").submit();
+        $("#user-details").empty();
+    }
+</script>
+
+
+
+<div id="results">
+    @Html.Partial("_UsersListPartialView", Model.Accounts)
+</div>
+
+ <section>
+
+
+<div id="user-details">
+   
+</div>
+ </section>
+
+
+   @using (Html.BeginForm("Update", "Roles", FormMethod.Post, new { @class = "form", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken();
+        <br />
+ 
+//    <p>Select new Role</p>
+//    @Html.DropDownListFor(m => m.SelectedRoleId, Model.UserRoles);
+    
+        @*@foreach (var user in Model.Accounts)
+        {
+            <tr>
+                <td>
+                    @Html.CheckBoxFor(model => user.Marked)
+                </td>
+                <td>
+                    @{
+            var roleLabelText = Model.UserRoles.Find(m => m.Value == user.RoleId);
+             @roleLabelText.Text;       
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(model => user.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => user.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => user.Email)
+                </td>
+            </tr>
+        }*@
+
+}
+

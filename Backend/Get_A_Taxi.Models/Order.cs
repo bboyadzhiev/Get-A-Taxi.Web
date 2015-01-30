@@ -8,6 +8,13 @@ using System.Threading.Tasks;
 
 namespace Get_A_Taxi.Models
 {
+    public enum OrderStatus
+    {
+        Waiting = 0,
+        InProgress = 1,
+        Finished = 2
+    }
+
     [Table("Orders")]
     public class Order
     {
@@ -15,28 +22,30 @@ namespace Get_A_Taxi.Models
         public int OrderId { get; set; }
 
         [Required]
-        public string CustomerId { get; set; }
         public virtual ApplicationUser Customer { get; set; }
 
-        public int TaxiId { get; set; }
+       public virtual ApplicationUser Driver { get; set; }
+
         public virtual Taxi AssignedTaxi { get; set; }
 
-        //[Required]
-        //public virtual Location OrderLocation { get; set; }
         [Required]
         public double OrderLattitude { get; set; }
         [Required]
         public double OrderLongitude { get; set; }
          [StringLength(50)]
         public string OrderAddress { get; set; }
-        //public virtual Location Destination { get; set; }
+
         [Required]
         public double DestinationLattitude { get; set; }
         [Required]
         public double DestinationLongitude { get; set; }
          [StringLength(50)]
         public string DestinationAddress { get; set; }
-        public bool Finished { get; set; }
+
+        public OrderStatus OrderStatus { get; set; }
+
+        public DateTime OrderedAt { get; set; }
+
         public int ArrivalTime { get; set; }
 
         public decimal Bill { get; set; }

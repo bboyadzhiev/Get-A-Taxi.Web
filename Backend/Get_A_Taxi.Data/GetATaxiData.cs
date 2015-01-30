@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Get_A_Taxi.Data.Repositories;
 using Get_A_Taxi.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Get_A_Taxi.Data
 {
@@ -38,6 +39,8 @@ namespace Get_A_Taxi.Data
             }
         }
 
+
+
         public IRepository<Taxi> Taxies
         {
             get
@@ -67,6 +70,21 @@ namespace Get_A_Taxi.Data
             get
             {
                 return this.GetRepository<Photo>();
+            }
+        }
+
+        public IRepository<District> Districts
+        {
+            get
+            {
+                return this.GetRepository<District>();
+            }
+        }
+        public IRepository<Location> Locations
+        {
+            get
+            {
+                return this.GetRepository<Location>();
             }
         }
 

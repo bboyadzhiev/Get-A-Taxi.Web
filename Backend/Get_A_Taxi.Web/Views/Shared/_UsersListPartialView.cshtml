@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Get_A_Taxi.Web.ViewModels.AccountItemViewModel>
+@{
+    List<SelectListItem> userRoles = (List<SelectListItem>)ViewBag.UserRoles;
+}
+<table class="table">
+    <tr><th>Select</th><th>Current Role</th><th>Username</th><th>Phone</th><th>E-mail</th></tr>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>
+                @Ajax.ActionLink("Edit", "Details", new { userId = user.Id},
+        new AjaxOptions
+            {
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "user-details"
+            })
+            </td>
+            <td>
+                @{
+
+            foreach (var roleid in user.RoleIds)
+            {
+                var roleLabelText = userRoles.Find(m => m.Value == roleid);
+                @roleLabelText.Text<br />
+            }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(model => user.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(model => user.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(model => user.Email)
+            </td>
+        </tr>
+    }
+</table>

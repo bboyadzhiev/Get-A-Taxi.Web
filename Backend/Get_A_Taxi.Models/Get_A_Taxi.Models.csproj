@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="District.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Photo.cs" />

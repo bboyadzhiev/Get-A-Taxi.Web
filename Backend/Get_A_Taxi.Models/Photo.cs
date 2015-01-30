@@ -12,8 +12,10 @@ namespace Get_A_Taxi.Models
         [Key]
         public int Id { get; set; }
 
+        [Required]
         public byte[] Content { get; set; }
 
+        [Required]
         [StringLength(4)]
         public string FileExtension { get; set; }
     }

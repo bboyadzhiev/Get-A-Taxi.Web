@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Get_A_Taxi.Web.Models;
+using Get_A_Taxi.Web.ViewModels;
 using Get_A_Taxi.Models;
 
 namespace Get_A_Taxi.Web.Controllers

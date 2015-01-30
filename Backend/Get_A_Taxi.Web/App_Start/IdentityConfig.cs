@@ -10,7 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using Get_A_Taxi.Web.Models;
+using Get_A_Taxi.Web.ViewModels;
 using Get_A_Taxi.Models;
 using Get_A_Taxi.Data;
 
@@ -31,6 +31,21 @@ namespace Get_A_Taxi.Web
         {
             // Plug in your SMS service here to send a text message.
             return Task.FromResult(0);
+        }
+    }
+
+    public class ApplicationRoleManager : RoleManager<IdentityRole>
+    {
+        public ApplicationRoleManager(IRoleStore<IdentityRole, string> roleStore)
+            : base(roleStore) { }
+
+        public static ApplicationRoleManager Create(
+            IdentityFactoryOptions<ApplicationRoleManager> options,
+            IOwinContext context)
+        {
+            var manager = new ApplicationRoleManager(
+                new RoleStore<IdentityRole>(context.Get<GetATaxiDbContext>()));
+            return manager;
         }
     }
 

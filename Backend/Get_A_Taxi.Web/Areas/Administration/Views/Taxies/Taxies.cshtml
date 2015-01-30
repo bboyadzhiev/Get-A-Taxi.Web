@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Get_A_Taxi.Web.ViewModels.TaxiItemVM>
+@{
+    ViewBag.Title = "Manage Taxies";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Ajax.BeginForm("SearchTaxi", null, new AjaxOptions
+{
+    UpdateTargetId = "taxiesResults",
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "POST"
+}, new { id = "taxiSearchForm" }))
+{
+    <p>Search:</p>
+    <input type="text" title="Plate" name="plate" oninput="changed()" />
+    <input type="text" title="Driver" name="driver" oninput="changed()" />
+    <input type="text" title="District" name="district" oninput="changed()" />
+}
+
+<script>
+    function changed() {
+        $("#taxiSearchForm").submit();
+        $("#taxi-details").empty();
+    }
+</script>
+
+<div id="taxiesResults">
+    @Html.Partial("_TaxiesListPartialView", Model)
+</div>
+
+<section>
+    <div id="taxi-details">
+
+    </div>
+</section>
+<div id="driversResults">
+    @Html.Partial("_DriversListPartialView", Model)
+</div>
+<section>
+    <div id="driver-details">
+
+    </div>
+</section>

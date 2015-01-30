@@ -15,6 +15,8 @@ namespace Get_A_Taxi.Data
         IDbSet<Order> Orders { get; set; }
         IDbSet<TaxiStand> Stands { get; set; }
         IDbSet<Photo> Photos { get; set; }
+        IDbSet<District> Districts { get; set; }
+        IDbSet<Location> Locations { get; set; }
         IDbSet<T> Set<T>() where T : class;
         DbEntityEntry<T> Entry<T>(T entity) where T : class;
         int SaveChanges();

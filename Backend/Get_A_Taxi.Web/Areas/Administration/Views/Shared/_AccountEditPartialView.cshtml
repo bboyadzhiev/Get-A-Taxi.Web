@@ -1,0 +1,37 @@
+﻿@model Get_A_Taxi.Web.Areas.Administration.ViewModels.RolesEditVM
+@{
+    //  List<SelectListItem> userRoles = (List<SelectListItem>)ViewBag.UserRoles;
+}
+@using (Html.BeginForm("Update", "Roles", FormMethod.Post, new { @class = "form", enctype = "multipart/form-data" }))
+{
+    <fieldset>
+        <legend>User Details</legend>
+
+    @Html.AntiForgeryToken()
+
+    @Html.Hidden("userId", Model.Id)
+    @Html.LabelFor(model => model.Name)<br />
+    @Html.DisplayFor(model => model.Name)<br />
+    @Html.LabelFor(model => model.PhoneNumber) <br />
+    @Html.DisplayFor(model => model.PhoneNumber) <br />
+    </fieldset>
+    <fieldset>
+        <legend>User Roles</legend>
+    @foreach (var role in Model.UserRoles)
+    {
+       // @Html.CheckBox(role.Value, new {  @checked = role.Selected })
+        //@Html.CheckBox(role.Text, new { value = role.Value, @checked = role.Selected })
+        //@Html.CheckBoxFor(model=>role.Selected, new { @checked = "checked" })
+        // @Html.CheckBoxFor(model => role.Selected, new { name= role.Text, value = role.Value, @checked = role.Selected })
+        <input type="checkbox" id="@role.Value" name="selectedRoles" value="@role.Text"
+               @if (role.Selected)
+               {
+                   @: checked="checked"
+               }
+              />
+        @Html.Label(role.Text)
+    <br />
+    }
+    <input type="submit" value="Submit" class="btn btn-default" />
+    </fieldset>
+}

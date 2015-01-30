@@ -10,20 +10,21 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Get_A_Taxi.Models
 {
+    public enum UserRoles
+    {
+        Administrator = 0,
+        Manager = 1,
+        Operator = 2,
+        Driver = 3,
+       // Client = 4 - registered user with no role is a client
+    }
     public class ApplicationUser : IdentityUser
     {
-        public enum UserType
-        {
-            Administrator = 0,
-            Manager = 1,
-            Operator = 2,
-            Driver = 3,
-            Client = 4
-        }
-
+        
         public ApplicationUser()
         {
             this.orders = new HashSet<Order>();
+            this.Favorites = new HashSet<Location>();
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -35,13 +36,24 @@ namespace Get_A_Taxi.Models
         }
 
         private ICollection<Order> orders;
+        private ICollection<Location> favorites;
+
+        [StringLength(20)]
+        public string FirstName { get; set; }
+        [StringLength(20)]
+        public string MiddleName { get; set; }
+        [StringLength(20)]
+        public string LastName { get; set; }
 
         [StringLength(50)]
         public string DefaultAddress { get; set; }
-        //public virtual Location CurrentLocation { get; set; }
 
-        public int? PhotoId { get; set; }
+
+       // public int? PhotoId { get; set; }
         public virtual Photo Photo { get; set; }
+
+        //public int DistrictId { get; set; }
+        public virtual District District { get; set; }
 
         public double Lattitude { get; set; }
         public double Longitude { get; set; }
@@ -57,5 +69,18 @@ namespace Get_A_Taxi.Models
                 this.orders = value;
             }
         }
+
+        public virtual ICollection<Location> Favorites
+        {
+            get
+            {
+                return this.favorites;
+            }
+            set
+            {
+                this.favorites = value;
+            }
+        }
+
     }
 }

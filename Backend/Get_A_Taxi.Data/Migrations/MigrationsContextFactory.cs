@@ -14,6 +14,11 @@ namespace Get_A_Taxi.Data.Migrations
         }
         public GetATaxiDbContext Create()
         {
+            //if (String.IsNullOrEmpty(Config.ConnectionString))
+            //{
+            //    var sqlServerPath = @".\SQLEXPRESS";
+            //    Config.SetConnectionString("GetATaxi", sqlServerPath);
+            //}
             return new GetATaxiDbContext(Config.ConnectionString);
         }
     }

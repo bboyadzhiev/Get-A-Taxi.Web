@@ -28,7 +28,12 @@
         public IDbSet<TaxiStand> Stands { get; set; }
 
         public IDbSet<Order> Orders { get; set; }
+
         public IDbSet<Photo> Photos { get; set; }
+
+        public IDbSet<District> Districts { get; set; }
+
+        public IDbSet<Location> Locations { get; set; }
 
         public new IDbSet<T> Set<T>() where T : class
         {
@@ -39,5 +44,6 @@
         {
             return base.SaveChanges();
         }
+
     }
 }
