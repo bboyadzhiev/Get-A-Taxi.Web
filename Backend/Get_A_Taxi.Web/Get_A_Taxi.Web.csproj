@@ -192,6 +192,10 @@
     <Compile Include="Areas\Administration\ViewModels\RolesEditVM.cs" />
     <Compile Include="Areas\Administration\ViewModels\EmployeesManagementVM.cs" />
     <Compile Include="Infrastructure\AuthorizeRolesAttribute.cs" />
+    <Compile Include="Infrastructure\Caching\ICacheService.cs" />
+    <Compile Include="Infrastructure\Caching\InMemoryCache.cs" />
+    <Compile Include="Infrastructure\Populators\DropDownListPopulator.cs" />
+    <Compile Include="Infrastructure\Populators\IDropDownListPopulator.cs" />
     <Compile Include="Infrastructure\Services\Contracts\ITaxiService.cs" />
     <Compile Include="Infrastructure\Services\TaxiService.cs" />
     <Compile Include="ViewModels\UserItemViewModel.cs" />
@@ -293,6 +297,7 @@
     <Content Include="Areas\Administration\Views\Taxies\Taxies.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\_TaxiesListPartialView.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\_TaxiDetailsPartialView.cshtml" />
+    <Content Include="Areas\Administration\Views\Taxies\Create.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

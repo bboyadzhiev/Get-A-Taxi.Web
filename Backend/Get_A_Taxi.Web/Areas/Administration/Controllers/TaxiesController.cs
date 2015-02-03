@@ -2,6 +2,7 @@
 using Get_A_Taxi.Models;
 using Get_A_Taxi.Web.Controllers;
 using Get_A_Taxi.Web.Infrastructure;
+using Get_A_Taxi.Web.Infrastructure.Populators;
 using Get_A_Taxi.Web.Infrastructure.Services.Contracts;
 using Get_A_Taxi.Web.ViewModels;
 using System;
@@ -18,8 +19,8 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
         private ITaxiService taxiService;
         private const int TAXI_RESULTS_DEFAULT_COUNT = 10;
 
-        public TaxiesController(IGetATaxiData data, ITaxiService taxiService)
-            :base(data)
+        public TaxiesController(IGetATaxiData data, ITaxiService taxiService, IDropDownListPopulator populator)
+            :base(data, populator)
         {
             this.taxiService = taxiService;
 
@@ -66,7 +67,8 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
             var driversListVM = this.taxiService.GetDriversByNameAndDistrict(driverName, district, this.RoleManager)
                 .Select(UserItemViewModel.FromApplicationUserModel)
                 .ToList();
-            var roleItems = this.GetRolesSelectList();
+            //var roleItems = this.GetRolesSelectList();
+            var roleItems = this.populator.GetRoles(this.RoleManager);
             ViewBag.UserRoles = roleItems;
             return PartialView("_UsersListPartialView", driversListVM);
         }

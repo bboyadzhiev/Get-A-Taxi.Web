@@ -11,7 +11,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
 using Get_A_Taxi.Web.Areas.Administration.ViewModels;
-using Get_A_Taxi.Web.Infrastructure; 
+using Get_A_Taxi.Web.Infrastructure;
+using Get_A_Taxi.Web.Infrastructure.Populators; 
 
 namespace Get_A_Taxi.Web.Areas.Administration.Controllers
 {
@@ -30,8 +31,8 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
     {
 
         private IAccountService services;
-        public RolesController(IGetATaxiData data, IAccountService services)
-            : base(data)
+        public RolesController(IGetATaxiData data, IAccountService services, IDropDownListPopulator populator)
+            : base(data, populator)
         {
             this.services = services;
         }
@@ -43,10 +44,11 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
 
             rolesViewModel.Accounts = this.services.GetAccounts();
 
-            var roleItems = this.GetRolesSelectList();
+            var roleItems = this.populator.GetRoles(this.RoleManager);
+           // var roleItems = this.GetRolesSelectList();
+            //rolesViewModel.UserRoles = roleItems;
             ViewBag.UserRoles = roleItems;
             return View("Roles",rolesViewModel);
-           
         }
 
         
@@ -55,7 +57,8 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
         public ActionResult Search(string query)
         {
             var accountsVM = this.services.GetAccountsByTextSearch(query);
-            var roleItems = this.GetRolesSelectList();
+            //var roleItems = this.GetRolesSelectList();
+            var roleItems = this.populator.GetRoles(this.RoleManager);
             ViewBag.UserRoles = roleItems;
             return this.PartialView("_UsersListPartialView", accountsVM);
         }
@@ -66,18 +69,13 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
         {
             var user = this.Data.Users.All().First(u => u.Id == userId);
             List<string> userRoles = user.Roles.AsQueryable().Select(r => r.RoleId).ToList();
+            var roleItems = this.populator.GetRoles(this.RoleManager);
 
-            var roles = RoleManager.Roles.ToList();
-            List<SelectListItem> roleItems = new List<SelectListItem>();
-            foreach (var role in roles)
+            foreach (var item in roleItems)
             {
-                roleItems.Add(new SelectListItem
-                {
-                    Text = role.Name,
-                    Value = role.Id,
-                    Selected = userRoles.Contains(role.Id)
-                });
+                item.Selected = userRoles.Contains(item.Value);
             }
+
             var accountVM = this.Data.Users.All()
                 .Where(u => u.Id == userId)
                 .Select(RolesEditVM.FromApplicationUserModel)

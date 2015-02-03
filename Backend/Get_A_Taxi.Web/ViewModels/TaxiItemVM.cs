@@ -1,6 +1,7 @@
 ﻿using Get_A_Taxi.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
@@ -10,10 +11,15 @@ namespace Get_A_Taxi.Web.ViewModels
 {
     public class TaxiItemVM
     {
+        [Key]
         public int TaxiId { get; set; }
 
+        [Required]
         [Display(Name="Plate")]
         public string Plate { get; set; }
+
+        [Required]
+        public int DistrictId { get; set; }
 
         [Display(Name = "Taxi's District")]
         public string DistrictTitle { get; set; }
@@ -26,8 +32,14 @@ namespace Get_A_Taxi.Web.ViewModels
         [Display(Name = "Driver Name")]
         public string DriverName { get; set; }
 
+        [DefaultValue(true)]
         [Display(Name = "Is available")]
         public bool Available { get; set; }
+
+        public TaxiItemVM()
+        {
+            Available = true;
+        }
 
         public static Expression<Func<Taxi, TaxiItemVM>> FromTaxiDataModel
         {

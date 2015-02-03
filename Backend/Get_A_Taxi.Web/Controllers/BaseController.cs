@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
+using Get_A_Taxi.Web.Infrastructure.Populators;
 
 namespace Get_A_Taxi.Web.Controllers
 {
@@ -17,10 +18,12 @@ namespace Get_A_Taxi.Web.Controllers
         protected IGetATaxiData Data { get; private set; }
 
         protected ApplicationUser UserProfile { get; private set; }
+        protected IDropDownListPopulator populator;
 
-        public BaseController(IGetATaxiData data)
+        public BaseController(IGetATaxiData data, IDropDownListPopulator populator)
         {
             this.Data = data;
+            this.populator = populator;
         }
 
         protected override IAsyncResult BeginExecute(RequestContext requestContext, AsyncCallback callback, object state)
@@ -67,20 +70,20 @@ namespace Get_A_Taxi.Web.Controllers
             }
         }
 
-        public ICollection<SelectListItem> GetRolesSelectList()
-        {
-            var roles = RoleManager.Roles.ToList();
-            List<SelectListItem> roleItems = new List<SelectListItem>();
+        //public ICollection<SelectListItem> GetRolesSelectList()
+        //{
+        //    var roles = RoleManager.Roles.ToList();
+        //    List<SelectListItem> roleItems = new List<SelectListItem>();
 
-            foreach (var role in roles)
-            {
-                roleItems.Add(new SelectListItem
-                {
-                    Text = role.Name,
-                    Value = role.Id
-                });
-            }
-            return roleItems;
-        }
+        //    foreach (var role in roles)
+        //    {
+        //        roleItems.Add(new SelectListItem
+        //        {
+        //            Text = role.Name,
+        //            Value = role.Id
+        //        });
+        //    }
+        //    return roleItems;
+        //}
     }
 }

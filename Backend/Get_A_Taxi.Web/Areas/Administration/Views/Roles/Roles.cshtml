@@ -55,12 +55,11 @@
 
 @using (Html.BeginForm("Update", "Roles", FormMethod.Post, new { @class = "form", enctype = "multipart/form-data" }))
 {
-    @Html.AntiForgeryToken();
+    @Html.AntiForgeryToken()
     <br />
-
-    //    <p>Select new Role</p>
-    //    @Html.DropDownListFor(m => m.SelectedRoleId, Model.UserRoles);
-
+   //  @Html.LabelFor(m => m.SelectedRoleId)
+   //  @Html.DropDownListFor(m => m.SelectedRoleId, Model.UserRoles)
+}
     @*@foreach (var user in Model.Accounts)
         {
             <tr>
@@ -85,5 +84,5 @@
             </tr>
         }*@
 
-}
+
 

@@ -16,7 +16,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.ViewModels
         public ICollection<UserItemViewModel> Accounts { get; set; }
 
        
-       // public string SelectedRoleId { get; set; }
-        public List<SelectListItem> UserRoles { get; set; }
+        public string SelectedRoleId { get; set; }
+        public IEnumerable<SelectListItem> UserRoles { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.ViewModels
 
         [Required]
       //  public ICollection<string> UserRoles { get; set; }
-        public ICollection<SelectListItem> UserRoles { get; set; }
+        public IEnumerable<SelectListItem> UserRoles { get; set; }
 
         public RolesEditVM()
         {
