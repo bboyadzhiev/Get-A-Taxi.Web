@@ -13,7 +13,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.ViewModels
     {
        // [Key]
       //  public int Id { get; set; }
-        public ICollection<AccountItemViewModel> Accounts { get; set; }
+        public ICollection<UserItemViewModel> Accounts { get; set; }
 
        
        // public string SelectedRoleId { get; set; }

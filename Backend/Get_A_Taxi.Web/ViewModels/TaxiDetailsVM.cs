@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Get_A_Taxi.Web.ViewModels
 {
-    public class TaxiViewModel
+    public class TaxiDetailsVM
     {
         public int TaxiId { get; set; }
 
@@ -22,15 +22,17 @@ namespace Get_A_Taxi.Web.ViewModels
         public double Lattitude { get; set; }
         public double Longitude { get; set; }
 
-        public string DriverId { get; set; }
-        public string DriverPhoneNumber { get; set; }
-        public string DriverName { get; set; }
+        //public string DriverId { get; set; }
+        //public string DriverPhoneNumber { get; set; }
+        //public string DriverName { get; set; }
 
-        public static Expression<Func<Taxi, TaxiViewModel>> FromTaxiDataModel
+        public UserInfoVM Driver { get; set; }
+
+        public static Expression<Func<Taxi, TaxiDetailsVM>> FromTaxiDataModel
         {
             get
             {
-                return x => new TaxiViewModel
+                return x => new TaxiDetailsVM
                 {
                     TaxiId = x.TaxiId,
                     Plate = x.Plate,
@@ -39,9 +41,17 @@ namespace Get_A_Taxi.Web.ViewModels
                     Available = x.Available,
                     Lattitude = x.Lattitude,
                     Longitude = x.Longitude,
-                    DriverId = x.Driver.Id,
-                    DriverName = x.Driver.FirstName +" " + x.Driver.LastName,
-                    DriverPhoneNumber = x.Driver.PhoneNumber
+                    //DriverId = x.Driver.Id,
+                    //DriverName = x.Driver.FirstName +" " + x.Driver.LastName,
+                    //DriverPhoneNumber = x.Driver.PhoneNumber,
+                    Driver = new UserInfoVM()
+                    {
+                        Id = x.Driver.Id,
+                        District = x.Driver.District.Title,
+                        Email = x.Driver.Email,
+                        Name = x.Driver.FirstName + " " + x.Driver.LastName,
+                        PhoneNumber = x.Driver.PhoneNumber
+                    }
                 };
             }
         }

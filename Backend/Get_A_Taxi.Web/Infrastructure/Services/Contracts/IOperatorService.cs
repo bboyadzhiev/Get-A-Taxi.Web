@@ -9,7 +9,7 @@ namespace Get_A_Taxi.Web.Infrastructure.Services.Contracts
 {
     interface IOperatorService
     {
-        IList<OrderViewModel> GetOrderVMList(int count);
+        IList<OrderDetailsVM> GetOrderVMList(int count);
 
     }
 }

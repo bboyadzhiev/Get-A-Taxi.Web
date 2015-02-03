@@ -1,0 +1,34 @@
+﻿@model Get_A_Taxi.Web.ViewModels.UserInfoVM
+
+<fieldset>
+    <legend>Details</legend>
+    <div style="float:left">
+        @if (Model.Photo != null)
+        {
+            string imageBase64 = Convert.ToBase64String(Model.Photo.Content);
+            string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+            <img src="@imageSrc" width="100" height="100" />
+        }
+        else
+        {
+            <img src="~/Content/Images/person.png" />
+        }
+    </div>
+    <div>
+        @Html.Hidden("userId", Model.Id)
+
+        @Html.LabelFor(m => m.Name)<br />
+        @Html.DisplayFor(m => m.Name)<br />
+
+        @Html.LabelFor(m => m.District)<br />
+        @Html.DisplayFor(m => m.District)<br />
+
+        @Html.LabelFor(m => m.PhoneNumber)<br />
+        @Html.DisplayFor(m => m.PhoneNumber)<br />
+
+        @Html.LabelFor(m => m.Email)<br />
+        @Html.DisplayFor(m => m.Email)<br />
+    </div>
+
+</fieldset>
+

@@ -2,54 +2,66 @@
 @{
     ViewBag.Title = "Manage User Roles";
 }
-
 <h2>@ViewBag.Title</h2>
-
 
 @using (Ajax.BeginForm("Search", null, new AjaxOptions
 {
     UpdateTargetId = "results",
     InsertionMode = InsertionMode.Replace,
-    HttpMethod = "POST"
+    HttpMethod = "POST",
+    OnComplete = "hideLoader()"
 }, new { id = "searchForm" }))
 {
-    <p>Search:</p><input type="text" name="query" oninput="changed()"/>
+    <p>Search:</p><input type="text" name="query" oninput="changed()" />
 }
-
-
-
-
-<script>
-    function changed() {
-        $("#searchForm").submit();
-        $("#user-details").empty();
-    }
-</script>
-
-
 
 <div id="results">
     @Html.Partial("_UsersListPartialView", Model.Accounts)
 </div>
 
- <section>
+<section>
+    <div id="user-details">
+
+    </div>
+</section>
+
+<script>
+    function changed() {
+        $("#searchForm").submit();
+        cleanUserDetails();
+        $("#results").empty().addClass("loader");
+    }
+
+    function hideLoader() {
+        $("#user-details").removeClass("loader");
+        $("#results").removeClass("loader");
+    }
+
+    function getUserDetails() {
+        cleanUserDetails();
+        $("#user-details").addClass("loader");
+    }
+
+    function cleanUserDetails() {
+        $("#user-details").empty();
+    }
+    function userDetailsLoaded() {
+        hideLoader();
+    }
+
+</script>
 
 
-<div id="user-details">
-   
-</div>
- </section>
 
+@using (Html.BeginForm("Update", "Roles", FormMethod.Post, new { @class = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken();
+    <br />
 
-   @using (Html.BeginForm("Update", "Roles", FormMethod.Post, new { @class = "form", enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken();
-        <br />
- 
-//    <p>Select new Role</p>
-//    @Html.DropDownListFor(m => m.SelectedRoleId, Model.UserRoles);
-    
-        @*@foreach (var user in Model.Accounts)
+    //    <p>Select new Role</p>
+    //    @Html.DropDownListFor(m => m.SelectedRoleId, Model.UserRoles);
+
+    @*@foreach (var user in Model.Accounts)
         {
             <tr>
                 <td>
@@ -58,7 +70,7 @@
                 <td>
                     @{
             var roleLabelText = Model.UserRoles.Find(m => m.Value == user.RoleId);
-             @roleLabelText.Text;       
+             @roleLabelText.Text;
                     }
                 </td>
                 <td>

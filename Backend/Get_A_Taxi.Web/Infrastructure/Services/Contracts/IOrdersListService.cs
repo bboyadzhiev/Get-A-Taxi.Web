@@ -5,6 +5,6 @@
 
     public interface IOrdersListService
     {
-        IList<OrderViewModel> GetOrderVMList(int count);
+        IList<OrderDetailsVM> GetOrderVMList(int count);
     }
 }

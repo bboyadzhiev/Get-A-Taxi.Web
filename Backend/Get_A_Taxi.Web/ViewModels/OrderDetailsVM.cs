@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Get_A_Taxi.Web.ViewModels
 {
-    public class OrderViewModel
+    public class OrderDetailsVM
     {
         public int OrderId { get; set; }
         public string CustomerId { get; set; }
@@ -27,11 +27,11 @@ namespace Get_A_Taxi.Web.ViewModels
 
         public DateTime OrderedAt { get; set; }
 
-        public static Expression<Func<Order, OrderViewModel>> FromOrderDataModel
+        public static Expression<Func<Order, OrderDetailsVM>> FromOrderDataModel
         {
             get
             {
-                return x => new OrderViewModel {
+                return x => new OrderDetailsVM {
                     OrderId = x.OrderId,
                     CustomerId = x.Customer.Id,
                     TaxiId = x.AssignedTaxi.TaxiId,

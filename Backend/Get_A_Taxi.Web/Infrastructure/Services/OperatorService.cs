@@ -15,7 +15,7 @@ namespace Get_A_Taxi.Web.Infrastructure.Services
         {
         }
 
-        public IList<ViewModels.OrderViewModel> GetOrderVMList(int count)
+        public IList<ViewModels.OrderDetailsVM> GetOrderVMList(int count)
         {
             throw new NotImplementedException();
         }

@@ -1,4 +1,4 @@
-﻿@model Get_A_Taxi.Web.ViewModels.TaxiViewModel
+﻿@model Get_A_Taxi.Web.ViewModels.TaxiDetailsVM
 
 <fieldset>
     <legend>Taxi Details</legend>
@@ -24,7 +24,7 @@
 
 <fieldset>
     <legend>Taxi Driver Details</legend>
-    @if (String.IsNullOrEmpty(Model.DriverId))
+    @if (String.IsNullOrEmpty(Model.Driver.Id))
     {
         <p>No driver assigned!</p>
         @*<input id="Search for driver" type="button" value="button" onclick="showDriverSearch()" />*@
@@ -32,22 +32,47 @@
         {
             UpdateTargetId = "driversResults",
             InsertionMode = InsertionMode.Replace,
-            HttpMethod = "POST"
+            HttpMethod = "POST",
+            OnBegin = "cleanDrivers()",
+            OnComplete = "hideLoader()"
         }, new { id = "driverSearchForm" }))
         {
-            <p>Search for a driver:</p>
-            <input type="text" name="driverName" oninput="changed()" title="Driver Name" />
-            <input type="text" name="district" oninput="changed()" title="District" />
+            <p>Search for a free driver:</p>
+            <label for="driderNameTB">Driver Name</label>
+            <input id="driverNameTB" type="text" name="driverName" oninput="searchDrivers()" title="Driver Name" />
+            <label for="driverDistrictTB">District</label>
+            <input id="driverDistrictTB" type="text" name="district" oninput="searchDrivers()" title="District" />
+        }
+
+        using (Html.BeginForm("AssignDriver", "Taxies", FormMethod.Post, new { @class = "form", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("taxiId", Model.TaxiId)
+            <div id="user-details">
+            </div>
+            <div id="assign-driver">
+                <input type="submit" value="Assign Driver" class="btn btn-default" />
+            </div>
         }
     }
     else
     {
-
+        using (Html.BeginForm("UnassignDriver", "Taxies", FormMethod.Post, new { @class = "form", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("taxiId", Model.TaxiId)
+        <div id="user-details">
+            @Html.Partial("_UserInfoPartialView", Model.Driver)
+        </div>
+        <input type="submit" value="Unassign Driver" class="btn btn-default" />
+        }
     }
 </fieldset>
 
 <script>
-    function changed() {
+    function searchDrivers() {
         $("#driverSearchForm").submit();
+
     }
 </script>
+

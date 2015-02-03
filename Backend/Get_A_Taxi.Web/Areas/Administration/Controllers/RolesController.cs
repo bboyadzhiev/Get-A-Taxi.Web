@@ -10,7 +10,8 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
-using Get_A_Taxi.Web.Areas.Administration.ViewModels; // Maybe this one too
+using Get_A_Taxi.Web.Areas.Administration.ViewModels;
+using Get_A_Taxi.Web.Infrastructure; 
 
 namespace Get_A_Taxi.Web.Areas.Administration.Controllers
 {
@@ -24,7 +25,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
             return new SelectList(values, "Id", "Name", enumObj);
         }
     }
-    [Authorize(Roles = "Administrator")]
+    [AuthorizeRoles(UserRoles = UserRoles.Administrator)]
     public class RolesController : BaseController
     {
 
@@ -60,8 +61,8 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
         }
 
         [HttpGet]
-        // GET: Administration/Roles/Details/5
-        public ActionResult Details(string userId)
+        // GET: Administration/Roles/UserDetails/{string}
+        public ActionResult UserDetails(string userId)
         {
             var user = this.Data.Users.All().First(u => u.Id == userId);
             List<string> userRoles = user.Roles.AsQueryable().Select(r => r.RoleId).ToList();
@@ -83,7 +84,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
                 .FirstOrDefault();
 
             accountVM.UserRoles = roleItems;
-            return View("_AccountEditPartialView", accountVM);
+            return View("_RolesEditPartialView", accountVM);
         }
 
         //public ActionResult Details(string userId)

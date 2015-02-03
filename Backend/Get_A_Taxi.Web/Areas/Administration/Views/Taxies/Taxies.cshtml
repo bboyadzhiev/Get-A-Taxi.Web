@@ -9,21 +9,19 @@
 {
     UpdateTargetId = "taxiesResults",
     InsertionMode = InsertionMode.Replace,
-    HttpMethod = "POST"
+    HttpMethod = "POST",
+    OnComplete = "hideLoader()"
 }, new { id = "taxiSearchForm" }))
 {
     <p>Search:</p>
-    <input type="text" title="Plate" name="plate" oninput="changed()" />
-    <input type="text" title="Driver" name="driver" oninput="changed()" />
-    <input type="text" title="District" name="district" oninput="changed()" />
+    @Html.AntiForgeryToken()
+    <label for="plateSearchTxt">Taxi's plate</label>
+    <input type="text" id="plateSearchTxt" name="plate" oninput="searchTaxies()" title="Taxi's plate" />
+    <label for="driverSearchTxt">Driver's name</label>
+    <input type="text" id="driverSearchTxt" name="driver" oninput="searchTaxies()" title="Driver's name" />
+    <label for="districtSearchTxt">Driver's district</label>
+    <input type="text" id="districtSearchTxt" name="district" oninput="searchTaxies()" title="Driver's district" />
 }
-
-<script>
-    function changed() {
-        $("#taxiSearchForm").submit();
-        $("#taxi-details").empty();
-    }
-</script>
 
 <div id="taxiesResults">
     @Html.Partial("_TaxiesListPartialView", Model)
@@ -31,14 +29,53 @@
 
 <section>
     <div id="taxi-details">
-
+            
     </div>
 </section>
+
 <div id="driversResults">
-    @Html.Partial("_DriversListPartialView", Model)
-</div>
-<section>
-    <div id="driver-details">
 
-    </div>
-</section>
+</div>
+
+
+
+<script>
+    function searchTaxies() {
+        $("#taxiSearchForm").submit();
+        $("#taxi-details").empty();
+        $("#driversResults").empty();
+        $("#user-details").empty();
+        $("#taxiesResults").empty().addClass("loader");
+    }
+
+    function hideLoader() {
+        $("#taxiesResults").removeClass("loader");
+        $("#taxi-details").removeClass("loader");
+        $("#driversResults").removeClass("loader");
+        $("#user-details").removeClass("loader");
+        $("#assign-driver").hide();
+    }
+
+    function cleanTaxiDetails() {
+        $("#driversResults").empty();
+        $("#user-details").empty();
+        $("#taxi-details").empty().addClass("loader");
+    }
+
+    function cleanDrivers() {
+        $("#user-details").empty();
+        $("#driversResults").empty().addClass("loader");
+    }
+
+    function cleanUserDetails() {
+        $("#user-details").empty().addClass("loader");
+    }
+
+    function userDetailsLoaded() {
+        hideLoader();
+        $("#driversResults").empty();
+        $("#assign-driver").show();
+    }
+ 
+
+</script>

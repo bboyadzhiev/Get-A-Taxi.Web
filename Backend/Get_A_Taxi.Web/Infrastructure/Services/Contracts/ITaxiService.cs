@@ -13,9 +13,9 @@ namespace Get_A_Taxi.Web.Infrastructure.Services.Contracts
         //ICollection<TaxiStand> GetByTitle(string title);
         //ICollection<TaxiStand> GetByLocation(double lat, double lon);
 
-        ICollection<TaxiViewModel> GetByPlate(string plate);
+        ICollection<TaxiDetailsVM> GetByPlate(string plate);
 
-        ICollection<TaxiViewModel> GetByTaxiStand(string taxiStand);
+        ICollection<TaxiDetailsVM> GetByTaxiStand(string taxiStand);
 
         IQueryable<Taxi> GetByDriverProperties(string name, string district, ApplicationRoleManager roleManager);
 

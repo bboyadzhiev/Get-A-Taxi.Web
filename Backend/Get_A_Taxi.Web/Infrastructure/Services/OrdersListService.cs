@@ -17,14 +17,14 @@
         {
         }
 
-        public IList<OrderViewModel> GetOrderVMList(int count)
+        public IList<OrderDetailsVM> GetOrderVMList(int count)
         {
             var ordersListVM = this.Data
                 .Orders.All()
                 .Where(o => o.OrderStatus != OrderStatus.Finished)
                 .OrderByDescending(o => o.OrderedAt)
                 .Take(count)
-                .Select(OrderViewModel.FromOrderDataModel)
+                .Select(OrderDetailsVM.FromOrderDataModel)
                 .ToList();
 
             return ordersListVM;

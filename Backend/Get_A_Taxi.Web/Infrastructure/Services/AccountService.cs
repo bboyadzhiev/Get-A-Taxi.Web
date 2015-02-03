@@ -22,38 +22,38 @@ namespace Get_A_Taxi.Web.Infrastructure.Services
         {
         }
 
-        public ICollection<AccountItemViewModel> GetAccounts()
+        public ICollection<UserItemViewModel> GetAccounts()
         {
 
             var accounts = this.Data.Users.All()
-                .Select(AccountItemViewModel.FromApplicationUserModel)
+                .Select(UserItemViewModel.FromApplicationUserModel)
                 .ToList();
             return accounts;
         }
 
-        public ICollection<AccountItemViewModel> GetEmployees(int count)
+        public ICollection<UserItemViewModel> GetEmployees(int count)
         {
             
-            ICollection<AccountItemViewModel> employees;
-            if (count != null)
+            ICollection<UserItemViewModel> employees;
+            if (count != 0)
             {
                  employees = this.Data.Users.All().Where(u => u.Roles.Count != 0)
                      .Take(count)
-                    .Select(AccountItemViewModel.FromApplicationUserModel)
+                    .Select(UserItemViewModel.FromApplicationUserModel)
                     .ToList();
                 return employees;
             }
              employees = this.Data.Users.All().Where(u => u.Roles.Count != 0)
-                   .Select(AccountItemViewModel.FromApplicationUserModel)
+                   .Select(UserItemViewModel.FromApplicationUserModel)
                    .ToList();
             return employees;
         }
 
-        public ICollection<AccountItemViewModel> GetAccountsByTextSearch(string textToSerach)
+        public ICollection<UserItemViewModel> GetAccountsByTextSearch(string textToSerach)
         {
             var result = this.Data.Users.All()
                 .Where(u => u.UserName.ToLower().Contains(textToSerach.ToLower()) || u.PhoneNumber.Contains(textToSerach))
-                .Select(AccountItemViewModel.FromApplicationUserModel).ToList();
+                .Select(UserItemViewModel.FromApplicationUserModel).ToList();
             return result;
         }
 
@@ -67,46 +67,46 @@ namespace Get_A_Taxi.Web.Infrastructure.Services
 
 
 
-        public ICollection<AccountItemViewModel> GetAccountByDistrict(string districtText)
+        public ICollection<UserItemViewModel> GetAccountByDistrict(string districtText)
         {
             var usersInDistrict = this.Data.Users.All()
                 .Where(u => u.District.Title.ToLower().Contains(districtText.ToLower()))
-                .Select(AccountItemViewModel.FromApplicationUserModel).ToList();
+                .Select(UserItemViewModel.FromApplicationUserModel).ToList();
             return usersInDistrict;
         }
 
-        public ICollection<AccountItemViewModel> GetAccountsByRole(UserRoles role, ApplicationRoleManager roleManager)
+        public ICollection<UserItemViewModel> GetAccountsByRole(UserRoles role, ApplicationRoleManager roleManager)
         {
             var identityRoleId = roleManager.Roles.Where(r => r.Name == role.ToString()).FirstOrDefault().Id;
             var usersInRole = this.Data.Users.All().Where(u => u.Roles.Select(y => y.RoleId)
                 .Contains(identityRoleId)).
-                Select(AccountItemViewModel.FromApplicationUserModel);
+                Select(UserItemViewModel.FromApplicationUserModel);
             return usersInRole.ToList();
         }
 
-        public ICollection<AccountItemViewModel> GetAccountsByRoleAndDistrict(int districtId, UserRoles role, ApplicationRoleManager roleManager)
+        public ICollection<UserItemViewModel> GetAccountsByRoleAndDistrict(int districtId, UserRoles role, ApplicationRoleManager roleManager)
         {
             var identityRoleId = roleManager.Roles.Where(r => r.Name == role.ToString()).FirstOrDefault().Id;
             var usersInRole = this.Data.Users.All().Where(u => u.Roles.Select(y => y.RoleId)
                 .Contains(identityRoleId) && u.District.DistrictId == districtId)
-                .Select(AccountItemViewModel.FromApplicationUserModel).ToList();
+                .Select(UserItemViewModel.FromApplicationUserModel).ToList();
             return usersInRole;
         }
 
-        public ICollection<AccountItemViewModel> GetAccountsByRoleAndDistrict(string districtText, string roleTextSearch, ApplicationRoleManager roleManager)
+        public ICollection<UserItemViewModel> GetAccountsByRoleAndDistrict(string districtText, string roleTextSearch, ApplicationRoleManager roleManager)
         {
             var usersInRole = SearchByRoleAndDistrict(districtText, roleTextSearch, roleManager);
             return usersInRole.ToList();
         }
 
-        private IQueryable<AccountItemViewModel> SearchByRoleAndDistrict(string districtText, string roleText, ApplicationRoleManager roleManager)
+        private IQueryable<UserItemViewModel> SearchByRoleAndDistrict(string districtText, string roleText, ApplicationRoleManager roleManager)
         {
             var identityRoleId = roleManager.Roles.Where(r => r.Name.ToLower().Contains(roleText.ToLower())).FirstOrDefault().Id;
             var usersInRole = this.Data.Users.All()
                 .Where(u => u.Roles.Select(y => y.RoleId)
                     .Contains(identityRoleId) && u.District.Title.ToLower()
                     .Contains(districtText.ToLower()))
-                .Select(AccountItemViewModel.FromApplicationUserModel);
+                .Select(UserItemViewModel.FromApplicationUserModel);
             return usersInRole;
         }
 
