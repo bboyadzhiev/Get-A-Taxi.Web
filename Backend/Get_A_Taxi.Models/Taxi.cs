@@ -18,10 +18,8 @@ namespace Get_A_Taxi.Models
         [Required]
         public string Plate { get; set; }
 
-     //   public int DistrictId { get; set; }
         public virtual District District { get; set; }
 
-      //  public int TaxiStandId { get; set; }
         public virtual TaxiStand TaxiStand { get; set; }
 
         [Required]
@@ -32,15 +30,13 @@ namespace Get_A_Taxi.Models
 
         [DefaultValue(true)]
         public bool Available { get; set; }
-        //public virtual Location Location { get; set; }
+
         public double Lattitude { get; set; }
         public double Longitude { get; set; }
 
         [StringLength(50)]
         public string Address { get; set; }
 
-
-      //  public string DriverId { get; set; }
         public virtual ApplicationUser Driver { get; set; }
     }
 }

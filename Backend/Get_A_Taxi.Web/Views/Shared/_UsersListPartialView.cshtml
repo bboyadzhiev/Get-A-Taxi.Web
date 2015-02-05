@@ -6,7 +6,7 @@
     <tr>
         <th>&nbsp;</th>
         <th>@Html.LabelFor(m=>m.First().RoleIds)</th>
-        <th>@Html.LabelFor(m => m.First().Name)</th>
+        <th>@Html.LabelFor(m => m.First().FullName)</th>
         <th>@Html.LabelFor(m => m.First().District)</th>
         <th>@Html.LabelFor(m => m.First().PhoneNumber)</th>
         <th>@Html.LabelFor(m => m.First().Email)</th>
@@ -35,7 +35,7 @@
                 }
             </td>
             <td>
-                @Html.DisplayFor(model => user.Name)
+                @Html.DisplayFor(model => user.FullName)
             </td>
             <td>
                 @Html.DisplayFor(model => user.District)

@@ -46,6 +46,8 @@ namespace Get_A_Taxi.Models
 
         public DateTime OrderedAt { get; set; }
 
+        public int PickupTime { get; set; }
+
         public int ArrivalTime { get; set; }
 
         public decimal Bill { get; set; }

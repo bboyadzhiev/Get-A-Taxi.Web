@@ -1,4 +1,4 @@
-﻿@model Get_A_Taxi.Web.ViewModels.UserInfoVM
+﻿@model Get_A_Taxi.Web.ViewModels.UserDetailsVM
 
 <fieldset>
     <legend>Details</legend>
@@ -17,8 +17,8 @@
     <div>
         @Html.Hidden("userId", Model.Id)
 
-        @Html.LabelFor(m => m.Name)<br />
-        @Html.DisplayFor(m => m.Name)<br />
+        @Html.LabelFor(m => m.FullName)<br />
+        @Html.DisplayFor(m => m.FullName)<br />
 
         @Html.LabelFor(m => m.District)<br />
         @Html.DisplayFor(m => m.District)<br />

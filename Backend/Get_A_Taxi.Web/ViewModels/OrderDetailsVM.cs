@@ -1,16 +1,23 @@
 ﻿using Get_A_Taxi.Models;
+using Get_A_Taxi.Web.Infrastructure.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Get_A_Taxi.Web.ViewModels
 {
-    public class OrderDetailsVM
+    public class OrderDetailsVM //: IMapFrom<Order>, IHaveCustomMappings
     {
+        [HiddenInput(DisplayValue = false)]
         public int OrderId { get; set; }
+
+        [HiddenInput(DisplayValue = false)]
         public string CustomerId { get; set; }
+
+        [HiddenInput(DisplayValue = false)]
         public int TaxiId { get; set; }
 
         public bool IsWaiting { get; set; }
@@ -48,5 +55,12 @@ namespace Get_A_Taxi.Web.ViewModels
                 };
             }
         }
+
+        //public void CreateMappings(AutoMapper.IConfiguration configuration)
+        //{
+        //    configuration.CreateMap<Order, OrderDetailsVM>()
+        //        .ForMember(vm=>vm.CustomerId, opt=>opt.MapFrom(m=>m.Customer.Id))
+        //        .ForMember(vm=>vm.TaxiId, opt=>opt.MapFrom(m=>m.AssignedTaxi.TaxiId))
+        //}
     }
 }

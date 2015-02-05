@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace Get_A_Taxi.Web.Infrastructure.Services
 {
@@ -26,7 +28,8 @@ namespace Get_A_Taxi.Web.Infrastructure.Services
         {
 
             var accounts = this.Data.Users.All()
-                .Select(UserItemViewModel.FromApplicationUserModel)
+                //.Select(UserItemViewModel.FromApplicationUserModel)
+                .Project().To<UserItemViewModel>()
                 .ToList();
             return accounts;
         }
@@ -38,13 +41,14 @@ namespace Get_A_Taxi.Web.Infrastructure.Services
             if (count != 0)
             {
                  employees = this.Data.Users.All().Where(u => u.Roles.Count != 0)
-                     .Take(count)
-                    .Select(UserItemViewModel.FromApplicationUserModel)
+                     .Take(count)//.Select(UserItemViewModel.FromApplicationUserModel)
+                     .Project().To<UserItemViewModel>()
                     .ToList();
                 return employees;
             }
              employees = this.Data.Users.All().Where(u => u.Roles.Count != 0)
-                   .Select(UserItemViewModel.FromApplicationUserModel)
+                  // .Select(UserItemViewModel.FromApplicationUserModel)
+                  .Project().To<UserItemViewModel>()
                    .ToList();
             return employees;
         }
@@ -53,7 +57,9 @@ namespace Get_A_Taxi.Web.Infrastructure.Services
         {
             var result = this.Data.Users.All()
                 .Where(u => u.UserName.ToLower().Contains(textToSerach.ToLower()) || u.PhoneNumber.Contains(textToSerach))
-                .Select(UserItemViewModel.FromApplicationUserModel).ToList();
+                //.Select(UserItemViewModel.FromApplicationUserModel)
+                .Project().To<UserItemViewModel>()
+                .ToList();
             return result;
         }
 
@@ -71,7 +77,9 @@ namespace Get_A_Taxi.Web.Infrastructure.Services
         {
             var usersInDistrict = this.Data.Users.All()
                 .Where(u => u.District.Title.ToLower().Contains(districtText.ToLower()))
-                .Select(UserItemViewModel.FromApplicationUserModel).ToList();
+                // .Select(UserItemViewModel.FromApplicationUserModel)
+                .Project().To<UserItemViewModel>()
+                .ToList();
             return usersInDistrict;
         }
 
@@ -79,8 +87,9 @@ namespace Get_A_Taxi.Web.Infrastructure.Services
         {
             var identityRoleId = roleManager.Roles.Where(r => r.Name == role.ToString()).FirstOrDefault().Id;
             var usersInRole = this.Data.Users.All().Where(u => u.Roles.Select(y => y.RoleId)
-                .Contains(identityRoleId)).
-                Select(UserItemViewModel.FromApplicationUserModel);
+                .Contains(identityRoleId))
+                //.Select(UserItemViewModel.FromApplicationUserModel);
+                .Project().To<UserItemViewModel>();
             return usersInRole.ToList();
         }
 
@@ -89,7 +98,9 @@ namespace Get_A_Taxi.Web.Infrastructure.Services
             var identityRoleId = roleManager.Roles.Where(r => r.Name == role.ToString()).FirstOrDefault().Id;
             var usersInRole = this.Data.Users.All().Where(u => u.Roles.Select(y => y.RoleId)
                 .Contains(identityRoleId) && u.District.DistrictId == districtId)
-                .Select(UserItemViewModel.FromApplicationUserModel).ToList();
+                //.Select(UserItemViewModel.FromApplicationUserModel)
+                .Project().To<UserItemViewModel>()
+                .ToList();
             return usersInRole;
         }
 
@@ -106,7 +117,8 @@ namespace Get_A_Taxi.Web.Infrastructure.Services
                 .Where(u => u.Roles.Select(y => y.RoleId)
                     .Contains(identityRoleId) && u.District.Title.ToLower()
                     .Contains(districtText.ToLower()))
-                .Select(UserItemViewModel.FromApplicationUserModel);
+                //.Select(UserItemViewModel.FromApplicationUserModel);
+                .Project().To<UserItemViewModel>();
             return usersInRole;
         }
 

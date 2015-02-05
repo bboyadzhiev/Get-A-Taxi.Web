@@ -10,17 +10,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace Get_A_Taxi.Web.Areas.Administration.Controllers
 {
-    [AuthorizeRoles(UserRoles=UserRoles.Administrator)]// | UserRoles.Manager)]
+    [AuthorizeRoles(UserRoles = UserRoles.Administrator)]// | UserRoles.Manager)]
     public class TaxiesController : BaseController
     {
         private ITaxiService taxiService;
         private const int TAXI_RESULTS_DEFAULT_COUNT = 10;
 
         public TaxiesController(IGetATaxiData data, ITaxiService taxiService, IDropDownListPopulator populator)
-            :base(data, populator)
+            : base(data, populator)
         {
             this.taxiService = taxiService;
 
@@ -30,22 +32,26 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
         // GET: Administration/Taxies
         public ActionResult Index()
         {
-           // var taxies = this.Data.Taxies.All().Select(TaxiViewModel.FromTaxiDataModel).ToList
+            // var taxies = this.Data.Taxies.All().Select(TaxiViewModel.FromTaxiDataModel).ToList
             var district = UserProfile.District;
             var taxiesListVM = this.Data.Taxies.All()
                 .Where(t => t.District.DistrictId == UserProfile.District.DistrictId)
                 .Take(TAXI_RESULTS_DEFAULT_COUNT)
-                .Select(TaxiItemVM.FromTaxiDataModel)
+                .Project().To<TaxiItemVM>()
+                //.Select(TaxiVM.FromTaxiDataModel)
                 .ToList();
             return View("Taxies", taxiesListVM);
         }
 
         // GET: Administration/Taxies/Details/5
+        [HttpGet]
         public ActionResult Details(int taxiId)
         {
             var taxiVM = this.Data.Taxies
-                .SearchFor(t => t.TaxiId == taxiId)
-                .Select(TaxiDetailsVM.FromTaxiDataModel)
+               // .SearchFor(t => t.TaxiId == taxiId)
+               .All().Where(t=>t.TaxiId == taxiId)
+                .Project().To<TaxiDetailsVM>()
+                //.Select(TaxiDetailsVM.FromTaxiDataModel)
                 .FirstOrDefault();
             return PartialView("_TaxiDetailsPartialView", taxiVM);
         }
@@ -56,7 +62,8 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
         {
             var taxiesListVM = this.taxiService.GetByAllProps(plate, driver, district, this.RoleManager)
                 .Take(TAXI_RESULTS_DEFAULT_COUNT)
-                .Select(TaxiItemVM.FromTaxiDataModel)
+                //.Select(TaxiVM.FromTaxiDataModel)
+                .Project().To<TaxiItemVM>()
                 .ToList();
             return PartialView("_TaxiesListPartialView", taxiesListVM);
         }
@@ -65,7 +72,8 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
         public ActionResult SearchDriver(string driverName, string district)
         {
             var driversListVM = this.taxiService.GetDriversByNameAndDistrict(driverName, district, this.RoleManager)
-                .Select(UserItemViewModel.FromApplicationUserModel)
+               .Project().To<UserItemViewModel>()
+                //.Select(UserItemViewModel.FromApplicationUserModel)
                 .ToList();
             //var roleItems = this.GetRolesSelectList();
             var roleItems = this.populator.GetRoles(this.RoleManager);
@@ -73,13 +81,14 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
             return PartialView("_UsersListPartialView", driversListVM);
         }
 
-        [HttpGet]
         // GET: Administration/Taxies/UserDetails/{string(guid)}
+        [HttpGet]
         public ActionResult UserDetails(string userId)
         {
             var accountInfoVM = this.Data.Users.All()
                .Where(u => u.Id == userId)
-               .Select(UserInfoVM.FromApplicationUserModel)
+               .Project().To<UserDetailsVM>()
+               //.Select(UserDetailsVM.FromApplicationUserModel)
                .FirstOrDefault();
 
             return PartialView("_UserInfoPartialView", accountInfoVM);
@@ -127,7 +136,6 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
                 .FirstOrDefault();
             if (taxi != null && taxi.Driver != null)
             {
-                
                 taxi.Driver = null;
                 this.Data.SaveChanges();
             }
@@ -141,18 +149,29 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
         // GET: Administration/Taxies/Create
         public ActionResult Create()
         {
+            var districts = this.populator.GetDistricts();
+            ViewBag.Districts = districts;
             return View();
         }
 
         // POST: Administration/Taxies/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(TaxiDetailsVM newTaxi)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (ModelState.IsValid)
+                {
+                    District district = this.Data.Districts.All().First(d => d.DistrictId == newTaxi.AssignDistrictId);
+                    Taxi taxi = TaxiDetailsVM.FromTaxiDetailsVM(newTaxi, district);
+                    taxi.Available = true;
+                    this.Data.Taxies.Add(taxi);
+                    this.Data.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
-                return RedirectToAction("Index");
+                return View("Create", newTaxi);
             }
             catch
             {
@@ -161,47 +180,89 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
         }
 
         // GET: Administration/Taxies/Edit/5
-        public ActionResult Edit(int id)
+        [HttpGet]
+        public ActionResult Edit(int taxiId)
         {
-            return View();
+            try
+            {
+                var taxiVM = this.Data.Taxies
+               .SearchFor(t => t.TaxiId == taxiId)
+               .Project().To<TaxiDetailsVM>()
+               //.Select(TaxiDetailsVM.FromTaxiDataModel)
+               .FirstOrDefault();
+                var districts = this.populator.GetDistricts();
+                ViewBag.Districts = districts;
+                return PartialView("Edit", taxiVM);
+            }
+            catch
+            {
+                return Content("Error occured!");
+            }
         }
 
         // POST: Administration/Taxies/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(TaxiDetailsVM taxiDetailsVM)
         {
             try
             {
-                // TODO: Add update logic here
+                if (ModelState.IsValid)
+                {
+                    District district = this.Data.Districts.All().First(d => d.DistrictId == taxiDetailsVM.AssignDistrictId);
+                    if (district == null)
+                    {
+                        TempData["Error"] = "District not found!";
+                        return PartialView("Edit", taxiDetailsVM);
+                    }
 
-                return RedirectToAction("Index");
+                    var taxi = this.Data.Taxies.Find(taxiDetailsVM.TaxiId);
+                    taxi.Plate = taxiDetailsVM.Plate;
+                    taxi.Seats = taxiDetailsVM.Seats;
+                    taxi.Luggage = taxiDetailsVM.Luggage;
+                    taxi.District = district;
+                    taxi.Available = taxiDetailsVM.Available;
+                    this.Data.Taxies.Update(taxi);
+                    this.Data.SaveChanges();
+
+                    return JavaScript("alert('Success')");
+                }
+
+                var districts = this.populator.GetDistricts();
+                ViewBag.Districts = districts;
+
+                return PartialView("Edit", taxiDetailsVM);
             }
             catch
             {
-                return View();
+                return Content("Error occured!");
             }
         }
 
         // GET: Administration/Taxies/Delete/5
+        [HttpGet]
         public ActionResult Delete(int id)
         {
-            return View();
-        }
-
-        // POST: Administration/Taxies/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
+            var taxi = this.Data.Taxies.Find(id);
+            if (taxi == null)
             {
-                // TODO: Add delete logic here
-
+                TempData["Error"] = "Taxi not found!";
                 return RedirectToAction("Index");
             }
-            catch
+
+            if (taxi.Available == false)
             {
-                return View();
+                TempData["Error"] = "Taxi is not available for decommissioning!!";
+                return RedirectToAction("Index");
             }
+
+            var plate = taxi.Plate;
+            this.Data.Taxies.Delete(taxi);
+            this.Data.SaveChanges();
+
+            TempData["Success"] = "Taxi " + plate + " has been decommisioned";
+            return RedirectToAction("Index");
         }
+
     }
 }

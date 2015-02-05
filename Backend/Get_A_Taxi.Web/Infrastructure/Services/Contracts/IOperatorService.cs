@@ -1,15 +1,15 @@
-﻿using Get_A_Taxi.Web.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Get_A_Taxi.Web.Infrastructure.Services.Contracts
+﻿namespace Get_A_Taxi.Web.Infrastructure.Services.Contracts
 {
+    using Get_A_Taxi.Models;
+    using System.Collections.Generic;
+using System.Linq;
+
     interface IOperatorService
     {
-        IList<OrderDetailsVM> GetOrderVMList(int count);
+        IQueryable<Order> OrdersByWaitingTime();
 
+        IQueryable<Order> OrdersByCompletionTime();
+
+        IQueryable<Order> OrdersByCompletionNearLocation(double lat, double lon);
     }
 }

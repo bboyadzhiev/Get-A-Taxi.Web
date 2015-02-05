@@ -1,13 +1,12 @@
-﻿using Get_A_Taxi.Data;
-using Get_A_Taxi.Web.Infrastructure.Services.Base;
-using Get_A_Taxi.Web.Infrastructure.Services.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Get_A_Taxi.Web.Infrastructure.Services
+﻿namespace Get_A_Taxi.Web.Infrastructure.Services
 {
+    using System.Linq;
+    
+    using Get_A_Taxi.Data;
+    using Get_A_Taxi.Models;
+    using Get_A_Taxi.Web.Infrastructure.Services.Base;
+    using Get_A_Taxi.Web.Infrastructure.Services.Contracts;
+
     public class OperatorService : BaseService, IOperatorService
     {
         public OperatorService(IGetATaxiData data)
@@ -15,9 +14,25 @@ namespace Get_A_Taxi.Web.Infrastructure.Services
         {
         }
 
-        public IList<ViewModels.OrderDetailsVM> GetOrderVMList(int count)
+        public IQueryable<Order> OrdersByWaitingTime()
         {
-            throw new NotImplementedException();
+            return this.Data.Orders.All()
+                 .Where(o => o.OrderStatus == OrderStatus.Waiting)
+                 .OrderByDescending(o => o.OrderedAt);
+        }
+
+        public IQueryable<Order> OrdersByCompletionTime()
+        {
+            return this.Data.Orders.All()
+                .Where(o => o.OrderStatus == OrderStatus.InProgress)
+                .OrderByDescending(o => o.ArrivalTime);
+        }
+
+        public IQueryable<Order> OrdersByCompletionNearLocation(double lat, double lon)
+        {
+            return this.Data.Orders.All()
+                .Where(o => o.OrderStatus == OrderStatus.InProgress)
+                .OrderBy(o => ((o.OrderLattitude-lat) + (o.OrderLongitude - lon)));
         }
     }
 }

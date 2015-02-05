@@ -43,6 +43,11 @@
             <p>&copy; @DateTime.Now.Year - Get-A-Taxi Application</p>
         </footer>
     </div>
+    @if (TempData["Success"] != null)
+    {
+        <script type="text/javascript">alert("@TempData["Success"]");</script>
+        TempData["Success"] = null;
+    }
     @if (TempData["Error"] != null)
     {
         <script type="text/javascript">alert("@TempData["Error"]");</script>

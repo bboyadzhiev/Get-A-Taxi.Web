@@ -40,6 +40,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
@@ -179,6 +185,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -194,10 +201,14 @@
     <Compile Include="Infrastructure\AuthorizeRolesAttribute.cs" />
     <Compile Include="Infrastructure\Caching\ICacheService.cs" />
     <Compile Include="Infrastructure\Caching\InMemoryCache.cs" />
+    <Compile Include="Infrastructure\Mapping\IHaveCustomMappings.cs" />
+    <Compile Include="Infrastructure\Mapping\IMapFrom.cs" />
     <Compile Include="Infrastructure\Populators\DropDownListPopulator.cs" />
     <Compile Include="Infrastructure\Populators\IDropDownListPopulator.cs" />
     <Compile Include="Infrastructure\Services\Contracts\ITaxiService.cs" />
     <Compile Include="Infrastructure\Services\TaxiService.cs" />
+    <Compile Include="ViewModels\OrderVM.cs" />
+    <Compile Include="ViewModels\TaxiVM.cs" />
     <Compile Include="ViewModels\UserItemViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\RolesAdministrationVM.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
@@ -252,7 +263,8 @@
     <Compile Include="ViewModels\OrderDetailsVM.cs" />
     <Compile Include="ViewModels\TaxiItemVM.cs" />
     <Compile Include="ViewModels\TaxiDetailsVM.cs" />
-    <Compile Include="ViewModels\UserInfoVM.cs" />
+    <Compile Include="ViewModels\UserDetailsVM.cs" />
+    <Compile Include="ViewModels\UserVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -291,13 +303,14 @@
     <Content Include="Areas\Administration\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Administration\Views\Roles\Roles.cshtml" />
     <Content Include="Views\Shared\_UsersListPartialView.cshtml" />
-    <Content Include="Areas\Administration\Views\Shared\_UserAccountPartialView - Copy.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\_RolesEditPartialView.cshtml" />
     <Content Include="Areas\Administration\Views\Employees.cshtml" />
     <Content Include="Areas\Administration\Views\Taxies\Taxies.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\_TaxiesListPartialView.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\_TaxiDetailsPartialView.cshtml" />
     <Content Include="Areas\Administration\Views\Taxies\Create.cshtml" />
+    <Content Include="Areas\Administration\Views\Taxies\Edit.cshtml" />
+    <Content Include="Areas\Administration\Views\Taxies\Edit - Copy.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -403,6 +416,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

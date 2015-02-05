@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace Get_A_Taxi.Web.Infrastructure.Services
 {
@@ -22,7 +24,8 @@ namespace Get_A_Taxi.Web.Infrastructure.Services
         {
             var taxies = this.Data.Taxies.All()
                 .Where(t => t.Plate.ToLower().Contains(plate.ToLower()))
-                .Select(TaxiDetailsVM.FromTaxiDataModel)
+                .Project().To<TaxiDetailsVM>()
+                //.Select(TaxiDetailsVM.FromTaxiDataModel)
                 .ToList();
             return taxies;
         }
@@ -31,7 +34,8 @@ namespace Get_A_Taxi.Web.Infrastructure.Services
         {
             var taxies = this.Data.Taxies.All()
                 .Where(t => t.TaxiStand.Alias.ToLower().Contains(taxiStandAlias.ToLower()))
-                .Select(TaxiDetailsVM.FromTaxiDataModel)
+                .Project().To<TaxiDetailsVM>()
+               // .Select(TaxiDetailsVM.FromTaxiDataModel)
                 .ToList();
             return taxies;
         }
@@ -84,7 +88,8 @@ namespace Get_A_Taxi.Web.Infrastructure.Services
                 .Where(t => t.Driver.Id != null)
                 .Select(d => d.Driver);
             var free = allDrivers.Except(busy)
-                .Select(UserItemViewModel.FromApplicationUserModel)
+                .Project().To<UserItemViewModel>()
+               // .Select(UserItemViewModel.FromApplicationUserModel)
                 .ToList();
 
             return free;

@@ -15,17 +15,12 @@
     <p>Search:</p><input type="text" name="query" oninput="changed()" />
 }
 
-
-
-
 <script>
     function changed() {
         $("#searchForm").submit();
         $("#user-details").empty();
     }
 </script>
-
-
 
 <div id="results">
     @Html.Partial("_UserAccountPartialView", Model.Accounts)

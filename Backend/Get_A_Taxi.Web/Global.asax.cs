@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Get_A_Taxi.Web.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,6 +16,8 @@ namespace Get_A_Taxi.Web
         {
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new RazorViewEngine());
+          
+            AutoMapperConfig.Execute();
 
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);

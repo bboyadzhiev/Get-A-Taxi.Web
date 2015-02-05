@@ -9,53 +9,8 @@ using System.Web;
 
 namespace Get_A_Taxi.Web.ViewModels
 {
-    public class TaxiItemVM
+    public class TaxiItemVM : TaxiVM
     {
-        [Key]
-        public int TaxiId { get; set; }
-
-        [Required]
-        [Display(Name="Plate")]
-        public string Plate { get; set; }
-
-        [Required]
-        public int DistrictId { get; set; }
-
-        [Display(Name = "Taxi's District")]
-        public string DistrictTitle { get; set; }
-
-        public string DriverId { get; set; }
-
-        [Display(Name = "Driver's Phone")]
-        public string DriverPhoneNumber { get; set; }
-
-        [Display(Name = "Driver Name")]
-        public string DriverName { get; set; }
-
-        [DefaultValue(true)]
-        [Display(Name = "Is available")]
-        public bool Available { get; set; }
-
-        public TaxiItemVM()
-        {
-            Available = true;
-        }
-
-        public static Expression<Func<Taxi, TaxiItemVM>> FromTaxiDataModel
-        {
-            get
-            {
-                return x => new TaxiItemVM
-                {
-                    TaxiId = x.TaxiId,
-                    Plate = x.Plate,
-                    DistrictTitle = x.District.Title,
-                    DriverId = x.Driver.Id,
-                    DriverName = x.Driver.FirstName + " " + x.Driver.LastName,
-                    DriverPhoneNumber = x.Driver.PhoneNumber,
-                    Available = x.Available
-                };
-            }
-        }
+        public UserVM Driver { get; set; }
     }
 }
