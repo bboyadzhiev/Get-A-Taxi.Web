@@ -1,0 +1,18 @@
+﻿@model ICollection<Get_A_Taxi.Web.ViewModels.UserItemViewModel>
+@{
+    ViewBag.Title = "Employees";
+}
+<h2>@ViewBag.Title</h2>
+<div id="userSearch">
+    @Html.Partial("_UserSearchPartialView", new Get_A_Taxi.Web.ViewModels.UserSearchVM())
+</div>
+
+<div id="results">
+    @Html.Partial("_UsersListPartialView", Model)
+</div>
+
+<section>
+    <div id="user-details">
+
+    </div>
+</section>

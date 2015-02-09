@@ -1,22 +1,17 @@
-﻿using Get_A_Taxi.Models;
-using Get_A_Taxi.Web.Areas.Administration.ViewModels;
-using Get_A_Taxi.Web.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Get_A_Taxi.Web.Infrastructure.Services.Contracts
+﻿namespace Get_A_Taxi.Web.Infrastructure.Services
 {
+    using Get_A_Taxi.Models;
+    using System.Linq;
+
     public interface IAccountService
     {
-        ICollection<UserItemViewModel> GetAccounts();
-        ICollection<UserItemViewModel> GetAccountsByRole(UserRoles role, ApplicationRoleManager roleManager);
-        ICollection<UserItemViewModel> GetAccountsByTextSearch(string textToSerach);
-
-        ICollection<UserItemViewModel> GetAccountByDistrict(string districtText);
-        ICollection<UserItemViewModel> GetAccountsByRoleAndDistrict(int districtId, UserRoles role, ApplicationRoleManager roleManager);
-        ICollection<UserItemViewModel> GetAccountsByRoleAndDistrict(string districtText, string roleTextSearch, ApplicationRoleManager roleManager);
+        IQueryable<ApplicationUser> AllUsers();
+        IQueryable<ApplicationUser> GetEmployees(IQueryable<ApplicationUser> users);
+        IQueryable<ApplicationUser> WithDistrictLike(IQueryable<ApplicationUser> users, string districtName);
+        IQueryable<ApplicationUser> WithFirstNameLike(IQueryable<ApplicationUser> users, string nameString);
+        IQueryable<ApplicationUser> WithFullNameContaining(IQueryable<ApplicationUser> users, string nameString);
+        IQueryable<ApplicationUser> WithLastNameLike(IQueryable<ApplicationUser> users, string nameString);
+        IQueryable<ApplicationUser> WithMiddletNameLike(IQueryable<ApplicationUser> users, string nameString);
+        IQueryable<ApplicationUser> WithRole(IQueryable<ApplicationUser> users, string roleId);
     }
 }

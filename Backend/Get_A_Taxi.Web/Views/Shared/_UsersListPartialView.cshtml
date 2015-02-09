@@ -2,20 +2,23 @@
 @{
     List<SelectListItem> userRoles = (List<SelectListItem>)ViewBag.UserRoles;
 }
-<table class="table">
-    <tr>
-        <th>&nbsp;</th>
-        <th>@Html.LabelFor(m=>m.First().RoleIds)</th>
-        <th>@Html.LabelFor(m => m.First().FullName)</th>
-        <th>@Html.LabelFor(m => m.First().District)</th>
-        <th>@Html.LabelFor(m => m.First().PhoneNumber)</th>
-        <th>@Html.LabelFor(m => m.First().Email)</th>
-    </tr>
-    @foreach (var user in Model)
-    {
+@if (Model.Any())
+{
+    <table class="table table-striped">
         <tr>
-            <td>
-                @Ajax.ActionLink("Details", "UserDetails", new { userId = user.Id },
+            <th>&nbsp;</th>
+            <th>@Html.LabelFor(m => m.First().Roles)</th>
+            <th>@Html.LabelFor(m => m.First().FullName)</th>
+            <th>@Html.LabelFor(m => m.First().District)</th>
+            <th>@Html.LabelFor(m => m.First().PhoneNumber)</th>
+            <th>@Html.LabelFor(m => m.First().Email)</th>
+        </tr>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Employees", new { area = "", id = user.Id }, null) |
+                    @Ajax.ActionLink("Details", "Details", new { id = user.Id },
         new AjaxOptions
             {
                 InsertionMode = InsertionMode.Replace,
@@ -23,29 +26,34 @@
                 OnBegin = "cleanUserDetails()",
                 OnComplete = "userDetailsLoaded()"
             })
-            </td>
-            <td>
-                @{
+                </td>
+                <td>
+                    @{
 
-        foreach (var roleid in user.RoleIds)
-        {
-            var roleLabelText = userRoles.Find(m => m.Value == roleid);
-            @roleLabelText.Text<br />
+            foreach (var roleid in user.Roles)
+            {
+                var roleLabelText = userRoles.Find(m => m.Value == roleid);
+                @roleLabelText.Text<br />
+            }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(model => user.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => user.District)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => user.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => user.Email)
+                </td>
+            </tr>
         }
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(model => user.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(model => user.District)
-            </td>
-            <td>
-                @Html.DisplayFor(model => user.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(model => user.Email)
-            </td>
-        </tr>
-    }
-</table>
+    </table>
+} 
+else 
+{
+    <p>No users found!</p>
+}

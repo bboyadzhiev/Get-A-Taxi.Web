@@ -13,9 +13,9 @@ using System.Web.Mvc;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 
-namespace Get_A_Taxi.Web.Areas.Administration.Controllers
+namespace Get_A_Taxi.Web.Areas.Management.Controllers
 {
-    [AuthorizeRoles(UserRoles = UserRoles.Administrator)]// | UserRoles.Manager)]
+    [AuthorizeRoles(UserRole = UserRoles.Administrator)]
     public class TaxiesController : BaseController
     {
         private ITaxiService taxiService;
@@ -29,7 +29,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
         }
 
         // Based on current user's District
-        // GET: Administration/Taxies
+        // GET: Management/Taxies
         public ActionResult Index()
         {
             // var taxies = this.Data.Taxies.All().Select(TaxiViewModel.FromTaxiDataModel).ToList
@@ -43,16 +43,15 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
             return View("Taxies", taxiesListVM);
         }
 
-        // GET: Administration/Taxies/Details/5
+        // GET: Management/Taxies/Details/5
         [HttpGet]
         public ActionResult Details(int taxiId)
         {
-            var taxiVM = this.Data.Taxies
-               // .SearchFor(t => t.TaxiId == taxiId)
-               .All().Where(t=>t.TaxiId == taxiId)
-                .Project().To<TaxiDetailsVM>()
-                //.Select(TaxiDetailsVM.FromTaxiDataModel)
-                .FirstOrDefault();
+            //var taxiVM = this.Data.Taxies
+            //   .All().Where(t => t.TaxiId == taxiId)
+            //    .Select(TaxiDetailsVM.FromTaxiDataModel)
+            //    .FirstOrDefault();
+            var taxiVM = this.Data.Taxies.All().Where(t => t.TaxiId == taxiId).AsQueryable().Project().To<TaxiDetailsVM>().FirstOrDefault();
             return PartialView("_TaxiDetailsPartialView", taxiVM);
         }
 
@@ -81,14 +80,14 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
             return PartialView("_UsersListPartialView", driversListVM);
         }
 
-        // GET: Administration/Taxies/UserDetails/{string(guid)}
+        // GET: Management/Taxies/UserDetails/{string(guid)}
         [HttpGet]
         public ActionResult UserDetails(string userId)
         {
             var accountInfoVM = this.Data.Users.All()
                .Where(u => u.Id == userId)
                .Project().To<UserDetailsVM>()
-               //.Select(UserDetailsVM.FromApplicationUserModel)
+                //.Select(UserDetailsVM.FromApplicationUserModel)
                .FirstOrDefault();
 
             return PartialView("_UserInfoPartialView", accountInfoVM);
@@ -146,7 +145,8 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Administration/Taxies/Create
+        // GET: Management/Taxies/Create
+        [HttpGet]
         public ActionResult Create()
         {
             var districts = this.populator.GetDistricts();
@@ -154,7 +154,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
             return View();
         }
 
-        // POST: Administration/Taxies/Create
+        // POST: Management/Taxies/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(TaxiDetailsVM newTaxi)
@@ -179,7 +179,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
             }
         }
 
-        // GET: Administration/Taxies/Edit/5
+        // GET: Management/Taxies/Edit/5
         [HttpGet]
         public ActionResult Edit(int taxiId)
         {
@@ -188,7 +188,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
                 var taxiVM = this.Data.Taxies
                .SearchFor(t => t.TaxiId == taxiId)
                .Project().To<TaxiDetailsVM>()
-               //.Select(TaxiDetailsVM.FromTaxiDataModel)
+                    //.Select(TaxiDetailsVM.FromTaxiDataModel)
                .FirstOrDefault();
                 var districts = this.populator.GetDistricts();
                 ViewBag.Districts = districts;
@@ -200,7 +200,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
             }
         }
 
-        // POST: Administration/Taxies/Edit/5
+        // POST: Management/Taxies/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(TaxiDetailsVM taxiDetailsVM)
@@ -239,7 +239,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
             }
         }
 
-        // GET: Administration/Taxies/Delete/5
+        // GET: Management/Taxies/Delete/5
         [HttpGet]
         public ActionResult Delete(int id)
         {

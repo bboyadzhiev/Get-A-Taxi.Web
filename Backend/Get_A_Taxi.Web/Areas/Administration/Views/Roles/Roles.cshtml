@@ -4,16 +4,9 @@
 }
 <h2>@ViewBag.Title</h2>
 
-@using (Ajax.BeginForm("Search", null, new AjaxOptions
-{
-    UpdateTargetId = "results",
-    InsertionMode = InsertionMode.Replace,
-    HttpMethod = "POST",
-    OnComplete = "hideLoader()"
-}, new { id = "searchForm" }))
-{
-    <p>Search:</p><input type="text" name="query" oninput="changed()" />
-}
+<div id="userSearch">
+    @Html.Partial("_UserSearchPartialView", new Get_A_Taxi.Web.ViewModels.UserSearchVM())
+</div>
 
 <div id="results">
     @Html.Partial("_UsersListPartialView", Model.Accounts)
@@ -24,65 +17,4 @@
 
     </div>
 </section>
-
-<script>
-    function changed() {
-        $("#searchForm").submit();
-        cleanUserDetails();
-        $("#results").empty().addClass("loader");
-    }
-
-    function hideLoader() {
-        $("#user-details").removeClass("loader");
-        $("#results").removeClass("loader");
-    }
-
-    function getUserDetails() {
-        cleanUserDetails();
-        $("#user-details").addClass("loader");
-    }
-
-    function cleanUserDetails() {
-        $("#user-details").empty();
-    }
-    function userDetailsLoaded() {
-        hideLoader();
-    }
-
-</script>
-
-
-
-@using (Html.BeginForm("Update", "Roles", FormMethod.Post, new { @class = "form", enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-    <br />
-   //  @Html.LabelFor(m => m.SelectedRoleId)
-   //  @Html.DropDownListFor(m => m.SelectedRoleId, Model.UserRoles)
-}
-    @*@foreach (var user in Model.Accounts)
-        {
-            <tr>
-                <td>
-                    @Html.CheckBoxFor(model => user.Marked)
-                </td>
-                <td>
-                    @{
-            var roleLabelText = Model.UserRoles.Find(m => m.Value == user.RoleId);
-             @roleLabelText.Text;
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(model => user.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => user.PhoneNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => user.Email)
-                </td>
-            </tr>
-        }*@
-
-
 

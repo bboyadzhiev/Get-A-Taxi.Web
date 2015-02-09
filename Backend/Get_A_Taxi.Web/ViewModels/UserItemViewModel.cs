@@ -13,12 +13,12 @@ using System.Web.Security;
 
 namespace Get_A_Taxi.Web.ViewModels
 {
-    public class UserItemViewModel : UserVM, IHaveCustomMappings
+    public class UserItemViewModel : UserVM, IMapFrom<ApplicationUser>, IHaveCustomMappings
     {
 
         [Required]
         [Display(Name = "Roles")]
-        public List<string> RoleIds { get; set; }
+        public List<string> Roles { get; set; }
 
         //public static Expression<Func<ApplicationUser, UserItemViewModel>> FromApplicationUserModel
         //{ 
@@ -38,11 +38,12 @@ namespace Get_A_Taxi.Web.ViewModels
         //        };
         //    }
         //}
-        public new void CreateMappings(IConfiguration configuration)
+        public override void CreateMappings(IConfiguration configuration)
         {
-            base.CreateMappings(configuration);
             configuration.CreateMap<ApplicationUser, UserItemViewModel>()
-                .ForMember(m=>m.RoleIds, opt=>opt.MapFrom (t=> t.Roles.Where(r=>r.UserId == t.Id).Select(r=>r.RoleId).ToList()));
+                .ForMember(m => m.FullName, opt => opt.MapFrom(t => t.FirstName + " " + t.MiddleName + " " + t.LastName))
+                .ForMember(m => m.District, opt => opt.MapFrom(t => t.District.Title))
+              .ForMember(m => m.Roles, opt => opt.MapFrom(t => t.Roles.Where(r => r.UserId == t.Id).Select(r => r.RoleId).ToList()));
         }
         
     }

@@ -194,10 +194,17 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
+    <Compile Include="Areas\Administration\Controllers\DistrictsController.cs" />
     <Compile Include="Areas\Administration\Controllers\RolesController.cs" />
-    <Compile Include="Areas\Administration\Controllers\TaxiesController.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
+    <Compile Include="Infrastructure\Services\Contracts\IAccountService.cs" />
+    <Compile Include="ViewModels\DistrictVM.cs" />
+    <Compile Include="Areas\Management\Controllers\TaxiesController.cs" />
+    <Compile Include="Areas\Administration\Controllers\MainController.cs" />
     <Compile Include="Areas\Administration\ViewModels\RolesEditVM.cs" />
-    <Compile Include="Areas\Administration\ViewModels\EmployeesManagementVM.cs" />
+    <Compile Include="Areas\Management\ViewModels\EmployeesManagementVM.cs" />
+    <Compile Include="Areas\Management\Controllers\MainController.cs" />
+    <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
     <Compile Include="Infrastructure\AuthorizeRolesAttribute.cs" />
     <Compile Include="Infrastructure\Caching\ICacheService.cs" />
     <Compile Include="Infrastructure\Caching\InMemoryCache.cs" />
@@ -239,7 +246,6 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Areas\Administration\Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -250,7 +256,6 @@
     </Compile>
     <Compile Include="Infrastructure\Services\Base\BaseServices.cs" />
     <Compile Include="Infrastructure\Services\Contracts\IOperatorService.cs" />
-    <Compile Include="Infrastructure\Services\Contracts\IAccountService.cs" />
     <Compile Include="Infrastructure\Services\OperatorService.cs" />
     <Compile Include="Infrastructure\Services\OrdersListService.cs" />
     <Compile Include="Infrastructure\Services\Contracts\IOrdersListService.cs" />
@@ -264,6 +269,7 @@
     <Compile Include="ViewModels\TaxiItemVM.cs" />
     <Compile Include="ViewModels\TaxiDetailsVM.cs" />
     <Compile Include="ViewModels\UserDetailsVM.cs" />
+    <Compile Include="ViewModels\UserSearchVM.cs" />
     <Compile Include="ViewModels\UserVM.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -272,7 +278,27 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\addtaxi.png" />
+    <Content Include="Content\Images\addemployee.png" />
+    <Content Include="Content\Images\Badges\edit.png" />
+    <Content Include="Content\Images\Badges\plus.png" />
+    <Content Include="Content\Images\Icons\admin.png" />
+    <Content Include="Content\Images\Icons\districts.png" />
+    <Content Include="Content\Images\Icons\driver.png" />
+    <Content Include="Content\Images\Icons\employee.png" />
+    <Content Include="Content\Images\Icons\manager.png" />
+    <Content Include="Content\Images\Icons\managetaxidrivers.png" />
+    <Content Include="Content\Images\Icons\operatorfemale.png" />
+    <Content Include="Content\Images\Icons\operatormale.png" />
+    <Content Include="Content\Images\Icons\roles.png" />
+    <Content Include="Content\Images\Icons\taxi.png" />
+    <Content Include="Content\Images\Icons\taxistand.png" />
+    <Content Include="Content\Images\Icons\user.png" />
+    <Content Include="Content\Images\managedistricts.png" />
+    <Content Include="Content\Images\managetaxies.png" />
     <Content Include="Content\Images\person.png" />
+    <Content Include="Content\Images\roles.png" />
+    <Content Include="Content\Images\taxistand.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -302,15 +328,26 @@
     <Content Include="Areas\Administration\Views\web.config" />
     <Content Include="Areas\Administration\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Administration\Views\Roles\Roles.cshtml" />
+    <Content Include="Scripts\getataxi.js" />
+    <Content Include="Scripts\gmaps.js" />
     <Content Include="Views\Shared\_UsersListPartialView.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\_RolesEditPartialView.cshtml" />
-    <Content Include="Areas\Administration\Views\Employees.cshtml" />
-    <Content Include="Areas\Administration\Views\Taxies\Taxies.cshtml" />
-    <Content Include="Areas\Administration\Views\Shared\_TaxiesListPartialView.cshtml" />
-    <Content Include="Areas\Administration\Views\Shared\_TaxiDetailsPartialView.cshtml" />
-    <Content Include="Areas\Administration\Views\Taxies\Create.cshtml" />
-    <Content Include="Areas\Administration\Views\Taxies\Edit.cshtml" />
-    <Content Include="Areas\Administration\Views\Taxies\Edit - Copy.cshtml" />
+    <Content Include="Areas\Management\Views\Taxies\Taxies.cshtml" />
+    <Content Include="Areas\Management\Views\Shared\_TaxiesListPartialView.cshtml" />
+    <Content Include="Areas\Management\Views\Shared\_TaxiDetailsPartialView.cshtml" />
+    <Content Include="Areas\Management\Views\Taxies\Create.cshtml" />
+    <Content Include="Areas\Management\Views\Taxies\Edit.cshtml" />
+    <Content Include="Areas\Management\Views\Taxies\Edit - Copy.cshtml" />
+    <Content Include="Areas\Management\Views\web.config" />
+    <Content Include="Areas\Administration\Views\Main\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\Districts\Create.cshtml" />
+    <Content Include="Areas\Administration\Views\Districts\Delete.cshtml" />
+    <Content Include="Areas\Administration\Views\Districts\Details.cshtml" />
+    <Content Include="Areas\Administration\Views\Districts\Edit.cshtml" />
+    <Content Include="Areas\Administration\Views\Districts\Index.cshtml" />
+    <Content Include="Areas\Management\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Management\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Administration\Views\Main\ManageEmployees.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -364,11 +401,20 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_UserInfoPartialView.cshtml" />
+    <Content Include="Views\Shared\_AdminPartial.cshtml" />
+    <Content Include="Views\Shared\_ManagerPartial.cshtml" />
+    <Content Include="Areas\Management\Views\Main\Index.cshtml" />
+    <Content Include="Views\Employees\Create.cshtml" />
+    <Content Include="Views\Employees\Delete.cshtml" />
+    <Content Include="Views\Employees\Details.cshtml" />
+    <Content Include="Views\Employees\Edit.cshtml" />
+    <Content Include="Views\Employees\Index.cshtml" />
+    <Content Include="Views\Employees\Index - Copy.cshtml" />
+    <Content Include="Views\Shared\_UserSearchPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Administration\Views\Cars\" />
-    <Folder Include="Areas\Administration\Views\Drivers\" />
+    <Folder Include="Areas\Management\Models\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

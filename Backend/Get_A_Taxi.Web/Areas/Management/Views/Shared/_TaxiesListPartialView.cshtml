@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Get_A_Taxi.Web.ViewModels.TaxiItemVM>
+@if (Model.Any())
+{
+    <table class="table table-striped">
+        <tr>
+            <th>Select</th>
+            <th>@Html.LabelFor(m => m.First().Plate)</th>
+            <th>@Html.LabelFor(m => m.First().Available)</th>
+            <th>@Html.LabelFor(m => m.First().DistrictTitle)</th>
+            <th>@Html.LabelFor(m => m.First().Driver.FullName)</th>
+            <th>@Html.LabelFor(m => m.First().Driver.PhoneNumber)</th>
+        </tr>
+        @foreach (var taxi in Model)
+        {
+            <tr>
+                <td>
+                    @Ajax.ActionLink("Details", "Details", new { taxiId = taxi.TaxiId },
+        new AjaxOptions
+            {
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "taxi-details",
+                OnBegin = "cleanTaxiDetails()",
+                OnComplete = "hideLoader()"
+            })
+                    |
+                    @Ajax.ActionLink("Edit", "Edit", new { taxiId = taxi.TaxiId },
+        new AjaxOptions
+            {
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "taxi-details",
+                OnBegin = "cleanTaxiDetails()",
+                OnComplete = "hideLoader()"
+            })
+
+                </td>
+                <td>
+                    @Html.DisplayFor(model => taxi.Plate)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => taxi.Available)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => taxi.DistrictTitle)
+                </td>
+                @if (taxi.Driver == null)
+                {
+                    <td>-</td>
+                    <td>-</td>
+                }
+                else
+                {
+                    <td>
+                        @Html.DisplayFor(model => taxi.Driver.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => taxi.Driver.PhoneNumber)
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No taxies found!</p>
+}
+
+

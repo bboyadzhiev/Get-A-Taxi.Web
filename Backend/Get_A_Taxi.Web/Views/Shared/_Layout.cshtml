@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Get_A_Taxi.Models
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -26,8 +27,12 @@
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, null)</li>
+                    <li class="nav-divider"></li>
                     <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                    <li class="nav-divider"></li>
                 </ul>
+                @Html.Partial("_ManagerPartial")
+                @Html.Partial("_AdminPartial")
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -54,6 +59,7 @@
         TempData["Error"] = null;
     }
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/getataxi")
     @RenderSection("scripts", required: false)
 </body>
 </html>

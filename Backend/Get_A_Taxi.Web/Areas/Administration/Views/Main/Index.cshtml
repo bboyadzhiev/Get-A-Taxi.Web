@@ -1,0 +1,35 @@
+﻿<h2>Admin Panel</h2>
+
+<div class="container-liquid" style="margin:0px; padding: 0px">
+    <div class="row">
+        <a href="@Url.Action("Index", "Districts", new { area = "Administration"})">
+            <div class="col-xs-12 col-sm-6 col-md-6 text-center ">
+                <h5>Manage Districts</h5>
+                <div class="buttonicon">
+                    <img src="~/Content/Images/Icons/districts.png" />
+                    <img src="~/Content/Images/Badges/edit.png" class="buttoniconbadge" />
+                </div>
+            </div>
+        </a>
+        <a href="@Url.Action("Index", "Stands", new { area = "Administration"})">
+            <div class="col-xs-12 col-sm-6 col-md-6 text-center ">
+                <h5>Manage Taxi Stands</h5>
+                <div class="buttonicon">
+                    <img src="~/Content/Images/Icons/taxistand.png" />
+                    <img src="~/Content/Images/Badges/edit.png" class="buttoniconbadge" />
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="row">
+        <a href="@Url.Action("Employees", "Main", new { area = "Administration"})">
+            <div class="col-xs-12 col-sm-6 col-md-6 text-center">
+                <h5>Manage Employees</h5>
+                <div class="buttonicon">
+                    <img src="~/Content/Images/Icons/employee.png" />
+                    <img src="~/Content/Images/Badges/edit.png" class="buttoniconbadge" />
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

@@ -10,13 +10,13 @@ namespace Get_A_Taxi.Web.Infrastructure
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class AuthorizeRolesAttribute : AuthorizeAttribute
     {
-        public UserRoles UserRoles { get; set; }
+        public UserRoles UserRole { get; set; }
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            if (UserRoles != 0)
+            if (UserRole != 0)
             {
-                Roles = UserRoles.ToString();
+                Roles = UserRole.ToString();
             }
 
             base.OnAuthorization(filterContext);

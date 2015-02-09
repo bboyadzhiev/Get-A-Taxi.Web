@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Get_A_Taxi.Web.ViewModels.DistrictVM>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CenterLattitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CenterLongitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MapZoom)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CenterLattitude)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CenterLongitude)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MapZoom)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.DistrictId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.DistrictId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.DistrictId })
+        </td>
+    </tr>
+}
+
+</table>

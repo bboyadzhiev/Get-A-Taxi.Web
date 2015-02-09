@@ -1,0 +1,8 @@
+﻿@using Microsoft.AspNet.Identity
+@using Get_A_Taxi.Models
+@if (Request.IsAuthenticated && User.IsInRole(UserRoles.Manager.ToString()))
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Manager", "Index", "Manager", routeValues: null, htmlAttributes: new { id = "adminLink" })</li>
+    </ul>
+}

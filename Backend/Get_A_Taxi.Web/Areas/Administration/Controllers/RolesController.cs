@@ -1,18 +1,21 @@
 ﻿using Get_A_Taxi.Data;
 using Get_A_Taxi.Models;
+using Get_A_Taxi.Web.Areas.Administration.ViewModels;
 using Get_A_Taxi.Web.Controllers;
+using Get_A_Taxi.Web.Infrastructure;
+using Get_A_Taxi.Web.Infrastructure.Populators;
+using Get_A_Taxi.Web.Infrastructure.Services;
 using Get_A_Taxi.Web.Infrastructure.Services.Contracts;
+using Get_A_Taxi.Web.ViewModels;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.AspNet.Identity;
-using Get_A_Taxi.Web.Areas.Administration.ViewModels;
-using Get_A_Taxi.Web.Infrastructure;
-using Get_A_Taxi.Web.Infrastructure.Populators; 
+using AutoMapper.QueryableExtensions;
 
 namespace Get_A_Taxi.Web.Areas.Administration.Controllers
 {
@@ -26,7 +29,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
             return new SelectList(values, "Id", "Name", enumObj);
         }
     }
-    [AuthorizeRoles(UserRoles = UserRoles.Administrator)]
+    [AuthorizeRoles(UserRole = UserRoles.Administrator)]
     public class RolesController : BaseController
     {
 
@@ -42,32 +45,69 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
 
             var rolesViewModel = new RolesAdministrationVM();
 
-            rolesViewModel.Accounts = this.services.GetAccounts();
+            rolesViewModel.Accounts = this.services.AllUsers().Project().To<UserItemViewModel>()
+                .ToList();
 
             var roleItems = this.populator.GetRoles(this.RoleManager);
            // var roleItems = this.GetRolesSelectList();
             //rolesViewModel.UserRoles = roleItems;
             ViewBag.UserRoles = roleItems;
+            ViewBag.DistrictsList = this.populator.GetDistricts();
             return View("Roles",rolesViewModel);
         }
 
-        
 
+        //public ActionResult Search(string query)
+        //{
+        //    var accountsVM = this.services.GetAccountsByTextSearch(query);
+        //    //var roleItems = this.GetRolesSelectList();
+        //    var roleItems = this.populator.GetRoles(this.RoleManager);
+        //    ViewBag.UserRoles = roleItems;
+        //    return this.PartialView("_UsersListPartialView", accountsVM);
+        //}
 
-        public ActionResult Search(string query)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Search([Bind(Include = "FirstName,MiddleName,LastName,DistritId,SelectedRoleIds")] UserSearchVM userSearchVM)
         {
-            var accountsVM = this.services.GetAccountsByTextSearch(query);
-            //var roleItems = this.GetRolesSelectList();
+            var result = this.services.AllUsers();
+
+            if (ModelState.IsValid)
+            {
+
+                if (userSearchVM.FirstName != null)
+                {
+                    result = this.services.WithFirstNameLike(result, userSearchVM.FirstName);
+                }
+                if (userSearchVM.MiddleName != null)
+                {
+                    result = this.services.WithMiddletNameLike(result, userSearchVM.MiddleName);
+                }
+                if (userSearchVM.LastName != null)
+                {
+                    result = this.services.WithLastNameLike(result, userSearchVM.LastName);
+                }
+                if (userSearchVM.SelectedRoleIds != null)
+                {
+                    foreach (var role in userSearchVM.SelectedRoleIds)
+                    {
+                        result = this.services.WithRole(result, role);
+                    }
+                }
+            }
+
+            var accountsVM = result.Project().To<UserItemViewModel>()
+                .ToList();
             var roleItems = this.populator.GetRoles(this.RoleManager);
             ViewBag.UserRoles = roleItems;
             return this.PartialView("_UsersListPartialView", accountsVM);
         }
 
         [HttpGet]
-        // GET: Administration/Roles/UserDetails/{string}
-        public ActionResult UserDetails(string userId)
+        // GET: Administration/Roles/Details/{string}
+        public ActionResult Details(string id)
         {
-            var user = this.Data.Users.All().First(u => u.Id == userId);
+            var user = this.Data.Users.All().First(u => u.Id == id);
             List<string> userRoles = user.Roles.AsQueryable().Select(r => r.RoleId).ToList();
             var roleItems = this.populator.GetRoles(this.RoleManager);
 
@@ -77,7 +117,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
             }
 
             var accountVM = this.Data.Users.All()
-                .Where(u => u.Id == userId)
+                .Where(u => u.Id == id)
                 .Select(RolesEditVM.FromApplicationUserModel)
                 .FirstOrDefault();
 
@@ -111,7 +151,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
         //}
 
         [HttpPost]
-        [Authorize(Roles="Administrator")]
+        [AuthorizeRoles(UserRole = UserRoles.Administrator)]
         [ValidateAntiForgeryToken]
         public ActionResult Update(string[] selectedRoles, Guid userId)
         {

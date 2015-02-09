@@ -7,5 +7,7 @@
     {
         IEnumerable<SelectListItem> GetDistricts();
         IEnumerable<SelectListItem> GetRoles(ApplicationRoleManager manager);
+
+        IEnumerable<SelectListItem> GetRolesForManagement(ApplicationRoleManager manager);
     }
 }

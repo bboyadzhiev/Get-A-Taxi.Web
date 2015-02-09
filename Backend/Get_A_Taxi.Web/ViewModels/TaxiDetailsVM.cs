@@ -46,6 +46,7 @@ namespace Get_A_Taxi.Web.ViewModels
                     {
                         Id = x.Driver.Id,
                         District = x.Driver.District.Title,
+                        DistritId = x.Driver == null ? 0 : x.Driver.District.DistrictId, // !!!!!!!!!!!!
                         Email = x.Driver.Email,
                         FullName = x.Driver.FirstName + " " + x.Driver.LastName,
                         PhoneNumber = x.Driver.PhoneNumber,
@@ -70,6 +71,7 @@ namespace Get_A_Taxi.Web.ViewModels
         //            {
         //                Id = x.Driver.Id,
         //                District = x.Driver.District.Title,
+        //                DistritId = x.Driver == null ? 0 : x.Driver.District.DistrictId, // !!!!!!!!!!!!
         //                Email = x.Driver.Email,
         //                FullName = x.Driver.FirstName + " " + x.Driver.LastName,
         //                PhoneNumber = x.Driver.PhoneNumber,

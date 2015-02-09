@@ -12,18 +12,18 @@ namespace Get_A_Taxi.Models
 {
     public enum UserRoles
     {
-        Administrator = 0,
-        Manager = 1,
-        Operator = 2,
-        Driver = 3,
-       // Client = 4 - registered user with no role is a client
+        Administrator = 1,
+        Manager = 2,
+        Operator = 4,
+        Driver = 8,
+       // Client = 16 - registered user with no role is a client
     }
     public class ApplicationUser : IdentityUser
     {
         
         public ApplicationUser()
         {
-            this.orders = new HashSet<Order>();
+            this.Orders = new HashSet<Order>();
             this.Favorites = new HashSet<Location>();
         }
 
