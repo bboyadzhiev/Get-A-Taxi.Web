@@ -18,14 +18,18 @@ namespace Get_A_Taxi.Web.ViewModels
 
         [Required]
         [StringLength(50)]
+        [DisplayName("District Title")]
         public string Title { get; set; }
 
         [Required]
+        [DisplayName("Lattitude")]
         public double CenterLattitude { get; set; }
         [Required]
+        [DisplayName("Longitude")]
         public double CenterLongitude { get; set; }
 
         [DefaultValue(10)]
+        [DisplayName("Zoom")]
         public float MapZoom { get; set; }
     }
 }

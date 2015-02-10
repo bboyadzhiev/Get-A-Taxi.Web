@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Get_A_Taxi.Web.ViewModels.UserItemViewModel>
+﻿@using Get_A_Taxi.Models
+@model IEnumerable<Get_A_Taxi.Web.ViewModels.UserItemViewModel>
 @{
     List<SelectListItem> userRoles = (List<SelectListItem>)ViewBag.UserRoles;
 }
@@ -17,7 +18,12 @@
         {
             <tr>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", "Employees", new { area = "", id = user.Id }, null) |
+                    @if (User.IsInRole(UserRoles.Manager.ToString()))
+                    {
+                        @Html.ActionLink("Edit", "Edit", "Employees", new { area = "", id = user.Id }, null) 
+                        @:|
+                    }
+                    
                     @Ajax.ActionLink("Details", "Details", new { id = user.Id },
         new AjaxOptions
             {
@@ -52,8 +58,8 @@
             </tr>
         }
     </table>
-} 
-else 
+}
+else
 {
     <p>No users found!</p>
 }

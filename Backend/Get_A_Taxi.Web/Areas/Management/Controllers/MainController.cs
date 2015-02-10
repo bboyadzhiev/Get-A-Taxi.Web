@@ -13,5 +13,9 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
         {
             return View();
         }
+        public ActionResult Employees()
+        {
+            return View("ManageEmployees");
+        }
     }
 }

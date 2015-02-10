@@ -1,36 +1,39 @@
-﻿<h2>Admin Panel</h2>
+﻿@using Get_A_Taxi.Models
+    <h2>Admin Panel</h2>
 
-<div class="container-liquid" style="margin:0px; padding: 0px">
-    <div class="row">
-        <a href="@Url.Action("Index", "Employees", new { area = ""})">
-            <div class="col-xs-12 col-sm-6 col-md-6 text-center">
-                <h5>Search Employee</h5>
-                <div class="buttonicon">
-                    <img src="~/Content/Images/Icons/employee.png" />
-                    <img src="~/Content/Images/Badges/edit.png" class="buttoniconbadge" />
+    <div class="container-liquid" style="margin:0px; padding: 0px">
+        <div class="row">
+            <a href="@Url.Action("Index", "Roles", new { area = "Administration"})">
+                <div class="col-xs-12 col-sm-6 col-md-6 text-center">
+                    <h5>Manage Employees' Roles</h5>
+                    <div class="buttonicon">
+                        <img src="~/Content/Images/Icons/roles.png" />
+                        <img src="~/Content/Images/Badges/edit.png" class="buttoniconbadge" />
+                    </div>
                 </div>
-            </div>
-        </a>
-        <a href="@Url.Action("Index", "Roles", new { area = "Administration"})">
-            <div class="col-xs-12 col-sm-6 col-md-6 text-center">
-                <h5>Manage Employees' Roles</h5>
-                <div class="buttonicon">
-                    <img src="~/Content/Images/Icons/roles.png" />
-                    <img src="~/Content/Images/Badges/edit.png" class="buttoniconbadge" />
+            </a>
+        </div>
+        <div class="row">
+            <a href="@Url.Action("Index", "Employees", new { area = ""})">
+                <div class="col-xs-12 col-sm-6 col-md-6 text-center">
+                    <h5>Search Employee</h5>
+                    <div class="buttonicon">
+                        <img src="~/Content/Images/Icons/employee.png" />
+                        <img src="~/Content/Images/Badges/search.png" class="buttoniconbadge" />
+                    </div>
                 </div>
-            </div>
-        </a>
+            </a>
+            @if (User.IsInRole(UserRoles.Manager.ToString()))
+            {
+                <a href="@Url.Action("Create", "Employees", new { area = "" })">
+                    <div class="col-xs-12 col-sm-6 col-md-6 text-center">
+                        <h5>Add Employee</h5>
+                        <div class="buttonicon">
+                            <img src="~/Content/Images/Icons/employee.png" />
+                            <img src="~/Content/Images/Badges/plus.png" class="buttoniconbadge" />
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
     </div>
-
-    <div class="row">
-        <a href="@Url.Action("Create", "Employees", new { area = "" })">
-            <div class="col-xs-12 col-sm-6 col-md-6 text-center">
-                <h5>Add Employee</h5>
-                <div class="buttonicon">
-                    <img src="~/Content/Images/Icons/employee.png" />
-                    <img src="~/Content/Images/Badges/plus.png" class="buttoniconbadge" />
-                </div>
-            </div>
-        </a>
-    </div>
-</div>

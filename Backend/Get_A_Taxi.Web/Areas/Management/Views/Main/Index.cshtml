@@ -2,27 +2,30 @@
 
 <div class="container-liquid" style="margin:0px; padding: 0px">
     <div class="row">
-        <a href="@Url.Action("Index", "Taxies", new { area = "Administration"})">
+        <a href="@Url.Action("Index", "Taxies", new { area = "Management"})">
             <div class="col-xs-12 col-sm-6 col-md-6 text-center">
                 <h5>Manage Taxies</h5>
                 <img src="~/Content/Images/managetaxies.png" />
             </div>
         </a>
-        <a href="@Url.Action("Create", "Taxies", new { area = "Administration" })">
+        <a href="@Url.Action("Employees", "Main", new { area = "Management" })">
+            <div class="col-xs-12 col-sm-6 col-md-6 text-center">
+                <h5>Manage Employees</h5>
+                <div class="buttonicon">
+                    <img src="~/Content/Images/Icons/employee.png" />
+                    <img src="~/Content/Images/Badges/edit.png" class="buttoniconbadge" />
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="row">
+        <a href="@Url.Action("Create", "Taxies", new { area = "Management" })">
             <div class="col-xs-12 col-sm-6 col-md-6 text-center">
                 <h5>Add Taxi</h5>
                 <img src="~/Content/Images/managetaxies.png" />
             </div>
         </a>
-    </div>
-    <div class="row">
-        <a href="@Url.Action("Index", "Employees", new { area = "Administration"})">
-            <div class="col-xs-12 col-sm-6 col-md-6 text-center">
-                <h5>Manage Employees</h5>
-                <img src="~/Content/Images/managetaxies.png" />
-            </div>
-        </a>
-        <a href="@Url.Action("Create", "Employees", new { area = "Administration" })">
+        <a href="@Url.Action("Create", "Employees", new { area = "Management" })">
             <div class="col-xs-12 col-sm-6 col-md-6 text-center">
                 <h5>Add Employee</h5>
                 <img src="~/Content/Images/addemployee.png" />

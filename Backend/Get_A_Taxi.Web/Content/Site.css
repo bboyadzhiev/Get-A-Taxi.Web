@@ -24,32 +24,57 @@ textarea {
 }
 
 .loader {
-  width: 50px;
-  height: 50px;
-  margin: 0 auto;
-  border: 3px solid #7e57c2;
-  border-radius: 50%;
-  border-left-color: transparent;
-  border-right-color: transparent;
-  animation: spin 500ms infinite linear;
-  -webkit-animation: spin 500ms infinite linear;
-  display: block;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+    border: 3px solid #7e57c2;
+    border-radius: 50%;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    animation: spin 500ms infinite linear;
+    -webkit-animation: spin 500ms infinite linear;
+    display: block;
 }
+
 @keyframes spin {
-  100%{ transform: rotate(360deg); }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 @-webkit-keyframes spin {
-  100%{ transform: rotate(360deg); }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
-.buttonicon{
-     position:relative;
-}
-
-.buttoniconbadge{
+.buttonicon {
     position: relative;
-    
+}
+
+.buttoniconbadge {
+    position: relative;
     right: 15px;
     top: 10px;
+}
+
+#map {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    top: 40px; /*must match the height of #header*/
+    width: 100%;
+    overflow: auto;
+    background-color: #333;
+    color: #666;
+}
+
+#createDistrictPanel {
+    z-index: 5;
+        background-color: #7e57c2;
+        padding: 5px;
+        border: 1px solid #999;
+    width: 400px;
+    color: #f00;
+
 }

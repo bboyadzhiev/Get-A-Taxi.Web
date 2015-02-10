@@ -1,0 +1,26 @@
+﻿<h2>Manager Panel</h2>
+
+<div class="container-liquid" style="margin:0px; padding: 0px">
+    <div class="row">
+        <a href="@Url.Action("Index", "Employees", new { area = ""})">
+            <div class="col-xs-12 col-sm-6 col-md-6 text-center">
+                <h5>Search Employee</h5>
+                <div class="buttonicon">
+                    <img src="~/Content/Images/Icons/employee.png" />
+                    <img src="~/Content/Images/Badges/search.png" class="buttoniconbadge" />
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="row">
+        <a href="@Url.Action("Create", "Employees", new { area = "" })">
+            <div class="col-xs-12 col-sm-6 col-md-6 text-center">
+                <h5>Add Employee</h5>
+                <div class="buttonicon">
+                    <img src="~/Content/Images/Icons/employee.png" />
+                    <img src="~/Content/Images/Badges/plus.png" class="buttoniconbadge" />
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

@@ -202,7 +202,6 @@
     <Compile Include="Areas\Management\Controllers\TaxiesController.cs" />
     <Compile Include="Areas\Administration\Controllers\MainController.cs" />
     <Compile Include="Areas\Administration\ViewModels\RolesEditVM.cs" />
-    <Compile Include="Areas\Management\ViewModels\EmployeesManagementVM.cs" />
     <Compile Include="Areas\Management\Controllers\MainController.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
     <Compile Include="Infrastructure\AuthorizeRolesAttribute.cs" />
@@ -282,6 +281,7 @@
     <Content Include="Content\Images\addemployee.png" />
     <Content Include="Content\Images\Badges\edit.png" />
     <Content Include="Content\Images\Badges\plus.png" />
+    <Content Include="Content\Images\Badges\search.png" />
     <Content Include="Content\Images\Icons\admin.png" />
     <Content Include="Content\Images\Icons\districts.png" />
     <Content Include="Content\Images\Icons\driver.png" />
@@ -346,8 +346,8 @@
     <Content Include="Areas\Administration\Views\Districts\Edit.cshtml" />
     <Content Include="Areas\Administration\Views\Districts\Index.cshtml" />
     <Content Include="Areas\Management\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Management\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Administration\Views\Main\ManageEmployees.cshtml" />
+    <Content Include="Areas\Management\Views\Main\ManageEmployees.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -415,6 +415,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Management\Models\" />
+    <Folder Include="Areas\Management\ViewModels\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
