@@ -50,6 +50,8 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
         // GET: Administration/Districts/Create
         public ActionResult Create()
         {
+            ViewBag.Lat = this.UserProfile.District.CenterLattitude;
+            ViewBag.Lon = this.UserProfile.District.CenterLongitude;
             return View();
         }
 
@@ -83,6 +85,9 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.Lat = districtVM.CenterLattitude;
+            ViewBag.Lon = districtVM.CenterLongitude;
             return View(districtVM);
         }
 

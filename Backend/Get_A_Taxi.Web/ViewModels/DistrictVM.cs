@@ -23,13 +23,18 @@ namespace Get_A_Taxi.Web.ViewModels
 
         [Required]
         [DisplayName("Lattitude")]
-        public double CenterLattitude { get; set; }
+        [DisplayFormat(DataFormatString = "{0:0.000000000}", ApplyFormatInEditMode = true)]
+        public decimal CenterLattitude { get; set; }
         [Required]
         [DisplayName("Longitude")]
-        public double CenterLongitude { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:0.000000000}", ApplyFormatInEditMode = true)]
+        public decimal CenterLongitude { get; set; }
 
         [DefaultValue(10)]
         [DisplayName("Zoom")]
         public float MapZoom { get; set; }
+
+
     }
 }

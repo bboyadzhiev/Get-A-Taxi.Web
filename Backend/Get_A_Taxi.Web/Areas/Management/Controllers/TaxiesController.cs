@@ -15,16 +15,18 @@ using AutoMapper.QueryableExtensions;
 
 namespace Get_A_Taxi.Web.Areas.Management.Controllers
 {
-    [AuthorizeRoles(UserRole = UserRoles.Administrator)]
+    [AuthorizeRoles(UserRole = UserRoles.Administrator, SecondRole=UserRoles.Manager)]
     public class TaxiesController : BaseController
     {
         private ITaxiService taxiService;
+        private IAccountService accountService;
         private const int TAXI_RESULTS_DEFAULT_COUNT = 10;
 
-        public TaxiesController(IGetATaxiData data, ITaxiService taxiService, IDropDownListPopulator populator)
+        public TaxiesController(IGetATaxiData data, ITaxiService taxiService, IAccountService accountService, IDropDownListPopulator populator)
             : base(data, populator)
         {
             this.taxiService = taxiService;
+            this.accountService = accountService;
 
         }
 
@@ -47,10 +49,16 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
         [HttpGet]
         public ActionResult Details(int taxiId)
         {
-            //var taxiVM = this.Data.Taxies
-            //   .All().Where(t => t.TaxiId == taxiId)
-            //    .Select(TaxiDetailsVM.FromTaxiDataModel)
-            //    .FirstOrDefault();
+            var driverRole = this.RoleManager.FindByNameAsync(UserRoles.Driver.ToString()).Result;
+            var driversOnly = new List<SelectListItem>(){
+               new SelectListItem(){
+                   Text = "Drivers only",
+                   Value = driverRole.Id,
+                   Selected = true
+               }
+            };
+            ViewBag.DistrictsList = this.populator.GetDistricts();
+            ViewBag.UserRoles = driversOnly;
             var taxiVM = this.Data.Taxies.All().Where(t => t.TaxiId == taxiId).AsQueryable().Project().To<TaxiDetailsVM>().FirstOrDefault();
             return PartialView("_TaxiDetailsPartialView", taxiVM);
         }
@@ -67,29 +75,70 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
             return PartialView("_TaxiesListPartialView", taxiesListVM);
         }
 
+        //[HttpPost]
+        //public ActionResult SearchDriver(string driverName, string district)
+        //{
+        //    var driversListVM = this.taxiService.GetDriversByNameAndDistrict(driverName, district, this.RoleManager)
+        //       .Project().To<UserItemViewModel>()
+        //        //.Select(UserItemViewModel.FromApplicationUserModel)
+        //        .ToList();
+        //    //var roleItems = this.GetRolesSelectList();
+        //    var roleItems = this.populator.GetRoles(this.RoleManager);
+        //    ViewBag.UserRoles = roleItems;
+        //    return PartialView("_DriversListPartialView", driversListVM);
+        //}
+
         [HttpPost]
-        public ActionResult SearchDriver(string driverName, string district)
+        [ValidateAntiForgeryToken]
+        public ActionResult Search([Bind(Include = "FirstName,MiddleName,LastName,DistritId")] UserSearchVM userSearchVM)
         {
-            var driversListVM = this.taxiService.GetDriversByNameAndDistrict(driverName, district, this.RoleManager)
-               .Project().To<UserItemViewModel>()
-                //.Select(UserItemViewModel.FromApplicationUserModel)
+            var result = this.accountService.AllUsers();
+
+            var driverRole = this.RoleManager.FindByNameAsync(UserRoles.Driver.ToString()).Result;
+            result = this.accountService.WithRole(result, driverRole.Id.ToString());
+            if (ModelState.IsValid)
+            {
+                if (userSearchVM.DistritId != null)
+                {
+                    var district = this.Data.Districts.SearchFor(d => d.DistrictId == userSearchVM.DistritId).FirstOrDefault();
+                    result = this.accountService.WithDistrictLike(result, district.Title);
+                }
+                if (userSearchVM.FirstName != null)
+                {
+                    result = this.accountService.WithFirstNameLike(result, userSearchVM.FirstName);
+                }
+                if (userSearchVM.MiddleName != null)
+                {
+                    result = this.accountService.WithMiddletNameLike(result, userSearchVM.MiddleName);
+                }
+                if (userSearchVM.LastName != null)
+                {
+                    result = this.accountService.WithLastNameLike(result, userSearchVM.LastName);
+                }
+            }
+
+            var accountsVM = result
+                .Project().To<UserItemViewModel>()
                 .ToList();
-            //var roleItems = this.GetRolesSelectList();
-            var roleItems = this.populator.GetRoles(this.RoleManager);
-            ViewBag.UserRoles = roleItems;
-            return PartialView("_UsersListPartialView", driversListVM);
+            ViewBag.UserRoles = this.populator.GetRoles(this.RoleManager);
+            // ViewBag.DistrictsList = this.populator.GetDistricts();
+
+            return this.PartialView("_DriversListPartialView", accountsVM);
         }
 
         // GET: Management/Taxies/UserDetails/{string(guid)}
         [HttpGet]
-        public ActionResult UserDetails(string userId)
+        public ActionResult DriverDetails(string driverId)
         {
-            var accountInfoVM = this.Data.Users.All()
-               .Where(u => u.Id == userId)
-               .Project().To<UserDetailsVM>()
-                //.Select(UserDetailsVM.FromApplicationUserModel)
-               .FirstOrDefault();
+            var result = this.accountService.AllUsers();
+            var driverRole = this.RoleManager.FindByNameAsync(UserRoles.Driver.ToString()).Result;
+            result = this.accountService.WithRole(result, driverRole.Id.ToString());
 
+            if (result.FirstOrDefault(u => u.Id == driverId) == null)
+            {
+                return HttpNotFound();
+            }
+            var accountInfoVM = result.Project().To<UserDetailsVM>().FirstOrDefault();
             return PartialView("_UserInfoPartialView", accountInfoVM);
         }
 

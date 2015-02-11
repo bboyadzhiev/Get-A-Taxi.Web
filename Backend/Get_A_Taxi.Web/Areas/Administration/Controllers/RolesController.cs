@@ -42,16 +42,12 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
         // GET: Administration/Roles
         public ActionResult Index()
         {
-
             var rolesViewModel = new RolesAdministrationVM();
 
             rolesViewModel.Accounts = this.services.AllUsers().Project().To<UserItemViewModel>()
                 .ToList();
 
-            var roleItems = this.populator.GetRoles(this.RoleManager);
-           // var roleItems = this.GetRolesSelectList();
-            //rolesViewModel.UserRoles = roleItems;
-            ViewBag.UserRoles = roleItems;
+            ViewBag.UserRoles = this.populator.GetRoles(this.RoleManager);
             ViewBag.DistrictsList = this.populator.GetDistricts();
             return View("Roles",rolesViewModel);
         }
@@ -71,10 +67,8 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
         public ActionResult Search([Bind(Include = "FirstName,MiddleName,LastName,DistritId,SelectedRoleIds")] UserSearchVM userSearchVM)
         {
             var result = this.services.AllUsers();
-
             if (ModelState.IsValid)
             {
-
                 if (userSearchVM.FirstName != null)
                 {
                     result = this.services.WithFirstNameLike(result, userSearchVM.FirstName);
@@ -93,6 +87,11 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
                     {
                         result = this.services.WithRole(result, role);
                     }
+                }
+                if (userSearchVM.DistritId != null)
+                {
+                    var district = this.Data.Districts.SearchFor(d => d.DistrictId == userSearchVM.DistritId).FirstOrDefault();
+                    result = this.services.WithDistrictLike(result, district.Title);
                 }
             }
 

@@ -1,4 +1,4 @@
-﻿namespace Get_A_Taxi.Web.Infrastructure.Services
+﻿namespace Get_A_Taxi.Web.Infrastructure.Services.Contracts
 {
     using Get_A_Taxi.Models;
     using System.Linq;

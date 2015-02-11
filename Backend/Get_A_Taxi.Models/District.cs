@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Get_A_Taxi.Models
+﻿namespace Get_A_Taxi.Models
 {
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     [Table("Districts")]
     public class District
     {
@@ -20,9 +16,9 @@ namespace Get_A_Taxi.Models
         public string Title { get; set; }
 
         [Required]
-        public double CenterLattitude { get; set; }
+        public decimal CenterLattitude { get; set; }
         [Required]
-        public double CenterLongitude { get; set; }
+        public decimal CenterLongitude { get; set; }
 
         [DefaultValue(10)]
         public float MapZoom { get; set; }
@@ -48,5 +44,7 @@ namespace Get_A_Taxi.Models
             this.TaxiStands = new HashSet<TaxiStand>();
             this.Taxies = new HashSet<Taxi>();
         }
+
+       
     }
 }

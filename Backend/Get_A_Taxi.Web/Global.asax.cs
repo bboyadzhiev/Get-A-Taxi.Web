@@ -1,4 +1,5 @@
 ﻿using Get_A_Taxi.Web.App_Start;
+using Get_A_Taxi.Web.Infrastructure.ModelBinders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,9 @@ namespace Get_A_Taxi.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            ModelBinders.Binders.Add(typeof(decimal), new DecimalModelBinder());
+            ModelBinders.Binders.Add(typeof(double), new DoubleModelBinder());
         }
     }
 }

@@ -197,6 +197,8 @@
     <Compile Include="Areas\Administration\Controllers\DistrictsController.cs" />
     <Compile Include="Areas\Administration\Controllers\RolesController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
+    <Compile Include="Infrastructure\ModelBinders\DecimalModelBinder.cs" />
+    <Compile Include="Infrastructure\ModelBinders\DoubleModelBinder.cs" />
     <Compile Include="Infrastructure\Services\Contracts\IAccountService.cs" />
     <Compile Include="ViewModels\DistrictVM.cs" />
     <Compile Include="Areas\Management\Controllers\TaxiesController.cs" />
@@ -330,6 +332,8 @@
     <Content Include="Areas\Administration\Views\Roles\Roles.cshtml" />
     <Content Include="Scripts\getataxi.js" />
     <Content Include="Scripts\gmaps.js" />
+    <Content Include="Scripts\gmaps.map.js" />
+    <Content Include="Scripts\gmaps.operator.js" />
     <Content Include="Views\Shared\_UsersListPartialView.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\_RolesEditPartialView.cshtml" />
     <Content Include="Areas\Management\Views\Taxies\Taxies.cshtml" />
@@ -348,6 +352,9 @@
     <Content Include="Areas\Management\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Administration\Views\Main\ManageEmployees.cshtml" />
     <Content Include="Areas\Management\Views\Main\ManageEmployees.cshtml" />
+    <Content Include="Scripts\getataxi.maptests.js" />
+    <Content Include="Areas\Administration\Views\Districts\Create - Copy.cshtml" />
+    <Content Include="Areas\Management\Views\Shared\_DriversListPartialView.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

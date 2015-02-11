@@ -20,11 +20,11 @@
                 <td>
                     @if (User.IsInRole(UserRoles.Manager.ToString()))
                     {
-                        @Html.ActionLink("Edit", "Edit", "Employees", new { area = "", id = user.Id }, null) 
+                        @Html.ActionLink("Edit", "Edit", "Employees", new { area = "", id = user.Id }, null)
                         @:|
                     }
-                    
-                    @Ajax.ActionLink("Details", "Details","Employees", new { id = user.Id },
+
+                    @Ajax.ActionLink("Details", "DriverDetails", new { driverId = user.Id },
         new AjaxOptions
             {
                 InsertionMode = InsertionMode.Replace,
@@ -61,5 +61,5 @@
 }
 else
 {
-    <p>No users found!</p>
+    <p>Driver not found!</p>
 }

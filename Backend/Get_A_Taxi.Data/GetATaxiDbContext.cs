@@ -44,5 +44,12 @@
         {
             return base.SaveChanges();
         }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<District>().Property(x => x.CenterLattitude).HasPrecision(12, 9);
+            modelBuilder.Entity<District>().Property(x => x.CenterLongitude).HasPrecision(12, 9);
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

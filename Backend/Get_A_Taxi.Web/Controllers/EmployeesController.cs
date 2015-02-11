@@ -232,10 +232,8 @@ namespace Get_A_Taxi.Web.Controllers
         public ActionResult Search([Bind(Include = "FirstName,MiddleName,LastName,DistritId,SelectedRoleIds")] UserSearchVM userSearchVM)
         {
             var result = this.services.AllUsers();
-
             if (ModelState.IsValid)
             {
-
                 if (userSearchVM.FirstName != null)
                 {
                     result = this.services.WithFirstNameLike(result, userSearchVM.FirstName);
@@ -254,6 +252,11 @@ namespace Get_A_Taxi.Web.Controllers
                     {
                         result = this.services.WithRole(result, role);
                     }
+                }
+                if (userSearchVM.DistritId != null)
+                {
+                    var district = this.Data.Districts.SearchFor(d=>d.DistrictId == userSearchVM.DistritId).FirstOrDefault();
+                    result = this.services.WithDistrictLike(result, district.Title);
                 }
             }
 

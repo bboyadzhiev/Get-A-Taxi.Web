@@ -28,7 +28,7 @@
     {
         <p>No driver assigned!</p>
         @*<input id="Search for driver" type="button" value="button" onclick="showDriverSearch()" />*@
-        using (Ajax.BeginForm("SearchDriver", null, new AjaxOptions
+        @*using (Ajax.BeginForm("SearchDriver", null, new AjaxOptions
         {
             UpdateTargetId = "driversResults",
             InsertionMode = InsertionMode.Replace,
@@ -42,7 +42,9 @@
             <input id="driverNameTB" type="text" name="driverName" oninput="searchDrivers()" title="Driver Name" />
             <label for="driverDistrictTB">District</label>
             <input id="driverDistrictTB" type="text" name="district" oninput="searchDrivers()" title="District" />
-        }
+        }*@
+        
+        @Html.Partial("_UserSearchPartialView", new Get_A_Taxi.Web.ViewModels.UserSearchVM())
 
         using (Html.BeginForm("AssignDriver", "Taxies", FormMethod.Post, new { @class = "form", enctype = "multipart/form-data" }))
         {

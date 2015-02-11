@@ -32,28 +32,21 @@
             
     </div>
 </section>
+<div id="results">
 
+</div>
 <div id="driversResults">
 
 </div>
 
-
-
 <script>
     function searchTaxies() {
+        console.log("hide");
         $("#taxiSearchForm").submit();
         $("#taxi-details").empty();
         $("#driversResults").empty();
         $("#user-details").empty();
         $("#taxiesResults").empty().addClass("loader");
-    }
-
-    function hideLoader() {
-        $("#taxiesResults").removeClass("loader");
-        $("#taxi-details").removeClass("loader");
-        $("#driversResults").removeClass("loader");
-        $("#user-details").removeClass("loader");
-        $("#assign-driver").hide();
     }
 
     function cleanTaxiDetails() {

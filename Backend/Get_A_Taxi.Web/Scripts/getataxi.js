@@ -6,8 +6,7 @@
     }
 
     function hideLoader() {
-        $("#user-details").removeClass("loader");
-        $("#results").removeClass("loader");
+        $(".loader").removeClass("loader");
     }
 
     function getUserDetails() {
