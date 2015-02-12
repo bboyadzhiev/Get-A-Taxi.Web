@@ -24,7 +24,7 @@ namespace Get_A_Taxi.Models
         [Required]
         public virtual ApplicationUser Customer { get; set; }
 
-       public virtual ApplicationUser Driver { get; set; }
+        public virtual ApplicationUser Driver { get; set; }
 
         public virtual Taxi AssignedTaxi { get; set; }
 
@@ -32,14 +32,14 @@ namespace Get_A_Taxi.Models
         public double OrderLattitude { get; set; }
         [Required]
         public double OrderLongitude { get; set; }
-         [StringLength(50)]
+        [StringLength(50)]
         public string OrderAddress { get; set; }
 
         [Required]
         public double DestinationLattitude { get; set; }
         [Required]
         public double DestinationLongitude { get; set; }
-         [StringLength(50)]
+        [StringLength(50)]
         public string DestinationAddress { get; set; }
 
         public OrderStatus OrderStatus { get; set; }

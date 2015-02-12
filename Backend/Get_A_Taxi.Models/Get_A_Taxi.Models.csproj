@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="District.cs" />
     <Compile Include="Location.cs" />
+    <Compile Include="OperatorOrder.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Photo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

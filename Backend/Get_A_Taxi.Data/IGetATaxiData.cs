@@ -15,6 +15,7 @@
         IRepository<Photo> Photos { get; }
         IRepository<District> Districts { get; }
         IRepository<Location> Locations { get; }
+        IRepository<OperatorOrder> OperatorsOrders { get; }
         int SaveChanges();
     }
 }

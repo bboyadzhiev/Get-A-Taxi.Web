@@ -98,7 +98,7 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
             result = this.accountService.WithRole(result, driverRole.Id.ToString());
             if (ModelState.IsValid)
             {
-                if (userSearchVM.DistritId != null)
+                if (userSearchVM.DistritId != 0)
                 {
                     var district = this.Data.Districts.SearchFor(d => d.DistrictId == userSearchVM.DistritId).FirstOrDefault();
                     result = this.accountService.WithDistrictLike(result, district.Title);

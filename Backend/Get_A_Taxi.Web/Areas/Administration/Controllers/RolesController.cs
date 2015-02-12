@@ -88,7 +88,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
                         result = this.services.WithRole(result, role);
                     }
                 }
-                if (userSearchVM.DistritId != null)
+                if (userSearchVM.DistritId != 0)
                 {
                     var district = this.Data.Districts.SearchFor(d => d.DistrictId == userSearchVM.DistritId).FirstOrDefault();
                     result = this.services.WithDistrictLike(result, district.Title);

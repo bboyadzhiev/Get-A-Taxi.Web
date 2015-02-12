@@ -35,6 +35,8 @@
 
         public IDbSet<Location> Locations { get; set; }
 
+        public IDbSet<OperatorOrder> OperatorsOrders { get; set; }
+
         public new IDbSet<T> Set<T>() where T : class
         {
             return base.Set<T>();

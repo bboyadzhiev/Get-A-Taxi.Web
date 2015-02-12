@@ -46,7 +46,17 @@
     <Reference Include="AutoMapper.Net4">
       <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
@@ -126,9 +136,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.Formatting">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -196,6 +203,7 @@
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Areas\Administration\Controllers\DistrictsController.cs" />
     <Compile Include="Areas\Administration\Controllers\RolesController.cs" />
+    <Compile Include="Areas\Operator\OperatorAreaRegistration.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Infrastructure\ModelBinders\DecimalModelBinder.cs" />
     <Compile Include="Infrastructure\ModelBinders\DoubleModelBinder.cs" />
@@ -334,6 +342,12 @@
     <Content Include="Scripts\gmaps.js" />
     <Content Include="Scripts\gmaps.map.js" />
     <Content Include="Scripts\gmaps.operator.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.0.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
+    <Content Include="Scripts\knockout-2.0.0.debug.js" />
+    <Content Include="Scripts\knockout-2.0.0.js" />
+    <Content Include="Scripts\knockout.mapping-latest.debug.js" />
+    <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Views\Shared\_UsersListPartialView.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\_RolesEditPartialView.cshtml" />
     <Content Include="Areas\Management\Views\Taxies\Taxies.cshtml" />
@@ -355,6 +369,7 @@
     <Content Include="Scripts\getataxi.maptests.js" />
     <Content Include="Areas\Administration\Views\Districts\Create - Copy.cshtml" />
     <Content Include="Areas\Management\Views\Shared\_DriversListPartialView.cshtml" />
+    <Content Include="Areas\Operator\Views\web.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -423,6 +438,10 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Management\Models\" />
     <Folder Include="Areas\Management\ViewModels\" />
+    <Folder Include="Areas\Operator\Controllers\" />
+    <Folder Include="Areas\Operator\Models\" />
+    <Folder Include="Areas\Operator\ViewModels\" />
+    <Folder Include="Areas\Operator\Views\Shared\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

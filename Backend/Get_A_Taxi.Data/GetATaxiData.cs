@@ -88,6 +88,14 @@ namespace Get_A_Taxi.Data
             }
         }
 
+        public IRepository<OperatorOrder> OperatorsOrders
+        {
+            get
+            {
+                return this.GetRepository<OperatorOrder>();
+            }
+        }
+
         public int SaveChanges()
         {
             return this.context.SaveChanges();
