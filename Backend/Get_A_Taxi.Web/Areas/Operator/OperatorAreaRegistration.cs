@@ -17,7 +17,7 @@ namespace Get_A_Taxi.Web.Areas.Operator
             context.MapRoute(
                 "Operator_default",
                 "Operator/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { action = "Main", id = UrlParameter.Optional }
             );
         }
     }

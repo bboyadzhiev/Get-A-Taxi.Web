@@ -203,7 +203,9 @@
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Areas\Administration\Controllers\DistrictsController.cs" />
     <Compile Include="Areas\Administration\Controllers\RolesController.cs" />
+    <Compile Include="Areas\Operator\Controllers\MainController.cs" />
     <Compile Include="Areas\Operator\OperatorAreaRegistration.cs" />
+    <Compile Include="Areas\Operator\ViewModels\OrderInputVM.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Infrastructure\ModelBinders\DecimalModelBinder.cs" />
     <Compile Include="Infrastructure\ModelBinders\DoubleModelBinder.cs" />
@@ -338,7 +340,7 @@
     <Content Include="Areas\Administration\Views\web.config" />
     <Content Include="Areas\Administration\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Administration\Views\Roles\Roles.cshtml" />
-    <Content Include="Scripts\getataxi.js" />
+    <Content Include="Scripts\getataxi.users.js" />
     <Content Include="Scripts\gmaps.js" />
     <Content Include="Scripts\gmaps.map.js" />
     <Content Include="Scripts\gmaps.operator.js" />
@@ -370,6 +372,10 @@
     <Content Include="Areas\Administration\Views\Districts\Create - Copy.cshtml" />
     <Content Include="Areas\Management\Views\Shared\_DriversListPartialView.cshtml" />
     <Content Include="Areas\Operator\Views\web.config" />
+    <Content Include="Areas\Operator\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Operator\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Operator\Views\Main\Index.cshtml" />
+    <Content Include="Areas\Operator\Views\Shared\_AddOrderPartialView.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -438,10 +444,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Management\Models\" />
     <Folder Include="Areas\Management\ViewModels\" />
-    <Folder Include="Areas\Operator\Controllers\" />
     <Folder Include="Areas\Operator\Models\" />
-    <Folder Include="Areas\Operator\ViewModels\" />
-    <Folder Include="Areas\Operator\Views\Shared\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

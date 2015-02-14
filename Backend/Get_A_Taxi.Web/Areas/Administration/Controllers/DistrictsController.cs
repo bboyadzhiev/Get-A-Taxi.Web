@@ -51,7 +51,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
         public ActionResult Create()
         {
             ViewBag.Lat = this.UserProfile.District.CenterLattitude;
-            ViewBag.Lon = this.UserProfile.District.CenterLongitude;
+            ViewBag.Lng = this.UserProfile.District.CenterLongitude;
             return View();
         }
 

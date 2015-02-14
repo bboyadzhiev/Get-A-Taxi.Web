@@ -1,0 +1,133 @@
+﻿@model Get_A_Taxi.Web.Areas.Operator.ViewModels.OrderInputVM
+
+    @*@using (Html.BeginForm("CreateOrder", "Main", FormMethod.Post, new { id= "newOrderForm"}))*@
+@using (Ajax.BeginForm("CreateOrder", null, new AjaxOptions
+{
+    UpdateTargetId = "addOrderPartial",
+    InsertionMode = InsertionMode.ReplaceWith,
+    HttpMethod = "POST",
+   OnBegin = "cleanPartial()"
+}, new { id = "newOrderForm" }))
+{
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.PhoneNumber)
+            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.OrderAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.OrderAddress, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.OrderAddress, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.DestinationAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DestinationAddress, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DestinationAddress, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserComment, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UserComment, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserComment, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @Html.HiddenFor(model => model.OrderLattitude)
+            @Html.HiddenFor(model => model.OrderLongitude)
+            @Html.HiddenFor(model => model.DestinationLattitude)
+            @Html.HiddenFor(model => model.DestinationLongitude)
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @*<input type="submit" value="Add Order" class="btn btn-default" />*@ 
+                    <input type="button" value="Add Order" class="btn btn-default" onclick="submitOrder()" />
+                </div>
+            </div>
+        </div>
+    }
+<script type="text/javascript">
+    /// <reference path="/Scripts/gmaps.js" />
+    function submitOrder() {
+        $('#newOrderForm').submit();
+    }
+
+    function cleanPartial() {
+        $('#phoneSearchBox').val("");
+        $('#addOrderPartial').empty();
+        alert('cleaned');
+    }
+
+    function mapClicked(e) {
+        console.log(e);
+        map.setCenter(e.latLng.lat(), e.latLng.lng());
+       // map.removeMarkers();
+
+    }
+
+    function updateOrderAddress(latlng, formattedAddress) {
+        $('#OrderLattitude').val(latlng.lat());
+        $('#OrderLongitude').val(latlng.lng());
+        $('#OrderAddress').val(formattedAddress);
+        addMarker(latlng, formattedAddress, function () {
+
+        });
+    }
+
+    function updateDestinationAddress(latlng, formattedAddress) {
+        $('#DestinationLattitude').val(latlng.lat());
+        $('#DestinationLongitude').val(latlng.lng());
+        $('#DestinationAddress').val(formattedAddress);
+        addMarker(latlng, formattedAddress, function () {
+
+        });
+    }
+
+    $("#OrderAddress").keyup(function (event) {
+        if (event.keyCode == 13) {
+            getCoordinates($('#OrderAddress').val().trim(), updateOrderAddress);
+        }
+    });
+
+    $("#DestinationAddress").keyup(function (event) {
+        if (event.keyCode == 13) {
+            getCoordinates($('#DestinationAddress').val().trim(), updateDestinationAddress);
+        }
+    });
+
+    $("#PhoneNumber").keyup(function (event) {
+        if (event.keyCode == 13) {
+
+        }
+    });
+
+    function zoomChanged(map) {
+    //    $('#MapZoom').val(map.zoom);
+    }
+
+</script>

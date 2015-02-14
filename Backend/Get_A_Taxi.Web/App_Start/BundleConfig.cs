@@ -25,7 +25,7 @@ namespace Get_A_Taxi.Web
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/getataxi").Include(
-                "~/Scripts/getataxi.js"));
+                "~/Scripts/getataxi.users.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/gmaps").Include(
               "~/Scripts/gmaps.js",

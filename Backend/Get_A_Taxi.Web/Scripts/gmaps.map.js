@@ -1,4 +1,5 @@
-﻿var markers = [];
+﻿/// <reference path="/Scripts/gmaps.js" />
+var markers = [];
 
 $(document).ready(function () {
     map = new GMaps({
@@ -6,38 +7,56 @@ $(document).ready(function () {
         lat: defaultLat,
         lng: defaultLon,
         zoom_changed: function (map) {
-            $('#MapZoom').val(map.getZoom());
+            zoomChanged(map);
         },
         click: function (e) {
             mapClicked(e);
         }
     });
 
-    $('#geocoding_form').submit(function (e) {
-        e.preventDefault();
-        GMaps.geocode({
-            address: $('#address').val().trim(),
-            callback: function (results, status) {
-                if (status == 'OK') {
-                    var latlng = results[0].geometry.location;
-                    map.setCenter(latlng.lat(), latlng.lng());
-                    geocodeComplete(latlng, map.getZoom());
-                }
-            }
-        });
-
-    });
-
-    $('#getAddress').click(function (e) {
-        GMaps.geocode({
-            lat: $('#CenterLattitude').val(),
-            lng: $('#CenterLongitude').val(),
-            callback: function (results, status) {
-                if (status == 'OK') {
-                    var address = results[0].formatted_address;
-                    geoDecodeComplete(address);
-                } 
-            }
-        });
-    });
 });
+
+function getAddress(latVal, lngVal, getAddressCallback) {
+    GMaps.geocode({
+        lat: latVal,
+        lng: lngVal,
+        callback: function (results, status) {
+            if (status == 'OK') {
+                var latlng = results[0].geometry.location;
+                var formattedAddress = results[0].formatted_address;
+                getAddressCallback(latlng, formattedAddress);
+            }
+        }
+    });
+}
+
+function getCoordinates(address, getCoordinatesCallback) {
+    GMaps.geocode({
+        address: address,
+        callback: function (results, status) {
+            if (status == 'OK') {
+                console.log(results[0]);
+                var latlng = results[0].geometry.location;
+                var formattedAddress = results[0].formatted_address;
+                map.setCenter(latlng.lat(), latlng.lng());
+                getCoordinatesCallback(latlng, formattedAddress);
+            } else {
+                alert("Address could not be found!");
+            }
+        }
+    });
+}
+
+function addMarker(latlng, content, clickCallback) {
+    var newMarker = map.addMarker({
+        lat: latlng.lat(),
+        lng: latlng.lng(),
+        infoWindow: {
+            content: '<p>' + content + '</p>'
+        },
+        click: function () {
+            clickCallback(latlng, content);
+        }
+    });
+    return newMarker;
+}

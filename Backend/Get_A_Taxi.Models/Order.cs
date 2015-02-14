@@ -35,9 +35,9 @@ namespace Get_A_Taxi.Models
         [StringLength(50)]
         public string OrderAddress { get; set; }
 
-        [Required]
+        //[Required]
         public double DestinationLattitude { get; set; }
-        [Required]
+       // [Required]
         public double DestinationLongitude { get; set; }
         [StringLength(50)]
         public string DestinationAddress { get; set; }

@@ -61,7 +61,7 @@
             <div class="col-md-offset-2 col-md-10">
                 <label for="address">Address:</label>
                 <div class="input">
-                    <input type="text" id="address" name="address" />
+                    <input type="text" id="address" name="address" on/>
                     <input type="submit" class="btn btn-default" value="Search" />
                 </div>
             </div>
@@ -77,42 +77,51 @@
 }
 <script>
     var lat = @ViewBag.Lat.ToString("0.000000000").Replace(",", ".");
-    var lon = @ViewBag.Lon.ToString("0.000000000").Replace(",", ".");
+    var lon = @ViewBag.Lng.ToString("0.000000000").Replace(",", ".");
     var defaultLat = parseFloat(lat)
     var defaultLon = parseFloat(lon);
 </script>
 <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 @Scripts.Render("~/bundles/gmaps")
 <script type="text/javascript">
-    function getZoom() {
+    /// <reference path="/Scripts/gmaps.js" />
+    function updateUI(latlng, formattedAddress) {
+        $('#CenterLattitude').val(latlng.lat());
+        $('#CenterLongitude').val(latlng.lng());
+        $('#address').val(formattedAddress);
+        $('#Title').val(formattedAddress);
+        markers.push( addMarker(latlng, formattedAddress, clb));
+    }
+
+    function clb( latlng, content) {
+        alert(content);
+    }
+
+    $('#geocoding_form').submit(function (e) {
+        e.preventDefault();
+        getCoordinates($('#address').val().trim(), updateUI);
+
+    });
+
+
+    function getInputAddress(latInput, lngInput, updateUI) {
+        getAddress($(latInput).val(), $(lngInput).val(), updateUI)
+    }
+
+    $('#getAddress').click(function (e) {
+        getInputAddress('#CenterLattitude', '#CenterLongitude', '#Title')
+  
+    });
+
+    function zoomChanged(map) {
         $('#MapZoom').val(map.zoom);
     }
 
     function mapClicked(e) {
         console.log(e);
+        map.removeMarkers();
         map.setCenter(e.latLng.lat(), e.latLng.lng());
-        map.removeMarkers();
-       
-        map.addMarker({
-            lat: e.latLng.lat(),
-            lng: e.latLng.lng()
-        });
-        geocodeComplete(e.latLng, getZoom());
+        getAddress(e.latLng.lat(),  e.latLng.lng(), updateUI);
     }
 
-    function geocodeComplete(latlng, mapZoom) {
-        map.removeMarkers();
-        map.addMarker({
-            lat: latlng.lat(),
-            lng: latlng.lng()
-        });
-        $('#CenterLattitude').val(latlng.lat());
-        $('#CenterLongitude').val(latlng.lng());
-        $('#MapZoom').val(mapZoom);
-        $('#Title').val($('#address').val());
-    }
-
-    function geoDecodeComplete(address) {
-        $('#Title').val(address);
-    }
 </script>

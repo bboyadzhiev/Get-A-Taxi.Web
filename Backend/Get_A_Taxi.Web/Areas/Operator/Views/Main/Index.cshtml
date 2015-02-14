@@ -1,0 +1,59 @@
+﻿@model Get_A_Taxi.Web.Areas.Operator.ViewModels.OrderInputVM     
+<div id="map"></div>
+<div class="mapHoverPanel" id="phoneOrderDiv">
+@using (Ajax.BeginForm("SearchUser", null, new AjaxOptions
+{
+  //  UpdateTargetId = "results",
+ //   InsertionMode = InsertionMode.Replace,
+    HttpMethod = "POST",
+    //OnComplete = "phoneSearchResult()"
+    OnSuccess = "phoneSearchResult"
+}, new { id = "phoneSearchForm" }))
+    {
+    @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", id="phoneSearchBox", oninput = "phoneChanged()" } })
+            </div>
+        </div>
+    @*<div class="form-group">
+        <label class="control-label col-md-2" for="phoneSearchBox"> Phone</label>
+        <input type="text" name="Phone" value=" " id="phoneSearchBox" class="form-control" oninput="phoneChanged()" />
+    </div>*@
+    }
+
+    <div id="addOrderPartial">
+        @Html.Partial("_AddOrderPartialView")
+    </div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    var lat = @ViewBag.Lat.ToString("0.000000000").Replace(",", ".");
+    var lon = @ViewBag.Lng.ToString("0.000000000").Replace(",", ".");
+    var defaultLat = parseFloat(lat)
+    var defaultLon = parseFloat(lon);
+</script>
+<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+@Scripts.Render("~/bundles/gmaps")
+<script>
+    function phoneChanged() {
+        if ($('#phoneSearchBox').val().length > 9) {
+            $('#phoneSearchForm').submit();
+            $('#PhoneNumber').val($('#phoneSearchBox').val());
+        }
+    }
+    
+    function phoneSearchResult(data, status, xhr) {
+        if (data != null) {
+            $('#OrderAddress').val(data.orderAddress);
+            $('#FirstName').val(data.firstName);
+            $('#LastName').val(data.lastName);
+        }
+    }
+
+
+</script>
