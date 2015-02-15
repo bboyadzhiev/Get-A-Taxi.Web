@@ -207,9 +207,13 @@
     <Compile Include="Areas\Operator\OperatorAreaRegistration.cs" />
     <Compile Include="Areas\Operator\ViewModels\OrderInputVM.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
+    <Compile Include="Hubs\OrdersHub.cs" />
     <Compile Include="Infrastructure\ModelBinders\DecimalModelBinder.cs" />
     <Compile Include="Infrastructure\ModelBinders\DoubleModelBinder.cs" />
     <Compile Include="Infrastructure\Services\Contracts\IAccountService.cs" />
+    <Compile Include="Infrastructure\Services\Hubs\IOrderBridge.cs" />
+    <Compile Include="Infrastructure\Services\Hubs\OrderServiceEventArgs.cs" />
+    <Compile Include="Infrastructure\Services\Hubs\OrderBridge.cs" />
     <Compile Include="ViewModels\DistrictVM.cs" />
     <Compile Include="Areas\Management\Controllers\TaxiesController.cs" />
     <Compile Include="Areas\Administration\Controllers\MainController.cs" />

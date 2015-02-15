@@ -65,17 +65,7 @@ namespace Get_A_Taxi.Web.Controllers
             }
             return View(userDetailsVM);
         }
-        public string CreatePassword(int length)
-        {
-            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-            StringBuilder res = new StringBuilder();
-            Random rnd = new Random();
-            while (0 < length--)
-            {
-                res.Append(valid[rnd.Next(valid.Length)]);
-            }
-            return res.ToString();
-        }
+       
 
         // GET: Employees/Create
         public ActionResult Create()
@@ -102,7 +92,7 @@ namespace Get_A_Taxi.Web.Controllers
                 Mapper.Map<UserDetailsVM, ApplicationUser>(userDetailsVM, employee);
                 employee.Id = id;
 
-                var password = CreatePassword(15);
+                var password = this.services.CreatePassword(15);
 
                 var result = await UserManager.CreateAsync(employee, password);
 

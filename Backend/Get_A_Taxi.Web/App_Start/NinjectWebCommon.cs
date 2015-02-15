@@ -16,6 +16,7 @@ namespace Get_A_Taxi.Web.App_Start
     using Get_A_Taxi.Web.Infrastructure.Services.Contracts;
     using Get_A_Taxi.Web.Infrastructure.Caching;
     using Get_A_Taxi.Web.Infrastructure.Populators;
+    using Get_A_Taxi.Web.Infrastructure.Services.Hubs;
 
     public static class NinjectWebCommon
     {
@@ -81,6 +82,7 @@ namespace Get_A_Taxi.Web.App_Start
             kernel.Bind<IOperatorService>().To<OperatorService>();
             kernel.Bind<ICacheService>().To<InMemoryCache>();
             kernel.Bind<IDropDownListPopulator>().To<DropDownListPopulator>();
+            kernel.Bind<IOrderBridge>().To<OrderBridge>();
         }
     }
 }

@@ -6,6 +6,8 @@
     using Get_A_Taxi.Models;
     using Get_A_Taxi.Web.Infrastructure.Services.Base;
     using Get_A_Taxi.Web.Infrastructure.Services.Contracts;
+    using Get_A_Taxi.Web.ViewModels;
+    using System;
 
     public class OperatorService : BaseService, IOperatorService
     {

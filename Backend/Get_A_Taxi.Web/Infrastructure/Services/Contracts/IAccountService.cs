@@ -13,5 +13,6 @@
         IQueryable<ApplicationUser> WithLastNameLike(IQueryable<ApplicationUser> users, string nameString);
         IQueryable<ApplicationUser> WithMiddletNameLike(IQueryable<ApplicationUser> users, string nameString);
         IQueryable<ApplicationUser> WithRole(IQueryable<ApplicationUser> users, string roleId);
+        string CreatePassword(int length);
     }
 }

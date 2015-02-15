@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-
-namespace Get_A_Taxi.Web.Areas.Operator.ViewModels
+﻿namespace Get_A_Taxi.Web.Areas.Operator.ViewModels
 {
+    using Get_A_Taxi.Models;
+    using System;
+    using System.ComponentModel.DataAnnotations;
+
     public class OrderInputVM
     {
         [Required]
@@ -14,11 +12,11 @@ namespace Get_A_Taxi.Web.Areas.Operator.ViewModels
         public double OrderLongitude { get; set; }
         [StringLength(50)]
         public string OrderAddress { get; set; }
-   
+
         public double DestinationLattitude { get; set; }
-  
+
         public double DestinationLongitude { get; set; }
-    
+
         [StringLength(50)]
         public string DestinationAddress { get; set; }
         [Required]
@@ -30,5 +28,25 @@ namespace Get_A_Taxi.Web.Areas.Operator.ViewModels
         [Required]
         public string PhoneNumber { get; set; }
         public string UserComment { get; set; }
+
+        public static Func<OrderInputVM, ApplicationUser, Order> ToOrderDataModel
+        {
+            get
+            {
+                return (o, u) => new Order
+                {
+                    OrderAddress = o.OrderAddress,
+                    OrderLattitude = o.OrderLattitude,
+                    OrderLongitude = o.OrderLongitude,
+                    OrderedAt = DateTime.Now,
+                    DestinationAddress = o.DestinationAddress,
+                    DestinationLattitude = o.DestinationLattitude,
+                    DestinationLongitude = o.DestinationLongitude,
+                    UserComment = o.UserComment,
+                    OrderStatus = OrderStatus.Waiting,
+                    Customer = u
+                };
+            }
+        }
     }
 }

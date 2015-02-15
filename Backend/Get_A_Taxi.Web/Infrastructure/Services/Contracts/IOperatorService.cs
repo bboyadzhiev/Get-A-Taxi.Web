@@ -1,10 +1,12 @@
 ﻿namespace Get_A_Taxi.Web.Infrastructure.Services.Contracts
 {
     using Get_A_Taxi.Models;
+    using Get_A_Taxi.Web.ViewModels;
+    using System;
     using System.Collections.Generic;
-using System.Linq;
+    using System.Linq;
 
-    interface IOperatorService
+    public interface IOperatorService
     {
         IQueryable<Order> OrdersByWaitingTime();
 
