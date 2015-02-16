@@ -11,6 +11,7 @@ namespace Get_A_Taxi.Web
         {
             ConfigureAuth(app);
             app.MapSignalR();
+            
         }
     }
 }

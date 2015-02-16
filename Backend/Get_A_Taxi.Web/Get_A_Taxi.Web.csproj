@@ -208,6 +208,7 @@
     <Compile Include="Areas\Operator\ViewModels\OrderInputVM.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Hubs\OrdersHub.cs" />
+    <Compile Include="Infrastructure\OrderEvents.cs" />
     <Compile Include="Infrastructure\ModelBinders\DecimalModelBinder.cs" />
     <Compile Include="Infrastructure\ModelBinders\DoubleModelBinder.cs" />
     <Compile Include="Infrastructure\Services\Contracts\IAccountService.cs" />
@@ -380,6 +381,7 @@
     <Content Include="Areas\Operator\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Operator\Views\Main\Index.cshtml" />
     <Content Include="Areas\Operator\Views\Shared\_AddOrderPartialView.cshtml" />
+    <Content Include="Areas\Operator\Views\Shared\_CurrentOrdersPartialView.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

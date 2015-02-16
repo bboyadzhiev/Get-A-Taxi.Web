@@ -88,7 +88,8 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                 this.Data.OperatorsOrders.Add(operatorOrder);
                 this.Data.SaveChanges();
 
-                this.bridge.AddOrder(order.OrderId);
+              //  this.bridge.AddOrder(order.OrderId);
+                OrdersEvents.AddOrder(order.OrderId);
 
                 return PartialView("_AddOrderPartialView", new OrderInputVM());
             }

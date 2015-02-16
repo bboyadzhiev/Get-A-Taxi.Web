@@ -1,31 +1,30 @@
-﻿@model Get_A_Taxi.Web.Areas.Operator.ViewModels.OrderInputVM     
+﻿@model Get_A_Taxi.Web.Areas.Operator.ViewModels.OrderInputVM
 <div id="map"></div>
 <div class="mapHoverPanel" id="phoneOrderDiv">
-@using (Ajax.BeginForm("SearchUser", null, new AjaxOptions
+    @using (Ajax.BeginForm("SearchUser", null, new AjaxOptions
 {
-  //  UpdateTargetId = "results",
- //   InsertionMode = InsertionMode.Replace,
+    //  UpdateTargetId = "results",
+    //   InsertionMode = InsertionMode.Replace,
     HttpMethod = "POST",
     //OnComplete = "phoneSearchResult()"
-    OnSuccess = "phoneSearchResult"
+    OnSuccess = "searchPane.phoneSearchUpdate"
 }, new { id = "phoneSearchForm" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
         <div class="form-group">
             @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", id="phoneSearchBox", oninput = "phoneChanged()" } })
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", id = "phoneSearchBox", oninput = "searchPane.phoneChanged()" } })
             </div>
         </div>
-    @*<div class="form-group">
-        <label class="control-label col-md-2" for="phoneSearchBox"> Phone</label>
-        <input type="text" name="Phone" value=" " id="phoneSearchBox" class="form-control" oninput="phoneChanged()" />
-    </div>*@
     }
 
     <div id="addOrderPartial">
         @Html.Partial("_AddOrderPartialView")
     </div>
+</div>
+<div id="currentOrdersPartial">
+    @Html.Partial("_CurrentOrdersPartialView")
 </div>
 
 @section Scripts{
@@ -34,26 +33,100 @@
 <script>
     var lat = @ViewBag.Lat.ToString("0.000000000").Replace(",", ".");
     var lon = @ViewBag.Lng.ToString("0.000000000").Replace(",", ".");
-    var defaultLat = parseFloat(lat)
+    var defaultLat = parseFloat(lat);
     var defaultLon = parseFloat(lon);
 </script>
 <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 @Scripts.Render("~/bundles/gmaps")
+<script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
+<script src="~/signalr/hubs" type="text/javascript"></script>
 <script>
-    function phoneChanged() {
-        if ($('#phoneSearchBox').val().length > 9) {
-            $('#phoneSearchForm').submit();
-            $('#PhoneNumber').val($('#phoneSearchBox').val());
-        }
-    }
+    /// <reference path="/Scripts/gmaps.js" />
+    /// <reference path="/Scripts/jquery.signalR-2.2.0.js" />
+    /// <reference path="/Scripts/knockout-2.0.0.debug.js" />
+         //Create the proxy
+   //var orders = $.connection.ordersHub;
+   // //var orders = $.hubConnection().createHubProxy("ordersHub");
+   //     console.log(orders);
+   //     function init() {
+   //         return orders.server.start();
+   //     }
     
-    function phoneSearchResult(data, status, xhr) {
-        if (data != null) {
-            $('#OrderAddress').val(data.orderAddress);
-            $('#FirstName').val(data.firstName);
-            $('#LastName').val(data.lastName);
+   //     orders.client.addedOrder = function (orderId) {
+   //         console.log("Order "+ orderId + " added!");
+   //         alert("Order "+ orderId + " added!");
+   //     }
+
+   //     // Start the connection
+   //     $.connection.hub.start(
+   //     function () {
+   //         init();
+   //     });
+
+
+    //$(function () {
+
+    //    var conn = $.hubConnection();
+    //    console.log(conn);
+    //    var ordersHub = conn.createHubProxy("ordersHub");
+        
+    //    ordersHub.on("addedOrder", function (orderId) {
+    //        console.log("Order "+ orderId + " added!");
+    //        alert("Order "+ orderId + " added!");
+    //    });
+
+    //    conn.start().done(function () {
+    //        console.log("Hub started")
+    //        ordersHub.invoke("start");
+    //        ordersHub.invoke("ghgh");
+    //    });
+    //    //$.connection.hub.start().done(function () {
+    //    //    console.log("Hub started")
+    //    //    ordersHub.invoke("start");
+    //    //});
+    //});
+
+    var ordersHub;    
+    $(document).ready(function () {
+        ordersHub = $.connection.ordersHub;
+        console.log(tHub);
+        //tHub.client.notify = function (msg) {
+        //    alert(msg);
+        //}
+        ordersHub.client.addedOrder = function (orderId) {
+            console.log("Order "+ orderId + " added!");
         }
-    }
 
+        ordersHub.on("addedOrder", function (orderId) {
+            console.log("Order "+ orderId + " added2!");
+        });
 
+        $.connection.hub.start().done(function () {
+            console.log("Starting...");
+            ordersHub.invoke("start");
+        });
+    });
+
+    var searchPane = function () {
+        var phoneSearchUpdate = function (data, status, xhr) {
+            if (data != null) {
+                $('#OrderAddress').val(data.orderAddress);
+                $('#FirstName').val(data.firstName);
+                $('#LastName').val(data.lastName);
+            }
+        }
+
+        var phoneChanged = function () {
+            if ($('#phoneSearchBox').val().length > 9) {
+                $('#phoneSearchForm').submit();
+                $('#PhoneNumber').val($('#phoneSearchBox').val());
+            }
+        }
+        return {
+            phoneSearchUpdate: phoneSearchUpdate,
+            phoneChanged:phoneChanged
+        }
+    }();
+
+    
 </script>

@@ -1,0 +1,27 @@
+﻿<table class="table table-hover">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Type</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Client Name</th>
+            <th>Client Phone</th>
+            <th>Taxi</th>
+            <th>Driver Phone</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: order">
+        <tr>
+            <td><img data-bind="attr:{ src: '~/Content/Images/' + orderType + '.png' }" /></td>
+            <td data-bind="text: from"></td>
+            <td data-bind="text: to"></td>
+            <td data-bind="text: clientName"></td>
+            <td data-bind="text: clientPhone"></td>
+            <td data-bind="text: taxi"></td>
+            <td data-bind="text: driverPhone"></td>
+        </tr>
+    </tbody>
+</table>
+<script>
+</script>
