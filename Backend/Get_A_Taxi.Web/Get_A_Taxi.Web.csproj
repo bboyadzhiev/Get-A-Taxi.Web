@@ -206,8 +206,11 @@
     <Compile Include="Areas\Operator\Controllers\MainController.cs" />
     <Compile Include="Areas\Operator\OperatorAreaRegistration.cs" />
     <Compile Include="Areas\Operator\ViewModels\OrderInputVM.cs" />
+    <Compile Include="Controllers\WebAPI\BaseApiController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
+    <Compile Include="Controllers\WebAPI\AccountController.cs" />
     <Compile Include="Hubs\OrdersHub.cs" />
+    <Compile Include="Infrastructure\BrowserJsonFormatter.cs" />
     <Compile Include="Infrastructure\OrderEvents.cs" />
     <Compile Include="Infrastructure\ModelBinders\DecimalModelBinder.cs" />
     <Compile Include="Infrastructure\ModelBinders\DoubleModelBinder.cs" />
@@ -215,6 +218,9 @@
     <Compile Include="Infrastructure\Services\Hubs\IOrderBridge.cs" />
     <Compile Include="Infrastructure\Services\Hubs\OrderServiceEventArgs.cs" />
     <Compile Include="Infrastructure\Services\Hubs\OrderBridge.cs" />
+    <Compile Include="Models\AccountBindingModels.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="ViewModels\DistrictVM.cs" />
     <Compile Include="Areas\Management\Controllers\TaxiesController.cs" />
     <Compile Include="Areas\Administration\Controllers\MainController.cs" />
@@ -266,7 +272,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\WebAPI\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

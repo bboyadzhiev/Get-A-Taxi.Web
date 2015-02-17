@@ -11,17 +11,44 @@
             <th>Driver Phone</th>
         </tr>
     </thead>
-    <tbody data-bind="foreach: order">
+    @*<tbody data-bind="foreach: order">
         <tr>
             <td><img data-bind="attr:{ src: '~/Content/Images/' + orderType + '.png' }" /></td>
-            <td data-bind="text: from"></td>
-            <td data-bind="text: to"></td>
+            <td data-bind="text: start"></td>
+            <td data-bind="text: end"></td>
             <td data-bind="text: clientName"></td>
             <td data-bind="text: clientPhone"></td>
             <td data-bind="text: taxi"></td>
             <td data-bind="text: driverPhone"></td>
         </tr>
-    </tbody>
+    </tbody>*@
 </table>
-<script>
+<script type="text/javascript">
+    $(function () {
+        //$.getJSON("/api/orders/", null, function (res) {
+        //    console.log(res);
+        //});
+        $.getJSON("/api/values")
+       .done(function (res) {
+           console.log(res);
+       });
+        var loginData = {
+            grant_type: 'password',
+            username: 'bboyadzhiev@gmail.com',
+            password: 'passW0RD'
+        };
+        console.log(loginData);
+        $.ajax({
+            type: 'GET',
+            url: '/api/Account/login',
+            data: loginData
+        }).done(function (data) {
+            // self.user(data.userName);
+            console.log(data);
+            // Cache the access token in session storage.
+           // sessionStorage.setItem(tokenKey, data.access_token);
+        }).fail(function (error) {
+            console.log(error);
+        });
+    });
 </script>

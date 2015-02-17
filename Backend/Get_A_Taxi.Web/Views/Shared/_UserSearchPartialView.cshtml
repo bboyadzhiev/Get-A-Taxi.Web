@@ -1,0 +1,43 @@
+﻿@model Get_A_Taxi.Web.ViewModels.UserSearchVM
+@{
+    var rolesList = (List<SelectListItem>)ViewBag.UserRoles;
+    var districtsList = (List<SelectListItem>)ViewBag.DistrictsList;
+    rolesList.ForEach(a => a.Selected = false);
+}
+
+@using (Ajax.BeginForm("Search", null, new AjaxOptions
+{
+    UpdateTargetId = "results",
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "POST",
+    OnComplete = "hideLoader()"
+}, new { id = "searchForm" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="container-liquid" style="margin:0px; padding: 0px">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", oninput = "changed()" } })
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 ">
+                @Html.LabelFor(model => model.MiddleName, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control", oninput = "changed()" } })
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 ">
+                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", oninput = "changed()" } })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-3">
+                @Html.LabelFor(model => model.DistritId, htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.DropDownListFor(model => model.DistritId, districtsList, htmlAttributes: new { @class = "dropdown", oninput = "changed()" })
+            </div>
+            <div class="col-xs-12 col-sm-3 col-md-3">
+                @Html.LabelFor(model => model.SelectedRoleIds, htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.ListBoxFor(model => model.SelectedRoleIds, rolesList, htmlAttributes: new { onchange = "changed()" })
+            </div>
+        </div>
+    </div>
+}

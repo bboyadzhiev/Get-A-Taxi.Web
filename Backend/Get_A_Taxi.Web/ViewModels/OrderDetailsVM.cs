@@ -54,6 +54,9 @@ namespace Get_A_Taxi.Web.ViewModels
         [JsonProperty(PropertyName = "orderedAt")]
         public DateTime OrderedAt { get; set; }
 
+        [JsonProperty(PropertyName = "driverPhone")]
+        public string DriverPhone { get; set; }
+
         public static Expression<Func<Order, OrderDetailsVM>> FromOrderDataModel
         {
             get
@@ -71,7 +74,8 @@ namespace Get_A_Taxi.Web.ViewModels
                     DestinationLongitude = x.DestinationLongitude,
                     DestinationAddress = x.DestinationAddress,
                     OrderedAt = x.OrderedAt,
-                    IsWaiting = (x.OrderStatus == OrderStatus.Waiting)
+                    IsWaiting = (x.OrderStatus == OrderStatus.Waiting),
+                    DriverPhone = (x.Driver != null) ? x.Driver.PhoneNumber : ""
                 };
             }
         }
@@ -81,7 +85,8 @@ namespace Get_A_Taxi.Web.ViewModels
             configuration.CreateMap<Order, OrderDetailsVM>()
                 .ForMember(vm => vm.CustomerId, opt => opt.MapFrom(m => m.Customer.Id))
                 .ForMember(vm => vm.TaxiId, opt => opt.MapFrom(m => m.AssignedTaxi.TaxiId))
-                .ForMember(vm => vm.IsWaiting, opt => opt.MapFrom(m => m.OrderStatus == OrderStatus.Waiting));
+                .ForMember(vm => vm.IsWaiting, opt => opt.MapFrom(m => m.OrderStatus == OrderStatus.Waiting))
+                .ForMember(vm => vm.DriverPhone, opt => opt.MapFrom(x => (x.Driver != null) ? x.Driver.PhoneNumber : ""));
         }
     }
 }

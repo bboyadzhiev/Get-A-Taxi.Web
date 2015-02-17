@@ -5,6 +5,7 @@ using System.Web.Http;
 using System.Net.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
+using Get_A_Taxi.Web.Infrastructure;
 
 namespace Get_A_Taxi.Web
 {
@@ -16,6 +17,12 @@ namespace Get_A_Taxi.Web
             // Configure Web API to use only bearer token authentication.
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+
+            // Remove the XML formatter
+            //config.Formatters.Remove(config.Formatters.XmlFormatter);
+
+          //  config.Formatters.Add(new BrowserJsonFormatter());
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 

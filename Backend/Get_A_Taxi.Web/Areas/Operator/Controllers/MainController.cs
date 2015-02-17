@@ -6,12 +6,14 @@ using Get_A_Taxi.Web.Infrastructure;
 using Get_A_Taxi.Web.Infrastructure.Populators;
 using Get_A_Taxi.Web.Infrastructure.Services.Contracts;
 using Get_A_Taxi.Web.Infrastructure.Services.Hubs;
+using Get_A_Taxi.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper.QueryableExtensions;
 
 namespace Get_A_Taxi.Web.Areas.Operator.Controllers
 {
@@ -112,6 +114,15 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                 });
             }
             return null;
+        }
+
+        [HttpGet]
+        public JsonResult GetOrders()
+        {
+            var result = this.Data.Orders.All()
+                .Where(o => o.OrderStatus != OrderStatus.Finished)
+                .Project().To<OrderDetailsVM>().ToList();
+            return Json(result);
         }
     }
 }
