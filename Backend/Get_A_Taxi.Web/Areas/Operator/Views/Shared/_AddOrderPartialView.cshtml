@@ -75,6 +75,7 @@
     /// <reference path="/Scripts/gmaps.js" />
     var startMarker;
     var endMarker;
+    var addressMarkers = [];
     function submitOrder() {
         $('#newOrderForm').submit();
     }
@@ -88,14 +89,14 @@
         $('#OrderLattitude').val(latlng.lat());
         $('#OrderLongitude').val(latlng.lng());
         $('#OrderAddress').val(formattedAddress);
-        startMarker = addMarker(0, latlng, "/Content/Images/Map/green_m.png", formattedAddress, null, null);
+        startMarker = addMarker(0, latlng.lat(), latlng.lng(), "/Content/Images/Map/green_m.png", formattedAddress, addressClick, addressMarkers);
     }
 
     function updateDestinationAddress(latlng, formattedAddress) {
         $('#DestinationLattitude').val(latlng.lat());
         $('#DestinationLongitude').val(latlng.lng());
         $('#DestinationAddress').val(formattedAddress);
-        endMarker = addMarker(0, latlng, "/Content/Images/Map/yellow_m.png", formattedAddress, null, null);
+        endMarker = addMarker(0, latlng.lat(), latlng.lng(), "/Content/Images/Map/yellow_m.png", formattedAddress, addressClick, addressMarkers);
     }
 
     $("#OrderAddress").keyup(function (event) {
@@ -116,5 +117,8 @@
         }
     });
 
+    function addressClick() {
+
+    }
 
 </script>

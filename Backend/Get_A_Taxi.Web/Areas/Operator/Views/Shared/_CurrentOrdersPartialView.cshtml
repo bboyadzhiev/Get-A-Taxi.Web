@@ -15,7 +15,7 @@
         <!-- ko foreach: orders -->
         <tr>
             <td data-bind="text: orderId"></td>
-            <td><img data-bind="attr: &#123; src: isWaiting ? '/Content/Images/Badges/search.png' : '/Content/Images/Badges/plus.png'  &#125;" /></td>
+            <td><img data-bind="attr: &#123; src: isWaiting ? '/Content/Images/Map/red_m.png' : '/Content/Images/Map/blue_m.png'  &#125;" /></td>
             <td data-bind="text: start"></td>
             <td data-bind="text: end"></td>
             <td data-bind="text: custName"></td>
@@ -27,70 +27,28 @@
     </tbody>
     </table>
 
-@*<script type="text/javascript">
-        var ordersHub;
-        $(document).ready(function () {
-
-           var currentOrdersPartialVM =  function (orderDetailsVM) {
-                this.orderId = orderDetailsVM.orderId;
-                this.customerId = ko.observable(orderDetailsVM.customerId);
-                this.taxiId = ko.observable(orderDetailsVM.taxiId);
-                this.isWaiting = ko.observable(orderDetailsVM.isWaiting);
-                this.custName = ko.observable(orderDetailsVM.custName);
-                this.custPhone = ko.observable(orderDetailsVM.custPhone);
-                this.startLat = ko.observable(orderDetailsVM.startLat);
-                this.startLng = ko.observable(orderDetailsVM.startLng);
-                this.start = ko.observable(orderDetailsVM.start);
-                this.endLat = ko.observable(orderDetailsVM.endLat);
-                this.endLng = ko.observable(orderDetailsVM.endLng);
-                this.end = ko.observable(orderDetailsVM.end);
-                this.orderedAt = ko.observable(orderDetailsVM.orderedAt);
-                this.driverPhone = ko.observable(orderDetailsVM.driverPhone);
-                var self = this;
-            }
-
-            function AppViewModel(orders) {
-                var self = this;
-
-                self.orders = orders;
-            }
-
-            ordersHub = $.connection.ordersHub;
-            console.log(ordersHub);
-            //tHub.client.notify = function (msg) {
-            //    alert(msg);
-            //}
-            ordersHub.client.addedOrder = function (orderId) {
-                console.log("Order " + orderId + " added!");
-            }
-
-            ordersHub.on("addedOrder", function (orderId) {
-                console.log("Order " + orderId + " added2!");
-            });
-
-            ordersHub.on("updateOrders", function (data) {
-                console.log(data);
-               // var orderVM = ko.mapping.fromJS(data);
-                var mappedOrders = $.map(data, function (order) {
-                    return new orderDetailsVM(order.orderId, order.customerId, order.taxiId, order.isWaiting, order.custName, order.custPhone, order.startLat, order.startLng, order.start, order.endLat, order.endLng, order.end, order.orderedAt, order.driverPhone)
-                });
-              //  console.log(orderVM);
-                console.log(mappedOrders);
-              //  ko.applyBindings(mappedOrders);
-             //   ko.applyBindings(new AppViewModel(data));
-            })
-
-            $.connection.hub.start().done(function () {
-                console.log("Starting...");
-                ordersHub.invoke("start");
-            });
-        });
-    </script>*@
-
-
 <script type="text/javascript">
-    var ordersHub;
     $(document).ready(function () {
+        var waitingMarkers = [];
+        var inProgressMarkers = [];
+
+        var ordersHub;
+
+        function updateOrdersMarkers(data) {
+            for (var i = 0; i < data.length; i++) {
+              
+                if(data[i].isWaiting == true){
+                    addMarker(data[i].markerId, data[i].startLat, data[i].startLng, '/Content/Images/Map/red_m.png', data[i].custName, clk, waitingMarkers );
+                }else {
+                    addMarker(data[i].markerId, data[i].startLat, data[i].startLng, '/Content/Images/Map/red_m.png', data[i].custName, clk, inProgressMarkers);
+                }
+            }
+        }
+
+        function clk() {
+    
+        }
+
         var currentOrdersPartialVM = function (orders) {
             this.orders = ko.mapping.fromJS(orders);
 
@@ -118,12 +76,14 @@
             console.log("client.updateOrders");
             console.log(data);
             ko.applyBindings(currentOrdersPartialVM(data));
+            updateOrdersMarkers(data);
         });
         ordersHub.client.addedOrder = function (order) {
             console.log("New order!");
 
            // console.log('Adding to table');
             addOrder(order);
+
         }
         //ordersHub.on("addOrder", function (newOrder) {
         //    addOrder(newOrder);
@@ -133,5 +93,8 @@
             console.log("Starting...");
             ordersHub.invoke("start");
         });
+
+      
+
     });
 </script>

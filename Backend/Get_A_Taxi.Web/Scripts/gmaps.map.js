@@ -46,17 +46,17 @@ function getCoordinates(address, getCoordinatesCallback) {
     });
 }
 
-function addMarker(markerId, latlng, iconLink, content, clickCallback, arrayReference) {
+function addMarker(markerId, lat, lng, iconLink, content, clickCallback, arrayReference) {
     var newMarker = map.addMarker({
         id: markerId,
-        lat: latlng.lat(),
-        lng: latlng.lng(),
+        lat: lat,
+        lng: lng,
         icon: iconLink,
         infoWindow: {
             content: '<p>' + content + '</p>'
         },
         click: function () {
-            clickCallback(markerId, latlng, content);
+            clickCallback(markerId, lat, lng, content);
         },
     });
     
