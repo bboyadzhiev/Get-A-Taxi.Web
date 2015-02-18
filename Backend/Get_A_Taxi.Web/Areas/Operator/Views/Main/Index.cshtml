@@ -23,10 +23,6 @@
         @Html.Partial("_AddOrderPartialView")
     </div>
 </div>
-<div id="currentOrdersPartial">
-    @Html.Partial("_CurrentOrdersPartialView")
-</div>
-
 @section Scripts{
     @Scripts.Render("~/bundles/jqueryval")
 }
@@ -38,74 +34,16 @@
 </script>
 <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 @Scripts.Render("~/bundles/gmaps")
-<script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
+@Scripts.Render("~/bundles/knockout")
+@Scripts.Render("~/bundles/signalr")
 <script src="~/signalr/hubs" type="text/javascript"></script>
+<div id="currentOrdersPartial">
+    @Html.Partial("_CurrentOrdersPartialView")
+</div>
 <script>
     /// <reference path="/Scripts/gmaps.js" />
     /// <reference path="/Scripts/jquery.signalR-2.2.0.js" />
     /// <reference path="/Scripts/knockout-2.0.0.debug.js" />
-         //Create the proxy
-   //var orders = $.connection.ordersHub;
-   // //var orders = $.hubConnection().createHubProxy("ordersHub");
-   //     console.log(orders);
-   //     function init() {
-   //         return orders.server.start();
-   //     }
-    
-   //     orders.client.addedOrder = function (orderId) {
-   //         console.log("Order "+ orderId + " added!");
-   //         alert("Order "+ orderId + " added!");
-   //     }
-
-   //     // Start the connection
-   //     $.connection.hub.start(
-   //     function () {
-   //         init();
-   //     });
-
-
-    //$(function () {
-
-    //    var conn = $.hubConnection();
-    //    console.log(conn);
-    //    var ordersHub = conn.createHubProxy("ordersHub");
-        
-    //    ordersHub.on("addedOrder", function (orderId) {
-    //        console.log("Order "+ orderId + " added!");
-    //        alert("Order "+ orderId + " added!");
-    //    });
-
-    //    conn.start().done(function () {
-    //        console.log("Hub started")
-    //        ordersHub.invoke("start");
-    //        ordersHub.invoke("ghgh");
-    //    });
-    //    //$.connection.hub.start().done(function () {
-    //    //    console.log("Hub started")
-    //    //    ordersHub.invoke("start");
-    //    //});
-    //});
-
-    var ordersHub;    
-    $(document).ready(function () {
-        ordersHub = $.connection.ordersHub;
-        console.log(ordersHub);
-        //tHub.client.notify = function (msg) {
-        //    alert(msg);
-        //}
-        ordersHub.client.addedOrder = function (orderId) {
-            console.log("Order "+ orderId + " added!");
-        }
-
-        ordersHub.on("addedOrder", function (orderId) {
-            console.log("Order "+ orderId + " added2!");
-        });
-
-        $.connection.hub.start().done(function () {
-            console.log("Starting...");
-            ordersHub.invoke("start");
-        });
-    });
 
     var searchPane = function () {
         var phoneSearchUpdate = function (data, status, xhr) {
@@ -128,5 +66,15 @@
         }
     }();
 
+    function mapClicked(e) {
+        console.log(e);
+        map.setCenter(e.latLng.lat(), e.latLng.lng());
+        // map.removeMarkers();
+    }
+
     
+    function zoomChanged(map) {
+        //    $('#MapZoom').val(map.zoom);
+    }
+
 </script>

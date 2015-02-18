@@ -1,5 +1,4 @@
-﻿/// <reference path="/Scripts/gmaps.js" />
-var markers = [];
+﻿var markers = [];
 
 $(document).ready(function () {
     map = new GMaps({
@@ -35,7 +34,7 @@ function getCoordinates(address, getCoordinatesCallback) {
         address: address,
         callback: function (results, status) {
             if (status == 'OK') {
-                console.log(results[0]);
+                //console.log(results[0]);
                 var latlng = results[0].geometry.location;
                 var formattedAddress = results[0].formatted_address;
                 map.setCenter(latlng.lat(), latlng.lng());
@@ -47,16 +46,20 @@ function getCoordinates(address, getCoordinatesCallback) {
     });
 }
 
-function addMarker(latlng, content, clickCallback) {
+function addMarker(markerId, latlng, iconLink, content, clickCallback, arrayReference) {
     var newMarker = map.addMarker({
+        id: markerId,
         lat: latlng.lat(),
         lng: latlng.lng(),
+        icon: iconLink,
         infoWindow: {
             content: '<p>' + content + '</p>'
         },
         click: function () {
-            clickCallback(latlng, content);
-        }
+            clickCallback(markerId, latlng, content);
+        },
     });
+    
+    arrayReference.push(newMarker);
     return newMarker;
 }

@@ -319,6 +319,12 @@
     <Content Include="Content\Images\Icons\user.png" />
     <Content Include="Content\Images\managedistricts.png" />
     <Content Include="Content\Images\managetaxies.png" />
+    <Content Include="Content\Images\Map\blue_m.png" />
+    <Content Include="Content\Images\Map\green_m.png" />
+    <Content Include="Content\Images\Map\orange_m.png" />
+    <Content Include="Content\Images\Map\purple_m.png" />
+    <Content Include="Content\Images\Map\red_m.png" />
+    <Content Include="Content\Images\Map\yellow_m.png" />
     <Content Include="Content\Images\person.png" />
     <Content Include="Content\Images\roles.png" />
     <Content Include="Content\Images\taxistand.png" />
@@ -357,8 +363,8 @@
     <Content Include="Scripts\gmaps.operator.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
-    <Content Include="Scripts\knockout-2.0.0.debug.js" />
-    <Content Include="Scripts\knockout-2.0.0.js" />
+    <Content Include="Scripts\knockout-3.2.0.debug.js" />
+    <Content Include="Scripts\knockout-3.2.0.js" />
     <Content Include="Scripts\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Views\Shared\_UsersListPartialView.cshtml" />

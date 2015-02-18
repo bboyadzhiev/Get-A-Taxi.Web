@@ -85,12 +85,14 @@
 @Scripts.Render("~/bundles/gmaps")
 <script type="text/javascript">
     /// <reference path="/Scripts/gmaps.js" />
+    var districtMarkers = [];
     function updateUI(latlng, formattedAddress) {
         $('#CenterLattitude').val(latlng.lat());
         $('#CenterLongitude').val(latlng.lng());
         $('#address').val(formattedAddress);
         $('#Title').val(formattedAddress);
-        markers.push( addMarker(latlng, formattedAddress, clb));
+        markers.push( addMarker(0, latlng, "/Content/Images/Map/orange_m.png",  formattedAddress, clb, districtMarkers));
+        console.log(districtMarkers);
     }
 
     function clb( latlng, content) {
@@ -100,7 +102,6 @@
     $('#geocoding_form').submit(function (e) {
         e.preventDefault();
         getCoordinates($('#address').val().trim(), updateUI);
-
     });
 
 

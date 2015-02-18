@@ -1,54 +1,137 @@
 ﻿<table class="table table-hover">
     <thead>
         <tr>
-            <th></th>
+            <th>id</th>
             <th>Type</th>
             <th>From</th>
             <th>To</th>
-            <th>Client Name</th>
-            <th>Client Phone</th>
-            <th>Taxi</th>
+            <th>Customer Name</th>
+            <th>Customer Phone</th>
+            <th>Comment</th>
             <th>Driver Phone</th>
         </tr>
     </thead>
-    @*<tbody data-bind="foreach: order">
+    <tbody >
+        <!-- ko foreach: orders -->
         <tr>
-            <td><img data-bind="attr:{ src: '~/Content/Images/' + orderType + '.png' }" /></td>
+            <td data-bind="text: orderId"></td>
+            <td><img data-bind="attr: &#123; src: isWaiting ? '/Content/Images/Badges/search.png' : '/Content/Images/Badges/plus.png'  &#125;" /></td>
             <td data-bind="text: start"></td>
             <td data-bind="text: end"></td>
-            <td data-bind="text: clientName"></td>
-            <td data-bind="text: clientPhone"></td>
-            <td data-bind="text: taxi"></td>
+            <td data-bind="text: custName"></td>
+            <td data-bind="text: custPhone"></td>
+            <td data-bind="text: custComment"></td>
             <td data-bind="text: driverPhone"></td>
         </tr>
-    </tbody>*@
-</table>
+        <!-- /ko -->
+    </tbody>
+    </table>
+
+@*<script type="text/javascript">
+        var ordersHub;
+        $(document).ready(function () {
+
+           var currentOrdersPartialVM =  function (orderDetailsVM) {
+                this.orderId = orderDetailsVM.orderId;
+                this.customerId = ko.observable(orderDetailsVM.customerId);
+                this.taxiId = ko.observable(orderDetailsVM.taxiId);
+                this.isWaiting = ko.observable(orderDetailsVM.isWaiting);
+                this.custName = ko.observable(orderDetailsVM.custName);
+                this.custPhone = ko.observable(orderDetailsVM.custPhone);
+                this.startLat = ko.observable(orderDetailsVM.startLat);
+                this.startLng = ko.observable(orderDetailsVM.startLng);
+                this.start = ko.observable(orderDetailsVM.start);
+                this.endLat = ko.observable(orderDetailsVM.endLat);
+                this.endLng = ko.observable(orderDetailsVM.endLng);
+                this.end = ko.observable(orderDetailsVM.end);
+                this.orderedAt = ko.observable(orderDetailsVM.orderedAt);
+                this.driverPhone = ko.observable(orderDetailsVM.driverPhone);
+                var self = this;
+            }
+
+            function AppViewModel(orders) {
+                var self = this;
+
+                self.orders = orders;
+            }
+
+            ordersHub = $.connection.ordersHub;
+            console.log(ordersHub);
+            //tHub.client.notify = function (msg) {
+            //    alert(msg);
+            //}
+            ordersHub.client.addedOrder = function (orderId) {
+                console.log("Order " + orderId + " added!");
+            }
+
+            ordersHub.on("addedOrder", function (orderId) {
+                console.log("Order " + orderId + " added2!");
+            });
+
+            ordersHub.on("updateOrders", function (data) {
+                console.log(data);
+               // var orderVM = ko.mapping.fromJS(data);
+                var mappedOrders = $.map(data, function (order) {
+                    return new orderDetailsVM(order.orderId, order.customerId, order.taxiId, order.isWaiting, order.custName, order.custPhone, order.startLat, order.startLng, order.start, order.endLat, order.endLng, order.end, order.orderedAt, order.driverPhone)
+                });
+              //  console.log(orderVM);
+                console.log(mappedOrders);
+              //  ko.applyBindings(mappedOrders);
+             //   ko.applyBindings(new AppViewModel(data));
+            })
+
+            $.connection.hub.start().done(function () {
+                console.log("Starting...");
+                ordersHub.invoke("start");
+            });
+        });
+    </script>*@
+
+
 <script type="text/javascript">
-    $(function () {
-        //$.getJSON("/api/orders/", null, function (res) {
-        //    console.log(res);
-        //});
-        $.getJSON("/api/values")
-       .done(function (res) {
-           console.log(res);
-       });
-        var loginData = {
-            grant_type: 'password',
-            username: 'bboyadzhiev@gmail.com',
-            password: 'passW0RD'
+    var ordersHub;
+    $(document).ready(function () {
+        var currentOrdersPartialVM = function (orders) {
+            this.orders = ko.mapping.fromJS(orders);
+
+            this.updateOrder = function (updatedOrder) {
+                var order = ko.utils.arrayFirst(this.orders(), function (order) {
+                    return order.orderId() == updatedOrder.orderId;
+                });
+                order.startLat(updatedOrder.startLat);
+                order.startLng(updatedOrder.startLng);
+                order.start(updatedOrder.start);
+                order.endLat(updatedOrder.endLat);
+                order.endLng(updatedOrder.endLng);
+                order.end(updatedOrder.end);
+                order.custComment(updatedOrder.custComment);
+            }
+
+            this.addOrder = function (newOrder) {
+                this.orders.push(newOrder);
+            }
         };
-        console.log(loginData);
-        $.ajax({
-            type: 'GET',
-            url: '/api/Account/login',
-            data: loginData
-        }).done(function (data) {
-            // self.user(data.userName);
+
+        ordersHub = $.connection.ordersHub;
+
+        ordersHub.on("updateOrders", function (data) {
+            console.log("client.updateOrders");
             console.log(data);
-            // Cache the access token in session storage.
-           // sessionStorage.setItem(tokenKey, data.access_token);
-        }).fail(function (error) {
-            console.log(error);
+            ko.applyBindings(currentOrdersPartialVM(data));
+        });
+        ordersHub.client.addedOrder = function (order) {
+            console.log("New order!");
+
+           // console.log('Adding to table');
+            addOrder(order);
+        }
+        //ordersHub.on("addOrder", function (newOrder) {
+        //    addOrder(newOrder);
+        //})
+
+        $.connection.hub.start().done(function () {
+            console.log("Starting...");
+            ordersHub.invoke("start");
         });
     });
 </script>

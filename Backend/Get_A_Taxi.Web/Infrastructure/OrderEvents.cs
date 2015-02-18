@@ -5,6 +5,9 @@ using System.Web;
 
 namespace Get_A_Taxi.Web.Infrastructure
 {
+    /// <summary>
+    /// Temporary solution, replacement for OrdersBridge bug problem
+    /// </summary>
     public static class OrdersEvents
     {
         public static event EventHandler<int> OrderAddedEvent;

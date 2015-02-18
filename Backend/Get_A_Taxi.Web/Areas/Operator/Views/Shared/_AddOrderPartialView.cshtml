@@ -73,6 +73,8 @@
     }
 <script type="text/javascript">
     /// <reference path="/Scripts/gmaps.js" />
+    var startMarker;
+    var endMarker;
     function submitOrder() {
         $('#newOrderForm').submit();
     }
@@ -82,29 +84,18 @@
         $('#addOrderPartial').empty();
     }
 
-    function mapClicked(e) {
-        console.log(e);
-        map.setCenter(e.latLng.lat(), e.latLng.lng());
-       // map.removeMarkers();
-
-    }
-
     function updateOrderAddress(latlng, formattedAddress) {
         $('#OrderLattitude').val(latlng.lat());
         $('#OrderLongitude').val(latlng.lng());
         $('#OrderAddress').val(formattedAddress);
-        addMarker(latlng, formattedAddress, function () {
-
-        });
+        startMarker = addMarker(0, latlng, "/Content/Images/Map/green_m.png", formattedAddress, null, null);
     }
 
     function updateDestinationAddress(latlng, formattedAddress) {
         $('#DestinationLattitude').val(latlng.lat());
         $('#DestinationLongitude').val(latlng.lng());
         $('#DestinationAddress').val(formattedAddress);
-        addMarker(latlng, formattedAddress, function () {
-
-        });
+        endMarker = addMarker(0, latlng, "/Content/Images/Map/yellow_m.png", formattedAddress, null, null);
     }
 
     $("#OrderAddress").keyup(function (event) {
@@ -125,8 +116,5 @@
         }
     });
 
-    function zoomChanged(map) {
-    //    $('#MapZoom').val(map.zoom);
-    }
 
 </script>

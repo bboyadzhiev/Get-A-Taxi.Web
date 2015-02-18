@@ -17,7 +17,7 @@ using AutoMapper.QueryableExtensions;
 
 namespace Get_A_Taxi.Web.Areas.Operator.Controllers
 {
-    [AuthorizeRoles(UserRole=UserRoles.Operator)]
+    [AuthorizeRoles(UserRole = UserRoles.Operator)]
     public class MainController : BaseController
     {
         private IAccountService services;
@@ -36,6 +36,14 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Create a phone order, added by the operator.
+        /// OperatorOrders stores the current orders added by the operators.
+        /// If client phone is not found in the database, a new user account is created using the new phone number.
+        /// Last order with same orderId and operator ID and the user comment are updated in OperatorOrders.
+        /// </summary>
+        /// <param name="orderVm">Input ViewModel of a phone order</param>
+        /// <returns>Partial view with phone order input form</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
@@ -49,10 +57,14 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                 var knownClient = this.Data.Users.SearchFor(u => u.PhoneNumber == orderVm.PhoneNumber).FirstOrDefault();
                 if (knownClient != null)
                 {
+                    // Known client, new order
                     order = OrderInputVM.ToOrderDataModel(orderVm, knownClient);
+                    this.Data.Orders.Add(order);
+                    this.Data.SaveChanges();
                 }
                 else
                 {
+                    //New client
                     ApplicationUser newClient = new ApplicationUser()
                     {
                         UserName = orderVm.PhoneNumber + "@getataxi.com",
@@ -60,7 +72,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                         DefaultAddress = orderVm.OrderAddress,
                         FirstName = orderVm.FirstName,
                         LastName = orderVm.LastName,
-                     //   District = operatorUser.District,
+                        //   District = operatorUser.District,
                         Email = orderVm.PhoneNumber + "@getataxi.com"
                     };
 
@@ -69,29 +81,41 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                     var result = await UserManager.CreateAsync(newClient, password);
                     if (result.Succeeded)
                     {
+                        //New order for the new client
                         order = OrderInputVM.ToOrderDataModel(orderVm, newClient);
                         this.Data.Orders.Add(order);
                         this.Data.SaveChanges();
                     }
                     else
                     {
-                        ViewBag.Error = "Order could not be added:"+result.Errors.ToString();
+                        ViewBag.Error = "Order could not be added:" + result.Errors.ToString();
                         return PartialView("_AddOrderPartialView", orderVm);
                     }
                 }
 
-                
-                var operatorOrder = new OperatorOrder()
-                {
-                    OperatorId = operatorUser.Id,
-                    OrderId = order.OrderId,
-                    Comment = order.UserComment
-                };
-                this.Data.OperatorsOrders.Add(operatorOrder);
+                //// Update OperatorOrder
+                //var lastOperatorOrder = this.Data.OperatorsOrders.All().Where(o => o.OrderId == order.OrderId).FirstOrDefault();
+                //if (lastOperatorOrder != null)
+                //{
+                //    // Update operator Id and comment
+                //    lastOperatorOrder.OperatorId = operatorUser.Id;
+                //    lastOperatorOrder.Comment = orderVm.UserComment;
+                //}
+                //else
+                //{
+                    // New order by operator
+                    var operatorOrder = new OperatorOrder()
+                    {
+                        OperatorId = operatorUser.Id,
+                        OrderId = order.OrderId,
+                        Comment = order.UserComment
+                    };
+                    this.Data.OperatorsOrders.Add(operatorOrder);
+               // }
                 this.Data.SaveChanges();
 
-              //  this.bridge.AddOrder(order.OrderId);
-                OrdersEvents.AddOrder(order.OrderId);
+                  this.bridge.AddOrder(order.OrderId);
+                  //OrdersEvents.AddOrder(order.OrderId);
 
                 return PartialView("_AddOrderPartialView", new OrderInputVM());
             }
@@ -110,19 +134,20 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                 {
                     firstName = user.FirstName,
                     lastName = user.LastName,
-                    orderAddress = user.DefaultAddress                   
+                    orderAddress = user.DefaultAddress
                 });
             }
             return null;
         }
 
-        [HttpGet]
-        public JsonResult GetOrders()
-        {
-            var result = this.Data.Orders.All()
-                .Where(o => o.OrderStatus != OrderStatus.Finished)
-                .Project().To<OrderDetailsVM>().ToList();
-            return Json(result);
-        }
+        //[AcceptVerbs(HttpVerbs.Post)]
+        //public JsonResult GetOrders()
+        //{
+        //    var result = this.Data.Orders.All()
+        //        .Where(o => o.OrderStatus != OrderStatus.Finished)
+        //        .Project().To<OrderDetailsVM>().ToList();
+
+        //    return Json(result);
+        //}
     }
 }
