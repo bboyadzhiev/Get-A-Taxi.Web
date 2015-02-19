@@ -1,7 +1,8 @@
 ﻿@model Get_A_Taxi.Web.Areas.Operator.ViewModels.OrderInputVM
 <div id="map"></div>
 <div class="mapHoverPanel" id="phoneOrderDiv">
-    @using (Ajax.BeginForm("SearchUser", null, new AjaxOptions
+    <div class="form-horizontal">
+        @using (Ajax.BeginForm("SearchUser", null, new AjaxOptions
 {
     //  UpdateTargetId = "results",
     //   InsertionMode = InsertionMode.Replace,
@@ -9,19 +10,26 @@
     //OnComplete = "phoneSearchResult()"
     OnSuccess = "searchPane.phoneSearchUpdate"
 }, new { id = "phoneSearchForm" }))
-    {
-        @Html.AntiForgeryToken()
-        <div class="form-group">
-            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", id = "phoneSearchBox", oninput = "searchPane.phoneChanged()" } })
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", id = "phoneSearchBox", oninput = "searchPane.phoneChanged()", placeholder = @Html.DisplayNameFor(m => m.PhoneNumber) } })
+                </div>
             </div>
-        </div>
-    }
+        }
+    </div>
+    
+        @Html.Partial("_OrderInputPartialView", Model)
+    
 
     <div id="addOrderPartial">
         @Html.Partial("_AddOrderPartialView")
     </div>
+    <div id="updateOrderPartial">
+        @Html.Partial("_UpdateOrderPartialView")
+    </div>
+
 </div>
 @section Scripts{
     @Scripts.Render("~/bundles/jqueryval")
@@ -37,14 +45,17 @@
 @Scripts.Render("~/bundles/knockout")
 @Scripts.Render("~/bundles/signalr")
 <script src="~/signalr/hubs" type="text/javascript"></script>
-<div id="currentOrdersPartial">
+<div id="currentOrdersPartial" class="rightBottomHover">
     @Html.Partial("_CurrentOrdersPartialView")
 </div>
+
 <script>
     /// <reference path="/Scripts/gmaps.js" />
     /// <reference path="/Scripts/jquery.signalR-2.2.0.js" />
     /// <reference path="/Scripts/knockout-2.0.0.debug.js" />
-
+    $('#orderInputPartial').appendTo('#addOrderInputPlaceholder');
+    $('#addOrderPartial').hide();
+    $('#updateOrderPartial').hide();
     var searchPane = function () {
         var phoneSearchUpdate = function (data, status, xhr) {
             if (data != null) {
@@ -56,6 +67,8 @@
 
         var phoneChanged = function () {
             if ($('#phoneSearchBox').val().length > 9) {
+                $('#orderInputPartial').appendTo('#addOrderInputPlaceholder');
+                $('#addOrderPartial').fadeIn();
                 $('#phoneSearchForm').submit();
                 $('#PhoneNumber').val($('#phoneSearchBox').val());
             }
@@ -72,7 +85,7 @@
         // map.removeMarkers();
     }
 
-    
+
     function zoomChanged(map) {
         //    $('#MapZoom').val(map.zoom);
     }

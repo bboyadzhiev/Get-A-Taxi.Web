@@ -19,7 +19,7 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 200px;
 }
 
 .loader {
@@ -72,7 +72,34 @@ textarea {
     z-index: 5;
     position: relative;
     background-color: rgba(128,128,128,0.5);
-    padding: 5px;
     border: 1px solid #999;
-    width: 300px;
+    width: 250px;
+}
+
+
+.rightBottomHover {
+    transition: width 0.5s ease;
+    z-index: 5;
+    right: 0;
+    top: 80px; /*must match the height of #header*/
+    bottom: 0;
+    position: absolute;
+    overflow-y: auto;
+    width: 200px;
+    border: 1px solid #999;
+    background-color: rgba(128,128,128,0.5);
+}
+
+.orderWaitingRow{
+    background-color: rgba(255,128,128,0.5);
+}
+.rightBottomHover:hover{
+   width: 400px;
+}
+
+.trimmedText {
+   max-width: 100px;
+    overflow: hidden;
+    text-overflow:clip;
+    white-space: nowrap;
 }

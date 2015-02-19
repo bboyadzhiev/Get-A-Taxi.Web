@@ -1,45 +1,43 @@
 ﻿
-    @*@using (Html.BeginForm("CreateOrder", "Main", FormMethod.Post, new { id= "newOrderForm"}))*@
-@using (Ajax.BeginForm("CreateOrder", null, new AjaxOptions
+@*@using (Html.BeginForm("CreateOrder", "Main", FormMethod.Post, new { id= "newOrderForm"}))*@
+@using (Ajax.BeginForm("UpdateOrder", null, new AjaxOptions
 {
     UpdateTargetId = "orderInputPartial",
     InsertionMode = InsertionMode.ReplaceWith,
     HttpMethod = "POST",
-    OnBegin = "addOrderPartial.cleanPartial()"
-}, new { id = "newOrderForm" }))
+    OnBegin = "updateOrderPartial.cleanPartial()"
+}, new { id = "updateOrderForm" }))
 {
-        <div class="form-horizontal">
-            <div id="addOrderInputPlaceholder"></div>
-         
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    @*<input type="submit" value="Add Order" class="btn btn-default" />*@ 
-                    <input type="button" value="Add Order" class="btn btn-default" onclick="addOrderPartial.submitOrder()" />
-                    <input type="button" value="Cancel" class="btn btn-default" onclick="addOrderPartial.cleanPartial()" />                   
-                </div>
+    @*@Html.AntiForgeryToken()*@
+
+    <div class="form-horizontal">
+        <div id="updateOrderInputPlaceholder"></div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Update Order" class="btn btn-default" onclick="updateOrderPartial.updateOrderClick()" />
+                <input type="button" value="Cancel" class="btn btn-default" onclick="updateOrderPartial.cleanPartial()" />
             </div>
         </div>
-    }
+    </div>
+}
 <script type="text/javascript">
     /// <reference path="/Scripts/gmaps.js" />
-    var addOrderPartial = function () {
+    var updateOrderPartial = function () {
         var startMarker;
         var endMarker;
         var addressMarkers = [];
-        function submitOrder() {
-            console.log('new order submit');
-            $('#newOrderForm').submit();
+        function updateOrderClick() {
+            // $('#updateOrderForm').submit();
+            console.log('update order click');
         }
 
         function cleanPartial() {
-            console.log('add partial clean');
             $('#phoneSearchBox').val("");
-            $('#addOrderPartial').trigger("reset");
-            $('#addOrderPartial').fadeOut();
+            $('#updateOrderPartial').trigger("reset");
+            $('#updateOrderPartial').fadeOut();
         }
 
         function updateOrderAddress(latlng, formattedAddress) {
-            
             $('#OrderLattitude').val(latlng.lat());
             $('#OrderLongitude').val(latlng.lng());
             $('#OrderAddress').val(formattedAddress);
@@ -53,7 +51,17 @@
             endMarker = addMarker(0, latlng.lat(), latlng.lng(), "/Content/Images/Map/yellow_m.png", formattedAddress, addressClick, addressMarkers);
         }
 
-      
+        $("#OrderAddress").keyup(function (event) {
+            if (event.keyCode == 13) {
+                getCoordinates($('#OrderAddress').val().trim(), updateOrderAddress);
+            }
+        });
+
+        $("#DestinationAddress").keyup(function (event) {
+            if (event.keyCode == 13) {
+                getCoordinates($('#DestinationAddress').val().trim(), updateDestinationAddress);
+            }
+        });
 
         $("#PhoneNumber").keyup(function (event) {
             if (event.keyCode == 13) {
@@ -64,19 +72,7 @@
         function addressClick() {
 
         }
-        $("#OrderAddress").keyup(function (event) {
-            console.log('"#OrderAddress" keyup');;
-            if (event.keyCode == 13) {
-                console.log('addorder-enteraddress');
-                getCoordinates($('#OrderAddress').val().trim(), updateOrderAddress);
-            }
-        });
 
-        $("#DestinationAddress").keyup(function (event) {
-            if (event.keyCode == 13) {
-                getCoordinates($('#DestinationAddress').val().trim(), updateDestinationAddress);
-            }
-        });
         function populate(data) {
             console.log('Populating addorderspartial');
             $('#phoneSearhPhone').val(data.custPhone);
@@ -88,10 +84,11 @@
 
         return {
             populate: populate,
-            submitOrder: submitOrder,
-            cleanPartial:cleanPartial
+            updateOrderClick: updateOrderClick,
+            cleanPartial: cleanPartial
         }
     }();
-   
+
+
 
 </script>

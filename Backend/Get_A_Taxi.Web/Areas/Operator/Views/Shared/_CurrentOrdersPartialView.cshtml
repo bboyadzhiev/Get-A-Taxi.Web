@@ -1,24 +1,24 @@
 ﻿<table class="table table-hover">
     <thead>
         <tr>
-            <th>id</th>
-            <th>Type</th>
+            @*<th>id</th>*@
+            @*<th>Type</th>*@
             <th>From</th>
             <th>To</th>
-            <th>Customer Name</th>
-            <th>Customer Phone</th>
+            <th>Name</th>
+            <th>Phone</th>
             <th>Comment</th>
-            <th>Driver Phone</th>
+            <th>Taxi GSM</th>
         </tr>
     </thead>
-    <tbody >
+    <tbody class="verticalTableScroll">
         <!-- ko foreach: orders -->
-        <tr>
-            <td data-bind="text: orderId"></td>
-            <td><img data-bind="attr: &#123; src: isWaiting ? '/Content/Images/Map/red_m.png' : '/Content/Images/Map/blue_m.png'  &#125;" /></td>
-            <td data-bind="text: start"></td>
-            <td data-bind="text: end"></td>
-            <td data-bind="text: custName"></td>
+        <tr data-bind="click: clicked, attr: &#123;  class:  isWaiting ? 'orderWaitingRow': 'orderInProgressRow' &#125;">
+            @*<td data-bind="text: orderId"></td>*@
+            @*<td><img data-bind="attr: &#123; src: isWaiting ? '/Content/Images/Map/red_m.png' : '/Content/Images/Map/blue_m.png'  &#125;" /></td>*@
+            <td class="trimmedText" data-bind="text: start"></td>
+            <td class="trimmedText" data-bind="text: end"></td>
+            <td><span data-bind="text: firstName"></span> <span data-bind="text: lastName"></span></td>
             <td data-bind="text: custPhone"></td>
             <td data-bind="text: custComment"></td>
             <td data-bind="text: driverPhone"></td>
@@ -36,11 +36,10 @@
 
         function updateOrdersMarkers(data) {
             for (var i = 0; i < data.length; i++) {
-              
                 if(data[i].isWaiting == true){
                     addMarker(data[i].markerId, data[i].startLat, data[i].startLng, '/Content/Images/Map/red_m.png', data[i].custName, clk, waitingMarkers );
                 }else {
-                    addMarker(data[i].markerId, data[i].startLat, data[i].startLng, '/Content/Images/Map/red_m.png', data[i].custName, clk, inProgressMarkers);
+                    addMarker(data[i].markerId, data[i].startLat, data[i].startLng, '/Content/Images/Map/blue_m.png', data[i].custName, clk, inProgressMarkers);
                 }
             }
         }
@@ -68,6 +67,26 @@
             this.addOrder = function (newOrder) {
                 this.orders.push(newOrder);
             }
+
+            this.clicked = function (data, event) {
+                map.setCenter(data.startLat(),data.startLng());
+                map.setZoom(17);
+              //  $('#phoneSearchBox').val(data.custPhone());
+                //  searchPane.phoneChanged();
+                $('#orderInputPartial').appendTo('#updateOrderInputPlaceholder');
+                $('#updateOrderPartial').fadeIn();
+                $('#updateOrderPartial').trigger("reset");
+                console.log('-----+++---');
+                $('#PhoneNumber').val(data.custPhone());
+                $('#OrderLattitude').val(data.startLat());
+                $('#OrderLongitude').val(data.startLng());
+                $('#OrderAddress').val(data.start());
+                $('#DestinationLattitude').val(data.endLat());
+                $('#DestinationLongitude').val(data.endLng());
+                $('#DestinationAddress').val(data.end());
+                $('#FirstName').val(data.firstName());
+                $('#LastName').val(data.lastName());
+            }
         };
 
         ordersHub = $.connection.ordersHub;
@@ -93,8 +112,6 @@
             console.log("Starting...");
             ordersHub.invoke("start");
         });
-
-      
 
     });
 </script>

@@ -393,8 +393,9 @@
     <Content Include="Areas\Operator\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Operator\Views\Main\Index.cshtml" />
     <Content Include="Areas\Operator\Views\Shared\_AddOrderPartialView.cshtml" />
-    <Content Include="Areas\Operator\Views\Shared\_CurrentOrdersPartialView2.cshtml" />
     <Content Include="Areas\Operator\Views\Shared\_CurrentOrdersPartialView.cshtml" />
+    <Content Include="Areas\Operator\Views\Shared\_UpdateOrderPartialView.cshtml" />
+    <Content Include="Areas\Operator\Views\Shared\_OrderInputPartialView.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -27,8 +27,11 @@ namespace Get_A_Taxi.Web.ViewModels
         [JsonProperty(PropertyName = "isWaiting")]
         public bool IsWaiting { get; set; }
 
-        [JsonProperty(PropertyName = "custName")]
-        public string CustomerName { get; set; }
+        [JsonProperty(PropertyName = "firstName")]
+        public string FirstName { get; set; }
+
+        [JsonProperty(PropertyName = "lastName")]
+        public string LastName { get; set; }
 
         [JsonProperty(PropertyName = "custPhone")]
         public string CustomerPhoneNumber { get; set; }
@@ -68,7 +71,9 @@ namespace Get_A_Taxi.Web.ViewModels
                     OrderId = x.OrderId,
                     CustomerId = x.Customer.Id,
                     TaxiId = (x.AssignedTaxi != null) ? x.AssignedTaxi.TaxiId : -1,
-                    CustomerName = x.Customer.UserName,
+                    //FirstName = x.Customer.UserName,
+                    FirstName = x.Customer.FirstName,
+                    LastName = x.Customer.LastName,
                     CustomerPhoneNumber = x.Customer.PhoneNumber,
                     OrderLattitude = x.OrderLattitude,
                     OrderLongitude = x.OrderLongitude,
@@ -88,7 +93,9 @@ namespace Get_A_Taxi.Web.ViewModels
         {
             configuration.CreateMap<Order, OrderDetailsVM>()
                 .ForMember(vm => vm.CustomerId, opt => opt.MapFrom(m => m.Customer.Id))
-                .ForMember(vm => vm.CustomerName, opt => opt.MapFrom(m => m.Customer.FirstName + " " + m.Customer.LastName))
+               // .ForMember(vm => vm.FirstName, opt => opt.MapFrom(m => m.Customer.FirstName + " " + m.Customer.LastName))
+               .ForMember(vm => vm.FirstName, opt => opt.MapFrom(m => m.Customer.FirstName))
+               .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.Customer.LastName))
                 .ForMember(vm => vm.TaxiId, opt => opt.MapFrom(m => (m.AssignedTaxi != null) ? m.AssignedTaxi.TaxiId : -1))
                 .ForMember(vm => vm.IsWaiting, opt => opt.MapFrom(m => m.OrderStatus == OrderStatus.Waiting))// ? 1 : 0))
                 .ForMember(vm => vm.DriverPhone, opt => opt.MapFrom(x => (x.Driver != null) ? x.Driver.PhoneNumber : ""))

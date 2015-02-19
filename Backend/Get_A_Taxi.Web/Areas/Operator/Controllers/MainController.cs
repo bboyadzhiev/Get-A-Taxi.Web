@@ -47,7 +47,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
-        public async Task<ActionResult> CreateOrder(OrderInputVM orderVm)
+        public async Task<ActionResult> CreateOrder([Bind(Include = "OrderLattitude,OrderLongitude,OrderAddress,DestinationLattitude,DestinationLongitude,DestinationAddress,FirstName,LastName,PhoneNumber,UserComment")]OrderInputVM orderVm)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +89,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                     else
                     {
                         ViewBag.Error = "Order could not be added:" + result.Errors.ToString();
-                        return PartialView("_AddOrderPartialView", orderVm);
+                        return PartialView("_OrderInputPartialView", orderVm);
                     }
                 }
 
@@ -117,9 +117,9 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                   this.bridge.AddOrder(order.OrderId);
                   //OrdersEvents.AddOrder(order.OrderId);
 
-                return PartialView("_AddOrderPartialView", new OrderInputVM());
+                return PartialView("_OrderInputPartialView", new OrderInputVM());
             }
-            return PartialView("_AddOrderPartialView", orderVm);
+            return PartialView("_OrderInputPartialView", orderVm);
         }
 
         [HttpPost]
