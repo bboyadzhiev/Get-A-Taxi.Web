@@ -60,11 +60,12 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                     // Known client, new order
                     order = OrderInputVM.ToOrderDataModel(orderVm, knownClient);
                     this.Data.Orders.Add(order);
-                    this.Data.SaveChanges();
+                    this.Data.Orders.SaveChanges();
                 }
                 else
                 {
                     //New client
+                    // TODO: Review phone user creation!
                     ApplicationUser newClient = new ApplicationUser()
                     {
                         UserName = orderVm.PhoneNumber + "@getataxi.com",
@@ -72,7 +73,8 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                         DefaultAddress = orderVm.OrderAddress,
                         FirstName = orderVm.FirstName,
                         LastName = orderVm.LastName,
-                        //   District = operatorUser.District,
+                        // TODO: Review District!
+                        // District = operatorUser.District,
                         Email = orderVm.PhoneNumber + "@getataxi.com"
                     };
 
@@ -84,7 +86,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                         //New order for the new client
                         order = OrderInputVM.ToOrderDataModel(orderVm, newClient);
                         this.Data.Orders.Add(order);
-                        this.Data.SaveChanges();
+                        this.Data.Orders.SaveChanges();
                     }
                     else
                     {
@@ -93,33 +95,111 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                     }
                 }
 
-                //// Update OperatorOrder
-                //var lastOperatorOrder = this.Data.OperatorsOrders.All().Where(o => o.OrderId == order.OrderId).FirstOrDefault();
-                //if (lastOperatorOrder != null)
-                //{
-                //    // Update operator Id and comment
-                //    lastOperatorOrder.OperatorId = operatorUser.Id;
-                //    lastOperatorOrder.Comment = orderVm.UserComment;
-                //}
-                //else
-                //{
-                    // New order by operator
-                    var operatorOrder = new OperatorOrder()
-                    {
-                        OperatorId = operatorUser.Id,
-                        OrderId = order.OrderId,
-                        Comment = order.UserComment
-                    };
-                    this.Data.OperatorsOrders.Add(operatorOrder);
-               // }
-                this.Data.SaveChanges();
+                // New order by operator
+                var operatorOrder = new OperatorOrder()
+                {
+                    OperatorId = operatorUser.Id,
+                    OrderId = order.OrderId,
+                    Comment = order.UserComment
+                };
+                this.Data.OperatorsOrders.Add(operatorOrder);
+                // }
+                this.Data.OperatorsOrders.SaveChanges();
 
-                  this.bridge.AddOrder(order.OrderId);
-                  //OrdersEvents.AddOrder(order.OrderId);
+                this.bridge.AddOrder(order.OrderId);
+                //OrdersEvents.AddOrder(order.OrderId);
 
                 return PartialView("_OrderInputPartialView", new OrderInputVM());
             }
             return PartialView("_OrderInputPartialView", orderVm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public ActionResult UpdateOrder(OrderInputVM orderVm)
+        {
+            if (ModelState.IsValid)
+            {
+                var order = this.Data.Orders.SearchFor(o => o.OrderId == orderVm.OrderId).FirstOrDefault();
+                if (order != null)
+                {
+                    var operatorUser = this.Data.Users.SearchFor(u => u.Id == UserProfile.Id).FirstOrDefault();
+
+                    OrderInputVM.UpdateOrderFromOperator(orderVm, order);
+                    this.Data.Orders.SaveChanges();
+
+                    // Updating or adding a new OperatorOrder entity
+                    var lastOperatorOrder = this.Data.OperatorsOrders.All().Where(o => o.OrderId == orderVm.OrderId).FirstOrDefault();
+                    if (lastOperatorOrder != null)
+                    {
+                        // Update operator Id and comment
+                        lastOperatorOrder.OperatorId = operatorUser.Id;
+                        lastOperatorOrder.Comment = orderVm.UserComment;
+                    }
+                    else
+                    {
+                        // Mobile order, updated by the operator
+                        var operatorOrder = new OperatorOrder()
+                        {
+                            OperatorId = operatorUser.Id,
+                            OrderId = orderVm.OrderId,
+                            Comment = orderVm.UserComment
+                        };
+                        this.Data.OperatorsOrders.Add(operatorOrder);
+                    }
+                    this.Data.OperatorsOrders.SaveChanges();
+                    this.bridge.UpdateOrder(order.OrderId);
+                }
+                else
+                {
+                    ViewBag.Error = "Order could not be found!";
+                    return PartialView("_OrderInputPartialView", orderVm);
+                }
+
+                return PartialView("_OrderInputPartialView", new OrderInputVM());
+            }
+            return PartialView("_OrderInputPartialView", orderVm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public ActionResult CancelOrder(int orderId)
+        {
+            // TODO: Is ValidateAntiForgeryToken validated?
+
+            var order = this.Data.Orders.SearchFor(o => o.OrderId == orderId).FirstOrDefault();
+            if (order != null)
+            {
+                if (order.OrderStatus == OrderStatus.Finished)
+                {
+                    var error = "Order could not be found!";
+                    ViewBag.Error = error;
+                    return Json(new
+                    {
+                        error = error
+                    });
+                }
+                order.OrderStatus = OrderStatus.Cancelled;
+                this.Data.Orders.SaveChanges();
+                this.bridge.CancelOrder(order.OrderId);
+
+                // TODO: review
+                return Json(new
+                {
+                    success = "ok"
+                });
+            }
+            else
+            {
+                var error = "Order is already finished!";
+                ViewBag.Error = error;
+                return Json(new
+                {
+                    error = error
+                });
+            }
         }
 
         [HttpPost]
@@ -140,14 +220,5 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
             return null;
         }
 
-        //[AcceptVerbs(HttpVerbs.Post)]
-        //public JsonResult GetOrders()
-        //{
-        //    var result = this.Data.Orders.All()
-        //        .Where(o => o.OrderStatus != OrderStatus.Finished)
-        //        .Project().To<OrderDetailsVM>().ToList();
-
-        //    return Json(result);
-        //}
     }
 }

@@ -9,6 +9,7 @@ namespace Get_A_Taxi.Web.Infrastructure.Services.Hubs
     {
         public event EventHandler<int> OrderAddedEvent;
         public event EventHandler<int> OrderCancelledEvent;
+        public event EventHandler<int> OrderUpdatedEvent;
         public void AddOrder(int orderId)
         {
             if (OrderAddedEvent != null)
@@ -22,6 +23,14 @@ namespace Get_A_Taxi.Web.Infrastructure.Services.Hubs
             if (OrderCancelledEvent != null)
             {
                 OrderCancelledEvent(this, orderId);
+            }
+        }
+
+        public void UpdateOrder(int orderId)
+        {
+            if (OrderUpdatedEvent != null)
+            {
+                OrderUpdatedEvent(this, orderId);
             }
         }
     }

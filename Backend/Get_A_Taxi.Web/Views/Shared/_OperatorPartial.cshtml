@@ -1,0 +1,10 @@
+﻿@using Microsoft.AspNet.Identity
+@using Get_A_Taxi.Models
+@if (Request.IsAuthenticated && User.IsInRole(UserRoles.Operator.ToString()))
+{
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("Operator Panel", "Index", "Main", new { area = "Operator" }, htmlAttributes: new { id = "operatorLink" })</li>
+    </ul>
+}
+
+

@@ -9,10 +9,12 @@ namespace Get_A_Taxi.Web.Infrastructure.Services.Hubs
 {
     public interface IOrderBridge
     {
-        void AddOrder(int orderId);
-        void CancelOrder(int orderId);
-
         event EventHandler<int> OrderAddedEvent;
         event EventHandler<int> OrderCancelledEvent;
+        event EventHandler<int> OrderUpdatedEvent;
+
+        void AddOrder(int orderId);
+        void CancelOrder(int orderId);
+        void UpdateOrder(int orderId);
     }
 }

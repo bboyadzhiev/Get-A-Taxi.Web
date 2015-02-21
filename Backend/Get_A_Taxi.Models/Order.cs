@@ -12,7 +12,8 @@ namespace Get_A_Taxi.Models
     {
         Waiting = 0,
         InProgress = 1,
-        Finished = 2
+        Finished = 2,
+        Cancelled = 3
     }
 
     [Table("Orders")]
@@ -32,14 +33,14 @@ namespace Get_A_Taxi.Models
         public double OrderLattitude { get; set; }
         [Required]
         public double OrderLongitude { get; set; }
-        [StringLength(50)]
+        [StringLength(100)]
         public string OrderAddress { get; set; }
 
         //[Required]
         public double DestinationLattitude { get; set; }
        // [Required]
         public double DestinationLongitude { get; set; }
-        [StringLength(50)]
+        [StringLength(100)]
         public string DestinationAddress { get; set; }
 
         public OrderStatus OrderStatus { get; set; }

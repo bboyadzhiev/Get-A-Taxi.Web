@@ -38,14 +38,25 @@ namespace Get_A_Taxi.Web.Hubs
 
             // Fallback to static event dispathcher
             //  OrdersEvents.OrderAddedEvent += (s, e) =>
-            _ordersBridge.OrderAddedEvent += (s, e) =>
-           {
-               var orderVM = this._data.Orders.All().Where(o => o.OrderId == e).Project().To<OrderDetailsVM>().FirstOrDefault();
-               // var orderVM = this.data.Orders.All().Where(o => o.OrderId == e).Select(OrderDetailsVM.FromOrderDataModel).FirstOrDefault();
-               Clients.All.addedOrder(orderVM);
-           };
+            //{
+            //    var orderVM = this.data.Orders.All().Where(o => o.OrderId == e).Select(OrderDetailsVM.FromOrderDataModel).FirstOrDefault();
+            //    Clients.All.addedOrder(orderVM);
+            //};
 
-            //// OrdersEvents.OrderCancelledEvent += (s, e) => Clients.All.cancelledOrder(e);
+            _ordersBridge.OrderAddedEvent += (s, e) =>
+            {
+                var orderVM = this._data.Orders.All().Where(o => o.OrderId == e).Project().To<OrderDetailsVM>().FirstOrDefault();
+                Clients.All.addedOrder(orderVM);
+            };
+
+            _ordersBridge.OrderUpdatedEvent += (s, e) =>
+            {
+                var orderVM = this._data.Orders.All().Where(o => o.OrderId == e).Project().To<OrderDetailsVM>().FirstOrDefault();
+                Clients.All.updatedOrder(orderVM);
+            };
+
+            OrdersEvents.OrderCancelledEvent += (s, e) => Clients.All.cancelledOrder(e);
+
             var ordersDisplayVMList = this._data.Orders.All().Where(o => o.OrderStatus != OrderStatus.Finished).Project().To<OrderDetailsVM>().ToList();
             Clients.Caller.updateOrders(ordersDisplayVMList);
         }

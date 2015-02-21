@@ -25,7 +25,7 @@
         </tr>
         <!-- /ko -->
     </tbody>
-    </table>
+</table>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -45,7 +45,7 @@
         }
 
         function clk() {
-    
+
         }
 
         var currentOrdersPartialVM = function (orders) {
@@ -65,18 +65,19 @@
             }
 
             this.addOrder = function (newOrder) {
-                this.orders.push(newOrder);
+                console.log(newOrder);
+                var observableOrder = ko.mapping.fromJS(newOrder);
+                this.orders.push(observableOrder);
             }
 
             this.clicked = function (data, event) {
                 map.setCenter(data.startLat(),data.startLng());
-                map.setZoom(17);
-              //  $('#phoneSearchBox').val(data.custPhone());
+                 map.setZoom(17);
+                  $('#phoneSearchBox').val(data.custPhone());
                 //  searchPane.phoneChanged();
                 $('#orderInputPartial').appendTo('#updateOrderInputPlaceholder');
                 $('#updateOrderPartial').fadeIn();
                 $('#updateOrderPartial').trigger("reset");
-                console.log('-----+++---');
                 $('#PhoneNumber').val(data.custPhone());
                 $('#OrderLattitude').val(data.startLat());
                 $('#OrderLongitude').val(data.startLng());
@@ -92,24 +93,20 @@
         ordersHub = $.connection.ordersHub;
 
         ordersHub.on("updateOrders", function (data) {
+            console.log('Orders Hub Connected!')
             console.log("client.updateOrders");
             console.log(data);
             ko.applyBindings(currentOrdersPartialVM(data));
             updateOrdersMarkers(data);
         });
         ordersHub.client.addedOrder = function (order) {
-            console.log("New order!");
-
-           // console.log('Adding to table');
+            console.log("New order received, adding to panel!");
             addOrder(order);
 
         }
-        //ordersHub.on("addOrder", function (newOrder) {
-        //    addOrder(newOrder);
-        //})
-
+       
         $.connection.hub.start().done(function () {
-            console.log("Starting...");
+            console.log("Connecting to Orders Hub...");
             ordersHub.invoke("start");
         });
 

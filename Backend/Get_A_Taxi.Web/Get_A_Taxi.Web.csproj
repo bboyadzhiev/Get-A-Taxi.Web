@@ -459,6 +459,7 @@
     <Content Include="Views\Employees\Index.cshtml" />
     <Content Include="Views\Employees\Index - Copy.cshtml" />
     <Content Include="Views\Shared\_UserSearchPartialView.cshtml" />
+    <Content Include="Views\Shared\_OperatorPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

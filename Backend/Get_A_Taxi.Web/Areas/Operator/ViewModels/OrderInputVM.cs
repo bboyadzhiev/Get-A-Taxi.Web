@@ -13,7 +13,7 @@
         public double OrderLattitude { get; set; }
         [Required]
         public double OrderLongitude { get; set; }
-        [StringLength(50)]
+        [StringLength(100)]
         [Display(Name="Order address")]
         public string OrderAddress { get; set; }
 
@@ -21,7 +21,7 @@
 
         public double DestinationLongitude { get; set; }
 
-        [StringLength(50)]
+        [StringLength(100)]
         [Display(Name = "Destination address")]
         public string DestinationAddress { get; set; }
         [Required]
@@ -56,6 +56,17 @@
                     Customer = u
                 };
             }
+        }
+
+        public static void UpdateOrderFromOperator(OrderInputVM orderVm, Order order)
+        {
+            order.OrderAddress = orderVm.OrderAddress;
+            order.OrderLattitude = orderVm.OrderLattitude;
+            order.OrderLongitude = orderVm.OrderLongitude;
+            order.DestinationAddress = orderVm.DestinationAddress;
+            order.DestinationLattitude = orderVm.DestinationLattitude;
+            order.DestinationLongitude = orderVm.DestinationLongitude;
+            order.UserComment = orderVm.UserComment;
         }
     }
 }

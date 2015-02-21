@@ -46,7 +46,7 @@ namespace Get_A_Taxi.Models
         [StringLength(20)]
         public string LastName { get; set; }
 
-        [StringLength(50)]
+        [StringLength(100)]
         public string DefaultAddress { get; set; }
 
 

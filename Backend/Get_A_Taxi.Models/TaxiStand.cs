@@ -18,7 +18,7 @@
         [Required]
         public double Longitude { get; set; }
 
-        [StringLength(50)]
+        [StringLength(100)]
         public string Address { get; set; }
 
         [StringLength(50)]
