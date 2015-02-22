@@ -8,70 +8,57 @@
     OnBegin = "updateOrderPartial.cleanPartial()"
 }, new { id = "updateOrderForm" }))
 {
-    @*@Html.AntiForgeryToken()*@
+   @*@Html.AntiForgeryToken()*@
 
     <div class="form-horizontal">
         <div id="updateOrderInputPlaceholder"></div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Update Order" class="btn btn-default" onclick="updateOrderPartial.updateOrderClick()" />
-                <input type="button" value="Cancel" class="btn btn-default" onclick="updateOrderPartial.cleanPartial()" />
+                <input type="button" value="Update" class="btn btn-default" onclick="updateOrderPartial.updateOrderClick()" />
+                <input type="button" value="Close" class="btn btn-default" onclick="updateOrderPartial.cleanPartial()" />
             </div>
         </div>
     </div>
 }
+@using (Ajax.BeginForm("CancelOrder", null, new AjaxOptions
+{
+    UpdateTargetId = "orderInputPartial",
+    InsertionMode = InsertionMode.ReplaceWith,
+    HttpMethod = "POST",
+    OnBegin = "updateOrderPartial.cleanPartial()"
+}, new { id = "cancelOrderForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("cancelOrderId")
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Cancel" class="btn btn-default" onclick="updateOrderPartial.cancelOrderClick()" />
+            </div>
+        </div>
+    </div>
+}
+
 <script type="text/javascript">
-    /// <reference path="/Scripts/gmaps.js" />
     var updateOrderPartial = function () {
-        var startMarker;
-        var endMarker;
-        var addressMarkers = [];
+
         function updateOrderClick() {
-            // $('#updateOrderForm').submit();
-            console.log('update order click');
+            orderInputPartial.cleanSearchMarkers();
+            $('#updateOrderForm').submit();
+        }
+
+        function cancelOrderClick() {
+            orderInputPartial.cleanSearchMarkers();
+            $('#cancelOrderForm').submit();
         }
 
         function cleanPartial() {
+            orderInputPartial.cleanSearchMarkers();
             $('#phoneSearchBox').val("");
             $('#updateOrderPartial').trigger("reset");
             $('#updateOrderPartial').fadeOut();
         }
 
-        function updateOrderAddress(latlng, formattedAddress) {
-            $('#OrderLattitude').val(latlng.lat());
-            $('#OrderLongitude').val(latlng.lng());
-            $('#OrderAddress').val(formattedAddress);
-            startMarker = addMarker(0, latlng.lat(), latlng.lng(), "/Content/Images/Map/green_m.png", formattedAddress, addressClick, addressMarkers);
-        }
-
-        function updateDestinationAddress(latlng, formattedAddress) {
-            $('#DestinationLattitude').val(latlng.lat());
-            $('#DestinationLongitude').val(latlng.lng());
-            $('#DestinationAddress').val(formattedAddress);
-            endMarker = addMarker(0, latlng.lat(), latlng.lng(), "/Content/Images/Map/yellow_m.png", formattedAddress, addressClick, addressMarkers);
-        }
-
-        $("#OrderAddress").keyup(function (event) {
-            if (event.keyCode == 13) {
-                getCoordinates($('#OrderAddress').val().trim(), updateOrderAddress);
-            }
-        });
-
-        $("#DestinationAddress").keyup(function (event) {
-            if (event.keyCode == 13) {
-                getCoordinates($('#DestinationAddress').val().trim(), updateDestinationAddress);
-            }
-        });
-
-        $("#PhoneNumber").keyup(function (event) {
-            if (event.keyCode == 13) {
-
-            }
-        });
-
-        function addressClick() {
-
-        }
 
         function populate(data) {
             console.log('Populating addorderspartial');
@@ -85,7 +72,8 @@
         return {
             populate: populate,
             updateOrderClick: updateOrderClick,
-            cleanPartial: cleanPartial
+            cleanPartial: cleanPartial,
+            cancelOrderClick: cancelOrderClick
         }
     }();
 

@@ -12,6 +12,7 @@ using Get_A_Taxi.Models;
 using Get_A_Taxi.Web.ViewModels;
 
 using AutoMapper.QueryableExtensions;
+using Get_A_Taxi.Web.Infrastructure.Services.Contracts;
 
 namespace Get_A_Taxi.Web.Hubs
 {
@@ -19,11 +20,12 @@ namespace Get_A_Taxi.Web.Hubs
     public class OrdersHub : Hub
     {
         private IOrderBridge _ordersBridge;
-        private IGetATaxiData _data;
-        public OrdersHub(IOrderBridge ordersBridge, IGetATaxiData data)
+        private IOrdersService _service;
+       // private IGetATaxiData _data;
+        public OrdersHub(IOrderBridge ordersBridge, IOrdersService service)
         {
             this._ordersBridge = ordersBridge;
-            this._data = data;
+            this._service = service;
         }
 
         //public OrdersHub(IGetATaxiData data)
@@ -45,20 +47,23 @@ namespace Get_A_Taxi.Web.Hubs
 
             _ordersBridge.OrderAddedEvent += (s, e) =>
             {
-                var orderVM = this._data.Orders.All().Where(o => o.OrderId == e).Project().To<OrderDetailsVM>().FirstOrDefault();
+                var orderVM = this._service.AllOrders().Where(o => o.OrderId == e).Project().To<OrderDetailsVM>().FirstOrDefault();
                 Clients.All.addedOrder(orderVM);
             };
 
             _ordersBridge.OrderUpdatedEvent += (s, e) =>
             {
-                var orderVM = this._data.Orders.All().Where(o => o.OrderId == e).Project().To<OrderDetailsVM>().FirstOrDefault();
+                var orderVM = this._service.AllOrders().Where(o => o.OrderId == e).Project().To<OrderDetailsVM>().FirstOrDefault();
                 Clients.All.updatedOrder(orderVM);
             };
 
-            OrdersEvents.OrderCancelledEvent += (s, e) => Clients.All.cancelledOrder(e);
+            _ordersBridge.OrderCancelledEvent += (s, e) => Clients.All.cancelledOrder(e);
 
-            var ordersDisplayVMList = this._data.Orders.All().Where(o => o.OrderStatus != OrderStatus.Finished).Project().To<OrderDetailsVM>().ToList();
+            var result = this._service.AllOrders();
+            result = this._service.GetUnfinished(result);
+            var ordersDisplayVMList = result.Project().To<OrderDetailsVM>().ToList();
             Clients.Caller.updateOrders(ordersDisplayVMList);
+
         }
     }
 }

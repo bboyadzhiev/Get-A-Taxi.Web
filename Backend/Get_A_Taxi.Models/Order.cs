@@ -29,6 +29,9 @@ namespace Get_A_Taxi.Models
 
         public virtual Taxi AssignedTaxi { get; set; }
 
+       
+        public virtual District District { get; set; }
+
         [Required]
         public double OrderLattitude { get; set; }
         [Required]

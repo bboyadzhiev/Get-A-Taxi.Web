@@ -45,3 +45,72 @@
     @Html.HiddenFor(model => model.DestinationLattitude)
     @Html.HiddenFor(model => model.DestinationLongitude)
 </div>
+
+<script type="text/javascript">
+    var orderInputPartial = function () {
+        var startMarker;
+        var endMarker;
+        var addressMarkers = [];
+
+        function cleanStartMarker() {
+            if (startMarker != null) {
+                removeMarker(startMarker.markerId, addressMarkers);
+            }
+        }
+        function cleanDestinationMarker() {
+            if (endMarker != null) {
+                removeMarker(endMarker.markerId, addressMarkers);
+            }
+        }
+
+        function cleanSearchMarkers() {
+            cleanStartMarker();
+            cleanDestinationMarker();
+        }
+
+        function addressClick() {
+            @{
+                // TODO: address search marker click 
+            }
+        }
+
+        function updateOrderAddress(latlng, formattedAddress) {
+            cleanStartMarker();
+            $('#OrderLattitude').val(latlng.lat());
+            $('#OrderLongitude').val(latlng.lng());
+            $('#OrderAddress').val(formattedAddress);
+            startMarker = addMarker(0, latlng.lat(), latlng.lng(), "/Content/Images/Map/green_m.png", formattedAddress, addressClick, addressMarkers);
+        }
+
+        function updateDestinationAddress(latlng, formattedAddress) {
+            cleanDestinationMarker();
+            $('#DestinationLattitude').val(latlng.lat());
+            $('#DestinationLongitude').val(latlng.lng());
+            $('#DestinationAddress').val(formattedAddress);
+            endMarker = addMarker(1, latlng.lat(), latlng.lng(), "/Content/Images/Map/yellow_m.png", formattedAddress, addressClick, addressMarkers);
+        }
+
+        $("#OrderAddress").keyup(function (event) {
+            console.log('"#OrderAddress" keyup');;
+            if (event.keyCode == 13) {
+                getCoordinates($('#OrderAddress').val().trim(), updateOrderAddress);
+            }
+        });
+
+        $("#DestinationAddress").keyup(function (event) {
+            if (event.keyCode == 13) {
+                getCoordinates($('#DestinationAddress').val().trim(), updateDestinationAddress);
+            }
+        });
+
+        return {
+            updateOrderAddress: updateOrderAddress,
+            updateDestinationAddress: updateDestinationAddress,
+            cleanSearchMarkers: cleanSearchMarkers,
+            cleanStartMarker: cleanStartMarker,
+            cleanDestinationMarker: cleanDestinationMarker
+        }
+
+    }();
+
+</script>

@@ -1,4 +1,4 @@
-﻿var markers = [];
+﻿//var markers = [];
 
 $(document).ready(function () {
     map = new GMaps({
@@ -59,7 +59,55 @@ function addMarker(markerId, lat, lng, iconLink, content, clickCallback, arrayRe
             clickCallback(markerId, lat, lng, content);
         },
     });
-    
+
     arrayReference.push(newMarker);
     return newMarker;
+}
+
+
+function updateMarker(markerId, lat, lng, iconLink, content, clickCallback, arrayReference) {
+    var markerToUpdate = removeMarker(markerId, arrayReference);
+
+    if (markerToUpdate != null) {
+        markerToUpdate.lat = lat,
+          markerToUpdate.lng = lng,
+          markerToUpdate.icon = iconLink,
+          markerToUpdate.infoWindow = { content: '<p>' + content + '</p>' },
+          markerToUpdate.click = function () {
+              clickCallback(markerId, lat, lng, content);
+          }
+
+        map.addMarker(markerToUpdate);
+        arrayReference.push(markerToUpdate);
+        console.log('marker updated');
+    }
+
+    //for (var marker in arrayReference) {
+    //    if (marker.markerId == markerId) {
+    //        markerToUpdate = marker;
+    //        break;
+    //    }
+    //}
+
+}
+
+function removeMarker(markerId, arrayReference) {
+    var markerToRemove;
+    var arrayLength = arrayReference.length;
+    var pos;
+    for (var i = 0; i < arrayLength; i++) {
+        if (arrayReference[i].markerId == markerId) {
+            markerToRemove = arrayReference[i];
+            pos = i;
+            break;
+        }
+    }
+
+    if (pos > -1) {
+        map.removeMarker(markerToRemove);
+        arrayReference.splice(pos, 1);
+        console.log('marker removed');
+        markerToRemove = null;
+    }
+    return markerToRemove;
 }

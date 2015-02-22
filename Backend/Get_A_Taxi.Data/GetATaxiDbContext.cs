@@ -4,6 +4,8 @@
     using Get_A_Taxi.Data.Migrations;
     using Get_A_Taxi.Models;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using System;
+    using System.Data.Entity.Validation;
 
     public class GetATaxiDbContext : IdentityDbContext<ApplicationUser>, IGetATaxiDbContext
     {
@@ -44,7 +46,24 @@
 
         public new int SaveChanges()
         {
-            return base.SaveChanges();
+            int code = 0;
+            try
+            {
+                code = base.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        int i = 5;
+                    }
+                }
+                throw;
+            }
+
+            return code;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -13,6 +13,8 @@
     </thead>
     <tbody class="verticalTableScroll">
         <!-- ko foreach: orders -->
+        @{// HACK: using &#123; - &#125; instead of { - } in data-binding due to RAZOR bug
+        }
         <tr data-bind="click: clicked, attr: &#123;  class:  isWaiting ? 'orderWaitingRow': 'orderInProgressRow' &#125;">
             @*<td data-bind="text: orderId"></td>*@
             @*<td><img data-bind="attr: &#123; src: isWaiting ? '/Content/Images/Map/red_m.png' : '/Content/Images/Map/blue_m.png'  &#125;" /></td>*@
@@ -34,7 +36,17 @@
 
         var ordersHub;
 
-        function updateOrdersMarkers(data) {
+        function addOrdersMarkers(data) {
+            for (var i = 0; i < data.length; i++) {
+                if(data[i].isWaiting == true){
+                    addMarker(data[i].markerId, data[i].startLat, data[i].startLng, '/Content/Images/Map/red_m.png', data[i].custName, clk, waitingMarkers );
+                }else {
+                    addMarker(data[i].markerId, data[i].startLat, data[i].startLng, '/Content/Images/Map/blue_m.png', data[i].custName, clk, inProgressMarkers);
+                }
+            }
+        }
+
+        function asdasdasd(data) {
             for (var i = 0; i < data.length; i++) {
                 if(data[i].isWaiting == true){
                     addMarker(data[i].markerId, data[i].startLat, data[i].startLng, '/Content/Images/Map/red_m.png', data[i].custName, clk, waitingMarkers );
@@ -70,23 +82,27 @@
                 this.orders.push(observableOrder);
             }
 
+            this.cancelOrder = function (orderId) {
+                var order = ko.utils.arrayFirst(this.orders(), function (order) {
+                    return order.orderId() == orderId;
+                });
+                this.orders.remove(order);
+                console.log("Order removed from list!");
+            }
+
             this.clicked = function (data, event) {
                 map.setCenter(data.startLat(),data.startLng());
-                 map.setZoom(17);
-                  $('#phoneSearchBox').val(data.custPhone());
-                //  searchPane.phoneChanged();
+                map.setZoom(17);
+                $('#phoneSearchBox').val(data.custPhone());
                 $('#orderInputPartial').appendTo('#updateOrderInputPlaceholder');
                 $('#updateOrderPartial').fadeIn();
                 $('#updateOrderPartial').trigger("reset");
+
                 $('#PhoneNumber').val(data.custPhone());
-                $('#OrderLattitude').val(data.startLat());
-                $('#OrderLongitude').val(data.startLng());
-                $('#OrderAddress').val(data.start());
-                $('#DestinationLattitude').val(data.endLat());
-                $('#DestinationLongitude').val(data.endLng());
-                $('#DestinationAddress').val(data.end());
-                $('#FirstName').val(data.firstName());
-                $('#LastName').val(data.lastName());
+
+                orderInputPartial.populate(data);
+              
+                $('#cancelOrderId').val(data.orderId());
             }
         };
 
@@ -94,17 +110,31 @@
 
         ordersHub.on("updateOrders", function (data) {
             console.log('Orders Hub Connected!')
-            console.log("client.updateOrders");
+            console.log('client.updateOrders');
             console.log(data);
             ko.applyBindings(currentOrdersPartialVM(data));
-            updateOrdersMarkers(data);
+            addOrdersMarkers(data);
         });
-        ordersHub.client.addedOrder = function (order) {
-            console.log("New order received, adding to panel!");
-            addOrder(order);
 
+        ordersHub.client.addedOrder = function (order) {
+            console.log('New order received, adding to panel!');
+            @{// TODO: add marker
+              }
+           // addOrderMarker(data);
+            addOrder(order);
         }
-       
+        ordersHub.client.cancelledOrder = function (orderId) {
+            console.log('Order '+orderId+' cancelled!');
+            var removedMarker = removeMarker(orderId, waitingMarkers);
+            console.log(removedMarker);
+            cancelOrder(orderId);
+        }
+
+        ordersHub.client.updatedOrder = function (order) {
+            console.log('Order '+order.orderId+' updated!');
+            updateOrder(order);
+        }
+
         $.connection.hub.start().done(function () {
             console.log("Connecting to Orders Hub...");
             ordersHub.invoke("start");

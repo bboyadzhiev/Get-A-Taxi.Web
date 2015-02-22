@@ -50,12 +50,11 @@
 </div>
 
 <script>
-    /// <reference path="/Scripts/gmaps.js" />
-    /// <reference path="/Scripts/jquery.signalR-2.2.0.js" />
-    /// <reference path="/Scripts/knockout-2.0.0.debug.js" />
+
     $('#orderInputPartial').appendTo('#addOrderInputPlaceholder');
     $('#addOrderPartial').hide();
     $('#updateOrderPartial').hide();
+
     var searchPane = function () {
         var phoneSearchUpdate = function (data, status, xhr) {
             if (data != null) {

@@ -21,69 +21,29 @@
         </div>
     }
 <script type="text/javascript">
-    /// <reference path="/Scripts/gmaps.js" />
     var addOrderPartial = function () {
-        var startMarker;
-        var endMarker;
-        var addressMarkers = [];
+
         function submitOrder() {
             console.log('new order submit');
+            orderInputPartial.cleanSearchMarkers();
             $('#newOrderForm').submit();
         }
 
         function cleanPartial() {
+            orderInputPartial.cleanSearchMarkers();
             console.log('add partial clean');
             $('#phoneSearchBox').val("");
             $('#addOrderPartial').trigger("reset");
             $('#addOrderPartial').fadeOut();
         }
 
-        function updateOrderAddress(latlng, formattedAddress) {
-            
-            $('#OrderLattitude').val(latlng.lat());
-            $('#OrderLongitude').val(latlng.lng());
-            $('#OrderAddress').val(formattedAddress);
-            startMarker = addMarker(0, latlng.lat(), latlng.lng(), "/Content/Images/Map/green_m.png", formattedAddress, addressClick, addressMarkers);
-        }
-
-        function updateDestinationAddress(latlng, formattedAddress) {
-            $('#DestinationLattitude').val(latlng.lat());
-            $('#DestinationLongitude').val(latlng.lng());
-            $('#DestinationAddress').val(formattedAddress);
-            endMarker = addMarker(0, latlng.lat(), latlng.lng(), "/Content/Images/Map/yellow_m.png", formattedAddress, addressClick, addressMarkers);
-        }
-
       
-
-        $("#PhoneNumber").keyup(function (event) {
-            if (event.keyCode == 13) {
-
-            }
-        });
-
-        function addressClick() {
-
-        }
-        $("#OrderAddress").keyup(function (event) {
-            console.log('"#OrderAddress" keyup');;
-            if (event.keyCode == 13) {
-                console.log('addorder-enteraddress');
-                getCoordinates($('#OrderAddress').val().trim(), updateOrderAddress);
-            }
-        });
-
-        $("#DestinationAddress").keyup(function (event) {
-            if (event.keyCode == 13) {
-                getCoordinates($('#DestinationAddress').val().trim(), updateDestinationAddress);
-            }
-        });
+     
         function populate(data) {
             console.log('Populating addorderspartial');
             $('#phoneSearhPhone').val(data.custPhone);
             searchPane.phoneChanged();
-            //$('#OrderAddress').val(data.start());
-            //$('#DestinationAddress').val(data.end());
-            //$('#FirstName').val(data.custName());
+          
         }
 
         return {

@@ -279,8 +279,8 @@
     <Compile Include="Infrastructure\Services\Base\BaseServices.cs" />
     <Compile Include="Infrastructure\Services\Contracts\IOperatorService.cs" />
     <Compile Include="Infrastructure\Services\OperatorService.cs" />
-    <Compile Include="Infrastructure\Services\OrdersListService.cs" />
-    <Compile Include="Infrastructure\Services\Contracts\IOrdersListService.cs" />
+    <Compile Include="Infrastructure\Services\OrdersService.cs" />
+    <Compile Include="Infrastructure\Services\Contracts\IOrdersService.cs" />
     <Compile Include="Infrastructure\Services\AccountService.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\IdentityModels.cs" />

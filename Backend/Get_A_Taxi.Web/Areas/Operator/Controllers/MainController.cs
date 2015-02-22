@@ -54,11 +54,13 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                 ModelState.Clear();
                 Order order;
                 var operatorUser = this.Data.Users.SearchFor(u => u.Id == UserProfile.Id).FirstOrDefault();
+                var district = operatorUser.District;
                 var knownClient = this.Data.Users.SearchFor(u => u.PhoneNumber == orderVm.PhoneNumber).FirstOrDefault();
                 if (knownClient != null)
                 {
                     // Known client, new order
                     order = OrderInputVM.ToOrderDataModel(orderVm, knownClient);
+                    order.District = district;
                     this.Data.Orders.Add(order);
                     this.Data.Orders.SaveChanges();
                 }
@@ -85,6 +87,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                     {
                         //New order for the new client
                         order = OrderInputVM.ToOrderDataModel(orderVm, newClient);
+                        order.District = district;
                         this.Data.Orders.Add(order);
                         this.Data.Orders.SaveChanges();
                     }
@@ -165,11 +168,9 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
-        public ActionResult CancelOrder(int orderId)
+        public ActionResult CancelOrder(int cancelOrderId)
         {
-            // TODO: Is ValidateAntiForgeryToken validated?
-
-            var order = this.Data.Orders.SearchFor(o => o.OrderId == orderId).FirstOrDefault();
+            var order = this.Data.Orders.SearchFor(o => o.OrderId == cancelOrderId).FirstOrDefault();
             if (order != null)
             {
                 if (order.OrderStatus == OrderStatus.Finished)
@@ -181,8 +182,9 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                         error = error
                     });
                 }
+              
                 order.OrderStatus = OrderStatus.Cancelled;
-                this.Data.Orders.SaveChanges();
+                this.Data.SaveChanges();
                 this.bridge.CancelOrder(order.OrderId);
 
                 // TODO: review

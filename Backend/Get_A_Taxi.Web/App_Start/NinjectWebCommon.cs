@@ -77,7 +77,7 @@ namespace Get_A_Taxi.Web.App_Start
                 .WithConstructorArgument("connectionString", Config.ConnectionString);
             kernel.Bind<IGetATaxiData>().To<GetATaxiData>();
             //   .WithConstructorArgument("data", d => db);
-            kernel.Bind<IOrdersListService>().To<OrdersListService>();
+            kernel.Bind<IOrdersService>().To<OrdersService>();
             kernel.Bind<IAccountService>().To<AccountService>();
             kernel.Bind<ITaxiService>().To<TaxiService>();
             kernel.Bind<IOperatorService>().To<OperatorService>();
