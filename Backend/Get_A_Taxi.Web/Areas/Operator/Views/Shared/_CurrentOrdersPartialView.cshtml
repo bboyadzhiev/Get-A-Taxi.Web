@@ -39,25 +39,42 @@
         function addOrdersMarkers(data) {
             for (var i = 0; i < data.length; i++) {
                 if(data[i].isWaiting == true){
-                    addMarker(data[i].markerId, data[i].startLat, data[i].startLng, '/Content/Images/Map/red_m.png', data[i].custName, clk, waitingMarkers );
+                    gATMap.addMarker(data[i].orderId, data[i].startLat, data[i].startLng, '/Content/Images/Map/red_m.png', data[i].firstName, clkW, waitingMarkers );
                 }else {
-                    addMarker(data[i].markerId, data[i].startLat, data[i].startLng, '/Content/Images/Map/blue_m.png', data[i].custName, clk, inProgressMarkers);
+                    gATMap.addMarker(data[i].orderId, data[i].startLat, data[i].startLng, '/Content/Images/Map/blue_m.png', data[i].firstName, clkP, inProgressMarkers);
                 }
             }
         }
 
-        function asdasdasd(data) {
-            for (var i = 0; i < data.length; i++) {
-                if(data[i].isWaiting == true){
-                    addMarker(data[i].markerId, data[i].startLat, data[i].startLng, '/Content/Images/Map/red_m.png', data[i].custName, clk, waitingMarkers );
-                }else {
-                    addMarker(data[i].markerId, data[i].startLat, data[i].startLng, '/Content/Images/Map/blue_m.png', data[i].custName, clk, inProgressMarkers);
-                }
+        function addNewOrderMarker(data) {
+            if(data.isWaiting == true){
+                gATMap.addMarker(data.orderId, data.startLat, data.startLng, '/Content/Images/Map/red_m.png', data.firstName, clkW, waitingMarkers );
+            }else {
+                gATMap.addMarker(data.orderId, data.startLat, data.startLng, '/Content/Images/Map/blue_m.png', data.firstName, clkP, inProgressMarkers);
             }
         }
 
-        function clk() {
+        function clkW(markerId, lat, lng, content) {
+            clickedMarker(markerId);
+        }
 
+        function clkP(markerId, lat, lng, content) {
+
+        }
+
+        function orderItemClick(data) {
+            gATMap.map.setCenter(data.startLat(),data.startLng());
+            gATMap.map.setZoom(17);
+            $('#phoneSearchBox').val(data.custPhone());
+            $('#orderInputPartial').appendTo('#updateOrderInputPlaceholder');
+            $('#updateOrderPartial').fadeIn();
+            $('#updateOrderPartial').trigger("reset");
+
+            $('#PhoneNumber').val(data.custPhone());
+
+            orderInputPartial.populate(data);
+
+            $('#cancelOrderId').val(data.orderId());
         }
 
         var currentOrdersPartialVM = function (orders) {
@@ -77,7 +94,6 @@
             }
 
             this.addOrder = function (newOrder) {
-                console.log(newOrder);
                 var observableOrder = ko.mapping.fromJS(newOrder);
                 this.orders.push(observableOrder);
             }
@@ -91,19 +107,18 @@
             }
 
             this.clicked = function (data, event) {
-                map.setCenter(data.startLat(),data.startLng());
-                map.setZoom(17);
-                $('#phoneSearchBox').val(data.custPhone());
-                $('#orderInputPartial').appendTo('#updateOrderInputPlaceholder');
-                $('#updateOrderPartial').fadeIn();
-                $('#updateOrderPartial').trigger("reset");
-
-                $('#PhoneNumber').val(data.custPhone());
-
-                orderInputPartial.populate(data);
-              
-                $('#cancelOrderId').val(data.orderId());
+                orderItemClick(data);
             }
+
+            this.clickedMarker = function (orderId) {
+                var order = ko.utils.arrayFirst(this.orders(), function (order) {
+                    return order.orderId() == orderId;
+                });
+                console.log('Clicked on marker with orderId ' + orderId);
+                console.log(order);
+                orderItemClick(order);
+            }
+    
         };
 
         ordersHub = $.connection.ordersHub;
@@ -118,20 +133,20 @@
 
         ordersHub.client.addedOrder = function (order) {
             console.log('New order received, adding to panel!');
-            @{// TODO: add marker
-              }
-           // addOrderMarker(data);
+            addNewOrderMarker(order);
             addOrder(order);
         }
         ordersHub.client.cancelledOrder = function (orderId) {
             console.log('Order '+orderId+' cancelled!');
-            var removedMarker = removeMarker(orderId, waitingMarkers);
-            console.log(removedMarker);
+            var markerToRemove = gATMap.removeMarker(orderId, waitingMarkers);
+            console.log(markerToRemove);
             cancelOrder(orderId);
         }
 
         ordersHub.client.updatedOrder = function (order) {
             console.log('Order '+order.orderId+' updated!');
+            var markerToRemove = gATMap.removeMarker(order.orderId, waitingMarkers);
+            addNewOrderMarker(order);
             updateOrder(order);
         }
 

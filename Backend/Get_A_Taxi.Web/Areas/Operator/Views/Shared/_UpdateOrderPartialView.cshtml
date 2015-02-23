@@ -59,18 +59,7 @@
             $('#updateOrderPartial').fadeOut();
         }
 
-
-        function populate(data) {
-            console.log('Populating addorderspartial');
-            $('#phoneSearhPhone').val(data.custPhone);
-            searchPane.phoneChanged();
-            //$('#OrderAddress').val(data.start());
-            //$('#DestinationAddress').val(data.end());
-            //$('#FirstName').val(data.custName());
-        }
-
         return {
-            populate: populate,
             updateOrderClick: updateOrderClick,
             cleanPartial: cleanPartial,
             cancelOrderClick: cancelOrderClick

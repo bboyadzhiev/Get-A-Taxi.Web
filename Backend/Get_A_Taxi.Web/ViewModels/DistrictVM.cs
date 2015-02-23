@@ -18,15 +18,15 @@ namespace Get_A_Taxi.Web.ViewModels
 
         [Required]
         [StringLength(50)]
-        [DisplayName("District Title")]
+        [DisplayName("Title")]
         public string Title { get; set; }
 
         [Required]
-        [DisplayName("Lattitude")]
+        [DisplayName("Lat")]
         [DisplayFormat(DataFormatString = "{0:0.000000000}", ApplyFormatInEditMode = true)]
         public decimal CenterLattitude { get; set; }
         [Required]
-        [DisplayName("Longitude")]
+        [DisplayName("Lng")]
 
         [DisplayFormat(DataFormatString = "{0:0.000000000}", ApplyFormatInEditMode = true)]
         public decimal CenterLongitude { get; set; }
