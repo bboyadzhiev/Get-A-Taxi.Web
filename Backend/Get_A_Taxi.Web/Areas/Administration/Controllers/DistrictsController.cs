@@ -121,8 +121,9 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
             {
                 return HttpNotFound();
             }
-            var districtVM = district.Select(d=>d.Taxies.Any()).Project().To<DistrictVM>().FirstOrDefault();
-            if (districtVM == null)
+
+            var districtVM = district.Where(d=>d.Taxies.Any()).Project().To<DistrictVM>().FirstOrDefault();
+            if (districtVM != null)
             {
                 return HttpNotFound("Cannot delete district with assigned taxies");
             }

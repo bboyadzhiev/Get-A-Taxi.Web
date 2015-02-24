@@ -91,14 +91,26 @@
         }
 
         function populate(data) {
-            +$('#OrderLattitude').val(data.startLat());
-            +$('#OrderLongitude').val(data.startLng());
-            +$('#OrderAddress').val(data.start());
-            +$('#DestinationLattitude').val(data.endLat());
-            +$('#DestinationLongitude').val(data.endLng());
-            +$('#DestinationAddress').val(data.end());
-            +$('#FirstName').val(data.firstName());
-            +$('#LastName').val(data.lastName());
+            if (data.orderId() != null) {
+                $('#OrderId').val(data.orderId());
+            }
+            $('#OrderLattitude').val(data.startLat());
+            $('#OrderLongitude').val(data.startLng());
+            $('#OrderAddress').val(data.start());
+            $('#DestinationLattitude').val(data.endLat());
+            $('#DestinationLongitude').val(data.endLng());
+            $('#DestinationAddress').val(data.end());
+            $('#FirstName').val(data.firstName());
+            $('#LastName').val(data.lastName());
+        }
+
+        function populateInputs(data) {
+            if (data != null) {
+                $('#DestinationAddress').val("");
+                $('#OrderAddress').val(data.orderAddress);
+                $('#FirstName').val(data.firstName);
+                $('#LastName').val(data.lastName);
+            }
         }
 
         $("#OrderAddress").keyup(function (event) {
@@ -120,7 +132,8 @@
             cleanSearchMarkers: cleanSearchMarkers,
             cleanStartMarker: cleanStartMarker,
             cleanDestinationMarker: cleanDestinationMarker,
-            populate:populate
+            populate: populate,
+            populateInputs:populateInputs
         }
 
     }();

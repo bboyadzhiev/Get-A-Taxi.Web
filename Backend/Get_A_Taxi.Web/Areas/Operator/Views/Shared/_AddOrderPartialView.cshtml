@@ -1,5 +1,4 @@
-﻿
-    @*@using (Html.BeginForm("CreateOrder", "Main", FormMethod.Post, new { id= "newOrderForm"}))*@
+﻿@*@using (Html.BeginForm("CreateOrder", "Main", FormMethod.Post, new { id= "newOrderForm"}))*@
 @using (Ajax.BeginForm("CreateOrder", null, new AjaxOptions
 {
     UpdateTargetId = "orderInputPartial",
@@ -8,18 +7,16 @@
     OnBegin = "addOrderPartial.cleanPartial()"
 }, new { id = "newOrderForm" }))
 {
-        <div class="form-horizontal">
-            <div id="addOrderInputPlaceholder"></div>
-         
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    @*<input type="submit" value="Add Order" class="btn btn-default" />*@ 
-                    <input type="button" value="Add Order" class="btn btn-default" onclick="addOrderPartial.submitOrder()" />
-                    <input type="button" value="Cancel" class="btn btn-default" onclick="addOrderPartial.cleanPartial()" />                   
-                </div>
+    <div class="form-horizontal">
+        <div id="addOrderInputPlaceholder"></div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Add Order" class="btn btn-default" onclick="addOrderPartial.submitOrder()" />
+                <input type="button" value="Cancel" class="btn btn-default" onclick="addOrderPartial.cleanPartial()" />
             </div>
         </div>
-    }
+    </div>
+}
 <script type="text/javascript">
     var addOrderPartial = function () {
 
@@ -33,25 +30,25 @@
             orderInputPartial.cleanSearchMarkers();
             console.log('add partial clean');
             $('#phoneSearchBox').val("");
-            $('#addOrderPartial').trigger("reset");
+            $('#newOrderForm').trigger("reset");
             $('#addOrderPartial').fadeOut();
         }
 
-      
-     
+
+
         function populate(data) {
             console.log('Populating addorderspartial');
             $('#phoneSearhPhone').val(data.custPhone);
             searchPane.phoneChanged();
-          
+
         }
 
         return {
             populate: populate,
             submitOrder: submitOrder,
-            cleanPartial:cleanPartial
+            cleanPartial: cleanPartial
         }
     }();
-   
+
 
 </script>

@@ -4,6 +4,7 @@ namespace Get_A_Taxi.Data.Repositories
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Validation;
     using System.Linq;
     using System.Linq.Expressions;
     public class Repository<T> : IRepository<T> where T : class
@@ -49,7 +50,27 @@ namespace Get_A_Taxi.Data.Repositories
         }
         public int SaveChanges()
         {
+            try
+            {
+
             return this.context.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        int i = 5;
+                    }
+                }
+                throw e;
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
         }
         private void ChangeState(T entity, EntityState state)
         {

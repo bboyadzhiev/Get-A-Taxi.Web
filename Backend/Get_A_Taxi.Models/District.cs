@@ -38,11 +38,14 @@
             get { return taxies; }
             set { taxies = value; }
         }
+
+        public ICollection<Order> Orders { get; set; }
         
         public District()
         {
             this.TaxiStands = new HashSet<TaxiStand>();
             this.Taxies = new HashSet<Taxi>();
+            this.Orders = new HashSet<Order>();
         }
 
        

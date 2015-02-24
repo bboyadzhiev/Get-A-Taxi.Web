@@ -50,18 +50,12 @@
 </div>
 
 <script>
-
     $('#orderInputPartial').appendTo('#addOrderInputPlaceholder');
     $('#addOrderPartial').hide();
     $('#updateOrderPartial').hide();
-
     var searchPane = function () {
         var phoneSearchUpdate = function (data, status, xhr) {
-            if (data != null) {
-                $('#OrderAddress').val(data.orderAddress);
-                $('#FirstName').val(data.firstName);
-                $('#LastName').val(data.lastName);
-            }
+            orderInputPartial.populateInputs(data);
         }
 
         var phoneChanged = function () {

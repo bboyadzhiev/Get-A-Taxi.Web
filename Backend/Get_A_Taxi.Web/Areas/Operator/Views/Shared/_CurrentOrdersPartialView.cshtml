@@ -66,6 +66,7 @@
             gATMap.map.setCenter(data.startLat(),data.startLng());
             gATMap.map.setZoom(17);
             $('#phoneSearchBox').val(data.custPhone());
+            $('#phoneSearchBox').enabled = false;
             $('#orderInputPartial').appendTo('#updateOrderInputPlaceholder');
             $('#updateOrderPartial').fadeIn();
             $('#updateOrderPartial').trigger("reset");

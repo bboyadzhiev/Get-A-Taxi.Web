@@ -76,7 +76,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                         FirstName = orderVm.FirstName,
                         LastName = orderVm.LastName,
                         // TODO: Review District!
-                        // District = operatorUser.District,
+                        //District = district,
                         Email = orderVm.PhoneNumber + "@getataxi.com"
                     };
 
@@ -106,11 +106,9 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                     Comment = order.UserComment
                 };
                 this.Data.OperatorsOrders.Add(operatorOrder);
-                // }
                 this.Data.OperatorsOrders.SaveChanges();
 
                 this.bridge.AddOrder(order.OrderId);
-                //OrdersEvents.AddOrder(order.OrderId);
 
                 return PartialView("_OrderInputPartialView", new OrderInputVM());
             }
@@ -127,10 +125,14 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                 var order = this.Data.Orders.SearchFor(o => o.OrderId == orderVm.OrderId).FirstOrDefault();
                 if (order != null)
                 {
+                    // HACK: re-assigning district and customer
                     var operatorUser = this.Data.Users.SearchFor(u => u.Id == UserProfile.Id).FirstOrDefault();
-
+                    var district = operatorUser.District;
+                    var customer = this.Data.Users.SearchFor(u => u.Id == order.Customer.Id).FirstOrDefault();
                     OrderInputVM.UpdateOrderFromOperator(orderVm, order);
-                    this.Data.Orders.SaveChanges();
+                    order.District = district;
+                    order.Customer = customer;
+                    this.Data.Orders.Update(order);
 
                     // Updating or adding a new OperatorOrder entity
                     var lastOperatorOrder = this.Data.OperatorsOrders.All().Where(o => o.OrderId == orderVm.OrderId).FirstOrDefault();
@@ -139,6 +141,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                         // Update operator Id and comment
                         lastOperatorOrder.OperatorId = operatorUser.Id;
                         lastOperatorOrder.Comment = orderVm.UserComment;
+                        this.Data.OperatorsOrders.Update(lastOperatorOrder);
                     }
                     else
                     {
@@ -151,7 +154,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                         };
                         this.Data.OperatorsOrders.Add(operatorOrder);
                     }
-                    this.Data.OperatorsOrders.SaveChanges();
+                    this.Data.SaveChanges();
                     this.bridge.UpdateOrder(order.OrderId);
                 }
                 else
@@ -182,7 +185,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                         error = error
                     });
                 }
-              
+
                 order.OrderStatus = OrderStatus.Cancelled;
                 this.Data.SaveChanges();
                 this.bridge.CancelOrder(order.OrderId);

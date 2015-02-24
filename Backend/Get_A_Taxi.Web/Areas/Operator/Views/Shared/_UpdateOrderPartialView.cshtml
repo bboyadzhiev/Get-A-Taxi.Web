@@ -8,18 +8,17 @@
     OnBegin = "updateOrderPartial.cleanPartial()"
 }, new { id = "updateOrderForm" }))
 {
-   @*@Html.AntiForgeryToken()*@
-
     <div class="form-horizontal">
         <div id="updateOrderInputPlaceholder"></div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="button" value="Update" class="btn btn-default" onclick="updateOrderPartial.updateOrderClick()" />
-                <input type="button" value="Close" class="btn btn-default" onclick="updateOrderPartial.cleanPartial()" />
+                <input type="button" value="Close" class="btn btn-default" onclick="updateOrderPartial.closeClick()" />
             </div>
         </div>
     </div>
 }
+
 @using (Ajax.BeginForm("CancelOrder", null, new AjaxOptions
 {
     UpdateTargetId = "orderInputPartial",
@@ -43,25 +42,32 @@
     var updateOrderPartial = function () {
 
         function updateOrderClick() {
-            orderInputPartial.cleanSearchMarkers();
             $('#updateOrderForm').submit();
+            cleanPartial();
         }
 
         function cancelOrderClick() {
-            orderInputPartial.cleanSearchMarkers();
             $('#cancelOrderForm').submit();
+            cleanPartial();
+           
         }
 
         function cleanPartial() {
             orderInputPartial.cleanSearchMarkers();
             $('#phoneSearchBox').val("");
-            $('#updateOrderPartial').trigger("reset");
+            $('#phoneSearchBox').enabled = true;
+            $('#updateOrderForm').trigger("reset");
             $('#updateOrderPartial').fadeOut();
+        }
+
+        function closeClick() {
+            cleanPartial();
         }
 
         return {
             updateOrderClick: updateOrderClick,
             cleanPartial: cleanPartial,
+            closeClick: closeClick,
             cancelOrderClick: cancelOrderClick
         }
     }();
