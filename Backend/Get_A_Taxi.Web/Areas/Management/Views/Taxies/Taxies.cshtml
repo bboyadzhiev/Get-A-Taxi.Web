@@ -32,15 +32,15 @@
             
     </div>
 </section>
-<div id="results">
 
-</div>
 <div id="driversResults">
 
 </div>
 
 <script>
+    
     function searchTaxies() {
+       
         console.log("hide");
         $("#taxiSearchForm").submit();
         $("#taxi-details").empty();
@@ -61,14 +61,21 @@
     }
 
     function cleanUserDetails() {
+       
         $("#user-details").empty().addClass("loader");
     }
 
-    function userDetailsLoaded() {
+    function driverDetailsLoaded() {
+        console.log('user details loaded');
         hideLoader();
         $("#driversResults").empty();
-        $("#assign-driver").show();
+        $("#userSearchPartial").empty();
+        $("#assignDriverForm").show();
     }
  
+    function taxiDetailsLoaded() {
+        hideLoader();
+        $("#assignDriverForm").hide();
+    }
 
 </script>

@@ -29,7 +29,7 @@ namespace Get_A_Taxi.Models
 
         public virtual Taxi AssignedTaxi { get; set; }
 
-       
+       [Required]
         public virtual District District { get; set; }
 
         [Required]

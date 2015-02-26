@@ -30,12 +30,12 @@
 </table>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    // $(document).ready(function () {
+    var currentOrdersPartial = function () {
         var waitingMarkers = [];
         var inProgressMarkers = [];
-
+        var m = [];
         var ordersHub;
-
         function addOrdersMarkers(data) {
             for (var i = 0; i < data.length; i++) {
                 if(data[i].isWaiting == true){
@@ -44,6 +44,7 @@
                     gATMap.addMarker(data[i].orderId, data[i].startLat, data[i].startLng, '/Content/Images/Map/blue_m.png', data[i].firstName, clkP, inProgressMarkers);
                 }
             }
+            console.log('waiting orders markers: '+waitingMarkers.length);
         }
 
         function addNewOrderMarker(data) {
@@ -116,10 +117,9 @@
                     return order.orderId() == orderId;
                 });
                 console.log('Clicked on marker with orderId ' + orderId);
-                console.log(order);
                 orderItemClick(order);
             }
-    
+
         };
 
         ordersHub = $.connection.ordersHub;
@@ -137,10 +137,10 @@
             addNewOrderMarker(order);
             addOrder(order);
         }
+
         ordersHub.client.cancelledOrder = function (orderId) {
             console.log('Order '+orderId+' cancelled!');
             var markerToRemove = gATMap.removeMarker(orderId, waitingMarkers);
-            console.log(markerToRemove);
             cancelOrder(orderId);
         }
 
@@ -155,6 +155,6 @@
             console.log("Connecting to Orders Hub...");
             ordersHub.invoke("start");
         });
-
-    });
+    }();
+    // });
 </script>

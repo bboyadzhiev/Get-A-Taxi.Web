@@ -24,13 +24,13 @@
                         @:|
                     }
 
-                    @Ajax.ActionLink("Details", "DriverDetails", new { driverId = user.Id },
+                    @Ajax.ActionLink("DriverDetails", "DriverDetails", new { driverId = user.Id },
         new AjaxOptions
             {
                 InsertionMode = InsertionMode.Replace,
                 UpdateTargetId = "user-details",
                 OnBegin = "cleanUserDetails()",
-                OnComplete = "userDetailsLoaded()"
+                OnComplete = "driverDetailsLoaded()"
             }, null)
                 </td>
                 <td>

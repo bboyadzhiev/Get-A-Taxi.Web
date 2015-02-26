@@ -3,7 +3,7 @@
 @if (Request.IsAuthenticated && User.IsInRole(UserRoles.Operator.ToString()))
 {
     <ul class="nav navbar-nav">
-        <li>@Html.ActionLink("Operator Panel", "Index", "Main", new { area = "Operator" }, htmlAttributes: new { id = "operatorLink" })</li>
+        <li>@Html.ActionLink("Operator", "Index", "Main", new { area = "Operator" }, htmlAttributes: new { id = "operatorLink" })</li>
     </ul>
 }
 

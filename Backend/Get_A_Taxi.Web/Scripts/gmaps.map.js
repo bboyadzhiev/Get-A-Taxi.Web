@@ -1,4 +1,5 @@
-﻿var gATMap = (function () {
+﻿
+var gATMap = (function () {
 
     var map = new GMaps({
         div: '#map',
@@ -57,6 +58,7 @@
         });
 
         arrayReference.push(newMarker);
+        console.log('GATMAP: marker added!');
         return newMarker;
     }
 
@@ -75,7 +77,7 @@
 
             map.addMarker(markerToUpdate);
             arrayReference.push(markerToUpdate);
-            console.log('marker updated');
+            console.log('GATMAP: marker updated!');
         }
 
         //for (var marker in arrayReference) {
@@ -92,17 +94,17 @@
         var arrayLength = arrayReference.length;
         var pos;
         for (var i = 0; i < arrayLength; i++) {
-            if (arrayReference[i].markerId == markerId) {
+            if (arrayReference[i].id == markerId) {
                 markerToRemove = arrayReference[i];
                 pos = i;
                 break;
             }
         }
-
+        console.log(pos);
         if (pos > -1) {
             map.removeMarker(markerToRemove);
             arrayReference.splice(pos, 1);
-            console.log('marker removed');
+            console.log('GATMAP: marker removed!');
             //  markerToRemove = null;
         }
         return markerToRemove;

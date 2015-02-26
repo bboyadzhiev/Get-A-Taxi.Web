@@ -54,12 +54,12 @@
 
         function cleanStartMarker() {
             if (startMarker != null) {
-                gATMap.removeMarker(startMarker.markerId, addressMarkers);
+                gATMap.removeMarker(startMarker.id, addressMarkers);
             }
         }
         function cleanDestinationMarker() {
             if (endMarker != null) {
-                gATMap.removeMarker(endMarker.markerId, addressMarkers);
+                gATMap.removeMarker(endMarker.id, addressMarkers);
             }
         }
 

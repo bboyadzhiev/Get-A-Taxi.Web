@@ -20,7 +20,7 @@
                 InsertionMode = InsertionMode.Replace,
                 UpdateTargetId = "taxi-details",
                 OnBegin = "cleanTaxiDetails()",
-                OnComplete = "hideLoader()"
+                OnComplete = "taxiDetailsLoaded()"
             })
                     |
                     @Ajax.ActionLink("Edit", "Edit", new { taxiId = taxi.TaxiId },

@@ -60,7 +60,12 @@
                         int i = 5;
                     }
                 }
-                throw;
+                throw e;
+            }
+            catch (Exception e)
+            {
+
+                throw e;
             }
 
             return code;

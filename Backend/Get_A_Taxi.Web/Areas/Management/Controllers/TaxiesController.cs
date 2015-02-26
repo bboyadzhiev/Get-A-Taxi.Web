@@ -146,6 +146,10 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AssignDriver(string userId, int taxiId)
         {
+            if (userId == null || taxiId == null)
+            {
+                return RedirectToAction("Index");
+            }
             var driverRoleId = this.RoleManager.Roles
                 .Where(r => r.Name == UserRoles.Driver.ToString())
                 .FirstOrDefault().Id;

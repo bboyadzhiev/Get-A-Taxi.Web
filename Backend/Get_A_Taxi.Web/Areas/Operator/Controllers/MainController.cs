@@ -72,6 +72,8 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                     {
                         UserName = orderVm.PhoneNumber + "@getataxi.com",
                         PhoneNumber = orderVm.PhoneNumber,
+
+                        // TODO: Phone user default address
                         DefaultAddress = orderVm.OrderAddress,
                         FirstName = orderVm.FirstName,
                         LastName = orderVm.LastName,
@@ -187,24 +189,18 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                 }
 
                 order.OrderStatus = OrderStatus.Cancelled;
-                this.Data.SaveChanges();
+                var customer = order.Customer;
+                var district = order.District;
+                this.Data.Orders.Update(order);
+                this.Data.Orders.SaveChanges();
                 this.bridge.CancelOrder(order.OrderId);
-
-                // TODO: review
-                return Json(new
-                {
-                    success = "ok"
-                });
             }
             else
             {
                 var error = "Order is already finished!";
                 ViewBag.Error = error;
-                return Json(new
-                {
-                    error = error
-                });
             }
+            return PartialView("_OrderInputPartialView", new OrderInputVM());
         }
 
         [HttpPost]
