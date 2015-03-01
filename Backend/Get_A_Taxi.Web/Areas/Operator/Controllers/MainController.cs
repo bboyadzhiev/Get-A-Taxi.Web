@@ -33,6 +33,8 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
         {
             ViewBag.Lat = this.UserProfile.District.CenterLattitude;
             ViewBag.Lng = this.UserProfile.District.CenterLongitude;
+            ViewBag.DistrictId = this.UserProfile.District.DistrictId;
+            ViewBag.OperatorId = this.UserProfile.Id;
             return View();
         }
 
@@ -109,8 +111,9 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                 };
                 this.Data.OperatorsOrders.Add(operatorOrder);
                 this.Data.OperatorsOrders.SaveChanges();
-
-                this.bridge.AddOrder(order.OrderId);
+                var orderVM = this.Data.Orders.All().Where(o => o.OrderId == order.OrderId).Project().To<OrderDetailsVM>().FirstOrDefault();
+                this.bridge.AddOrder(orderVM, district.DistrictId);
+                //this.bridge.AddOrder(order.OrderId, district.DistrictId);
 
                 return PartialView("_OrderInputPartialView", new OrderInputVM());
             }
@@ -157,7 +160,9 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                         this.Data.OperatorsOrders.Add(operatorOrder);
                     }
                     this.Data.SaveChanges();
-                    this.bridge.UpdateOrder(order.OrderId);
+                    var orderVM = this.Data.Orders.All().Where(o => o.OrderId == order.OrderId).Project().To<OrderDetailsVM>().FirstOrDefault();
+                    this.bridge.UpdateOrder(orderVM, district.DistrictId);
+                   // this.bridge.UpdateOrder(order.OrderId, district.DistrictId);
                 }
                 else
                 {
@@ -193,7 +198,9 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                 var district = order.District;
                 this.Data.Orders.Update(order);
                 this.Data.Orders.SaveChanges();
-                this.bridge.CancelOrder(order.OrderId);
+                var orderVM = this.Data.Orders.All().Where(o => o.OrderId == order.OrderId).Project().To<OrderDetailsVM>().FirstOrDefault();
+                this.bridge.CancelOrder(orderVM, district.DistrictId);
+               // this.bridge.CancelOrder(order.OrderId, district.DistrictId);
             }
             else
             {

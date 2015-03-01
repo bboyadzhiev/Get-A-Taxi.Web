@@ -11,6 +11,10 @@
     {
         private IGetATaxiData data;
         private ICacheService cache;
+        public const string DISTRICTS_CHACHE = "districts";
+        public const string NULL_DISTRICTS_CHACHE = "nullableDistricts";
+        public const string ROLES_CACHE = "roles";
+        public const string MANAGEMENT_ROLES_CACHE = "managementRoles";
 
         public DropDownListPopulator(IGetATaxiData data, ICacheService cache)
         {
@@ -20,8 +24,7 @@
 
         public IEnumerable<SelectListItem> GetDistricts()
         {
-
-            var districts = this.cache.Get<IEnumerable<SelectListItem>>("districts",
+            var districts = this.cache.Get<IEnumerable<SelectListItem>>(DISTRICTS_CHACHE,
                 () =>
                 {
                     return this.data.Districts.All()
@@ -32,13 +35,36 @@
                         })
                         .ToList();
                 });
+            return districts;
+        }
 
+        public IEnumerable<SelectListItem> GetNullableDistricts()
+        {
+            var districts = this.cache.Get<IEnumerable<SelectListItem>>(NULL_DISTRICTS_CHACHE,
+               () =>
+               {
+                   var none = new SelectListItem
+                   {
+                       Value = "0",
+                       Text = "-----"
+                   };
+                   var result =
+                   this.data.Districts.All()
+                       .Select(d => new SelectListItem
+                       {
+                           Value = d.DistrictId.ToString(),
+                           Text = d.Title
+                       })
+                       .ToList();
+                   result.Add(none);
+                   return result;
+               });
             return districts;
         }
 
         public IEnumerable<SelectListItem> GetRoles(ApplicationRoleManager manager)
         {
-            var cachedRoles = this.cache.Get<IEnumerable<SelectListItem>>("roles",
+            var cachedRoles = this.cache.Get<IEnumerable<SelectListItem>>(ROLES_CACHE,
                 () =>
                 {
                     var roles = manager.Roles.ToList();
@@ -60,7 +86,7 @@
 
         public IEnumerable<SelectListItem> GetRolesForManagement(ApplicationRoleManager manager)
         {
-            var cachedRoles = this.cache.Get<IEnumerable<SelectListItem>>("roles",
+            var cachedRoles = this.cache.Get<IEnumerable<SelectListItem>>(MANAGEMENT_ROLES_CACHE,
                () =>
                {
                    var roles = manager.Roles.ToList();
@@ -81,5 +107,18 @@
                });
             return cachedRoles;
         }
+
+
+        public void clearCache(string cacheId)
+        {
+            this.cache.Clear(cacheId);
+        }
+
+        public void clearDistrictCaches()
+        {
+            this.cache.Clear(DISTRICTS_CHACHE);
+            this.cache.Clear(NULL_DISTRICTS_CHACHE);
+        }
+
     }
 }

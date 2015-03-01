@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Get_A_Taxi.Web.ViewModels;
 using Get_A_Taxi.Models;
+using Get_A_Taxi.Web.Infrastructure.Populators;
 
 namespace Get_A_Taxi.Web.Controllers
 {
@@ -17,15 +18,18 @@ namespace Get_A_Taxi.Web.Controllers
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
+        private IDropDownListPopulator _populator;
 
-        public AccountController()
+        public AccountController(IDropDownListPopulator populator)
         {
+            this._populator = populator;
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            
         }
 
         public ApplicationUserManager UserManager
@@ -143,6 +147,7 @@ namespace Get_A_Taxi.Web.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            ViewBag.DistrictsList = this._populator.GetNullableDistricts();
             return View();
         }
 
@@ -155,7 +160,7 @@ namespace Get_A_Taxi.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, PhoneNumber = model.PhoneNumber };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, MiddleName = model.MiddleName, LastName = model.LastName, PhoneNumber = model.PhoneNumber };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

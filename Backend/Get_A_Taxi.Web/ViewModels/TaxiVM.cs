@@ -17,7 +17,7 @@ namespace Get_A_Taxi.Web.ViewModels
 
         [Required]
         [Display(Name = "Plate")]
-        [StringLength(8)]
+        [StringLength(10)]
         public string Plate { get; set; }
 
         [Display(Name = "Taxi's District")]

@@ -1,7 +1,13 @@
 ﻿using Get_A_Taxi.Data.Migrations;
+using Get_A_Taxi.Web.App_Start;
+using Get_A_Taxi.Web.Hubs;
+using Get_A_Taxi.Web.Infrastructure.Services.Hubs;
+using Get_A_Taxi.Web.Infrastructure.Services.Hubs.HubServices;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.Owin;
+using Ninject;
 using Owin;
 using System.Web.Mvc;
 
@@ -14,23 +20,37 @@ namespace Get_A_Taxi.Web
         {
             ConfigureAuth(app);
 
-            var unityHubActivator = new MvcHubActivator();
+            //var unityHubActivator = new MvcHubActivator();
+            //GlobalHost.DependencyResolver.Register(
+            //    typeof(IHubActivator),
+            //    () => unityHubActivator);
+            // app.MapSignalR();
 
-            GlobalHost.DependencyResolver.Register(
-                typeof(IHubActivator),
-                () => unityHubActivator);
+            var kernel = NinjectWebCommon.bootstrapper.Kernel;
+            var resolver = new NinjectSignalRDependencyResolver(kernel);
 
-            app.MapSignalR();
+            kernel.Bind(typeof(IHubConnectionContext<dynamic>)).ToMethod(context =>
+                    resolver.Resolve<IConnectionManager>().GetHubContext<OrdersHub>().Clients
+                        ).WhenInjectedInto<IOrderBridge>();
+
+            var config = new HubConfiguration();
+            config.Resolver = resolver;
+            ConfigureSignalR(app, config);
             
         }
 
-        public class MvcHubActivator : IHubActivator
+        public static void ConfigureSignalR(IAppBuilder app, HubConfiguration config)
         {
-            public IHub Create(HubDescriptor descriptor)
-            {
-                return (IHub)DependencyResolver.Current
-                    .GetService(descriptor.HubType);
-            }
+            app.MapSignalR(config);
         }
+
+        //public class MvcHubActivator : IHubActivator
+        //{
+        //    public IHub Create(HubDescriptor descriptor)
+        //    {
+        //        return (IHub)DependencyResolver.Current
+        //            .GetService(descriptor.HubType);
+        //    }
+        //}
     }
 }

@@ -1,0 +1,118 @@
+﻿@model Get_A_Taxi.Models.TaxiStand
+
+@{
+    ViewBag.Title = "Create";
+}
+<div id="map"></div>
+<div class="mapHoverPanel">
+    <h2>Create</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>TaxiStand</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Lattitude, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Lattitude, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Lattitude, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Longitude, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Longitude, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Longitude, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Alias, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Alias, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Alias, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    var lat = @ViewBag.Lat.ToString("0.000000000").Replace(",", ".");
+    var lon = @ViewBag.Lng.ToString("0.000000000").Replace(",", ".");
+    var defaultLat = parseFloat(lat)
+    var defaultLon = parseFloat(lon);
+</script>
+<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+@Scripts.Render("~/bundles/gmaps")
+<script type="text/javascript">
+    var createTaxiStand = function () {
+        var markers = [];
+        function updateUI(latlng, formattedAddress) {
+            $('#CenterLattitude').val(latlng.lat());
+            $('#CenterLongitude').val(latlng.lng());
+            $('#Address').val(formattedAddress);
+            $('#Alias').val(formattedAddress);
+            gATMap.addMarker(0, latlng.lat(), latlng.lng(), "/Content/Images/Map/orange_m.png",  formattedAddress, clb, markers);
+            $('#MapZoom').val(gATMap.map.zoom);
+        }
+
+        function clb(markerId, lat, lng, content) {
+            // alert(content);
+        }
+
+        $("#Address").keyup(function (event) {
+            if (event.keyCode == 13) {
+                gATMap.getCoordinates($('#Address').val().trim(), updateUI);
+            }
+        });
+
+
+
+
+        function getInputAddress(latInput, lngInput, updateUI) {
+            gATMap.getAddress($(latInput).val(), $(lngInput).val(), updateUI)
+        }
+
+        $('#getAddress').click(function (e) {
+            getInputAddress('#CenterLattitude', '#CenterLongitude', '#Alias')
+
+        });
+        return {
+            updateUI:updateUI
+        }
+
+    }();
+
+    function mapClicked(e) {
+        gATMap.map.removeMarkers();
+        gATMap.map.setCenter(e.latLng.lat(), e.latLng.lng());
+        gATMap.getAddress(e.latLng.lat(),  e.latLng.lng(), createTaxiStand.updateUI);
+        gATMap.addMarker(0, e.latLng.lat(), e.latLng.lng(), "/Content/Images/Map/orange_m.png", $('#Alias').val(), null,  markers);
+    }
+</script>

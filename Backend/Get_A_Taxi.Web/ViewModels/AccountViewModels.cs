@@ -70,6 +70,18 @@ namespace Get_A_Taxi.Web.ViewModels
         public string Email { get; set; }
 
         [Required]
+        [StringLength(20)]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+        [StringLength(20)]
+        [Display(Name = "Middle Name")]
+        public string MiddleName { get; set; }
+        [Required]
+        [StringLength(20)]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
         [Phone]
         [Display(Name = "GSM")]
         [DataType(DataType.PhoneNumber)]
@@ -85,6 +97,9 @@ namespace Get_A_Taxi.Web.ViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "District")]
+        public int DistritId { get; set; }
     }
 
     public class ResetPasswordViewModel

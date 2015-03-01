@@ -31,7 +31,9 @@
 
 <script type="text/javascript">
     // $(document).ready(function () {
-    var currentOrdersPartial = function () {
+    var district = @ViewBag.DistrictId;
+    var operatorId = "@ViewBag.OperatorId";
+    var currentOrdersPartial = function (districtId) {
         var waitingMarkers = [];
         var inProgressMarkers = [];
         var m = [];
@@ -141,7 +143,6 @@
         ordersHub.client.cancelledOrder = function (orderId) {
             console.log('Order '+orderId+' cancelled!');
             var markerToRemove = gATMap.removeMarker(orderId, waitingMarkers);
-            cancelOrder(orderId);
         }
 
         ordersHub.client.updatedOrder = function (order) {
@@ -151,10 +152,14 @@
             updateOrder(order);
         }
 
+
         $.connection.hub.start().done(function () {
             console.log("Connecting to Orders Hub...");
-            ordersHub.invoke("start");
+            ordersHub.invoke("open", districtId, operatorId);
         });
-    }();
+        $(window).unload(function () {
+            ordersHub.invoke("close", districtId, operatorId);
+        });
+    }(district);
     // });
 </script>

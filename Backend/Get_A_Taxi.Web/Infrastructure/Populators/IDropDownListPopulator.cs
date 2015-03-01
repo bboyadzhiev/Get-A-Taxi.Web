@@ -6,8 +6,12 @@
     public interface IDropDownListPopulator
     {
         IEnumerable<SelectListItem> GetDistricts();
+        IEnumerable<SelectListItem> GetNullableDistricts();
         IEnumerable<SelectListItem> GetRoles(ApplicationRoleManager manager);
 
         IEnumerable<SelectListItem> GetRolesForManagement(ApplicationRoleManager manager);
+
+        void clearCache(string cacheId);
+        void clearDistrictCaches();
     }
 }

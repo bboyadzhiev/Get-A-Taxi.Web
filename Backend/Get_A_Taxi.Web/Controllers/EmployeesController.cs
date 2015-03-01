@@ -24,7 +24,6 @@ using System.Web.Mvc;
 namespace Get_A_Taxi.Web.Controllers
 {
     [AuthorizeRoles(UserRole = UserRoles.Administrator, SecondRole =  UserRoles.Manager)]
-   // [AuthorizeRoles(UserWithRoles = new HashSet<UserRoles>() { UserRoles.Administrator})]
     public class EmployeesController : BaseController
     {
         private IAccountService services;
@@ -266,8 +265,13 @@ namespace Get_A_Taxi.Web.Controllers
             var district = this.Data.Districts.SearchFor(d => d.DistrictId == districtId).FirstOrDefault();
             // if (user.District.DistrictId != district.DistrictId)
             // {
-            user.District = district;
-            this.Data.SaveChanges();
+            var title = district.Title;
+            if (district != null)
+            {
+                user.District = district;
+                this.Data.Users.Update(user);
+                this.Data.Users.SaveChanges();
+            }
             // }
 
         }

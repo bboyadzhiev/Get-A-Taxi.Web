@@ -16,6 +16,7 @@ namespace Get_A_Taxi.Models
         public int TaxiId { get; set; }
 
         [Required]
+        [StringLength(10)]
         public string Plate { get; set; }
 
         public virtual District District { get; set; }

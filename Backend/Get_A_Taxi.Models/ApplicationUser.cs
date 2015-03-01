@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Get_A_Taxi.Models
 {
@@ -53,7 +54,6 @@ namespace Get_A_Taxi.Models
        // public int? PhotoId { get; set; }
         public virtual Photo Photo { get; set; }
 
-        //public int DistrictId { get; set; }
         public virtual District District { get; set; }
 
         public double Lattitude { get; set; }

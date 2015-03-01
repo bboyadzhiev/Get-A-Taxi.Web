@@ -15,7 +15,7 @@ using AutoMapper.QueryableExtensions;
 
 namespace Get_A_Taxi.Web.Areas.Management.Controllers
 {
-    [AuthorizeRoles(UserRole = UserRoles.Administrator, SecondRole=UserRoles.Manager)]
+    [AuthorizeRoles(UserRole = UserRoles.Administrator, SecondRole = UserRoles.Manager)]
     public class TaxiesController : BaseController
     {
         private ITaxiService taxiService;
@@ -247,7 +247,7 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
                 ViewBag.Districts = districts;
                 return PartialView("Edit", taxiVM);
             }
-            catch
+            catch (Exception e)
             {
                 return Content("Error occured!");
             }
@@ -262,18 +262,20 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    District district = this.Data.Districts.All().First(d => d.DistrictId == taxiDetailsVM.AssignDistrictId);
-                    if (district == null)
-                    {
-                        TempData["Error"] = "District not found!";
-                        return PartialView("Edit", taxiDetailsVM);
-                    }
-
                     var taxi = this.Data.Taxies.Find(taxiDetailsVM.TaxiId);
                     taxi.Plate = taxiDetailsVM.Plate;
                     taxi.Seats = taxiDetailsVM.Seats;
                     taxi.Luggage = taxiDetailsVM.Luggage;
-                    taxi.District = district;
+                    if (taxiDetailsVM.AssignDistrictId != 0)
+                    {
+                        District district = this.Data.Districts.All().First(d => d.DistrictId == taxiDetailsVM.AssignDistrictId);
+                        if (district == null)
+                        {
+                            TempData["Error"] = "District not found!";
+                            return PartialView("Edit", taxiDetailsVM);
+                        }
+                        taxi.District = district;
+                    }
                     taxi.Available = taxiDetailsVM.Available;
                     this.Data.Taxies.Update(taxi);
                     this.Data.SaveChanges();
@@ -286,7 +288,7 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
 
                 return PartialView("Edit", taxiDetailsVM);
             }
-            catch
+            catch (Exception e)
             {
                 return Content("Error occured!");
             }

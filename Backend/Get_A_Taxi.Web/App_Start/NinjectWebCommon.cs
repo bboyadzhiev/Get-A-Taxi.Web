@@ -18,11 +18,15 @@ namespace Get_A_Taxi.Web.App_Start
     using Get_A_Taxi.Web.Infrastructure.Populators;
     using Get_A_Taxi.Web.Infrastructure.Services.Hubs;
     using System.Web.Routing;
+    using Get_A_Taxi.Web.Infrastructure.Services.Hubs.HubServices;
+    using Microsoft.AspNet.SignalR.Hubs;
+    using Get_A_Taxi.Web.Hubs;
+    using Microsoft.AspNet.SignalR.Infrastructure;
+    using Microsoft.AspNet.SignalR;
 
     public static class NinjectWebCommon
     {
-        private static readonly Bootstrapper bootstrapper = new Bootstrapper();
-
+        public static readonly Bootstrapper bootstrapper = new Bootstrapper();
         /// <summary>
         /// Starts the application
         /// </summary>
@@ -45,7 +49,7 @@ namespace Get_A_Taxi.Web.App_Start
         /// Creates the kernel that will manage your application.
         /// </summary>
         /// <returns>The created kernel.</returns>
-        private static IKernel CreateKernel()
+        private static IKernel  CreateKernel()
         {
             var kernel = new StandardKernel();
             try
@@ -54,6 +58,7 @@ namespace Get_A_Taxi.Web.App_Start
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
                 RegisterServices(kernel);
+
                 return kernel;
             }
             catch
@@ -83,8 +88,9 @@ namespace Get_A_Taxi.Web.App_Start
             kernel.Bind<IOperatorService>().To<OperatorService>();
             kernel.Bind<ICacheService>().To<InMemoryCache>();
             kernel.Bind<IDropDownListPopulator>().To<DropDownListPopulator>();
+
             kernel.Bind<IOrderBridge>().To<OrderBridge>().InSingletonScope();
-           
+            kernel.Bind<IOrdersHubService>().To<OrdersHubService>().InSingletonScope();
         }
     }
 }

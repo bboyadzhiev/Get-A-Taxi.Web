@@ -67,6 +67,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
                 var district = Mapper.Map<District>(districtVM);
                 this.Data.Districts.Add(district);
                 this.Data.SaveChanges();
+                this.populator.clearDistrictCaches();
                 return RedirectToAction("Index");
             }
 
@@ -103,6 +104,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
                 var district = Mapper.Map<District>(districtVM);
                 this.Data.Districts.Update(district);
                 this.Data.SaveChanges();
+                this.populator.clearDistrictCaches();
                 return RedirectToAction("Index");
             }
             return View(districtVM);
@@ -138,6 +140,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
             var district = this.Data.Districts.All().Where(d => d.DistrictId == id).FirstOrDefault();
             this.Data.Districts.Delete(district);
             this.Data.SaveChanges();
+            this.populator.clearDistrictCaches();
             return RedirectToAction("Index");
         }
 
