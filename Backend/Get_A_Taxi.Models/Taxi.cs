@@ -9,6 +9,14 @@ using System.Threading.Tasks;
 
 namespace Get_A_Taxi.Models
 {
+    public enum TaxiStatus
+    {
+        Available = 0,
+        Busy = 1,
+        OffDuty = 2,
+        Decommissioned = 3
+    }
+
     [Table("Taxies")]
     public class Taxi
     {
@@ -29,8 +37,8 @@ namespace Get_A_Taxi.Models
         [Required]
         public int Luggage { get; set; }
 
-        [DefaultValue(true)]
-        public bool Available { get; set; }
+        [DefaultValue(TaxiStatus.OffDuty)]
+        public TaxiStatus Status { get; set; }
 
         public double Lattitude { get; set; }
         public double Longitude { get; set; }

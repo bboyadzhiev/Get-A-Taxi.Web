@@ -16,8 +16,8 @@
             <td>@Html.DisplayFor(model => model.Luggage)</td>
         </tr>
         <tr>
-            <th>@Html.LabelFor(model => model.Available)</th>
-            <td>@Html.DisplayFor(model => model.Available)</td>
+            <th>@Html.LabelFor(model => model.Status)</th>
+            <td>@Html.DisplayFor(model => model.Status)</td>
         </tr>
     </table>
 </fieldset>
@@ -26,7 +26,8 @@
     <legend>Taxi Driver Details</legend>
     @if (String.IsNullOrEmpty(Model.Driver.Id))
     {
-        <p>No driver assigned!</p>
+        <h5>No driver assigned!</h5>
+       
         <div id="userSearchPartial">
             @Html.Partial("_UserSearchPartialView", new Get_A_Taxi.Web.ViewModels.UserSearchVM())
         </div>
@@ -40,10 +41,10 @@
                 @Html.Hidden("taxiId", Model.TaxiId)
                 <div id="user-details">
                 </div>
-
                 <input type="submit" value="Assign Driver" class="btn btn-default" />
             }
         </div>
+
     }
     else
     {

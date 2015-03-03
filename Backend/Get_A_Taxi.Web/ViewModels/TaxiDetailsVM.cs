@@ -24,19 +24,12 @@ namespace Get_A_Taxi.Web.ViewModels
 
         public UserDetailsVM Driver { get; set; }
 
-
         public double Lattitude { get; set; }
         public double Longitude { get; set; }
 
         [Required]
         [Display(Name = "Select District")]
         public int AssignDistrictId { get; set; }
-
-        public TaxiDetailsVM()
-        {
-            Available = true;
-        }
-
 
         public new void CreateMappings(AutoMapper.IConfiguration configuration)
         {
@@ -90,7 +83,7 @@ namespace Get_A_Taxi.Web.ViewModels
                     Plate = t.Plate,
                     Seats = t.Seats,
                     Luggage = t.Luggage,
-                    Available = t.Available,
+                    Status = TaxiStatus.OffDuty,
                     District = d
                 };
             }

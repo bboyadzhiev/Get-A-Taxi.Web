@@ -27,6 +27,9 @@
        // public int DistrictId { get; set; }
         public virtual District District { get; set; }
 
+        [Required]
+        public bool Active { get; set; }
+
         private ICollection<Taxi> taxies;
 
         public virtual ICollection<Taxi> Taxies

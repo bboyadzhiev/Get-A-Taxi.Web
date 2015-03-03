@@ -23,14 +23,22 @@ namespace Get_A_Taxi.Web.ViewModels
         [Display(Name = "Taxi's District")]
         public string DistrictTitle { get; set; }
 
-        [DefaultValue(true)]
-        [Display(Name = "Is Available")]
-        public bool Available { get; set; }
+        //[DefaultValue(true)]
+        //[Display(Name = "Is Available")]
+        //public bool Available { get; set; }
+
+        //[DefaultValue(true)]
+        //[Display(Name = "Out of service")]
+        //public bool OutOfService { get; set; }
+
+        [Display(Name = "Status")]
+        public TaxiStatus Status { get; set; }
 
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
             configuration.CreateMap<Taxi, TaxiVM>()
                 .ForMember(vm => vm.DistrictTitle, opt => opt.MapFrom(m => m.District.Title));
+              //  .ForMember(vm => vm.OutOfService, opt => opt.MapFrom(m => m.Status == TaxiStatus.OutOfService));
         }
     }
 }

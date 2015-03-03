@@ -16,9 +16,9 @@
         public string Title { get; set; }
 
         [Required]
-        public decimal CenterLattitude { get; set; }
+        public double CenterLattitude { get; set; }
         [Required]
-        public decimal CenterLongitude { get; set; }
+        public double CenterLongitude { get; set; }
 
         [DefaultValue(10)]
         public float MapZoom { get; set; }

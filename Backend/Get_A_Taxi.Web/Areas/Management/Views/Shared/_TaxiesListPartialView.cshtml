@@ -1,11 +1,12 @@
-﻿@model IEnumerable<Get_A_Taxi.Web.ViewModels.TaxiItemVM>
+﻿@using Get_A_Taxi.Models
+@model IEnumerable<Get_A_Taxi.Web.ViewModels.TaxiItemVM>
 @if (Model.Any())
 {
     <table class="table table-striped">
         <tr>
             <th>Select</th>
             <th>@Html.LabelFor(m => m.First().Plate)</th>
-            <th>@Html.LabelFor(m => m.First().Available)</th>
+            <th>@Html.LabelFor(m => m.First().Status)</th>
             <th>@Html.LabelFor(m => m.First().DistrictTitle)</th>
             <th>@Html.LabelFor(m => m.First().Driver.FullName)</th>
             <th>@Html.LabelFor(m => m.First().Driver.PhoneNumber)</th>
@@ -31,15 +32,21 @@
                 OnBegin = "cleanTaxiDetails()",
                 OnComplete = "hideLoader()"
             })
-
+                    
+                @{
+            if (taxi.Status == TaxiStatus.OffDuty && taxi.Driver == null)
+            {
+                @:|
+                @Html.ActionLink("Decomission", "Delete", new { id = taxi.TaxiId })
+            }
+                }
                 </td>
                 <td>
                     @Html.DisplayFor(model => taxi.Plate)
                 </td>
                 <td>
-                    @Html.DisplayFor(model => taxi.Available)
+                    @Html.DisplayFor(model => taxi.Status)
                 </td>
-
                 <td>
                     @Html.DisplayFor(model => taxi.DistrictTitle)
                 </td>

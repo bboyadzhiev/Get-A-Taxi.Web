@@ -1,6 +1,7 @@
 ﻿using Get_A_Taxi.Data.Migrations;
 using Get_A_Taxi.Web.App_Start;
 using Get_A_Taxi.Web.Hubs;
+using Get_A_Taxi.Web.Infrastructure.Bridges;
 using Get_A_Taxi.Web.Infrastructure.Services.Hubs;
 using Get_A_Taxi.Web.Infrastructure.Services.Hubs.HubServices;
 using Microsoft.AspNet.SignalR;

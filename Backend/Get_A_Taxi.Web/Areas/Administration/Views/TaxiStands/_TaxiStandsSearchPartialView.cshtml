@@ -1,0 +1,20 @@
+﻿@model Get_A_Taxi.Web.ViewModels.TaxiStandVM
+@{
+    var districtsList = (List<SelectListItem>)ViewBag.DistrictsList;
+}
+
+@using (Ajax.BeginForm("SearchStand", null, new AjaxOptions
+{
+    UpdateTargetId = "taxiStandsResults",
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "POST",
+    OnComplete = "hideLoader()"
+}, new { id = "taxiStandSearchForm" }))
+{
+    <p>Search:</p>
+    @Html.AntiForgeryToken()
+    <label for="aliasSearchTxt">Alias</label>
+    <input type="text" id="aliasSearchTxt" name="alias" oninput="searchTaxiStands()" title="Alias" />
+    @Html.LabelFor(model=>model.DistrictId, htmlAttributes: new { @class = "control-label col-md-3" })
+    @Html.DropDownListFor(model => model.DistrictId, districtsList, htmlAttributes: new { @class = "dropdown", oninput = "changed()" })
+}

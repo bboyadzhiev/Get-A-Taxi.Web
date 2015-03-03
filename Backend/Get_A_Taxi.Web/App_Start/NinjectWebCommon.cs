@@ -23,6 +23,7 @@ namespace Get_A_Taxi.Web.App_Start
     using Get_A_Taxi.Web.Hubs;
     using Microsoft.AspNet.SignalR.Infrastructure;
     using Microsoft.AspNet.SignalR;
+    using Get_A_Taxi.Web.Infrastructure.Bridges;
 
     public static class NinjectWebCommon
     {
@@ -86,6 +87,8 @@ namespace Get_A_Taxi.Web.App_Start
             kernel.Bind<IAccountService>().To<AccountService>();
             kernel.Bind<ITaxiService>().To<TaxiService>();
             kernel.Bind<IOperatorService>().To<OperatorService>();
+            kernel.Bind<ITaxiStandService>().To<TaxiStandService>();
+
             kernel.Bind<ICacheService>().To<InMemoryCache>();
             kernel.Bind<IDropDownListPopulator>().To<DropDownListPopulator>();
 

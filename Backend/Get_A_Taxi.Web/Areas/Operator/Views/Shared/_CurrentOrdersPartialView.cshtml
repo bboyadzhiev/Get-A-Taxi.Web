@@ -142,6 +142,7 @@
 
         ordersHub.client.cancelledOrder = function (orderId) {
             console.log('Order '+orderId+' cancelled!');
+            cancelOrder(orderId);
             var markerToRemove = gATMap.removeMarker(orderId, waitingMarkers);
         }
 

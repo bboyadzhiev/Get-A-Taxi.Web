@@ -1,4 +1,4 @@
-﻿@model Get_A_Taxi.Models.TaxiStand
+﻿@model Get_A_Taxi.Web.ViewModels.TaxiStandVM
 
 @{
     ViewBag.Title = "Edit";
@@ -11,7 +11,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>TaxiStand</h4>
+        <h4>Taxi Stand</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.TaxiStandId)
@@ -59,3 +59,15 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    var lat = @Model.Lattitude.ToString("0.000000000").Replace(",", ".");
+    var lon = @Model.Longitude.ToString("0.000000000").Replace(",", ".");
+    var defaultLat = parseFloat(lat)
+    var defaultLon = parseFloat(lon);
+</script>
+<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+@Scripts.Render("~/bundles/gmaps")
+@Scripts.Render("~/bundles/gmaps.taxistands")

@@ -1,0 +1,51 @@
+﻿@model Get_A_Taxi.Web.ViewModels.TaxiDetailsVM
+
+<h2>Decomission</h2>
+
+<h3>Are you sure you want to decommission this taxi?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Plate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Plate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Seats)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Seats)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Luggage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Luggage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DistrictTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DistrictTitle)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Decomission" title="Decomission taxi" class="btn btn-default" />
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+        </div>
+    }
+</div>

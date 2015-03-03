@@ -18,12 +18,10 @@ var gATMap = (function () {
             lng: lngVal,
             callback: function (results, status) {
                 if (status == 'OK') {
-                   // var latlng = results[0].geometry.location;
-                    var lat = results[0].geometry.location.lat();
-                    var lng = results[0].geometry.location.lng();
+                    var latlng = results[0].geometry.location;
                     var formattedAddress = results[0].formatted_address;
-                    map.setCenter(lat, lng);
-                    getAddressCallback(lat, lng, formattedAddress);
+                    map.setCenter(latlng.lat(), latlng.lng());
+                    getAddressCallback(latlng, formattedAddress);
                 }
             }
         });

@@ -16,7 +16,6 @@
                 <div class="col-md-10">
                     <input type="text" id="address" name="address" class="form-control" />
                     <input type="submit" class="btn btn-default" value="Search" />
-
                 </div>
             </div>
         </div>
@@ -45,7 +44,6 @@
                     @Html.ValidationMessageFor(model => model.CenterLattitude, "", new { @class = "text-danger" })
                 </div>
             </div>
-
             <div class="form-group">
                 @Html.LabelFor(model => model.CenterLongitude, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -53,7 +51,7 @@
                     @Html.ValidationMessageFor(model => model.CenterLongitude, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <input type="button" value="getAddress" id="getAddress" />
+            <input type="button" value="getAddress" id="getAddress" class="btn btn-default" />
             <div class="form-group">
                 @Html.LabelFor(model => model.MapZoom, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -65,14 +63,12 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Create" class="btn btn-default" />
+                    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
                 </div>
             </div>
         </div>
     }
 
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
 </div>
 
 @section Scripts{
@@ -87,7 +83,7 @@
 <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 @Scripts.Render("~/bundles/gmaps")
 <script type="text/javascript">
-    var createDistrict = function () {
+    var districtMap = function () {
         var districtMarkers = [];
         function updateUI(latlng, formattedAddress) {
             $('#CenterLattitude').val(latlng.lat());
@@ -116,8 +112,7 @@
         }
 
         $('#getAddress').click(function (e) {
-            getInputAddress('#CenterLattitude', '#CenterLongitude', '#Title')
-
+            gATMap.getAddress($('#CenterLattitude').val(), $('#CenterLongitude').val(), updateUI)
         });
         return {
             updateUI:updateUI

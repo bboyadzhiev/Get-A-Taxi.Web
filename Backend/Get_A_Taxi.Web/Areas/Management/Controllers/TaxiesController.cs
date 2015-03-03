@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using System.Net;
 
 namespace Get_A_Taxi.Web.Areas.Management.Controllers
 {
@@ -27,7 +28,6 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
         {
             this.taxiService = taxiService;
             this.accountService = accountService;
-
         }
 
         // Based on current user's District
@@ -119,6 +119,7 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
 
             var accountsVM = result
                 .Project().To<UserItemViewModel>()
+                 .Take(TAXI_RESULTS_DEFAULT_COUNT)
                 .ToList();
             ViewBag.UserRoles = this.populator.GetRoles(this.RoleManager);
             // ViewBag.DistrictsList = this.populator.GetDistricts();
@@ -161,9 +162,9 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
             var driver = this.Data.Users.All()
                 .FirstOrDefault(u => u.Id == userId);
 
-            if (!taxi.Available)
+            if (taxi.Status != TaxiStatus.OffDuty)
             {
-                TempData["Error"] = "Taxi not available!";
+                TempData["Error"] = "Taxi not available for driver change!";
                 return RedirectToAction("Index");
             }
 
@@ -218,7 +219,6 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
                 {
                     District district = this.Data.Districts.All().First(d => d.DistrictId == newTaxi.AssignDistrictId);
                     Taxi taxi = TaxiDetailsVM.FromTaxiDetailsVM(newTaxi, district);
-                    taxi.Available = true;
                     this.Data.Taxies.Add(taxi);
                     this.Data.SaveChanges();
                     return RedirectToAction("Index");
@@ -241,7 +241,6 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
                 var taxiVM = this.Data.Taxies
                .SearchFor(t => t.TaxiId == taxiId)
                .Project().To<TaxiDetailsVM>()
-                    //.Select(TaxiDetailsVM.FromTaxiDataModel)
                .FirstOrDefault();
                 var districts = this.populator.GetDistricts();
                 ViewBag.Districts = districts;
@@ -276,7 +275,8 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
                         }
                         taxi.District = district;
                     }
-                    taxi.Available = taxiDetailsVM.Available;
+                    //taxi.Status = taxiDetailsVM.OutOfService ? TaxiStatus.OutOfService : TaxiStatus.Available;
+                    taxi.Status = TaxiStatus.OffDuty;
                     this.Data.Taxies.Update(taxi);
                     this.Data.SaveChanges();
 
@@ -298,26 +298,47 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var taxi = this.Data.Taxies.Find(id);
+
+            var taxi = this.Data.Taxies.SearchFor(t=>t.TaxiId == id).FirstOrDefault();
             if (taxi == null)
             {
                 TempData["Error"] = "Taxi not found!";
                 return RedirectToAction("Index");
             }
 
-            if (taxi.Available == false)
+            if (taxi.Status != TaxiStatus.OffDuty)
             {
                 TempData["Error"] = "Taxi is not available for decommissioning!!";
                 return RedirectToAction("Index");
             }
 
-            var plate = taxi.Plate;
-            this.Data.Taxies.Delete(taxi);
-            this.Data.SaveChanges();
+            var taxiVM = this.Data.Taxies.All().Where(t=>t.TaxiId == id).Project().To<TaxiDetailsVM>().FirstOrDefault();
 
-            TempData["Success"] = "Taxi " + plate + " has been decommisioned";
-            return RedirectToAction("Index");
+            return View(taxiVM);
+
         }
 
+        // POST: Management/Taxies/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+           
+            var taxi = this.Data.Taxies.SearchFor(t => t.TaxiId == id).FirstOrDefault();
+            if (taxi == null)
+            {
+                TempData["Error"] = "Taxi not found!";
+                return HttpNotFound();
+            }
+
+            taxi.Status = TaxiStatus.Decommissioned;
+            var plate = taxi.Plate;
+
+            this.Data.Taxies.Update(taxi);
+            this.Data.Taxies.SaveChanges();
+
+            TempData["Success"] = "Taxi " + plate + " has been decommisioned!";
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -31,6 +31,9 @@ namespace Get_A_Taxi.Web
               "~/Scripts/gmaps.js",
               "~/Scripts/gmaps.map.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/gmaps.taxistands").Include(
+              "~/Scripts/gmaps.taxistands.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                 "~/Scripts/knockout*"));
 

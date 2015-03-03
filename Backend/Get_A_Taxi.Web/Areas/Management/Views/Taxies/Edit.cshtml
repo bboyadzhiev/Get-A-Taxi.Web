@@ -1,4 +1,5 @@
-﻿@model Get_A_Taxi.Web.ViewModels.TaxiDetailsVM
+﻿@using Get_A_Taxi.Models
+@model Get_A_Taxi.Web.ViewModels.TaxiDetailsVM
 
 @{
     ViewBag.Title = "Edit";
@@ -47,15 +48,15 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Available, htmlAttributes: new { @class = "control-label col-md-2" })
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.Decommissionable, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.Available)
-                    @Html.ValidationMessageFor(model => model.Available, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Decommissionable)
+                    @Html.ValidationMessageFor(model => model.Decommissionable, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.AssignDistrictId, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -65,7 +66,7 @@
             </div>
         </div>
 
-@if (Model.Driver == null)
+@if (Model.Status == TaxiStatus.OffDuty && Model.Driver.Id == null)
 {
      <div class="form-group">
          <div class="col-md-offset-2 col-md-10">
@@ -73,7 +74,8 @@
                 "Decommission Taxi",
                 "Delete",
                 new { id = Model.TaxiId },
-            new { onclick = "return confirm('Are you sure you want to decommission this taxi?');", @class = "text-danger" })
+        //new { onclick = "return confirm('Are you sure you want to decommission this taxi?');", @class = "btn btn-default text-danger" })
+     new { @class = "btn btn-default text-danger" })
          </div>
          </div>
 }

@@ -5,7 +5,6 @@ using Get_A_Taxi.Web.Controllers;
 using Get_A_Taxi.Web.Infrastructure;
 using Get_A_Taxi.Web.Infrastructure.Populators;
 using Get_A_Taxi.Web.Infrastructure.Services.Contracts;
-using Get_A_Taxi.Web.Infrastructure.Services.Hubs;
 using Get_A_Taxi.Web.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -14,6 +13,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
+using Get_A_Taxi.Web.Infrastructure.Bridges;
 
 namespace Get_A_Taxi.Web.Areas.Operator.Controllers
 {

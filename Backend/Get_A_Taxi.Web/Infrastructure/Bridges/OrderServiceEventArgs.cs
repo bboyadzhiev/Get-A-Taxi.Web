@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Get_A_Taxi.Web.ViewModels;
 
-namespace Get_A_Taxi.Web.Infrastructure.Services.Hubs
+namespace Get_A_Taxi.Web.Infrastructure.Bridges
 {
     public class OrderServiceEventArgs: EventArgs
     {
