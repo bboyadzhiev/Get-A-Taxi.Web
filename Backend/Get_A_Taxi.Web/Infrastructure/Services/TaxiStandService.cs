@@ -15,6 +15,7 @@ namespace Get_A_Taxi.Web.Infrastructure.Services
             :base(data)
         {
         }
+
         public IQueryable<TaxiStand> GetAll()
         {
             return this.Data.Stands.All();
@@ -28,6 +29,11 @@ namespace Get_A_Taxi.Web.Infrastructure.Services
         public IQueryable<TaxiStand> ByDistrict(IQueryable<TaxiStand> taxiStands, int districtId)
         {
             return taxiStands.Where(ts => ts.District.DistrictId == districtId);
+        }
+
+        public IQueryable<TaxiStand> ByNearestLocation(IQueryable<TaxiStand> taxiStands, double lat, double lng)
+        {
+            return taxiStands.OrderBy(ts => ((ts.Lattitude - lat) + (ts.Longitude - lng)));
         }
     }
 }

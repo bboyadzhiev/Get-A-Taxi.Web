@@ -8,23 +8,26 @@ using System.Web.Http;
 
 namespace Get_A_Taxi.Web.Controllers.WebAPI
 {
+    [Authorize]
     [RoutePrefix("api/TaxiStands")]
     public class TaxiStandsController : BaseApiController
     {
 
         public TaxiStandsController(IGetATaxiData data)
-            :base(data)
+            : base(data)
         {
-
         }
+
+        /// <summary>
+        /// Get all Taxi Stands for a district
+        /// </summary>
+        /// <param name="districtId">The District's ID</param>
+        /// <returns>A list of taxi stands</returns>
+        [HttpGet]
         public IHttpActionResult Get(int districtId)
         {
-            if (districtId != null)
-            {
-                var taxiStands = this.data.Stands.All().Where(s => s.District.DistrictId == districtId).ToList();
-                return Ok(taxiStands);
-            }
-            return NotFound();
+            var taxiStands = this.Data.Stands.All().Where(s => s.District.DistrictId == districtId).ToList();
+            return Ok(taxiStands);
         }
     }
 }

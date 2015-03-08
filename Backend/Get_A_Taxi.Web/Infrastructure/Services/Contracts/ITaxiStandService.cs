@@ -12,5 +12,6 @@ namespace Get_A_Taxi.Web.Infrastructure.Services.Contracts
         IQueryable<TaxiStand> GetAll();
         IQueryable<TaxiStand> ByAlias(IQueryable<TaxiStand> taxiStands, string alias);
         IQueryable<TaxiStand> ByDistrict(IQueryable<TaxiStand> taxiStands, int districtId);
+        IQueryable<TaxiStand> ByNearestLocation(IQueryable<TaxiStand> taxiStands, double lat, double lng);
     }
 }

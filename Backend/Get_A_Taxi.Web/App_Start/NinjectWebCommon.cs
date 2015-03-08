@@ -94,6 +94,9 @@ namespace Get_A_Taxi.Web.App_Start
 
             kernel.Bind<IOrderBridge>().To<OrderBridge>().InSingletonScope();
             kernel.Bind<IOrdersHubService>().To<OrdersHubService>().InSingletonScope();
+            kernel.Bind<ITaxiesBridge>().To<TaxiesBridge>().InSingletonScope();
+            kernel.Bind<ITaxiesHubService>().To<TaxiesHubService>().InSingletonScope();
+
         }
     }
 }

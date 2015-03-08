@@ -203,6 +203,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Areas\Administration\Controllers\DistrictsController.cs" />
+    <Compile Include="Controllers\WebAPI\IRESTController.cs" />
     <Compile Include="Areas\Administration\Controllers\RolesController.cs" />
     <Compile Include="Areas\Administration\Controllers\TaxiStandsController.cs" />
     <Compile Include="Areas\Operator\Controllers\MainController.cs" />
@@ -211,6 +212,8 @@
     <Compile Include="Controllers\WebAPI\BaseApiController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\WebAPI\AccountController.cs" />
+    <Compile Include="Controllers\WebAPI\LocationsController.cs" />
+    <Compile Include="Controllers\WebAPI\OrdersController.cs" />
     <Compile Include="Controllers\WebAPI\TaxiStandsController.cs" />
     <Compile Include="Hubs\OrdersHub.cs" />
     <Compile Include="Hubs\TaxiesHub.cs" />
@@ -223,6 +226,7 @@
     <Compile Include="Infrastructure\Bridges\BaseBridge.cs" />
     <Compile Include="Infrastructure\Services\Contracts\ITaxiStandService.cs" />
     <Compile Include="Infrastructure\Services\Hubs\HubServices\IOrdersHubService.cs" />
+    <Compile Include="Infrastructure\Services\Hubs\HubServices\ITaxiesHubService.cs" />
     <Compile Include="Infrastructure\Services\Hubs\HubServices\OrdersHubService.cs" />
     <Compile Include="Infrastructure\Bridges\IOrderBridge.cs" />
     <Compile Include="Infrastructure\Bridges\ITaxiesBridge.cs" />
@@ -230,9 +234,12 @@
     <Compile Include="Infrastructure\Bridges\OrderBridge.cs" />
     <Compile Include="Infrastructure\Bridges\TaxiBridgeEventArgs.cs" />
     <Compile Include="Infrastructure\Bridges\TaxiesBridge.cs" />
+    <Compile Include="Infrastructure\Services\Hubs\HubServices\TaxiesHubService.cs" />
     <Compile Include="Infrastructure\Services\TaxiStandService.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\LocationDataModel.cs" />
+    <Compile Include="Models\OrderDataModel.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="ViewModels\DistrictVM.cs" />
     <Compile Include="Areas\Management\Controllers\TaxiesController.cs" />

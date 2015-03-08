@@ -38,6 +38,7 @@
         [Display(Name = "User comment")]
         public string UserComment { get; set; }
 
+        // TODO: Replace with automapper and custom mappings
         public static Func<OrderInputVM, ApplicationUser, Order> ToOrderDataModel
         {
             get
@@ -58,6 +59,7 @@
             }
         }
 
+        // TODO: Replace with automapper and custom mappings
         public static void UpdateOrderFromOperator(OrderInputVM orderVm, Order order)
         {
             order.OrderAddress = orderVm.OrderAddress;
@@ -68,5 +70,6 @@
             order.DestinationLongitude = orderVm.DestinationLongitude;
             order.UserComment = orderVm.UserComment;
         }
+
     }
 }

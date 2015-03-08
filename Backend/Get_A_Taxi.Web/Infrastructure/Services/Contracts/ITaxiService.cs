@@ -10,6 +10,7 @@ namespace Get_A_Taxi.Web.Infrastructure.Services.Contracts
 {
     public interface ITaxiService
     {
+        // TODO: REFACTOR Service!
         //ICollection<TaxiStand> GetByTitle(string title);
         //ICollection<TaxiStand> GetByLocation(double lat, double lon);
 

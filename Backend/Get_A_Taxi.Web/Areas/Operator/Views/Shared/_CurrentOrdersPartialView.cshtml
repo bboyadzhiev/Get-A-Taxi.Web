@@ -152,7 +152,9 @@
             addNewOrderMarker(order);
             updateOrder(order);
         }
-
+        //$.hubConnection('ordersHub').disconnect(function() {
+        //    alert('Server is disconnected!');
+        //});
 
         $.connection.hub.start().done(function () {
             console.log("Connecting to Orders Hub...");

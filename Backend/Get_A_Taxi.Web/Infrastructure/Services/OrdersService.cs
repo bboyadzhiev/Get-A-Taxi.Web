@@ -33,7 +33,7 @@
 
         public IQueryable<Order> ByTaxi(IQueryable<Order> orders, int taxiId)
         {
-            throw new System.NotImplementedException();
+            return orders.Where(o => o.AssignedTaxi.TaxiId == taxiId);
         }
 
         public IQueryable<Order> GetUnfinished(IQueryable<Order> orders)

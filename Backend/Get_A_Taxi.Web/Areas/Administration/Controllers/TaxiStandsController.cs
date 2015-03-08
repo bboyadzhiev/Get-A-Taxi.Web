@@ -50,10 +50,7 @@ namespace Get_A_Taxi.Web.Areas.Administration
             {
                 result = this._service.ByAlias(result, alias);
             }
-            if (districtId != null)
-            {
-                result = this._service.ByDistrict(result, districtId);
-            }
+            result = this._service.ByDistrict(result, districtId);
 
             var taxiStandsList = result.Project().To<TaxiStandVM>()
                 .Take(TAXI_STands_RESULTS_DEFAULT_COUNT)
@@ -170,6 +167,6 @@ namespace Get_A_Taxi.Web.Areas.Administration
             this.Data.SaveChanges();
             return RedirectToAction("Index");
         }
-      
+
     }
 }

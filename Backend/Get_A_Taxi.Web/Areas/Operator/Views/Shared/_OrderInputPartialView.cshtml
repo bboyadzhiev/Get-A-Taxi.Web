@@ -74,20 +74,20 @@
             }
         }
 
-        function updateOrderAddress(latlng, formattedAddress) {
+        function updateOrderAddress(lat, lng, formattedAddress) {
             cleanStartMarker();
-            $('#OrderLattitude').val(latlng.lat());
-            $('#OrderLongitude').val(latlng.lng());
+            $('#OrderLattitude').val(lat);
+            $('#OrderLongitude').val(lng);
             $('#OrderAddress').val(formattedAddress);
-            startMarker = gATMap.addMarker(0, latlng.lat(), latlng.lng(), "/Content/Images/Map/green_m.png", formattedAddress, addressClick, addressMarkers);
+            startMarker = gATMap.addMarker(0, lat, lng, "/Content/Images/Map/green_m.png", formattedAddress, addressClick, addressMarkers);
         }
 
-        function updateDestinationAddress(latlng, formattedAddress) {
+        function updateDestinationAddress(lat, lng, formattedAddress) {
             cleanDestinationMarker();
-            $('#DestinationLattitude').val(latlng.lat());
-            $('#DestinationLongitude').val(latlng.lng());
+            $('#DestinationLattitude').val(lat);
+            $('#DestinationLongitude').val(lng);
             $('#DestinationAddress').val(formattedAddress);
-            endMarker = gATMap.addMarker(1, latlng.lat(), latlng.lng(), "/Content/Images/Map/yellow_m.png", formattedAddress, addressClick, addressMarkers);
+            endMarker = gATMap.addMarker(1, lat, lng, "/Content/Images/Map/yellow_m.png", formattedAddress, addressClick, addressMarkers);
         }
 
         function populate(data) {

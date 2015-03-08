@@ -1,17 +1,16 @@
-﻿using System;
+﻿using Get_A_Taxi.Models;
+using Get_A_Taxi.Web.Infrastructure.Mapping;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Get_A_Taxi.Models
+namespace Get_A_Taxi.Web.Models
 {
-    [Table("Locations")]
-    public class Location
+    public class LocationDataModel : IMapFrom<Location>
     {
-        [Key]
+
         public int LocationId { get; set; }
 
         [Required]

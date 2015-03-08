@@ -62,7 +62,7 @@ namespace Get_A_Taxi.Web.Controllers
             {
                 return HttpNotFound();
             }
-            return View(userDetailsVM);
+            return PartialView("Details",userDetailsVM);
         }
        
 
@@ -181,7 +181,11 @@ namespace Get_A_Taxi.Web.Controllers
             {
                 return HttpNotFound();
             }
-
+            if (UserManager.IsInRole(id, UserRoles.Driver.ToString()) && this.Data.Taxies.All().Any(t => t.Driver.Id == id))
+            {
+                TempData["Error"] = "This driver is assigned to a taxi!";
+                return RedirectToAction("Index");
+            }
             var userDetailsVM = user.Project().To<UserDetailsVM>().FirstOrDefault();
             return View(userDetailsVM);
         }
@@ -198,7 +202,7 @@ namespace Get_A_Taxi.Web.Controllers
             {
                 return HttpNotFound();
             }
-
+            
             user.Roles.Clear();
             this.Data.SaveChanges();
 

@@ -147,7 +147,7 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AssignDriver(string userId, int taxiId)
         {
-            if (userId == null || taxiId == null)
+            if (userId == null)
             {
                 return RedirectToAction("Index");
             }
@@ -248,7 +248,7 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
             }
             catch (Exception e)
             {
-                return Content("Error occured!");
+                return Content("Error occured: "+ e.ToString());
             }
         }
 
@@ -290,7 +290,7 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
             }
             catch (Exception e)
             {
-                return Content("Error occured!");
+                return Content("Error occured:" + e.ToString());
             }
         }
 
