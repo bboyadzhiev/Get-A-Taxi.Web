@@ -1,4 +1,5 @@
-﻿using Get_A_Taxi.Models;
+﻿using AutoMapper;
+using Get_A_Taxi.Models;
 using Get_A_Taxi.Web.Infrastructure.Mapping;
 using Newtonsoft.Json;
 using System;
@@ -89,7 +90,7 @@ namespace Get_A_Taxi.Web.ViewModels
             }
         }
 
-        public void CreateMappings(AutoMapper.IConfiguration configuration)
+        public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<Order, OrderDetailsVM>()
                 .ForMember(vm => vm.CustomerId, opt => opt.MapFrom(m => m.Customer.Id))

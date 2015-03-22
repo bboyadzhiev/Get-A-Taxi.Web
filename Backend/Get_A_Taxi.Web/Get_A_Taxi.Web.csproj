@@ -30,6 +30,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>App_Data\Get_A_Taxi.WebAPI.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -213,7 +214,8 @@
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\WebAPI\AccountController.cs" />
     <Compile Include="Controllers\WebAPI\LocationsController.cs" />
-    <Compile Include="Controllers\WebAPI\OrdersController.cs" />
+    <Compile Include="Controllers\WebAPI\ClientOrdersController.cs" />
+    <Compile Include="Controllers\WebAPI\TaxiOrdersController.cs" />
     <Compile Include="Controllers\WebAPI\TaxiStandsController.cs" />
     <Compile Include="Hubs\OrdersHub.cs" />
     <Compile Include="Hubs\TaxiesHub.cs" />
@@ -238,8 +240,10 @@
     <Compile Include="Infrastructure\Services\TaxiStandService.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\LocationDataModel.cs" />
-    <Compile Include="Models\OrderDataModel.cs" />
+    <Compile Include="Models\LocationDTO.cs" />
+    <Compile Include="Models\OrderDetailsDTO.cs" />
+    <Compile Include="Models\OrderDTO.cs" />
+    <Compile Include="Models\TaxiStandDTO.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="ViewModels\DistrictVM.cs" />
     <Compile Include="Areas\Management\Controllers\TaxiesController.cs" />

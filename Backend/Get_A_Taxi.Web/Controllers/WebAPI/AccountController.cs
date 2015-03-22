@@ -24,6 +24,9 @@ using Get_A_Taxi.Web.Providers;
 
 namespace Get_A_Taxi.Web.Controllers.WebAPI
 {
+    /// <summary>
+    /// Manages the Web API Authentication
+    /// </summary>
     [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
@@ -72,6 +75,10 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         }
 
         // POST api/Account/Logout
+        /// <summary>
+        /// Logout user
+        /// </summary>
+        /// <returns></returns>
         [Route("Logout")]
         public IHttpActionResult Logout()
         {

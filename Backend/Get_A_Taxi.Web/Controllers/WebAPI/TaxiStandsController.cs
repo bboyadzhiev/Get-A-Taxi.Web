@@ -5,6 +5,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AutoMapper.QueryableExtensions;
+using Get_A_Taxi.Web.Models;
 
 namespace Get_A_Taxi.Web.Controllers.WebAPI
 {
@@ -26,7 +28,11 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         [HttpGet]
         public IHttpActionResult Get(int districtId)
         {
-            var taxiStands = this.Data.Stands.All().Where(s => s.District.DistrictId == districtId).ToList();
+            var taxiStands = this.Data.Stands.All()
+                .Where(s => s.District.DistrictId == districtId)
+                .Project().To<TaxiStandDTO>()
+                .ToList();
+
             return Ok(taxiStands);
         }
     }

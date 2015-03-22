@@ -13,7 +13,7 @@
         {
             this.Data = data;
         }
-
+        
         #region Helpers
         [NonAction]
         public ApplicationUser GetUser()

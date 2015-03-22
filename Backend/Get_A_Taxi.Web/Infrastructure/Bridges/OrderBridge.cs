@@ -8,29 +8,39 @@ using Microsoft.AspNet.SignalR.Hubs;
 
 namespace Get_A_Taxi.Web.Infrastructure.Bridges
 {
-    
+
 
     public class OrderBridge : BaseBridge, IOrderBridge
     {
-        public event EventHandler<OrderBidgeEventArgs> OrderAddedEvent;
-        public event EventHandler<OrderBidgeEventArgs> OrderCancelledEvent;
-        public event EventHandler<OrderBidgeEventArgs> OrderUpdatedEvent;
+        public event EventHandler<OrderBridgeDetailedEventArgs> OrderAddedEvent;
+        public event EventHandler<OrderBridgeEventArgs> OrderCancelledEvent;
+        public event EventHandler<OrderBridgeAssignmentEventArgs> OrderAssignedEvent;
+        public event EventHandler<OrderBridgeDetailedEventArgs> OrderUpdatedEvent;
 
         public void AddOrder(OrderDetailsVM order, int districtId)
         {
             if (OrderAddedEvent != null)
             {
-                var args = new OrderBidgeEventArgs() { districtId = districtId, order = order };
+                var args = new OrderBridgeDetailedEventArgs() { districtId = districtId, order = order };
                 OrderAddedEvent(this, args);
             }
         }
 
-        public void CancelOrder(OrderDetailsVM order, int districtId)
+        public void CancelOrder(int orderId, int districtId)
         {
             if (OrderCancelledEvent != null)
             {
-                var args = new OrderBidgeEventArgs() { districtId = districtId, order = order };
+                var args = new OrderBridgeEventArgs() { districtId = districtId, orderId = orderId };
                 OrderCancelledEvent(this, args);
+            }
+        }
+
+        public void AssignOrder(int orderId, int taxiId, int districtId)
+        {
+            if (OrderAssignedEvent != null)
+            {
+                var args = new OrderBridgeAssignmentEventArgs() { districtId = districtId, orderId = orderId, taxiId = taxiId };
+                OrderAssignedEvent(this, args);
             }
         }
 
@@ -38,25 +48,40 @@ namespace Get_A_Taxi.Web.Infrastructure.Bridges
         {
             if (OrderUpdatedEvent != null)
             {
-                var args = new OrderBidgeEventArgs() { districtId = districtId, order = order };
+                var args = new OrderBridgeDetailedEventArgs() { districtId = districtId, order = order };
                 OrderUpdatedEvent(this, args);
             }
         }
 
-        private EventHandler<OrderBidgeEventArgs> orderAddedHandler;
-        private EventHandler<OrderBidgeEventArgs> orderUpdatedHandler;
-        private EventHandler<OrderBidgeEventArgs> orderCancelledHandler;
+        private EventHandler<OrderBridgeDetailedEventArgs> orderAddedHandler;
+        private EventHandler<OrderBridgeEventArgs> orderCancelledHandler;
+        private EventHandler<OrderBridgeAssignmentEventArgs> orderAssignedHandler;
+        private EventHandler<OrderBridgeDetailedEventArgs> orderUpdatedHandler;
 
         public OrderBridge(IHubConnectionContext<dynamic> clients)
-            :base(clients)
+            : base(clients)
         {
-           
+
             orderAddedHandler = (s, e) =>
              {
                  var districtGroup = e.districtId.ToString();
                  //var orderVM = this._service.AllOrders().Where(o => o.OrderId == e.orderId).Project().To<OrderDetailsVM>().FirstOrDefault();
                  Clients.Group(districtGroup).addedOrder(e.order);
              };
+
+
+            orderCancelledHandler = (s, e) =>
+            {
+                var districtGroup = e.districtId.ToString();
+                Clients.Group(districtGroup).cancelledOrder(e.orderId);
+            };
+
+            // Notify all about order assignment
+            orderAssignedHandler = (s, e) =>
+            {
+                var districtGroup = e.districtId.ToString();
+                Clients.Group(districtGroup).assignedOrder(e.orderId, e.taxiId);
+            };
 
             orderUpdatedHandler = (s, e) =>
             {
@@ -65,18 +90,17 @@ namespace Get_A_Taxi.Web.Infrastructure.Bridges
                 Clients.Group(districtGroup).updatedOrder(e.order);
             };
 
-            orderCancelledHandler = (s, e) =>
-            {
-                var districtGroup = e.districtId.ToString();
-                Clients.Group(districtGroup).cancelledOrder(e.order.OrderId);
-            };
-
             OrderAddedEvent += orderAddedHandler;
 
-            OrderUpdatedEvent += orderUpdatedHandler;
-
             OrderCancelledEvent += orderCancelledHandler;
+
+            OrderAssignedEvent += orderAssignedHandler;
+
+            OrderUpdatedEvent += orderUpdatedHandler;
         }
+
+
+
 
     }
 }

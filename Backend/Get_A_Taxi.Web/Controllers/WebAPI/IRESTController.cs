@@ -7,6 +7,8 @@
 
         IHttpActionResult Get(int id);
 
+        IHttpActionResult GetPaged(int page);
+
         IHttpActionResult Post([FromBody]T model);
 
         IHttpActionResult Put([FromBody]T model);

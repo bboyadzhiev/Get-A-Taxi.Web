@@ -198,9 +198,8 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                 var district = order.District;
                 this.Data.Orders.Update(order);
                 this.Data.Orders.SaveChanges();
-                var orderVM = this.Data.Orders.All().Where(o => o.OrderId == order.OrderId).Project().To<OrderDetailsVM>().FirstOrDefault();
-                this.bridge.CancelOrder(orderVM, district.DistrictId);
-               // this.bridge.CancelOrder(order.OrderId, district.DistrictId);
+
+                this.bridge.CancelOrder(order.OrderId, district.DistrictId);
             }
             else
             {
