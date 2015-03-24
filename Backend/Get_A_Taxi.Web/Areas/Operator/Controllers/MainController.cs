@@ -79,8 +79,6 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                         DefaultAddress = orderVm.OrderAddress,
                         FirstName = orderVm.FirstName,
                         LastName = orderVm.LastName,
-                        // TODO: Review District!
-                        //District = district,
                         Email = orderVm.PhoneNumber + "@getataxi.com"
                     };
 
@@ -150,7 +148,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                     }
                     else
                     {
-                        // Mobile order, updated by the operator
+                        // Mobile client order that is updated by the operator
                         var operatorOrder = new OperatorOrder()
                         {
                             OperatorId = operatorUser.Id,
@@ -162,7 +160,6 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                     this.Data.SaveChanges();
                     var orderVM = this.Data.Orders.All().Where(o => o.OrderId == order.OrderId).Project().To<OrderDetailsVM>().FirstOrDefault();
                     this.bridge.UpdateOrder(orderVM, district.DistrictId);
-                   // this.bridge.UpdateOrder(order.OrderId, district.DistrictId);
                 }
                 else
                 {

@@ -16,6 +16,10 @@ using System.Net;
 
 namespace Get_A_Taxi.Web.Areas.Management.Controllers
 {
+    /// <summary>
+    /// Taxies management controller
+    /// Only users with a role of Administrator or Manager are allowed
+    /// </summary>
     [AuthorizeRoles(UserRole = UserRoles.Administrator, SecondRole = UserRoles.Manager)]
     public class TaxiesController : BaseController
     {
@@ -30,22 +34,30 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
             this.accountService = accountService;
         }
 
-        // Based on current user's District
+
         // GET: Management/Taxies
+        /// <summary>
+        /// Get top 10 taxies in user's District, ordered by plate
+        /// </summary>
+        /// <returns>A view with a taxies list view model</returns>
         public ActionResult Index()
         {
-            // var taxies = this.Data.Taxies.All().Select(TaxiViewModel.FromTaxiDataModel).ToList
             var district = UserProfile.District;
             var taxiesListVM = this.Data.Taxies.All()
                 .Where(t => t.District.DistrictId == UserProfile.District.DistrictId)
+                .OrderBy(t => t.Plate)
                 .Take(TAXI_RESULTS_DEFAULT_COUNT)
                 .Project().To<TaxiItemVM>()
-                //.Select(TaxiVM.FromTaxiDataModel)
                 .ToList();
             return View("Taxies", taxiesListVM);
         }
 
         // GET: Management/Taxies/Details/5
+        /// <summary>
+        /// Get the details of a taxi
+        /// </summary>
+        /// <param name="taxiId">The taxi's id</param>
+        /// <returns>A partial view with the found taxi view model</returns>
         [HttpGet]
         public ActionResult Details(int taxiId)
         {
@@ -67,9 +79,27 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SearchTaxi(string plate, string driver, string district)
         {
-            var taxiesListVM = this.taxiService.GetByAllProps(plate, driver, district, this.RoleManager)
+            IQueryable<Taxi> taxies = this.Data.Taxies.All();
+            if (!String.IsNullOrEmpty(driver))
+            {
+                var driverRoleId = this.RoleManager.Roles.Where(r => r.Name == UserRoles.Driver.ToString()).FirstOrDefault().Id;
+                var drivers = this.Data.Users.All().Where(u => (u.Roles.Select(y => y.RoleId).Contains(driverRoleId)));
+                drivers = drivers.Where(u => u.FirstName.ToLower().Contains(driver) || u.LastName.ToLower().Contains(driver));
+                taxies = taxies.Where(t => drivers.Contains(t.Driver));
+            }
+
+            if (!String.IsNullOrEmpty(plate))
+            {
+                taxies = this.taxiService.WithPlateLike(taxies, plate);
+            }
+
+            if (!String.IsNullOrEmpty(district))
+            {
+                taxies = this.taxiService.WithDistrictTitleLike(taxies, district);
+            }
+
+            var taxiesListVM = taxies
                 .Take(TAXI_RESULTS_DEFAULT_COUNT)
-                //.Select(TaxiVM.FromTaxiDataModel)
                 .Project().To<TaxiItemVM>()
                 .ToList();
             return PartialView("_TaxiesListPartialView", taxiesListVM);
@@ -122,7 +152,6 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
                  .Take(TAXI_RESULTS_DEFAULT_COUNT)
                 .ToList();
             ViewBag.UserRoles = this.populator.GetRoles(this.RoleManager);
-            // ViewBag.DistrictsList = this.populator.GetDistricts();
 
             return this.PartialView("_DriversListPartialView", accountsVM);
         }
@@ -248,7 +277,7 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
             }
             catch (Exception e)
             {
-                return Content("Error occured: "+ e.ToString());
+                return Content("Error occured: " + e.ToString());
             }
         }
 
@@ -275,7 +304,6 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
                         }
                         taxi.District = district;
                     }
-                    //taxi.Status = taxiDetailsVM.OutOfService ? TaxiStatus.OutOfService : TaxiStatus.Available;
                     taxi.Status = TaxiStatus.OffDuty;
                     this.Data.Taxies.Update(taxi);
                     this.Data.SaveChanges();
@@ -299,7 +327,7 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
         public ActionResult Delete(int id)
         {
 
-            var taxi = this.Data.Taxies.SearchFor(t=>t.TaxiId == id).FirstOrDefault();
+            var taxi = this.Data.Taxies.SearchFor(t => t.TaxiId == id).FirstOrDefault();
             if (taxi == null)
             {
                 TempData["Error"] = "Taxi not found!";
@@ -312,7 +340,7 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
                 return RedirectToAction("Index");
             }
 
-            var taxiVM = this.Data.Taxies.All().Where(t=>t.TaxiId == id).Project().To<TaxiDetailsVM>().FirstOrDefault();
+            var taxiVM = this.Data.Taxies.All().Where(t => t.TaxiId == id).Project().To<TaxiDetailsVM>().FirstOrDefault();
 
             return View(taxiVM);
 
@@ -323,7 +351,7 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-           
+
             var taxi = this.Data.Taxies.SearchFor(t => t.TaxiId == id).FirstOrDefault();
             if (taxi == null)
             {

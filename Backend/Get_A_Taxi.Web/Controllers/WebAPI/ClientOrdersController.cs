@@ -15,7 +15,7 @@ using System.Web.Http;
 namespace Get_A_Taxi.Web.Controllers.WebAPI
 {
     /// <summary>
-    /// Manages client orders.
+    /// Manages orders for the clients of the system.
     /// </summary>
     [Authorize]
     [RoutePrefix("api/ClientOrders")]
@@ -57,6 +57,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
             return Ok(orders);
         }
+
         /// <summary>
         /// Get a page of the client's orders
         /// </summary>

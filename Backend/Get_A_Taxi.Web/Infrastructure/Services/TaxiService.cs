@@ -20,79 +20,29 @@ namespace Get_A_Taxi.Web.Infrastructure.Services
             : base(data)
         {
         }
-        public ICollection<TaxiDetailsVM> GetByPlate(string plate)
+       
+        public IQueryable<Taxi> AllTaxies()
         {
-            var taxies = this.Data.Taxies.All()
-                .Where(t => t.Plate.ToLower().Contains(plate.ToLower()))
-                .Project().To<TaxiDetailsVM>()
-                //.Select(TaxiDetailsVM.FromTaxiDataModel)
-                .ToList();
+            var taxies = this.Data.Taxies.All();
             return taxies;
         }
 
-        public ICollection<TaxiDetailsVM> GetByTaxiStand(string taxiStandAlias)
+        public IQueryable<Taxi> WithPlateLike(IQueryable<Taxi> taxies, string plate)
         {
-            var taxies = this.Data.Taxies.All()
-                .Where(t => t.TaxiStand.Alias.ToLower().Contains(taxiStandAlias.ToLower()))
-                .Project().To<TaxiDetailsVM>()
-               // .Select(TaxiDetailsVM.FromTaxiDataModel)
-                .ToList();
-            return taxies;
+            var result = taxies.Where(t => t.Plate.ToLower().Contains(plate.ToLower()));
+            return result;
         }
 
-        public IQueryable<Taxi> GetByDriverProperties(string name, string district, ApplicationRoleManager roleManager)
+        public IQueryable<Taxi> WithTaxiStandTitleLike(IQueryable<Taxi> taxies, string taxiStandTitle)
         {
-            var drivers = this.GetDriversByNameAndDistrict(name, district, roleManager);
-            var taxies = this.Data.Taxies.All().Where(t => drivers.Contains(t.Driver));
-            //.Select(TaxiViewModel.FromTaxiDataModel).ToList();
-            return taxies;
-
+            var result = taxies.Where(t => t.TaxiStand.Alias.ToLower().Contains(taxiStandTitle.ToLower()));
+            return result;
         }
 
-        public IQueryable<Taxi> GetByAllProps(string plate, string driver, string district, ApplicationRoleManager roleManager)
+        public IQueryable<Taxi> WithDistrictTitleLike(IQueryable<Taxi> taxies, string districtTitle)
         {
-                var drivers = this.GetDriversByNameAndDistrict(driver, district, roleManager);
-                var taxies = this.Data.Taxies.All().Where(t => drivers.Contains(t.Driver) || t.Plate.ToLower().Contains(plate.ToLower()));
-                return taxies;
-        }
-
-        public IQueryable<ApplicationUser> GetDriversByNameAndDistrict(string nameText, string districtText, ApplicationRoleManager roleManager)
-        {
-            var driverRoleId = roleManager.Roles.Where(r => r.Name == UserRoles.Driver.ToString()).FirstOrDefault().Id;
-            var name = nameText.ToLower();
-
-            //var drivers = this.Data.Users.All()
-            //    .Where(u => (u.Roles.Select(y => y.RoleId).Contains(driverRoleId))
-            //        && ( u.District.Title.ToLower().Contains(districtText.ToLower())
-            //        || ((u.FirstName.ToLower() + " " + u.LastName.ToLower()) == nameText.ToLower()
-            //        || (u.FirstName.ToLower() + " " + u.MiddleName.ToLower() + " " + u.LastName.ToLower()) == nameText.ToLower()))
-            //        );
-
-            var drivers = this.Data.Users.All().Where(u => (u.Roles.Select(y => y.RoleId).Contains(driverRoleId)));
-            if (!String.IsNullOrEmpty(districtText))
-            {
-                drivers = drivers.Where(u => (u.District.Title.ToLower().Contains(districtText.ToLower())));
-            }
-            if (!String.IsNullOrEmpty(nameText))
-            {
-                drivers = drivers.Where(u => u.FirstName.ToLower().Contains(name) || u.LastName.ToLower().Contains(name));
-            }
-
-            return drivers;
-        }
-
-        public ICollection<UserItemViewModel> GetFreeDrivers(string name, string district, ApplicationRoleManager roleManager)
-        {
-            var allDrivers = this.GetDriversByNameAndDistrict(name, district, roleManager);
-            var busy = this.Data.Taxies.All()
-                .Where(t => t.Driver.Id != null)
-                .Select(d => d.Driver);
-            var free = allDrivers.Except(busy)
-                .Project().To<UserItemViewModel>()
-               // .Select(UserItemViewModel.FromApplicationUserModel)
-                .ToList();
-
-            return free;
+            var result = taxies.Where(t => (t.District.Title.ToLower().Contains(districtTitle.ToLower())));
+            return result;
         }
     }
 }

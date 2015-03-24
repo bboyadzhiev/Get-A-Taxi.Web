@@ -10,18 +10,9 @@ namespace Get_A_Taxi.Web.Infrastructure.Services.Contracts
 {
     public interface ITaxiService
     {
-        // TODO: REFACTOR Service!
-        //ICollection<TaxiStand> GetByTitle(string title);
-        //ICollection<TaxiStand> GetByLocation(double lat, double lon);
-
-        ICollection<TaxiDetailsVM> GetByPlate(string plate);
-
-        ICollection<TaxiDetailsVM> GetByTaxiStand(string taxiStand);
-
-        IQueryable<Taxi> GetByDriverProperties(string name, string district, ApplicationRoleManager roleManager);
-
-        IQueryable<Taxi> GetByAllProps(string plate, string driver, string district, ApplicationRoleManager roleManager);
-
-        IQueryable<ApplicationUser> GetDriversByNameAndDistrict(string nameText, string districtText, ApplicationRoleManager roleManager);
+        IQueryable<Taxi> AllTaxies();
+        IQueryable<Taxi> WithPlateLike(IQueryable<Taxi> taxies, string plate);
+        IQueryable<Taxi> WithTaxiStandTitleLike(IQueryable<Taxi> taxies, string taxiStandTitle);
+        IQueryable<Taxi> WithDistrictTitleLike(IQueryable<Taxi> taxies, string districtTitle);
     }
 }
