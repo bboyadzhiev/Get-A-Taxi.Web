@@ -320,6 +320,7 @@
     <Compile Include="ViewModels\UserVM.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Get_A_Taxi.WebAPI.xml" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -497,7 +498,6 @@
     <Content Include="Views\Shared\_OperatorPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Areas\Management\Models\" />
     <Folder Include="Areas\Management\ViewModels\" />
     <Folder Include="Areas\Operator\Models\" />
