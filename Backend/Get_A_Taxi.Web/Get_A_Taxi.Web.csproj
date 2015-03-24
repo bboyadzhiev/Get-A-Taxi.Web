@@ -401,7 +401,6 @@
     <Content Include="Areas\Management\Views\Shared\_TaxiDetailsPartialView.cshtml" />
     <Content Include="Areas\Management\Views\Taxies\Create.cshtml" />
     <Content Include="Areas\Management\Views\Taxies\Edit.cshtml" />
-    <Content Include="Areas\Management\Views\Taxies\Edit - Copy.cshtml" />
     <Content Include="Areas\Management\Views\web.config" />
     <Content Include="Areas\Administration\Views\Main\Index.cshtml" />
     <Content Include="Areas\Administration\Views\Districts\Create.cshtml" />
