@@ -15,7 +15,8 @@ namespace Get_A_Taxi.Data.Migrations
         public GetATaxiDbContext Create()
         {
             //return new GetATaxiDbContext("GetATaxi");
-            return new GetATaxiDbContext();
+            //return new GetATaxiDbContext();
+            return GetATaxiDbContext.GetInstance();
         }
     }
 }

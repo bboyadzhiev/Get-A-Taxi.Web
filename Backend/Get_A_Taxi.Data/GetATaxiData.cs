@@ -15,7 +15,7 @@ namespace Get_A_Taxi.Data
         private readonly IDictionary<Type, object> repositories;
 
         public GetATaxiData()
-            : this(new GetATaxiDbContext())
+            : this(GetATaxiDbContext.GetInstance())
         {
 
         }

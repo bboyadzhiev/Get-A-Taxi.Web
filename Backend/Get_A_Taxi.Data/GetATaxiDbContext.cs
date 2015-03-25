@@ -18,16 +18,20 @@
 
         public static GetATaxiDbContext Create()
         {
+            
+
+            return new GetATaxiDbContext();
+        }
+
+        public static GetATaxiDbContext GetInstance()
+        {
             if (ctx != null)
             {
                 return ctx;
             }
             ctx = new GetATaxiDbContext();
             return ctx;
-
-            //return new GetATaxiDbContext();
         }
-
 
         public IDbSet<Taxi> Taxies { get; set; }
 
