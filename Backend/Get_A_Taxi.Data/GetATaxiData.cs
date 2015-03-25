@@ -14,13 +14,13 @@ namespace Get_A_Taxi.Data
         private readonly IGetATaxiDbContext context;
         private readonly IDictionary<Type, object> repositories;
 
-        //public GetATaxiData()
-        //    :this(new GetATaxiDbContext())
-        //{
+        public GetATaxiData()
+            : this(new GetATaxiDbContext())
+        {
 
-        //}
+        }
         //public GetATaxiData(string connectionString)
-        //    :this(new GetATaxiDbContext(connectionString))
+        //    : this(new GetATaxiDbContext(connectionString))
         //{
 
         //}

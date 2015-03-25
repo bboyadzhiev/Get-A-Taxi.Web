@@ -9,16 +9,28 @@
 
     public class GetATaxiDbContext : IdentityDbContext<ApplicationUser>, IGetATaxiDbContext
     {
-        public GetATaxiDbContext(string connectionString)
-            : base(connectionString)
+        //public GetATaxiDbContext(string connectionString)
+        //    : base(connectionString)
+        //{
+        //    Database.SetInitializer(new MigrateDatabaseToLatestVersion<GetATaxiDbContext, Configuration>());
+        //}
+
+        //public static GetATaxiDbContext Create()
+        //{
+        //    return new GetATaxiDbContext("GetATaxi");
+        //}
+
+        public GetATaxiDbContext()
+            : base("GetATaxi")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<GetATaxiDbContext, Configuration>());
         }
 
         public static GetATaxiDbContext Create()
         {
-            return new GetATaxiDbContext("GetATaxi");
+            return new GetATaxiDbContext();
         }
+
 
         public IDbSet<Taxi> Taxies { get; set; }
 
