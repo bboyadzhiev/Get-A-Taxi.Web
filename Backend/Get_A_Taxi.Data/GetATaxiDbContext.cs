@@ -9,19 +9,9 @@
 
     public class GetATaxiDbContext : IdentityDbContext<ApplicationUser>, IGetATaxiDbContext
     {
-        //public GetATaxiDbContext(string connectionString)
-        //    : base(connectionString)
-        //{
-        //    Database.SetInitializer(new MigrateDatabaseToLatestVersion<GetATaxiDbContext, Configuration>());
-        //}
-
-        //public static GetATaxiDbContext Create()
-        //{
-        //    return new GetATaxiDbContext("GetATaxi");
-        //}
 
         public GetATaxiDbContext()
-            : base("GetATaxi")
+            : base("GetATaxiDbContext")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<GetATaxiDbContext, Configuration>());
         }
