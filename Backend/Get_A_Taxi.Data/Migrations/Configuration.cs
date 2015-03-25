@@ -8,7 +8,7 @@ namespace Get_A_Taxi.Data.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    public sealed class Configuration : DbMigrationsConfiguration<Get_A_Taxi.Data.GetATaxiDbContext>
+    public sealed class Configuration : DbMigrationsConfiguration<GetATaxiDbContext>
     {
         public Configuration()
         {
@@ -16,7 +16,7 @@ namespace Get_A_Taxi.Data.Migrations
             AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(Get_A_Taxi.Data.GetATaxiDbContext context)
+        protected override void Seed(GetATaxiDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -68,7 +68,7 @@ namespace Get_A_Taxi.Data.Migrations
                     MiddleName = "Vladimirov",
                     LastName = "Boyadzhiev",
                     Email = "bboyadzhiev@gmail.com",
-                    PhoneNumber = "0886176803",
+                    PhoneNumber = "0888666777",
                     District = context.Districts.First(d=>d.Title == "Sofia")
                 };
 

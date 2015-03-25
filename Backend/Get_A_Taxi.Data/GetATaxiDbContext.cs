@@ -9,20 +9,15 @@
 
     public class GetATaxiDbContext : IdentityDbContext<ApplicationUser>, IGetATaxiDbContext
     {
-        //public GetATaxiDbContext()
-        //{
-        //}
-
         public GetATaxiDbContext(string connectionString)
             : base(connectionString)
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<GetATaxiDbContext, Configuration>());
-            this.Database.Connection.ConnectionString = connectionString;
         }
 
         public static GetATaxiDbContext Create()
         {
-            return new GetATaxiDbContext(Config.ConnectionString);
+            return new GetATaxiDbContext("GetATaxi");
         }
 
         public IDbSet<Taxi> Taxies { get; set; }
