@@ -9,7 +9,7 @@
 
     public class GetATaxiDbContext : IdentityDbContext<ApplicationUser>, IGetATaxiDbContext
     {
-
+        private static GetATaxiDbContext ctx;
         public GetATaxiDbContext()
             : base("GetATaxiDbContext")
         {
@@ -18,7 +18,14 @@
 
         public static GetATaxiDbContext Create()
         {
-            return new GetATaxiDbContext();
+            if (ctx != null)
+            {
+                return ctx;
+            }
+            ctx = new GetATaxiDbContext();
+            return ctx;
+
+            //return new GetATaxiDbContext();
         }
 
 
