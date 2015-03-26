@@ -9,29 +9,18 @@
 
     public class GetATaxiDbContext : IdentityDbContext<ApplicationUser>, IGetATaxiDbContext
     {
-        private static GetATaxiDbContext ctx;
+
         public GetATaxiDbContext()
-            : base("GetATaxiDbContext")
+            : base("GetATaxi")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<GetATaxiDbContext, Configuration>());
         }
 
         public static GetATaxiDbContext Create()
         {
-            
-
             return new GetATaxiDbContext();
         }
 
-        public static GetATaxiDbContext GetInstance()
-        {
-            if (ctx != null)
-            {
-                return ctx;
-            }
-            ctx = new GetATaxiDbContext();
-            return ctx;
-        }
 
         public IDbSet<Taxi> Taxies { get; set; }
 

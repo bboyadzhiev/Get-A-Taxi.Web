@@ -61,7 +61,6 @@
     <Compile Include="GetATaxiDbContext.cs" />
     <Compile Include="IGetATaxiData.cs" />
     <Compile Include="IGetATaxiDbContext.cs" />
-    <Compile Include="Migrations\Config.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MigrationsContextFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
