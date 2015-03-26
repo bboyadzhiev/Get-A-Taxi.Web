@@ -11,7 +11,7 @@
     {
 
         public GetATaxiDbContext()
-            : base("GetATaxi")
+            : base("GetATaxiDbContext")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<GetATaxiDbContext, Configuration>());
         }
