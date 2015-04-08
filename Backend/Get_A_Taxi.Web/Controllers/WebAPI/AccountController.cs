@@ -331,6 +331,11 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         }
 
         // POST api/Account/Register
+        /// <summary>
+        /// Register new user account
+        /// </summary>
+        /// <param name="model">New user registration data model</param>
+        /// <returns>Success message</returns>
         [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
@@ -340,7 +345,16 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            // TODO: Check mobile user registration method!!!
+            var user = new ApplicationUser() 
+            { 
+                UserName = model.Email, 
+                Email = model.Email, 
+                PhoneNumber = model.PhoneNumber,
+                FirstName = model.FirstName,
+                MiddleName = model.MiddleName,
+                LastName = model.LastName
+            };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 

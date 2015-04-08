@@ -33,14 +33,14 @@ namespace Get_A_Taxi.Models
         public virtual District District { get; set; }
 
         [Required]
-        public double OrderLattitude { get; set; }
+        public double OrderLatitude { get; set; }
         [Required]
         public double OrderLongitude { get; set; }
         [StringLength(100)]
         public string OrderAddress { get; set; }
 
         //[Required]
-        public double DestinationLattitude { get; set; }
+        public double DestinationLatitude { get; set; }
        // [Required]
         public double DestinationLongitude { get; set; }
         [StringLength(100)]

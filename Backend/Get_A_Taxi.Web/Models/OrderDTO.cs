@@ -16,7 +16,7 @@ namespace Get_A_Taxi.Web.Models
 
         [Required]
         [JsonProperty(PropertyName = "startLat")]
-        public double OrderLattitude { get; set; }
+        public double OrderLatitude { get; set; }
 
         [Required]
         [JsonProperty(PropertyName = "startLng")]
@@ -28,7 +28,7 @@ namespace Get_A_Taxi.Web.Models
         public string OrderAddress { get; set; }
 
          [JsonProperty(PropertyName = "endLat")]
-        public double DestinationLattitude { get; set; }
+        public double DestinationLatitude { get; set; }
 
          [JsonProperty(PropertyName = "endLng")]
         public double DestinationLongitude { get; set; }

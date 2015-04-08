@@ -46,11 +46,11 @@
                 return (o, u) => new Order
                 {
                     OrderAddress = o.OrderAddress,
-                    OrderLattitude = o.OrderLattitude,
+                    OrderLatitude = o.OrderLattitude,
                     OrderLongitude = o.OrderLongitude,
                     OrderedAt = DateTime.Now,
                     DestinationAddress = o.DestinationAddress,
-                    DestinationLattitude = o.DestinationLattitude,
+                    DestinationLatitude = o.DestinationLattitude,
                     DestinationLongitude = o.DestinationLongitude,
                     UserComment = o.UserComment,
                     OrderStatus = OrderStatus.Waiting,
@@ -63,10 +63,10 @@
         public static void UpdateOrderFromOperator(OrderInputVM orderVm, Order order)
         {
             order.OrderAddress = orderVm.OrderAddress;
-            order.OrderLattitude = orderVm.OrderLattitude;
+            order.OrderLatitude = orderVm.OrderLattitude;
             order.OrderLongitude = orderVm.OrderLongitude;
             order.DestinationAddress = orderVm.DestinationAddress;
-            order.DestinationLattitude = orderVm.DestinationLattitude;
+            order.DestinationLatitude = orderVm.DestinationLattitude;
             order.DestinationLongitude = orderVm.DestinationLongitude;
             order.UserComment = orderVm.UserComment;
         }

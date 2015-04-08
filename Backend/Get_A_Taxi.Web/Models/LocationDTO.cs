@@ -16,7 +16,7 @@ namespace Get_A_Taxi.Web.Models
 
         [Required]
         [JsonProperty(PropertyName = "lat")]
-        public double Lattitude { get; set; }
+        public double Latitude { get; set; }
 
         [Required]
         [JsonProperty(PropertyName = "lon")]
