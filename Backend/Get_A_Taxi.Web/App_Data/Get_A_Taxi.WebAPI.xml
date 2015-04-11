@@ -47,6 +47,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.AccountController.Register(Get_A_Taxi.Web.Models.RegisterBindingModel)">
+            <summary>
+            Register new user account
+            </summary>
+            <param name="model">New user registration data model</param>
+            <returns>Success message</returns>
+        </member>
         <member name="T:Get_A_Taxi.Web.Controllers.WebAPI.LocationsController">
             <summary>
             Manages user's favorite locations
