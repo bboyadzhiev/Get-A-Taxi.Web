@@ -24,6 +24,8 @@ namespace Get_A_Taxi.Web.App_Start
     using Microsoft.AspNet.SignalR.Infrastructure;
     using Microsoft.AspNet.SignalR;
     using Get_A_Taxi.Web.Infrastructure.Bridges;
+    using System.Web.Http;
+    using Ninject.Web.WebApi;
 
     public static class NinjectWebCommon
     {
@@ -59,6 +61,9 @@ namespace Get_A_Taxi.Web.App_Start
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
                 RegisterServices(kernel);
+
+                // Install our Ninject-based IDependencyResolver into the Web API config
+                GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
 
                 return kernel;
             }
