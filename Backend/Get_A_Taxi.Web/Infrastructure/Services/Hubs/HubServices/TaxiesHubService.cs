@@ -35,5 +35,11 @@ namespace Get_A_Taxi.Web.Infrastructure.Services.Hubs.HubServices
         {
             return taxies.Where(t => t.Status == status);
         }
+
+
+        public IQueryable<Taxi> OnDuty(IQueryable<Taxi> taxies)
+        {
+            return taxies.Where(t => t.Status == TaxiStatus.Available || t.Status == TaxiStatus.Busy);
+        }
     }
 }

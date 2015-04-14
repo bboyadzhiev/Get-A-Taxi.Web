@@ -152,6 +152,52 @@
             <param name="id">The id of the client order</param>
             <returns>The cancelled order's data model</returns>
         </member>
+        <member name="T:Get_A_Taxi.Web.Controllers.WebAPI.TaxiController">
+            <summary>
+            Manages driver assignment to a taxi
+            </summary>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiController.Get">
+            <summary>
+            Gets all available for driver assignment taxies for the driver's district
+            </summary>
+            <returns>List of all free for assignment taxi data models</returns>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiController.Get(System.Int32)">
+            <summary>
+            Get taxi details, only if the driver and the taxi are in the same district
+            </summary>
+            <param name="id">Id of the taxi</param>
+            <returns>Taxi details data model</returns>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiController.GetPaged(System.Int32)">
+            <summary>
+            Gets a page of all available for driver assignment taxies for the driver's district
+            </summary>
+            <param name="page">The page number</param>
+            <returns>List of free for assignment taxies' data models</returns>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiController.Post(Get_A_Taxi.Web.Models.TaxiDTO)">
+            <summary>
+            Assign a driver to a taxi and make it available
+            </summary>
+            <param name="model">The data model of the taxi the driver will be assigned to</param>
+            <returns>The detailed data model of the taxi that the driver was assigned to</returns>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiController.Put(Get_A_Taxi.Web.Models.TaxiDTO)">
+            <summary>
+            Change taxi status
+            </summary>
+            <param name="model">The taxi's new data model</param>
+            <returns>Appropriate responce</returns>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiController.Delete(System.Int32)">
+            <summary>
+            Unassigns a driver from a taxi
+            </summary>
+            <param name="taxiId">The id of a taxi the driver will be assigned to</param>
+            <returns>The taxi's data model that the driver was assigned to</returns>
+        </member>
         <member name="T:Get_A_Taxi.Web.Controllers.WebAPI.TaxiOrdersController">
             <summary>
             Manages the orders for taxies

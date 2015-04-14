@@ -9,11 +9,29 @@ using System.Threading.Tasks;
 
 namespace Get_A_Taxi.Models
 {
+    /// <summary>
+    /// Possible states of a taxi
+    /// </summary>
     public enum TaxiStatus
     {
+        /// <summary>
+        /// On duty, available to be assigned to an order
+        /// </summary>
         Available = 0,
+
+        /// <summary>
+        /// On duty, assigned to an order or something else
+        /// </summary>
         Busy = 1,
+
+        /// <summary>
+        /// Off-duty - availabe for decommissioning or driver assignment
+        /// </summary>
         OffDuty = 2,
+
+        /// <summary>
+        /// Decommissioned and off-duty, driver can not be assigned
+        /// </summary>
         Decommissioned = 3
     }
 
@@ -40,7 +58,7 @@ namespace Get_A_Taxi.Models
         [DefaultValue(TaxiStatus.OffDuty)]
         public TaxiStatus Status { get; set; }
 
-        public double Lattitude { get; set; }
+        public double Latitude { get; set; }
         public double Longitude { get; set; }
 
         [StringLength(100)]

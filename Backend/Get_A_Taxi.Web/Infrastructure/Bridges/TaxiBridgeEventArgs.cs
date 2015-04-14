@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Get_A_Taxi.Web.ViewModels;
-
-namespace Get_A_Taxi.Web.Infrastructure.Bridges
+﻿namespace Get_A_Taxi.Web.Infrastructure.Bridges
 {
+    using System;
+    using Get_A_Taxi.Web.Models;
     public class TaxiBridgeDetailedEventArgs : EventArgs
     {
-        public TaxiDetailsVM taxiVm { get; set; }
+        public TaxiDetailsDTO taxiDM { get; set; }
+        public int districtId { get; set; }
+    }
+
+    public class TaxiBridgeUpdateEventArgs : EventArgs
+    {
+        public TaxiDTO taxiDM { get; set; }
         public int districtId { get; set; }
     }
 

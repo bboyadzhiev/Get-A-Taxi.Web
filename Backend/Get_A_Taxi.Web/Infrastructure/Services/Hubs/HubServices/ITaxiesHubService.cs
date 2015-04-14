@@ -13,5 +13,6 @@ namespace Get_A_Taxi.Web.Infrastructure.Services.Hubs.HubServices
         IQueryable<Taxi> ByDistrict(IQueryable<Taxi> taxies, int districtId);
         IQueryable<Taxi> ByTaxiStand(IQueryable<Taxi> taxies, int taxiStandId);
         IQueryable<Taxi> ByStatus(IQueryable<Taxi> taxies, TaxiStatus status);
+        IQueryable<Taxi> OnDuty(IQueryable<Taxi> taxies);
     }
 }

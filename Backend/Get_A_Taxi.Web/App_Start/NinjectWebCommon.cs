@@ -80,8 +80,6 @@ namespace Get_A_Taxi.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            //kernel.Bind<IGetATaxiDbContext>().To<GetATaxiDbContext>()
-            //    .WithConstructorArgument("connectionString", "GetATaxi");
             kernel.Bind<IGetATaxiData>().To<GetATaxiData>();
             kernel.Bind<IOrdersService>().To<OrdersService>();
             kernel.Bind<IAccountService>().To<AccountService>();

@@ -28,14 +28,24 @@ namespace Get_A_Taxi.Web
             var kernel = NinjectWebCommon.bootstrapper.Kernel;
             var resolver = new NinjectSignalRDependencyResolver(kernel);
 
-            kernel.Bind(typeof(IHubConnectionContext<dynamic>)).ToMethod(context =>
-                    resolver.Resolve<IConnectionManager>().GetHubContext<OrdersHub>().Clients
-                        ).WhenInjectedInto<IOrderBridge>();
+            kernel.Bind(typeof(IHubConnectionContext<dynamic>))
+                .ToMethod(context => resolver
+                    .Resolve<IConnectionManager>()
+                    .GetHubContext<OrdersHub>()
+                    .Clients)
+                    .WhenInjectedInto<IOrderBridge>();
+
+            kernel.Bind(typeof(IHubConnectionContext<dynamic>))
+                .ToMethod(context => resolver
+                    .Resolve<IConnectionManager>()
+                    .GetHubContext<TaxiesHub>()
+                    .Clients)
+                    .WhenInjectedInto<ITaxiesBridge>();
 
             var config = new HubConfiguration();
             config.Resolver = resolver;
             ConfigureSignalR(app, config);
-            
+
         }
 
         public static void ConfigureSignalR(IAppBuilder app, HubConfiguration config)

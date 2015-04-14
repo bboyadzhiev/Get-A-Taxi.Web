@@ -24,11 +24,13 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
     {
 
         private const int RESULTS_COUNT = 10;
-        private IOrderBridge bridge;
-        public TaxiOrdersController(IGetATaxiData data, IOrderBridge bridge)
+        private IOrderBridge ordersBridge;
+        private ITaxiesBridge taxiesBrigde;
+        public TaxiOrdersController(IGetATaxiData data, IOrderBridge ordersBridge, ITaxiesBridge taxiesBridge)
             : base(data)
         {
-            this.bridge = bridge;
+            this.ordersBridge = ordersBridge;
+            this.taxiesBrigde = taxiesBrigde;
         }
 
         /// <summary>
@@ -49,7 +51,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             var districtId = driver.District.DistrictId;
             var orders = this.Data.Orders.All()
                 .Where(o => o.District.DistrictId == districtId && o.OrderStatus == OrderStatus.Waiting)
-                .OrderBy(o => (o.OrderLatitude - taxi.Lattitude) + (o.OrderLongitude - taxi.Longitude))
+                .OrderBy(o => (o.OrderLatitude - taxi.Latitude) + (o.OrderLongitude - taxi.Longitude))
                 .Take(RESULTS_COUNT)
                 .Project().To<OrderDTO>()
                 .ToList();
@@ -97,7 +99,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             var districtId = driver.District.DistrictId;
             var orders = this.Data.Orders.All()
                 .Where(o => o.District.DistrictId == districtId)
-                .OrderBy(o => (o.OrderLatitude - taxi.Lattitude) + (o.OrderLongitude - taxi.Longitude))
+                .OrderBy(o => (o.OrderLatitude - taxi.Latitude) + (o.OrderLongitude - taxi.Longitude))
                 .Skip(page * RESULTS_COUNT)
                 .Take(RESULTS_COUNT)
                 .Project().To<OrderDTO>()
@@ -135,17 +137,32 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             newOrder.District = driver.District;
             newOrder.Driver = driver;
             newOrder.Customer = driver;
-            newOrder.OrderStatus = OrderStatus.Waiting;
+            newOrder.OrderStatus = OrderStatus.InProgress;
             newOrder.AssignedTaxi = taxi;
 
             this.Data.Orders.Add(newOrder);
-            this.Data.Orders.SaveChanges();
+            //this.Data.Orders.SaveChanges();
 
+            // The taxi's locatin is at the new order location
+            taxi.Latitude = model.OrderLatitude;
+            taxi.Longitude = model.OrderLongitude;
+            taxi.Status = TaxiStatus.Busy;
+
+            this.Data.Taxies.Update(taxi);
+            this.Data.SaveChanges();
+
+            // Prepare the new order for the Taxi Driver
             var addedOrder = this.Data.Orders.SearchFor(o => o.OrderId == newOrder.OrderId).FirstOrDefault();
             var addedOrderModel = Mapper.Map<OrderDetailsDTO>(addedOrder);
 
+            // Notify the district about the new order
             var orderVM = Mapper.Map<OrderDetailsVM>(addedOrder);
-            this.bridge.AddOrder(orderVM, addedOrder.District.DistrictId);
+            this.ordersBridge.AddOrder(orderVM, addedOrder.District.DistrictId);
+
+            // When an order is taken the taxi is automatically 
+            // Notify the district about the new taxi state
+            var taxiDM = Mapper.Map<TaxiDTO>(taxi);
+            this.taxiesBrigde.TaxiUpdated(taxiDM, taxi.District.DistrictId);
 
             return Ok(addedOrderModel);
 
@@ -189,7 +206,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
 
             // Notify all about order's assignment
-            this.bridge.AssignOrder(orderToAssign.OrderId, taxi.TaxiId, orderToAssign.District.DistrictId);
+            this.ordersBridge.AssignOrder(orderToAssign.OrderId, taxi.TaxiId, orderToAssign.District.DistrictId);
 
             var assignedOrderModel = Mapper.Map<OrderDetailsDTO>(orderToAssign);
             return Ok(assignedOrderModel);
@@ -258,7 +275,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
             // Notify all about order's update
             var orderVM = Mapper.Map<OrderDetailsVM>(orderToUpdate);
-            this.bridge.UpdateOrder(orderVM, orderToUpdate.District.DistrictId);
+            this.ordersBridge.UpdateOrder(orderVM, orderToUpdate.District.DistrictId);
 
             return Ok(model);
         }
@@ -292,7 +309,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             this.Data.Orders.Update(orderToCancel);
             this.Data.Orders.SaveChanges();
 
-            this.bridge.CancelOrder(orderToCancel.OrderId, orderToCancel.District.DistrictId);
+            this.ordersBridge.CancelOrder(orderToCancel.OrderId, orderToCancel.District.DistrictId);
 
             return Ok(id);
         }

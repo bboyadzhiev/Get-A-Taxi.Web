@@ -1,32 +1,39 @@
-﻿using Get_A_Taxi.Web.ViewModels;
-using Microsoft.AspNet.SignalR.Hubs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Get_A_Taxi.Web.Infrastructure.Bridges
+﻿namespace Get_A_Taxi.Web.Infrastructure.Bridges
 {
+    using System;
+    using Microsoft.AspNet.SignalR.Hubs;
+    using Get_A_Taxi.Web.Models;
+
     public class TaxiesBridge : BaseBridge, ITaxiesBridge
     {
-        public event EventHandler<TaxiBridgeDetailedEventArgs> TaxiUpdatedEvent;
-        public event EventHandler<TaxiBridgeEventArgs> TaxiFreedEvent;
+        public event EventHandler<TaxiBridgeDetailedEventArgs> TaxiOnDutyEvent;
+        public event EventHandler<TaxiBridgeUpdateEventArgs> TaxiUpdatedEvent;
+        public event EventHandler<TaxiBridgeEventArgs> TaxiOffDutyEvent;
 
-        public void UpdateTaxi(TaxiDetailsVM taxiVm, int districtId)
+        public void TaxiUpdated(TaxiDTO taxiDM, int districtId)
         {
             if (TaxiUpdatedEvent != null)
             {
-                var args = new TaxiBridgeDetailedEventArgs() { districtId = districtId, taxiVm = taxiVm };
+                var args = new TaxiBridgeUpdateEventArgs() { districtId = districtId, taxiDM = taxiDM };
                 TaxiUpdatedEvent(this, args);
             }
         }
 
-        public void FreeTaxi(int taxiId, int districtId)
+        public void TaxiOnDuty(TaxiDetailsDTO taxiDM, int districtId)
         {
-            if (TaxiFreedEvent != null)
+            if (TaxiOnDutyEvent != null)
+            {
+                var args = new TaxiBridgeDetailedEventArgs() { districtId = districtId, taxiDM = taxiDM };
+                TaxiOnDutyEvent(this, args);
+            }
+        }
+
+        public void TaxiOffDuty(int taxiId, int districtId)
+        {
+            if (TaxiOffDutyEvent != null)
             {
                 var args = new TaxiBridgeEventArgs() { districtId = districtId, taxiId = taxiId };
-                TaxiFreedEvent(this, args);
+                TaxiOffDutyEvent(this, args);
             }
         }
 
@@ -34,7 +41,6 @@ namespace Get_A_Taxi.Web.Infrastructure.Bridges
             : base(clients)
         {
         }
-
 
     }
 }

@@ -1,17 +1,16 @@
-﻿using Get_A_Taxi.Web.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Get_A_Taxi.Web.Infrastructure.Bridges
+﻿namespace Get_A_Taxi.Web.Infrastructure.Bridges
 {
+
+    using System;
+    using Get_A_Taxi.Web.Models;
+
     public interface ITaxiesBridge
     {
-        event EventHandler<TaxiBridgeDetailedEventArgs> TaxiUpdatedEvent;
-        event EventHandler<TaxiBridgeEventArgs> TaxiFreedEvent;
-        void UpdateTaxi(TaxiDetailsVM taxiVm, int districtId);
-        void FreeTaxi(int taxiId, int districtId);
+        event EventHandler<TaxiBridgeDetailedEventArgs> TaxiOnDutyEvent;
+        event EventHandler<TaxiBridgeUpdateEventArgs> TaxiUpdatedEvent;
+        event EventHandler<TaxiBridgeEventArgs> TaxiOffDutyEvent;
+        void TaxiUpdated(TaxiDTO taxiDM, int districtId);
+        void TaxiOnDuty(TaxiDetailsDTO taxiDM, int districtId);
+        void TaxiOffDuty(int taxiId, int districtId);
     }
 }

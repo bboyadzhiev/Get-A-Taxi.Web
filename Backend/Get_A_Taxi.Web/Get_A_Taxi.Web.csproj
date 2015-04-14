@@ -230,6 +230,7 @@
     <Compile Include="Controllers\WebAPI\AccountController.cs" />
     <Compile Include="Controllers\WebAPI\LocationsController.cs" />
     <Compile Include="Controllers\WebAPI\ClientOrdersController.cs" />
+    <Compile Include="Controllers\WebAPI\TaxiController.cs" />
     <Compile Include="Controllers\WebAPI\TaxiOrdersController.cs" />
     <Compile Include="Controllers\WebAPI\TaxiStandsController.cs" />
     <Compile Include="Hubs\OrdersHub.cs" />
@@ -258,6 +259,8 @@
     <Compile Include="Models\LocationDTO.cs" />
     <Compile Include="Models\OrderDetailsDTO.cs" />
     <Compile Include="Models\OrderDTO.cs" />
+    <Compile Include="Models\TaxiDetailsDTO.cs" />
+    <Compile Include="Models\TaxiDTO.cs" />
     <Compile Include="Models\TaxiStandDTO.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="ViewModels\DistrictVM.cs" />
