@@ -16,7 +16,7 @@ namespace Get_A_Taxi.Web.ViewModels
         public int TaxiStandId { get; set; }
 
         [Required]
-        public double Lattitude { get; set; }
+        public double Latitude { get; set; }
 
         [Required]
         public double Longitude { get; set; }

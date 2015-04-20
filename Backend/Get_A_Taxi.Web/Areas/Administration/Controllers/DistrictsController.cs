@@ -50,7 +50,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
         // GET: Administration/Districts/Create
         public ActionResult Create()
         {
-            ViewBag.Lat = this.UserProfile.District.CenterLattitude;
+            ViewBag.Lat = this.UserProfile.District.CenterLatitude;
             ViewBag.Lng = this.UserProfile.District.CenterLongitude;
             return View();
         }
@@ -60,7 +60,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DistrictId,Title,CenterLattitude,CenterLongitude,MapZoom")] DistrictVM districtVM)
+        public ActionResult Create([Bind(Include = "DistrictId,Title,CenterLatitude,CenterLongitude,MapZoom")] DistrictVM districtVM)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.Lat = districtVM.CenterLattitude;
+            ViewBag.Lat = districtVM.CenterLatitude;
             ViewBag.Lon = districtVM.CenterLongitude;
             return View(districtVM);
         }
@@ -97,7 +97,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DistrictId,Title,CenterLattitude,CenterLongitude,MapZoom")] DistrictVM districtVM)
+        public ActionResult Edit([Bind(Include = "DistrictId,Title,CenterLatitude,CenterLongitude,MapZoom")] DistrictVM districtVM)
         {
             if (ModelState.IsValid)
             {

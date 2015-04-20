@@ -1,7 +1,7 @@
 ﻿var districtMap = function () {
     var districtMarkers = [];
     function updateUI(latlng, formattedAddress) {
-        $('#CenterLattitude').val(latlng.lat());
+        $('#CenterLatitude').val(latlng.lat());
         $('#CenterLongitude').val(latlng.lng());
         $('#address').val(formattedAddress);
         $('#Title').val(formattedAddress);
@@ -24,7 +24,7 @@
     }
 
     $('#getAddress').click(function (e) {
-        gATMap.getAddress($('#CenterLattitude').val(), $('#CenterLongitude').val(), updateUI)
+        gATMap.getAddress($('#CenterLatitude').val(), $('#CenterLongitude').val(), updateUI)
     });
 
     return {

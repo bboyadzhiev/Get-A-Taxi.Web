@@ -23,17 +23,15 @@
             <td><span data-bind="text: firstName"></span> <span data-bind="text: lastName"></span></td>
             <td data-bind="text: custPhone"></td>
             <td data-bind="text: custComment"></td>
-            <td data-bind="text: driverPhone"></td>
+            @*<td data-bind="text: driverPhone"></td>*@
         </tr>
         <!-- /ko -->
     </tbody>
 </table>
 
 <script type="text/javascript">
-    // $(document).ready(function () {
-    var district = @ViewBag.DistrictId;
-    var operatorId = "@ViewBag.OperatorId";
-    var currentOrdersPartial = function (districtId) {
+    // ORDERS
+    var currentOrdersPartial = function (districtId, operatorId) {
         var waitingMarkers = [];
         var inProgressMarkers = [];
         var m = [];
@@ -163,6 +161,72 @@
         $(window).unload(function () {
             ordersHub.invoke("close", districtId, operatorId);
         });
-    }(district);
+    }(district, operator);
     // });
+
+
+    // TAXIES
+    var taxies = function (districtId, operatorId) {
+        var availableMarkers = [];
+        var busyMarkers = [];
+        var taxiesHub;
+
+        function addNewTaxiMarker(data) {
+            if(data.isAvailable == true){
+                gATMap.addMarker(data.taxiId, data.lat, data.lon, '/Content/Images/Map/yellow_m.png', data.plate +' '+ data.phone, clkW, availableMarkers );
+            }else {
+                gATMap.addMarker(data.taxiId, data.lat, data.lon, '/Content/Images/Map/orange_m.png',  data.plate +' '+ data.phone, clkP, busyMarkers);
+            }
+        }
+
+        function addTaxiesMarkers(data) {
+            for (var i = 0; i < data.length; i++) {
+                addNewTaxiMarker(data[i]);
+            }
+        }
+
+        function clkW(markerId, lat, lng, content) {
+
+        }
+
+        function clkP(markerId, lat, lng, content) {
+
+        }
+
+        // Taxies hub
+        taxiesHub = $.connection.taxiesHub;
+
+        taxiesHub.client.populateTaxies = function (data) {
+            console.log('Taxies Hub Connected!')
+            console.log(data);
+            addTaxiesMarkers(data);
+        };
+
+        taxiesHub.client.taxiOnDuty = function (data) {
+            console.log('Taxi on duty!');
+            addNewTaxiMarker(data);
+        }
+
+        taxiesHub.client.taxiOffDuty = function (taxiId) {
+            console.log('Taxi '+taxiId+' is off duty!');
+            var markerToRemove = gATMap.removeMarker(taxiId, availableMarkers);
+        }
+
+        taxiesHub.client.taxiUpdated = function (data) {
+            console.log('Taxi '+data.taxiId+' updated!');
+            
+            var taxiMarkerToUpdate = gATMap.removeMarker(data.taxiId, availableMarkers);
+            taxiMarkerToUpdate.lat = data.lat;
+            taxiMarkerToUpdate.lon = data.lon;
+            addNewTaxiMarker(taxiMarkerToUpdate);
+        }
+
+        $.connection.hub.start().done(function () {
+            console.log("Connecting to Taxies Hub...");
+            taxiesHub.invoke("open", districtId, operatorId);
+        });
+        $(window).unload(function () {
+            taxiesHub.invoke("close", districtId, operatorId);
+        });
+    }(district, operator);
 </script>

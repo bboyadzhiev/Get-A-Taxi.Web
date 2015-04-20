@@ -6,9 +6,9 @@
 
     public class TaxiesBridge : BaseBridge, ITaxiesBridge
     {
-        public event EventHandler<TaxiBridgeDetailedEventArgs> TaxiOnDutyEvent;
-        public event EventHandler<TaxiBridgeUpdateEventArgs> TaxiUpdatedEvent;
-        public event EventHandler<TaxiBridgeEventArgs> TaxiOffDutyEvent;
+        private event EventHandler<TaxiBridgeDetailedEventArgs> TaxiOnDutyEvent;
+        private event EventHandler<TaxiBridgeUpdateEventArgs> TaxiUpdatedEvent;
+        private event EventHandler<TaxiBridgeEventArgs> TaxiOffDutyEvent;
 
         public void TaxiUpdated(TaxiDTO taxiDM, int districtId)
         {
@@ -37,9 +37,30 @@
             }
         }
 
+        private EventHandler<TaxiBridgeDetailedEventArgs> taxiOnDutyHandler;
+        private EventHandler<TaxiBridgeUpdateEventArgs> taxiUpdatedHandler;
+        private EventHandler<TaxiBridgeEventArgs> taxiOffDutyHandler;
+
         public TaxiesBridge(IHubConnectionContext<dynamic> clients)
             : base(clients)
         {
+            taxiOnDutyHandler = (s, e) =>
+            {
+                var districtGroup = e.districtId.ToString();
+                Clients.Group(districtGroup).taxiOnDuty(e.taxiDM);
+            };
+
+            taxiUpdatedHandler = (s, e) =>
+            {
+                var districtGroup = e.districtId.ToString();
+                Clients.Group(districtGroup).taxiUpdated(e.taxiDM);
+            };
+
+            taxiOffDutyHandler = (s, e) =>
+            {
+                var districtGroup = e.districtId.ToString();
+                Clients.Group(districtGroup).taxiOffDuty(e.taxiId);
+            };
         }
 
     }

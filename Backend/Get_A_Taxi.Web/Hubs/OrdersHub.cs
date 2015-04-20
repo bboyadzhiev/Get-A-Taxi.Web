@@ -1,12 +1,12 @@
 ﻿namespace Get_A_Taxi.Web.Hubs
 {
-    using AutoMapper.QueryableExtensions;
-    using Get_A_Taxi.Web.Infrastructure.Services.Hubs.HubServices;
-    using Get_A_Taxi.Web.ViewModels;
+    using System.Linq;
+    using System.Threading.Tasks;
     using Microsoft.AspNet.SignalR;
     using Microsoft.AspNet.SignalR.Hubs;
-    using System.Threading.Tasks;
-    using System.Linq;
+    using AutoMapper.QueryableExtensions;
+    using Get_A_Taxi.Web.Infrastructure.Services.Hubs.HubServices;
+    using Get_A_Taxi.Web.Models;
 
     [HubName("ordersHub")]
     public class OrdersHub : Hub
@@ -25,10 +25,10 @@
 
             var result = this._service.AllOrders().Where(o => o.District.DistrictId == districtId);
             result = this._service.GetUnfinished(result);
-            var ordersDisplayVMList = result.Project().To<OrderDetailsVM>().ToList();
+            var ordersDisplayDTOList = result.Project().To<OrderDetailsDTO>().ToList();
 
             await Groups.Add(Context.ConnectionId, districtGroup);
-            Clients.Caller.updateOrders(ordersDisplayVMList);
+            Clients.Caller.updateOrders(ordersDisplayDTOList);
         }
 
         public Task Close(int districtId, string operatorId)

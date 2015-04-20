@@ -24,7 +24,7 @@ namespace Get_A_Taxi.Web.ViewModels
         [Required]
         [DisplayName("Lat")]
        // [DisplayFormat(DataFormatString = "{0:0.000000000}", ApplyFormatInEditMode = true)]
-        public double CenterLattitude { get; set; }
+        public double CenterLatitude { get; set; }
         [Required]
         [DisplayName("Lng")]
 

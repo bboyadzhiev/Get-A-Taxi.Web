@@ -156,8 +156,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             var addedOrderModel = Mapper.Map<OrderDetailsDTO>(addedOrder);
 
             // Notify the district about the new order
-            var orderVM = Mapper.Map<OrderDetailsVM>(addedOrder);
-            this.ordersBridge.AddOrder(orderVM, addedOrder.District.DistrictId);
+            this.ordersBridge.AddOrder(addedOrderModel, addedOrder.District.DistrictId);
 
             // When an order is taken the taxi is automatically 
             // Notify the district about the new taxi state
@@ -175,7 +174,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         /// <param name="driverId">The taxi driver's id</param>
         /// <returns>The assigned order data model</returns>
         [HttpPut]
-        public IHttpActionResult Put(int orderId, [FromUri] string driverId)
+        public IHttpActionResult Put(int orderId)
         {
             var orderToAssign = this.Data.Orders.SearchFor(o => o.OrderId == orderId).FirstOrDefault();
             if (orderToAssign == null)
@@ -183,30 +182,41 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return NotFound();
             }
 
-            // Check if order is still waiting for an assignment
-            if (orderToAssign.OrderStatus != OrderStatus.Waiting)
-            {
-                return BadRequest("The order is already processed!");
-            }
-
             var driver = this.GetUser();
-            var taxi = this.Data.Taxies.SearchFor(t => t.Driver.Id == driverId).FirstOrDefault();
-            
+            var taxi = this.Data.Taxies.SearchFor(t => t.Driver.Id == driver.Id).FirstOrDefault();
             var taxiErrorCheck = CheckTaxi(taxi);
             if (taxiErrorCheck != null)
             {
                 return taxiErrorCheck;
             }
 
-            // Checks passed at this point, assigning order
-            orderToAssign.AssignedTaxi = taxi;
-            orderToAssign.Driver = driver;
-            this.Data.Orders.Update(orderToAssign);
-            this.Data.Orders.SaveChanges();
+            // Check if order is still waiting for an assignment
+            //return BadRequest("The order is already processed!");
 
 
-            // Notify all about order's assignment
-            this.ordersBridge.AssignOrder(orderToAssign.OrderId, taxi.TaxiId, orderToAssign.District.DistrictId);
+            if (orderToAssign.OrderStatus == OrderStatus.Waiting)
+            {
+                // Checks passed at this point, assigning order
+                orderToAssign.AssignedTaxi = taxi;
+                orderToAssign.Driver = driver;
+                orderToAssign.OrderStatus = OrderStatus.InProgress;
+                this.Data.Orders.Update(orderToAssign);
+                this.Data.Orders.SaveChanges();
+
+                // Notify all about order's assignment
+                this.ordersBridge.AssignOrder(orderToAssign.OrderId, taxi.TaxiId, orderToAssign.District.DistrictId);
+            }
+            else if (orderToAssign.OrderStatus == OrderStatus.InProgress
+                && orderToAssign.AssignedTaxi.TaxiId == taxi.TaxiId)
+            {
+                orderToAssign.AssignedTaxi = null;
+                orderToAssign.Driver = null;
+                orderToAssign.OrderStatus = OrderStatus.Waiting;
+                this.Data.Orders.Update(orderToAssign);
+                this.Data.Orders.SaveChanges();
+
+                this.ordersBridge.CancelOrder(orderToAssign.OrderId, driver.District.DistrictId);
+            }
 
             var assignedOrderModel = Mapper.Map<OrderDetailsDTO>(orderToAssign);
             return Ok(assignedOrderModel);
@@ -274,8 +284,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             this.Data.Orders.SaveChanges();
 
             // Notify all about order's update
-            var orderVM = Mapper.Map<OrderDetailsVM>(orderToUpdate);
-            this.ordersBridge.UpdateOrder(orderVM, orderToUpdate.District.DistrictId);
+            this.ordersBridge.UpdateOrder(model, orderToUpdate.District.DistrictId);
 
             return Ok(model);
         }
@@ -292,7 +301,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         public IHttpActionResult Delete(int id)
         {
             var driver = this.GetUser();
-            var taxi = this.Data.Taxies.SearchFor(t=>t.Driver.Id == driver.Id).FirstOrDefault();
+            var taxi = this.Data.Taxies.SearchFor(t => t.Driver.Id == driver.Id).FirstOrDefault();
             var orderToCancel = this.Data.Orders.SearchFor(o => o.OrderId == id && o.AssignedTaxi.TaxiId == taxi.TaxiId).FirstOrDefault();
             if (orderToCancel == null)
             {

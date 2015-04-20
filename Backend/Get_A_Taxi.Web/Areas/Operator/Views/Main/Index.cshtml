@@ -40,11 +40,14 @@
     
     var defaultLat = parseFloat(lat);
     var defaultLon = parseFloat(lon);
+    var district = @ViewBag.DistrictId;
+    var operator = "@ViewBag.OperatorId";
 </script>
 <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 @Scripts.Render("~/bundles/gmaps")
 @Scripts.Render("~/bundles/knockout")
 @Scripts.Render("~/bundles/signalr")
+
 <script src="~/signalr/hubs" type="text/javascript"></script>
 <div id="currentOrdersPartial" class="rightBottomHover">
     @Html.Partial("_CurrentOrdersPartialView")

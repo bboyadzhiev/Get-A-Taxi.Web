@@ -78,7 +78,7 @@ namespace Get_A_Taxi.Web.Areas.Administration
         public ActionResult Create()
         {
             ViewBag.DistrictsList = this.populator.GetDistricts();
-            ViewBag.Lat = this.UserProfile.District.CenterLattitude;
+            ViewBag.Lat = this.UserProfile.District.CenterLatitude;
             ViewBag.Lng = this.UserProfile.District.CenterLongitude;
             return View();
         }
@@ -88,7 +88,7 @@ namespace Get_A_Taxi.Web.Areas.Administration
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TaxiStandId,Lattitude,Longitude,Address,Alias,DistrictId")] TaxiStandVM taxiStandVM)
+        public ActionResult Create([Bind(Include = "TaxiStandId,Latitude,Longitude,Address,Alias,DistrictId")] TaxiStandVM taxiStandVM)
         {
             if (ModelState.IsValid)
             {
@@ -123,7 +123,7 @@ namespace Get_A_Taxi.Web.Areas.Administration
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TaxiStandId,Lattitude,Longitude,Address,Alias,DistrictId")] TaxiStandVM taxiStandVM)
+        public ActionResult Edit([Bind(Include = "TaxiStandId,Latitude,Longitude,Address,Alias,DistrictId")] TaxiStandVM taxiStandVM)
         {
             if (ModelState.IsValid)
             {

@@ -1,4 +1,5 @@
-﻿using Get_A_Taxi.Web.ViewModels;
+﻿using Get_A_Taxi.Web.Models;
+using Get_A_Taxi.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,13 @@ namespace Get_A_Taxi.Web.Infrastructure.Bridges
 {
     public class OrderBridgeDetailedEventArgs : EventArgs
     {
-        public OrderDetailsVM order { get; set; }
+        public OrderDetailsDTO order { get; set; }
+        public int districtId { get; set; }
+    }
+
+    public class OrderBridgeUpdateEventArgs : EventArgs
+    {
+        public OrderDTO order { get; set; }
         public int districtId { get; set; }
     }
 

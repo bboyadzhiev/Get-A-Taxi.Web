@@ -19,7 +19,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
     /// </summary>
     [Authorize]
     [RoutePrefix("api/ClientOrders")]
-    public class ClientOrdersController : BaseApiController, IRESTController<OrderDTO>
+    public class ClientOrdersController : BaseApiController, IRESTController<OrderDetailsDTO>
     {
         private const int RESULTS_COUNT = 10;
         private IOrderBridge bridge;
@@ -80,7 +80,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         /// <param name="model">The data model of the new order</param>
         /// <returns>The data model of the new order</returns>
         [HttpPost]
-        public IHttpActionResult Post([FromBody]OrderDTO model)
+        public IHttpActionResult Post([FromBody]OrderDetailsDTO model)
         {
             if (!ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
             // TODO: Review distance calculation
             // Finds the closes district
-            var closestDistrict = this.Data.Districts.All().OrderBy(d => ((d.CenterLattitude - model.OrderLatitude) + (d.CenterLongitude - model.OrderLongitude))).FirstOrDefault();
+            var closestDistrict = this.Data.Districts.All().OrderBy(d => ((d.CenterLatitude - model.OrderLatitude) + (d.CenterLongitude - model.OrderLongitude))).FirstOrDefault();
             var user = GetUser();
 
             newOrder.District = closestDistrict;
@@ -104,8 +104,8 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             var addedOrder = this.Data.Orders.SearchFor(o => o.OrderId == newOrder.OrderId).FirstOrDefault();
             var addedOrderModel = Mapper.Map<OrderDTO>(addedOrder);
 
-            var orderVM = Mapper.Map<OrderDetailsVM>(addedOrder);
-            this.bridge.AddOrder(orderVM, addedOrder.District.DistrictId);
+            var orderDTO = Mapper.Map<OrderDetailsDTO>(addedOrder);
+            this.bridge.AddOrder(orderDTO, addedOrder.District.DistrictId);
 
             return Ok(addedOrderModel);
         }
@@ -115,7 +115,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         /// </summary>
         /// <param name="model">The updated order's data model</param>
         /// <returns>The updated order's data model</returns>
-        public IHttpActionResult Put([FromBody]OrderDTO model)
+        public IHttpActionResult Put([FromBody]OrderDetailsDTO model)
         {
             if (!ModelState.IsValid)
             {
@@ -139,8 +139,8 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             this.Data.Orders.Update(orderToUpdate);
             this.Data.Orders.SaveChanges();
 
-            var orderVM = Mapper.Map<OrderDetailsVM>(orderToUpdate);
-            this.bridge.UpdateOrder(orderVM, orderToUpdate.District.DistrictId);
+            var orderDTO = Mapper.Map<OrderDetailsDTO>(orderToUpdate);
+            this.bridge.UpdateOrder(orderDTO, orderToUpdate.District.DistrictId);
 
             return Ok(model);
 
@@ -165,7 +165,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             }
 
             orderToCancel.OrderStatus = OrderStatus.Cancelled;
-            var orderToCancelModel = Mapper.Map<OrderDetailsVM>(orderToCancel);
+
             this.Data.Orders.Update(orderToCancel);
             this.Data.SaveChanges();
 

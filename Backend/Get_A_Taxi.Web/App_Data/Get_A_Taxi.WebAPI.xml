@@ -131,14 +131,14 @@
             <param name="page">Page number</param>
             <returns>List of data models of client orders</returns>
         </member>
-        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.ClientOrdersController.Post(Get_A_Taxi.Web.Models.OrderDTO)">
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.ClientOrdersController.Post(Get_A_Taxi.Web.Models.OrderDetailsDTO)">
             <summary>
             Creates a new client order. The district for it will be the closest one in the system.
             </summary>
             <param name="model">The data model of the new order</param>
             <returns>The data model of the new order</returns>
         </member>
-        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.ClientOrdersController.Put(Get_A_Taxi.Web.Models.OrderDTO)">
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.ClientOrdersController.Put(Get_A_Taxi.Web.Models.OrderDetailsDTO)">
             <summary>
             Updates a client order. Possible only if it's in the "Waiting" state.
             </summary>
@@ -234,7 +234,7 @@
             <param name="model">A detailed order's data model</param>
             <returns>The new order's data model</returns>
         </member>
-        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiOrdersController.Put(System.Int32,System.String)">
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiOrdersController.Put(System.Int32)">
             <summary>
             Assign order to taxi
             </summary>
@@ -262,6 +262,19 @@
             </summary>
             <param name="districtId">The District's ID</param>
             <returns>A list of taxi stands</returns>
+        </member>
+        <member name="T:Get_A_Taxi.Web.Hubs.ClientsHub">
+            <summary>
+            Mobile clients hub
+            hub group is every client Id
+            </summary>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Hubs.ClientsHub.Open(System.String)">
+            <summary>
+            When client connects a new 
+            </summary>
+            <param name="clientId"></param>
+            <returns></returns>
         </member>
         <member name="T:Get_A_Taxi.Web.Infrastructure.OrdersEvents">
             <summary>

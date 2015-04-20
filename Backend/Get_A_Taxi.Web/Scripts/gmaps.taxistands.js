@@ -1,7 +1,7 @@
 ﻿var createTaxiStand = function () {
 var markers = [];
     function updateUI(lat,lng, formattedAddress) {
-        $('#Lattitude').val(lat);
+        $('#Latitude').val(lat);
         $('#Longitude').val(lng);
         $('#Address').val(formattedAddress);
         $('#Alias').val(formattedAddress);
@@ -23,7 +23,7 @@ var markers = [];
     }
 
     $('#getAddress').click(function (e) {
-        getInputAddress('#CenterLattitude', '#CenterLongitude', '#Alias')
+        getInputAddress('#CenterLatitude', '#CenterLongitude', '#Alias')
 
     });
     return {

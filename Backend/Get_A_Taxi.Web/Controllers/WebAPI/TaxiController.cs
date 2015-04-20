@@ -64,7 +64,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 .Project().To<TaxiDetailsDTO>()
                 .FirstOrDefault();
 
-            
+
             if (taxiDetails == null)
             {
                 return NotFound();
@@ -72,7 +72,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
             if (taxiDetails.DistrictId != districtId)
             {
-               return BadRequest("Taxi is not in your district!");
+                return BadRequest("Taxi is not in your district!");
             }
 
             return Ok(taxiDetails);
@@ -126,14 +126,14 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             var driversCurrentTaxi = this.Data.Taxies.SearchFor(t => t.Driver.Id == driver.Id).FirstOrDefault();
             if (driversCurrentTaxi != null)
             {
-                 return BadRequest("You are already assigned to another taxi: " + driversCurrentTaxi.Plate + "!");
+                return BadRequest("You are already assigned to another taxi: " + driversCurrentTaxi.Plate + "!");
             }
 
             taxi.Driver = driver;
             taxi.Latitude = model.Latitude;
             taxi.Longitude = model.Longitude;
             taxi.Status = TaxiStatus.Available;
-            
+
             this.Data.Taxies.Update(taxi);
             this.Data.Taxies.SaveChanges();
 
@@ -170,20 +170,22 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return BadRequest("Taxi is not in your district!");
             }
 
-            if (model.Status == TaxiStatus.Decommissioned)
+            if (taxi.Status == TaxiStatus.Decommissioned)
             {
                 return BadRequest("Unauthorized operation!");
             }
 
-            if (model.Status == TaxiStatus.OffDuty && taxi.Status == TaxiStatus.Busy)
+            if (taxi.Status == TaxiStatus.Busy && model.OnDuty == false)
             {
                 return BadRequest("Taxi is serving an order - cannot get off-duty!");
             }
 
+
+
             taxi.Latitude = model.Latitude;
             taxi.Longitude = model.Longitude;
-            taxi.Status = model.Status;
-            
+            taxi.Status = FromModelStatus(model);
+
             this.Data.Taxies.Update(taxi);
             this.Data.Taxies.SaveChanges();
 
@@ -205,7 +207,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             var taxi = this.Data.Taxies
                 .SearchFor(t => t.TaxiId == taxiId && t.Driver.Id == driver.Id)
                 .FirstOrDefault();
-            
+
             if (taxi == null)
             {
                 return NotFound();
@@ -215,7 +217,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             {
                 return BadRequest("Taxi must be on-duty to be un-assigned!");
             }
-            
+
             taxi.Driver = null;
             taxi.Status = TaxiStatus.OffDuty;
 
@@ -226,5 +228,27 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             this.taxiesBridge.TaxiOffDuty(taxi.TaxiId, districtId);
             return Ok();
         }
+
+        #region Helpers
+        [NonAction]
+        private TaxiStatus FromModelStatus(TaxiDTO model)
+        {
+            if (model.IsAvailable)
+            {
+                if (!model.OnDuty)
+                {
+                    return TaxiStatus.OffDuty;
+                }
+                else
+                {
+                    return TaxiStatus.Available;
+                }
+            }
+            else
+            {
+                return TaxiStatus.Busy;
+            }
+        }
+        #endregion
     }
 }

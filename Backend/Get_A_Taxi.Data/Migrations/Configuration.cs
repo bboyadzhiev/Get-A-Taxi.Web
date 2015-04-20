@@ -48,7 +48,7 @@ namespace Get_A_Taxi.Data.Migrations
             if (!context.Districts.Any(d=>d.Title == "Sofia"))
             {
 
-                District sofia = new District { Title = "Sofia", CenterLattitude = 42.697652, CenterLongitude = 23.322036, MapZoom = 10 };
+                District sofia = new District { Title = "Sofia", CenterLatitude = 42.697652, CenterLongitude = 23.322036, MapZoom = 10 };
                 context.Districts.AddOrUpdate(sofia);
                 context.Taxies.AddOrUpdate(
                new Taxi { Plate = "CA 0001 AA", Seats = 5, Luggage = 2, District = sofia, Status = TaxiStatus.OffDuty },

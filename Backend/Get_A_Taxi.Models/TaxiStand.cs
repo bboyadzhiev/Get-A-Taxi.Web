@@ -13,7 +13,7 @@
         //[Required]
         //public virtual Location Location { get; set; }
         [Required]
-        public double Lattitude { get; set; }
+        public double Latitude { get; set; }
 
         [Required]
         public double Longitude { get; set; }

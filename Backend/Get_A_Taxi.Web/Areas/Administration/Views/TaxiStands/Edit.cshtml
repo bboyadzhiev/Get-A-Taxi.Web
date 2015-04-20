@@ -17,10 +17,10 @@
         @Html.HiddenFor(model => model.TaxiStandId)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Lattitude, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Latitude, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Lattitude, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Lattitude, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Latitude, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Latitude, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -63,7 +63,7 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 <script>
-    var lat = @Model.Lattitude.ToString("0.000000000").Replace(",", ".");
+    var lat = @Model.Latitude.ToString("0.000000000").Replace(",", ".");
     var lon = @Model.Longitude.ToString("0.000000000").Replace(",", ".");
     var defaultLat = parseFloat(lat)
     var defaultLon = parseFloat(lon);

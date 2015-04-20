@@ -15,7 +15,7 @@ namespace Get_A_Taxi.Models
         public int LocationId { get; set; }
 
         [Required]
-        public double Lattitude { get; set; }
+        public double Latitude { get; set; }
         [Required]
         public double Longitude { get; set; }
         [StringLength(100)]

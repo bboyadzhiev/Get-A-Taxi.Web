@@ -9,7 +9,7 @@ using System.Web;
 
 namespace Get_A_Taxi.Web.Models
 {
-    public class TaxiDTO : IMapFrom<Taxi>
+    public class TaxiDTO : IMapFrom<Taxi>, IHaveCustomMappings
     {
         [JsonProperty(PropertyName = "taxiId")]
         public int TaxiId { get; set; }
@@ -22,9 +22,17 @@ namespace Get_A_Taxi.Web.Models
         [JsonProperty(PropertyName = "lon")]
         public double Longitude { get; set; }
 
-        [Required]
-        [JsonProperty(PropertyName = "status")]
-        public TaxiStatus Status { get; set; }
+        [JsonProperty(PropertyName = "onDuty")]
+        public bool OnDuty { get; set; }
 
+        [JsonProperty(PropertyName = "isAvailable")]
+        public bool IsAvailable { get; set; }
+
+        public void CreateMappings(AutoMapper.IConfiguration configuration)
+        {
+            configuration.CreateMap<Taxi, TaxiDTO>()
+               .ForMember(dm => dm.IsAvailable, opt => opt.MapFrom(m => m.Status == TaxiStatus.Available))
+               .ForMember(dm => dm.OnDuty, opt => opt.MapFrom(m => m.Status == TaxiStatus.Available || m.Status == TaxiStatus.Busy));
+        }
     }
 }

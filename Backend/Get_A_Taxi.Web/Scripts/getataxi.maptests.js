@@ -43,7 +43,7 @@ $(document).ready(function () {
 						lat: latlng.lat(),
 						lng: latlng.lng()
 					});
-					$('#CenterLattitude').val(latlng.lat());
+					$('#CenterLatitude').val(latlng.lat());
 					$('#CenterLongitude').val(latlng.lng());
 					$('#MapZoom').val(map.getZoom());
 					$('#Title').val($('#address').val());

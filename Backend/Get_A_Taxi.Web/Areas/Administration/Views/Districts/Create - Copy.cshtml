@@ -25,10 +25,10 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.CenterLattitude, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.CenterLatitude, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.CenterLattitude, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.CenterLattitude, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.CenterLatitude, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CenterLatitude, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -108,7 +108,7 @@
                             lat: latlng.lat(),
                             lng: latlng.lng()
                         });
-                        $('#CenterLattitude').val(latlng.lat());
+                        $('#CenterLatitude').val(latlng.lat());
                         $('#CenterLongitude').val(latlng.lng());
                         $('#MapZoom').val(map.getZoom());
                         $('#Title').val($('#address').val());

@@ -56,7 +56,7 @@ namespace Get_A_Taxi.Models
 
         public virtual District District { get; set; }
 
-        public double Lattitude { get; set; }
+        public double Latitude { get; set; }
         public double Longitude { get; set; }
 
         public virtual ICollection<Order> Orders

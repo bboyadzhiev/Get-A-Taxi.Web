@@ -10,14 +10,14 @@
         public int OrderId { get; set; }
 
         [Required]
-        public double OrderLattitude { get; set; }
+        public double OrderLatitude { get; set; }
         [Required]
         public double OrderLongitude { get; set; }
         [StringLength(100)]
         [Display(Name="Order address")]
         public string OrderAddress { get; set; }
 
-        public double DestinationLattitude { get; set; }
+        public double DestinationLatitude { get; set; }
 
         public double DestinationLongitude { get; set; }
 
@@ -46,11 +46,11 @@
                 return (o, u) => new Order
                 {
                     OrderAddress = o.OrderAddress,
-                    OrderLatitude = o.OrderLattitude,
+                    OrderLatitude = o.OrderLatitude,
                     OrderLongitude = o.OrderLongitude,
                     OrderedAt = DateTime.Now,
                     DestinationAddress = o.DestinationAddress,
-                    DestinationLatitude = o.DestinationLattitude,
+                    DestinationLatitude = o.DestinationLatitude,
                     DestinationLongitude = o.DestinationLongitude,
                     UserComment = o.UserComment,
                     OrderStatus = OrderStatus.Waiting,
@@ -63,10 +63,10 @@
         public static void UpdateOrderFromOperator(OrderInputVM orderVm, Order order)
         {
             order.OrderAddress = orderVm.OrderAddress;
-            order.OrderLatitude = orderVm.OrderLattitude;
+            order.OrderLatitude = orderVm.OrderLatitude;
             order.OrderLongitude = orderVm.OrderLongitude;
             order.DestinationAddress = orderVm.DestinationAddress;
-            order.DestinationLatitude = orderVm.DestinationLattitude;
+            order.DestinationLatitude = orderVm.DestinationLatitude;
             order.DestinationLongitude = orderVm.DestinationLongitude;
             order.UserComment = orderVm.UserComment;
         }

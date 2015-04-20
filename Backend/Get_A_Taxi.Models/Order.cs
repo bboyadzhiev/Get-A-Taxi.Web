@@ -10,9 +10,24 @@ namespace Get_A_Taxi.Models
 {
     public enum OrderStatus
     {
+        /// <summary>
+        /// New order waiting to be assigned to a taxi
+        /// </summary>
         Waiting = 0,
+
+        /// <summary>
+        /// Order assigned to a taxi and in progress
+        /// </summary>
         InProgress = 1,
+
+        /// <summary>
+        /// A finished order
+        /// </summary>
         Finished = 2,
+
+        /// <summary>
+        /// Cancelled order
+        /// </summary>
         Cancelled = 3
     }
 

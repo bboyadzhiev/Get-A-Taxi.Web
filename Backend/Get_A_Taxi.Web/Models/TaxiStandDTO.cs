@@ -14,7 +14,7 @@ namespace Get_A_Taxi.Web.Models
         public int TaxiStandId { get; set; }
 
         [JsonProperty(PropertyName = "lat")]
-        public double Lattitude { get; set; }
+        public double Latitude { get; set; }
 
         [JsonProperty(PropertyName = "lng")]
         public double Longitude { get; set; }

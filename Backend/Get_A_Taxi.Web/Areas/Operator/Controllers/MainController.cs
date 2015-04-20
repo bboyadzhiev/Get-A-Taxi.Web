@@ -14,6 +14,7 @@ using System.Web;
 using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
 using Get_A_Taxi.Web.Infrastructure.Bridges;
+using Get_A_Taxi.Web.Models;
 
 namespace Get_A_Taxi.Web.Areas.Operator.Controllers
 {
@@ -31,7 +32,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
         // GET: Operator/Main
         public ActionResult Index()
         {
-            ViewBag.Lat = this.UserProfile.District.CenterLattitude;
+            ViewBag.Lat = this.UserProfile.District.CenterLatitude;
             ViewBag.Lng = this.UserProfile.District.CenterLongitude;
             ViewBag.DistrictId = this.UserProfile.District.DistrictId;
             ViewBag.OperatorId = this.UserProfile.Id;
@@ -49,7 +50,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
-        public async Task<ActionResult> CreateOrder([Bind(Include = "OrderLattitude,OrderLongitude,OrderAddress,DestinationLattitude,DestinationLongitude,DestinationAddress,FirstName,LastName,PhoneNumber,UserComment")]OrderInputVM orderVm)
+        public async Task<ActionResult> CreateOrder([Bind(Include = "OrderLatitude,OrderLongitude,OrderAddress,DestinationLatitude,DestinationLongitude,DestinationAddress,FirstName,LastName,PhoneNumber,UserComment")]OrderInputVM orderVm)
         {
             if (ModelState.IsValid)
             {
@@ -109,7 +110,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                 };
                 this.Data.OperatorsOrders.Add(operatorOrder);
                 this.Data.OperatorsOrders.SaveChanges();
-                var orderVM = this.Data.Orders.All().Where(o => o.OrderId == order.OrderId).Project().To<OrderDetailsVM>().FirstOrDefault();
+                var orderVM = this.Data.Orders.All().Where(o => o.OrderId == order.OrderId).Project().To<OrderDetailsDTO>().FirstOrDefault();
                 this.bridge.AddOrder(orderVM, district.DistrictId);
                 //this.bridge.AddOrder(order.OrderId, district.DistrictId);
 
@@ -158,7 +159,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                         this.Data.OperatorsOrders.Add(operatorOrder);
                     }
                     this.Data.SaveChanges();
-                    var orderVM = this.Data.Orders.All().Where(o => o.OrderId == order.OrderId).Project().To<OrderDetailsVM>().FirstOrDefault();
+                    var orderVM = this.Data.Orders.All().Where(o => o.OrderId == order.OrderId).Project().To<OrderDetailsDTO>().FirstOrDefault();
                     this.bridge.UpdateOrder(orderVM, district.DistrictId);
                 }
                 else

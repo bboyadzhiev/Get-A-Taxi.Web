@@ -23,7 +23,6 @@ namespace Get_A_Taxi.Web.Models
         public double OrderLongitude { get; set; }
 
         [StringLength(100)]
-        [Display(Name = "Order address")]
         [JsonProperty(PropertyName = "start")]
         public string OrderAddress { get; set; }
 
@@ -34,12 +33,13 @@ namespace Get_A_Taxi.Web.Models
         public double DestinationLongitude { get; set; }
 
         [StringLength(100)]
-        [Display(Name = "Destination address")]
         [JsonProperty(PropertyName = "end")]
         public string DestinationAddress { get; set; }
         
-        [Display(Name = "Customer comment")]
         [JsonProperty(PropertyName = "custComment")]
         public string UserComment { get; set; }
+
+        [JsonProperty(PropertyName = "pickupTime")] // in minutes
+        public int PickupTime { get; set; }
     }
 }

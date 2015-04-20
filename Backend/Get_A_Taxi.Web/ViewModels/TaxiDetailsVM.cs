@@ -24,7 +24,7 @@ namespace Get_A_Taxi.Web.ViewModels
 
         public UserDetailsVM Driver { get; set; }
 
-        public double Lattitude { get; set; }
+        public double Latitude { get; set; }
         public double Longitude { get; set; }
 
         [Required]
@@ -58,7 +58,7 @@ namespace Get_A_Taxi.Web.ViewModels
         //            Seats = x.Seats,
         //            Luggage = x.Luggage,
         //            Available = x.Available,
-        //            Lattitude = x.Lattitude,
+        //            Latitude = x.Latitude,
         //            Longitude = x.Longitude,
         //            Driver = new UserDetailsVM()
         //            {

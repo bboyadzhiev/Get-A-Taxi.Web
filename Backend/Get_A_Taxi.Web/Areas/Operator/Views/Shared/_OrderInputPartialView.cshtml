@@ -13,7 +13,7 @@
 
             @Html.EditorFor(model => model.OrderAddress, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(m => m.OrderAddress) } })
             @Html.ValidationMessageFor(model => model.OrderAddress, "", new { @class = "text-danger" })
-            @Html.ValidationMessageFor(model => model.OrderLattitude, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.OrderLatitude, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
@@ -40,9 +40,9 @@
             @Html.ValidationMessageFor(model => model.UserComment, "", new { @class = "text-danger" })
         </div>
     </div>
-    @Html.HiddenFor(model => model.OrderLattitude)
+    @Html.HiddenFor(model => model.OrderLatitude)
     @Html.HiddenFor(model => model.OrderLongitude)
-    @Html.HiddenFor(model => model.DestinationLattitude)
+    @Html.HiddenFor(model => model.DestinationLatitude)
     @Html.HiddenFor(model => model.DestinationLongitude)
 </div>
 
@@ -76,7 +76,7 @@
 
         function updateOrderAddress(lat, lng, formattedAddress) {
             cleanStartMarker();
-            $('#OrderLattitude').val(lat);
+            $('#OrderLatitude').val(lat);
             $('#OrderLongitude').val(lng);
             $('#OrderAddress').val(formattedAddress);
             startMarker = gATMap.addMarker(0, lat, lng, "/Content/Images/Map/green_m.png", formattedAddress, addressClick, addressMarkers);
@@ -84,7 +84,7 @@
 
         function updateDestinationAddress(lat, lng, formattedAddress) {
             cleanDestinationMarker();
-            $('#DestinationLattitude').val(lat);
+            $('#DestinationLatitude').val(lat);
             $('#DestinationLongitude').val(lng);
             $('#DestinationAddress').val(formattedAddress);
             endMarker = gATMap.addMarker(1, lat, lng, "/Content/Images/Map/yellow_m.png", formattedAddress, addressClick, addressMarkers);
@@ -94,10 +94,10 @@
             if (data.orderId() != null) {
                 $('#OrderId').val(data.orderId());
             }
-            $('#OrderLattitude').val(data.startLat());
+            $('#OrderLatitude').val(data.startLat());
             $('#OrderLongitude').val(data.startLng());
             $('#OrderAddress').val(data.start());
-            $('#DestinationLattitude').val(data.endLat());
+            $('#DestinationLatitude').val(data.endLat());
             $('#DestinationLongitude').val(data.endLng());
             $('#DestinationAddress').val(data.end());
             $('#FirstName').val(data.firstName());

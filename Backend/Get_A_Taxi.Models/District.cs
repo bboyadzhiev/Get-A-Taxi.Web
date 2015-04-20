@@ -16,7 +16,7 @@
         public string Title { get; set; }
 
         [Required]
-        public double CenterLattitude { get; set; }
+        public double CenterLatitude { get; set; }
         [Required]
         public double CenterLongitude { get; set; }
 

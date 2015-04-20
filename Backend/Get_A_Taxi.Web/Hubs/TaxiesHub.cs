@@ -12,7 +12,7 @@ using System.Web;
 
 namespace Get_A_Taxi.Web.Hubs
 {
-     [HubName("taxiesHub")]
+    [HubName("taxiesHub")]
     public class TaxiesHub : Hub
     {
          private ITaxiesHubService _service;
@@ -27,10 +27,10 @@ namespace Get_A_Taxi.Web.Hubs
 
              var result = this._service.AllTaxies().Where(o => o.District.DistrictId == districtId);
              result = this._service.OnDuty(result);
-             var ordersDisplayVMList = result.Project().To<TaxiDetailsDTO>().ToList();
+             var onDutyaxiesList = result.Project().To<TaxiDetailsDTO>().ToList();
 
              await Groups.Add(Context.ConnectionId, districtGroup);
-             Clients.Caller.updateOrders(ordersDisplayVMList);
+             Clients.Caller.populateTaxies(onDutyaxiesList);
          }
 
          public Task Close(int districtId, string operatorId)

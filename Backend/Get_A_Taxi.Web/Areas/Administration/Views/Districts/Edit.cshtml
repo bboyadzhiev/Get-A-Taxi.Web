@@ -26,10 +26,10 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.CenterLattitude, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.CenterLatitude, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.CenterLattitude, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.CenterLattitude, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.CenterLatitude, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CenterLatitude, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -76,7 +76,7 @@
     var districtMap = function () {
         var districtMarkers = [];
         function updateUI(latlng, formattedAddress) {
-            $('#CenterLattitude').val(latlng.lat());
+            $('#CenterLatitude').val(latlng.lat());
             $('#CenterLongitude').val(latlng.lng());
             $('#address').val(formattedAddress);
             $('#Title').val(formattedAddress);
@@ -99,7 +99,7 @@
         }
 
         $('#getAddress').click(function (e) {
-            getInputAddress('#CenterLattitude', '#CenterLongitude', '#Title')
+            getInputAddress('#CenterLatitude', '#CenterLongitude', '#Title')
 
         });
         return {

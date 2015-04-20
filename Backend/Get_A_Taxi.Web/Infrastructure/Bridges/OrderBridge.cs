@@ -2,22 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Get_A_Taxi.Web.ViewModels;
-using Get_A_Taxi.Web.Infrastructure.Services.Hubs.HubServices;
 using Microsoft.AspNet.SignalR.Hubs;
+using Get_A_Taxi.Web.Infrastructure.Services.Hubs.HubServices;
+using Get_A_Taxi.Web.Models;
 
 namespace Get_A_Taxi.Web.Infrastructure.Bridges
 {
 
-
     public class OrderBridge : BaseBridge, IOrderBridge
     {
-        public event EventHandler<OrderBridgeDetailedEventArgs> OrderAddedEvent;
-        public event EventHandler<OrderBridgeEventArgs> OrderCancelledEvent;
-        public event EventHandler<OrderBridgeAssignmentEventArgs> OrderAssignedEvent;
-        public event EventHandler<OrderBridgeDetailedEventArgs> OrderUpdatedEvent;
+        private event EventHandler<OrderBridgeDetailedEventArgs> OrderAddedEvent;
+        private event EventHandler<OrderBridgeEventArgs> OrderCancelledEvent;
+        private event EventHandler<OrderBridgeAssignmentEventArgs> OrderAssignedEvent;
+        private event EventHandler<OrderBridgeDetailedEventArgs> OrderUpdatedEvent;
 
-        public void AddOrder(OrderDetailsVM order, int districtId)
+        public void AddOrder(OrderDetailsDTO order, int districtId)
         {
             if (OrderAddedEvent != null)
             {
@@ -44,7 +43,7 @@ namespace Get_A_Taxi.Web.Infrastructure.Bridges
             }
         }
 
-        public void UpdateOrder(OrderDetailsVM order, int districtId)
+        public void UpdateOrder(OrderDetailsDTO order, int districtId)
         {
             if (OrderUpdatedEvent != null)
             {
@@ -65,7 +64,6 @@ namespace Get_A_Taxi.Web.Infrastructure.Bridges
             orderAddedHandler = (s, e) =>
              {
                  var districtGroup = e.districtId.ToString();
-                 //var orderVM = this._service.AllOrders().Where(o => o.OrderId == e.orderId).Project().To<OrderDetailsVM>().FirstOrDefault();
                  Clients.Group(districtGroup).addedOrder(e.order);
              };
 
@@ -86,7 +84,6 @@ namespace Get_A_Taxi.Web.Infrastructure.Bridges
             orderUpdatedHandler = (s, e) =>
             {
                 var districtGroup = e.districtId.ToString();
-                //var orderVM = this._service.AllOrders().Where(o => o.OrderId == e.orderId).Project().To<OrderDetailsVM>().FirstOrDefault();
                 Clients.Group(districtGroup).updatedOrder(e.order);
             };
 
@@ -98,9 +95,6 @@ namespace Get_A_Taxi.Web.Infrastructure.Bridges
 
             OrderUpdatedEvent += orderUpdatedHandler;
         }
-
-
-
 
     }
 }
