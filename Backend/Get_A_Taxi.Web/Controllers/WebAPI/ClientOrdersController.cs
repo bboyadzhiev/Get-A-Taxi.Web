@@ -87,27 +87,51 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return BadRequest("Invalid model state!");
             }
 
-            var newOrder = Mapper.Map<Order>(model);
+            var user = GetUser();
+
+            var order = this.Data.Orders.All()
+                .Where(o => o.Customer.Id == user.Id && (o.OrderStatus == OrderStatus.Waiting || o.OrderStatus == OrderStatus.InProgress))
+                .FirstOrDefault();
+
+            if (order != null)
+            {
+                order.OrderLatitude = model.OrderLatitude;
+                order.OrderLongitude = model.OrderLongitude;
+                order.OrderAddress = model.OrderAddress;
+                order.UserComment = model.UserComment;
+                order.DestinationAddress = model.DestinationAddress;
+                order.DestinationLatitude = model.DestinationLatitude;
+                order.DestinationLongitude = model.DestinationLongitude;
+
+                this.Data.Orders.Update(order);
+                this.Data.Orders.SaveChanges();
+
+                var updatedOrder = this.Data.Orders.SearchFor(o => o.OrderId == order.OrderId).FirstOrDefault();
+                var updatedOrderModel = Mapper.Map<OrderDTO>(updatedOrder);
+
+                return Ok(updatedOrder);
+            }
 
             // TODO: Review distance calculation
             // Finds the closes district
             var closestDistrict = this.Data.Districts.All().OrderBy(d => ((d.CenterLatitude - model.OrderLatitude) + (d.CenterLongitude - model.OrderLongitude))).FirstOrDefault();
-            var user = GetUser();
+            order = Mapper.Map<Order>(model);
 
-            newOrder.District = closestDistrict;
-            newOrder.Customer = user;
-            newOrder.OrderStatus = OrderStatus.Waiting;
+            order.District = closestDistrict;
+            order.Customer = user;
+            order.OrderStatus = OrderStatus.Waiting;
 
-            this.Data.Orders.Add(newOrder);
+            this.Data.Orders.Add(order);
             this.Data.Orders.SaveChanges();
 
-            var addedOrder = this.Data.Orders.SearchFor(o => o.OrderId == newOrder.OrderId).FirstOrDefault();
+            var addedOrder = this.Data.Orders.SearchFor(o => o.OrderId == order.OrderId).FirstOrDefault();
             var addedOrderModel = Mapper.Map<OrderDTO>(addedOrder);
 
             var orderDTO = Mapper.Map<OrderDetailsDTO>(addedOrder);
             this.bridge.AddOrder(orderDTO, addedOrder.District.DistrictId);
 
             return Ok(addedOrderModel);
+
         }
 
         /// <summary>

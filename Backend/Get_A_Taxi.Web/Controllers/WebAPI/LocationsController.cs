@@ -114,12 +114,21 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return BadRequest("Invalid model state!");
             }
 
+            var user = GetUser();
             var location = this.Data.Locations.SearchFor(l => l.LocationId == model.LocationId).FirstOrDefault();
             if (location == null)
             {
-                return NotFound();
+                // The user has changed its location and is reporting to server
+                user.Latitude = model.Latitude;
+                user.Longitude = model.Longitude;
+                this.Data.Users.Update(user);
+                this.Data.Users.SaveChanges();
+
+                //TODO: Notify taxi about user location change
+
+                return Ok(model);
             }
-            var user = GetUser();
+            
             var favoriteId = location.LocationId;
 
             var found = user.Favorites.AsQueryable().Where(l => l.LocationId == favoriteId).FirstOrDefault();
