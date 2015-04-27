@@ -2,6 +2,7 @@
 @{
     var rolesList = (List<SelectListItem>)ViewBag.UserRoles;
     var districtsList = (List<SelectListItem>)ViewBag.DistrictsList;
+   
     rolesList.ForEach(a => a.Selected = false);
 }
 

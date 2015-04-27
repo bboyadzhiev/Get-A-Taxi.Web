@@ -112,7 +112,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return Ok(updatedOrder);
             }
 
-            // TODO: Review distance calculation
+            // HACK: Review distance calculation
             // Finds the closes district
             var closestDistrict = this.Data.Districts.All().OrderBy(d => ((d.CenterLatitude - model.OrderLatitude) + (d.CenterLongitude - model.OrderLongitude))).FirstOrDefault();
             order = Mapper.Map<Order>(model);

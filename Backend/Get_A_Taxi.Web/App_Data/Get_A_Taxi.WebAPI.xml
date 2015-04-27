@@ -300,6 +300,26 @@
             <param name="taxiId">The taxi's id</param>
             <returns>A partial view with the found taxi view model</returns>
         </member>
+        <member name="M:Get_A_Taxi.Web.Infrastructure.Populators.IDropDownListPopulator.GetDistricts">
+            <summary>
+            Get selectlist of all available districts
+            </summary>
+            <returns>Collection of SelectList districts</returns>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Infrastructure.Populators.IDropDownListPopulator.GetNullableDistricts">
+            <summary>
+            Get selectlist of all available districts 
+            and one marked as "----", used for null-district search
+            </summary>
+            <returns>Collection of SelectList districts</returns>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Infrastructure.Populators.IDropDownListPopulator.GetRoles(Get_A_Taxi.Web.ApplicationRoleManager)">
+            <summary>
+            Get selectlist of all available roles
+            </summary>
+            <param name="manager">Role manager</param>
+            <returns></returns>
+        </member>
         <member name="M:Get_A_Taxi.Web.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
             <summary>
             Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"

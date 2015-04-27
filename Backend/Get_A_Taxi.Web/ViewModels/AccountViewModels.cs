@@ -83,7 +83,7 @@ namespace Get_A_Taxi.Web.ViewModels
 
         [Required]
         [Phone]
-        [Display(Name = "Phone Numbaer")]
+        [Display(Name = "Phone Number")]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 

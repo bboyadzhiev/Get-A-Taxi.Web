@@ -108,7 +108,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             return Ok(orders);
         }
 
-        // TODO: Review the purpose of this action
+        // HACK: Order from the taxi driver, client's ID = driver's ID
         /// <summary>
         /// Place new order from the taxi driver 
         /// (customer got the taxi on a taxi stand or by hailing it). 

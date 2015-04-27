@@ -27,13 +27,14 @@
             var districts = this.cache.Get<IEnumerable<SelectListItem>>(DISTRICTS_CHACHE,
                 () =>
                 {
-                    return this.data.Districts.All()
+                    var result =  this.data.Districts.All()
                         .Select(d => new SelectListItem
                         {
                             Value = d.DistrictId.ToString(),
                             Text = d.Title
                         })
                         .ToList();
+                    return result;
                 });
             return districts;
         }

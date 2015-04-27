@@ -48,7 +48,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
                 .ToList();
 
             ViewBag.UserRoles = this.populator.GetRoles(this.RoleManager);
-            ViewBag.DistrictsList = this.populator.GetDistricts();
+            ViewBag.DistrictsList = this.populator.GetNullableDistricts();
             return View("Roles",rolesViewModel);
         }
 

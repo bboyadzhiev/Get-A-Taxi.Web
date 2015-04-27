@@ -1,14 +1,14 @@
 ﻿@model Get_A_Taxi.Web.ViewModels.UserDetailsVM
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Dismiss";
 }
 
-<h2>Delete</h2>
+<h2>Dismiss employee</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to dismiss this employee?</h3>
 <div>
-    <h4>UserDetailsVM</h4>
+    <h4>Employee details</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -44,11 +44,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DistritId)
+            @Html.DisplayNameFor(model => model.District)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DistritId)
+            @Html.DisplayFor(model => model.District)
         </dd>
 
         <dt>
@@ -89,7 +89,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <input type="submit" value="Dismiss" class="btn btn-default" /> |
             @Html.ActionLink("Back to List", "Index")
         </div>
     }
