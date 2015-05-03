@@ -102,7 +102,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
 
         /// <summary>
-        /// Updates location details
+        /// Update user location
         /// </summary>
         /// <param name="model">The location's data model</param>
         /// <returns>The updated location's data model</returns>
@@ -125,6 +125,8 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 this.Data.Users.SaveChanges();
 
                 //TODO: Notify taxi about user location change
+
+
 
                 return Ok(model);
             }

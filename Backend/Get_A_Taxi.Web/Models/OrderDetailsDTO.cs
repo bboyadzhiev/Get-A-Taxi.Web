@@ -31,6 +31,9 @@ namespace Get_A_Taxi.Web.Models
         [JsonProperty(PropertyName = "taxiId")]
         public int TaxiId { get; set; }
 
+        [JsonProperty(PropertyName = "driverPhone")]
+        public string DriverPhone { get; set; }
+
         [JsonProperty(PropertyName = "isWaiting")]
         public bool IsWaiting { get; set; }
 
@@ -52,8 +55,8 @@ namespace Get_A_Taxi.Web.Models
                 .ForMember(vm => vm.CustomerPhoneNumber, opt => opt.MapFrom(m => m.Customer.PhoneNumber))
                 .ForMember(vm => vm.IsWaiting, opt => opt.MapFrom(m => m.OrderStatus == OrderStatus.Waiting))
                 .ForMember(vm => vm.IsFinished, opt => opt.MapFrom(m => m.OrderStatus == OrderStatus.Finished))
-                .ForMember(vm => vm.TaxiId, opt => opt.MapFrom(m => (m.AssignedTaxi != null) ? m.AssignedTaxi.TaxiId : -1));
-
+                .ForMember(vm => vm.TaxiId, opt => opt.MapFrom(m => (m.AssignedTaxi != null) ? m.AssignedTaxi.TaxiId : -1))
+                .ForMember(vm => vm.DriverPhone, opt => opt.MapFrom(m => (m.AssignedTaxi != null && m.AssignedTaxi.Driver != null) ? m.AssignedTaxi.Driver.PhoneNumber : String.Empty));
         }
     }
 }

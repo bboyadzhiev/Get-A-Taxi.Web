@@ -28,6 +28,7 @@ namespace Get_A_Taxi.Web
             var kernel = NinjectWebCommon.bootstrapper.Kernel;
             var resolver = new NinjectSignalRDependencyResolver(kernel);
 
+            // Binding Orders Hub to Orders Bridge
             kernel.Bind(typeof(IHubConnectionContext<dynamic>))
                 .ToMethod(context => resolver
                     .Resolve<IConnectionManager>()
@@ -35,6 +36,7 @@ namespace Get_A_Taxi.Web
                     .Clients)
                     .WhenInjectedInto<IOrderBridge>();
 
+            // Binding Taxies Hub to Taxies Bridge
             kernel.Bind(typeof(IHubConnectionContext<dynamic>))
                 .ToMethod(context => resolver
                     .Resolve<IConnectionManager>()

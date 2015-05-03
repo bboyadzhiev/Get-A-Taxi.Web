@@ -1,17 +1,17 @@
-﻿using AutoMapper.QueryableExtensions;
-using Get_A_Taxi.Models;
-using Get_A_Taxi.Web.Infrastructure.Services.Hubs.HubServices;
-using Get_A_Taxi.Web.Models;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
+using AutoMapper.QueryableExtensions;
+using Get_A_Taxi.Web.Infrastructure.Services.Hubs.HubServices;
+using Get_A_Taxi.Web.Models;
 
 namespace Get_A_Taxi.Web.Hubs
 {
+    /// <summary>
+    /// Subscribe operators in the district about all taxies' status changes
+    /// </summary>
+    [Authorize]
     [HubName("taxiesHub")]
     public class TaxiesHub : Hub
     {
@@ -21,19 +21,20 @@ namespace Get_A_Taxi.Web.Hubs
              this._service = taxiService;
          }
 
-         public async Task Open(int districtId, string operatorId)
+         public async Task Open(int districtId)
          {
              var districtGroup = districtId.ToString();
+             await Groups.Add(Context.ConnectionId, districtGroup);
 
              var result = this._service.AllTaxies().Where(o => o.District.DistrictId == districtId);
              result = this._service.OnDuty(result);
-             var onDutyaxiesList = result.Project().To<TaxiDetailsDTO>().ToList();
-
-             await Groups.Add(Context.ConnectionId, districtGroup);
-             Clients.Caller.populateTaxies(onDutyaxiesList);
+             var onDutyTaxiesList = result.Project().To<TaxiDetailsDTO>().ToList();
+             
+             // Return currently operating taxies
+             Clients.Caller.populateTaxies(onDutyTaxiesList);
          }
 
-         public Task Close(int districtId, string operatorId)
+         public Task Close(int districtId)
          {
              return Groups.Remove(Context.ConnectionId, districtId.ToString());
          }

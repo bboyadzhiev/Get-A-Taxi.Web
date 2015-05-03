@@ -1,16 +1,17 @@
-﻿using AutoMapper;
-using Get_A_Taxi.Models;
+﻿using Get_A_Taxi.Models;
 using Get_A_Taxi.Web.Infrastructure.Mapping;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
 using System.Web;
 
 namespace Get_A_Taxi.Web.Models
 {
     public class TaxiDetailsDTO : TaxiDTO, IHaveCustomMappings
     {
+      
         [JsonProperty(PropertyName = "plate")]
         public string Plate { get; set; }
 
@@ -33,14 +34,16 @@ namespace Get_A_Taxi.Web.Models
         public string Address { get; set; }
 
 
-        public void CreateMappings(IConfiguration configuration)
+        public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
             configuration.CreateMap<Taxi, TaxiDetailsDTO>()
                 .ForMember(dm => dm.DistrictId, opt => opt.MapFrom(m => m.District.DistrictId))
-                .ForMember(dm => dm.TaxiStandId, opt => opt.MapFrom(m => m.TaxiStand.TaxiStandId))
                 .ForMember(dm => dm.DriverName, opt => opt.MapFrom(m => m.Driver.FirstName + " " + m.Driver.LastName))
                 .ForMember(dm => dm.Phone, opt => opt.MapFrom(m => m.Driver.PhoneNumber))
-                .ForMember(dm => dm.TaxiStandAlias, opt => opt.MapFrom(m => m.TaxiStand.Alias));
+                .ForMember(dm => dm.TaxiStandId, opt => opt.MapFrom(m => m.TaxiStand != null ? m.TaxiStand.TaxiStandId : -1))
+                .ForMember(dm => dm.TaxiStandAlias, opt => opt.MapFrom(m => m.TaxiStand != null ? m.TaxiStand.Alias : "new"));
+               // .ForMember(dm => dm.IsAvailable, opt => opt.MapFrom(m => m.Status == TaxiStatus.Available))
+               //.ForMember(dm => dm.OnDuty, opt => opt.MapFrom(m => m.Status == TaxiStatus.Available || m.Status == TaxiStatus.Busy));
         }
     }
 }

@@ -155,10 +155,9 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             var addedOrder = this.Data.Orders.SearchFor(o => o.OrderId == newOrder.OrderId).FirstOrDefault();
             var addedOrderModel = Mapper.Map<OrderDetailsDTO>(addedOrder);
 
-            // Notify the district about the new order
-            this.ordersBridge.AddOrder(addedOrderModel, addedOrder.District.DistrictId);
+            // No need to notify the district about the new order
 
-            // When an order is taken the taxi is automatically 
+            // When an order is placed from the taxi it is automatically set as busy
             // Notify the district about the new taxi state
             var taxiDM = Mapper.Map<TaxiDTO>(taxi);
             this.taxiesBrigde.TaxiUpdated(taxiDM, taxi.District.DistrictId);
@@ -171,7 +170,6 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         /// Assign order to taxi
         /// </summary>
         /// <param name="orderId">The order's id</param>
-        /// <param name="driverId">The taxi driver's id</param>
         /// <returns>The assigned order data model</returns>
         [HttpPut]
         public IHttpActionResult Put(int orderId)

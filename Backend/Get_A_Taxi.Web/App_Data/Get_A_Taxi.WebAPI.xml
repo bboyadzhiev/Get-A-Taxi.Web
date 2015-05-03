@@ -94,7 +94,7 @@
         </member>
         <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.LocationsController.Put(Get_A_Taxi.Web.Models.LocationDTO)">
             <summary>
-            Updates location details
+            Update user location
             </summary>
             <param name="model">The location's data model</param>
             <returns>The updated location's data model</returns>
@@ -239,7 +239,6 @@
             Assign order to taxi
             </summary>
             <param name="orderId">The order's id</param>
-            <param name="driverId">The taxi driver's id</param>
             <returns>The assigned order data model</returns>
         </member>
         <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiOrdersController.Put(Get_A_Taxi.Web.Models.OrderDetailsDTO)">
@@ -266,15 +265,49 @@
         <member name="T:Get_A_Taxi.Web.Hubs.ClientsHub">
             <summary>
             Mobile clients hub
-            hub group is every client Id
+            hub group is client Id
             </summary>
         </member>
         <member name="M:Get_A_Taxi.Web.Hubs.ClientsHub.Open(System.String)">
             <summary>
-            When client connects a new 
+            Add SignalR subscribers to clients status changes
             </summary>
             <param name="clientId"></param>
+        </member>
+        <member name="T:Get_A_Taxi.Web.Hubs.OrdersHub">
+            <summary>
+            Subscribes operators and taxies to the new orders that are being placed in the district
+            The hub's group is the district id
+            </summary>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Hubs.OrdersHub.Open(System.Int32)">
+            <summary>
+            Subscribe to the hub and fetch all the current orders
+            </summary>
+            <param name="districtId">The id of the distrit</param>
             <returns></returns>
+        </member>
+        <member name="T:Get_A_Taxi.Web.Hubs.TaxiesHub">
+            <summary>
+            Subscribe operators in the district about all taxies' status changes
+            </summary>
+        </member>
+        <member name="T:Get_A_Taxi.Web.Hubs.TrackingHub">
+            <summary>
+            Subscribe for tracking assigned order's taxi and client locations
+            There are up to to group members - the taxi and the client
+            A group is formed, named after the order's ID
+            Used by the taxi driver to track the client if client has enabled tracking
+            and by the client to track taxi's position on the map
+            </summary>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Hubs.TrackingHub.LocationChanged(System.Int32,System.Double,System.Double)">
+            <summary>
+            Taxi/client reports a location change to the other group member client/taxi
+            </summary>
+            <param name="orderId">The order's id</param>
+            <param name="lat">The location's latitude</param>
+            <param name="lon">The location's longitude</param>
         </member>
         <member name="T:Get_A_Taxi.Web.Infrastructure.OrdersEvents">
             <summary>

@@ -8,27 +8,31 @@ using System.Web;
 
 namespace Get_A_Taxi.Web.Hubs
 {
+
+    //TODO Obsolete
+
     /// <summary>
     /// Mobile clients hub
-    /// hub group is every client Id
+    /// hub group is client Id
     /// </summary>
     [HubName("clientsHub")]
+    [Obsolete]
     public class ClientsHub: Hub
     {
-        public ClientsHub()
-        {
-
-        }
 
         /// <summary>
-        /// When client connects a new 
+        /// Add SignalR subscribers to clients status changes
         /// </summary>
         /// <param name="clientId"></param>
-        /// <returns></returns>
         public async Task Open(string clientId)
         {
             await Groups.Add(Context.ConnectionId, clientId);
             Clients.Caller.ok(clientId);
+        }
+
+        public Task Close(string clientId)
+        {
+            return Groups.Remove(Context.ConnectionId, clientId.ToString());
         }
     }
 }

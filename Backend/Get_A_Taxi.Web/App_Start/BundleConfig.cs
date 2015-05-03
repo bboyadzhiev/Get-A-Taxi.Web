@@ -40,6 +40,9 @@ namespace Get_A_Taxi.Web
             bundles.Add(new ScriptBundle("~/bundles/signalr").Include(
                 "~/Scripts/jquery.signalR*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/gmaps.taxies").Include(
+                "~/Scripts/gmaps.taxies.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));

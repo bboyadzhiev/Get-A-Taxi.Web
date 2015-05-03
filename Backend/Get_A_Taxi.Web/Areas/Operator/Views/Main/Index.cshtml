@@ -47,10 +47,12 @@
 @Scripts.Render("~/bundles/gmaps")
 @Scripts.Render("~/bundles/knockout")
 @Scripts.Render("~/bundles/signalr")
-
 <script src="~/signalr/hubs" type="text/javascript"></script>
+
+@Scripts.Render("~/bundles/gmaps.taxies")
+
 <div id="currentOrdersPartial" class="rightBottomHover">
-    @Html.Partial("_CurrentOrdersPartialView")
+    @*@Html.Partial("_CurrentOrdersPartialView")*@
 </div>
 
 <script>
