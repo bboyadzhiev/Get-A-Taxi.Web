@@ -27,9 +27,12 @@ namespace Get_A_Taxi.Web.Models
         [JsonProperty(PropertyName = "orderedAt")]
         public DateTime OrderedAt { get; set; }
 
-        // Properties, updated by taxi driver
+        // Properties, updated by taxi assignment
         [JsonProperty(PropertyName = "taxiId")]
         public int TaxiId { get; set; }
+
+        [JsonProperty(PropertyName = "taxiPlate")]
+        public string TaxiPlate { get; set; }
 
         [JsonProperty(PropertyName = "driverPhone")]
         public string DriverPhone { get; set; }
@@ -56,6 +59,7 @@ namespace Get_A_Taxi.Web.Models
                 .ForMember(vm => vm.IsWaiting, opt => opt.MapFrom(m => m.OrderStatus == OrderStatus.Waiting))
                 .ForMember(vm => vm.IsFinished, opt => opt.MapFrom(m => m.OrderStatus == OrderStatus.Finished))
                 .ForMember(vm => vm.TaxiId, opt => opt.MapFrom(m => (m.AssignedTaxi != null) ? m.AssignedTaxi.TaxiId : -1))
+                .ForMember(vm => vm.TaxiPlate, opt => opt.MapFrom(m => (m.AssignedTaxi != null) ? m.AssignedTaxi.Plate : ""))
                 .ForMember(vm => vm.DriverPhone, opt => opt.MapFrom(m => (m.AssignedTaxi != null && m.AssignedTaxi.Driver != null) ? m.AssignedTaxi.Driver.PhoneNumber : String.Empty));
         }
     }

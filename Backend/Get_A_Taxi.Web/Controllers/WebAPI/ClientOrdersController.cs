@@ -43,19 +43,31 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         }
 
         /// <summary>
-        /// Get client order by id
+        /// Get assigned client order by id
         /// </summary>
         /// <param name="id">Order's id</param>
-        /// <returns>List of data models of client orders</returns>
+        /// <returns>Orders's model with included taxi details</returns>
         [HttpGet]
         public IHttpActionResult Get(int id)
         {
             var user = GetUser();
-            var orders = this.Data.Orders
+            var order = this.Data.Orders
                 .SearchFor(o => o.OrderId == id && o.Customer.Id == user.Id)
-                .Project().To<OrderDTO>().ToList();
+                .FirstOrDefault();
 
-            return Ok(orders);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            //if (order.AssignedTaxi == null)
+            //{
+            //    return BadRequest("Order not yet assigned");
+            //}
+
+            var orderDTO = Mapper.Map<Order, AssignedOrderDTO>(order);
+
+            return Ok(orderDTO);
         }
 
         /// <summary>
@@ -131,7 +143,6 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             this.bridge.AddOrder(orderDTO, addedOrder.District.DistrictId);
 
             return Ok(addedOrderModel);
-
         }
 
         /// <summary>
