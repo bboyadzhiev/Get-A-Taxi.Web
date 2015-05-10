@@ -101,12 +101,14 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
             var user = GetUser();
 
+            // Checking for unfinished orders
             var order = this.Data.Orders.All()
                 .Where(o => o.Customer.Id == user.Id && (o.OrderStatus == OrderStatus.Waiting || o.OrderStatus == OrderStatus.InProgress))
                 .FirstOrDefault();
 
             if (order != null)
             {
+                // Previous order is not finished, updating with new details and returning new model
                 order.OrderLatitude = model.OrderLatitude;
                 order.OrderLongitude = model.OrderLongitude;
                 order.OrderAddress = model.OrderAddress;
@@ -121,10 +123,15 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 var updatedOrder = this.Data.Orders.SearchFor(o => o.OrderId == order.OrderId).FirstOrDefault();
                 var updatedOrderModel = Mapper.Map<OrderDTO>(updatedOrder);
 
-                return Ok(updatedOrder);
+                //IHttpActionResult response;
+                //HttpResponseMessage responseMsg = Request.CreateResponse<OrderDTO>(HttpStatusCode.Found, updatedOrderModel);
+                //response = ResponseMessage(responseMsg);
+                //return response;
+                return Ok(updatedOrderModel);
             }
 
             // HACK: Review distance calculation
+            // New order
             // Finds the closes district
             var closestDistrict = this.Data.Districts.All().OrderBy(d => ((d.CenterLatitude - model.OrderLatitude) + (d.CenterLongitude - model.OrderLongitude))).FirstOrDefault();
             order = Mapper.Map<Order>(model);
@@ -194,19 +201,21 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return NotFound();
             }
 
-            if (orderToCancel.OrderStatus != OrderStatus.Waiting)
+            if (orderToCancel.OrderStatus == OrderStatus.Waiting || orderToCancel.OrderStatus == OrderStatus.InProgress)
             {
-                return BadRequest("Order can be changed only in waiting state!");
+                orderToCancel.OrderStatus = OrderStatus.Cancelled;
+
+                this.Data.Orders.Update(orderToCancel);
+                this.Data.SaveChanges();
+
+                this.bridge.CancelOrder(orderToCancel.OrderId, orderToCancel.District.DistrictId);
+
+                var orderDM = Mapper.Map<Order, OrderDTO>(orderToCancel);
+
+                return Ok(orderDM);
             }
 
-            orderToCancel.OrderStatus = OrderStatus.Cancelled;
-
-            this.Data.Orders.Update(orderToCancel);
-            this.Data.SaveChanges();
-
-            this.bridge.CancelOrder(orderToCancel.OrderId, orderToCancel.District.DistrictId);
-
-            return Ok(orderToCancel);
+            return BadRequest("Order can be cancelled only in waiting or progress states!");
         }
     }
 }
