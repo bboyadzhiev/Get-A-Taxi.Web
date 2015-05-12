@@ -46,7 +46,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 .Where(t => t.Driver.Id == null && t.Status == TaxiStatus.OffDuty)
                 .AsQueryable()
                 .Take(RESULTS_COUNT)
-                .Project().To<TaxiDTO>().ToList();
+                .Project().To<TaxiDetailsDTO>().ToList();
             return Ok(freeTaxies);
         }
 
@@ -92,7 +92,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 .AsQueryable()
                 .Skip(page * RESULTS_COUNT)
                 .Take(RESULTS_COUNT)
-                .Project().To<TaxiDTO>().ToList();
+                .Project().To<TaxiDetailsDTO>().ToList();
             return Ok(freeTaxies);
         }
 
@@ -120,7 +120,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
             if (taxi.Status != TaxiStatus.OffDuty)
             {
-                return BadRequest("Taxi is not off-duty!");
+                return BadRequest("Taxi is not available for driver change!");
             }
 
             var driversCurrentTaxi = this.Data.Taxies.SearchFor(t => t.Driver.Id == driver.Id).FirstOrDefault();

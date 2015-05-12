@@ -187,7 +187,11 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
             var taxi = this.Data.Taxies.All()
                 .Where(t => t.TaxiId == taxiId && t.Driver == null)
                 .FirstOrDefault();
-
+            if (taxi == null)
+            {
+                TempData["Error"] = "Taxi not found!";
+                return RedirectToAction("Index");
+            }
             var driver = this.Data.Users.All()
                 .FirstOrDefault(u => u.Id == userId);
 
@@ -218,6 +222,11 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
                 .FirstOrDefault();
             if (taxi != null && taxi.Driver != null)
             {
+                if(taxi.Status != TaxiStatus.OffDuty){
+                    TempData["Error"] = "Taxi not available for driver change!";
+                    return RedirectToAction("Index");
+                }
+
                 taxi.Driver = null;
                 this.Data.SaveChanges();
             }
