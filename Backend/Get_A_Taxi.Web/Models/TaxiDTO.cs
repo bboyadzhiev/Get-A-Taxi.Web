@@ -28,6 +28,13 @@ namespace Get_A_Taxi.Web.Models
         [JsonProperty(PropertyName = "isAvailable")]
         public bool IsAvailable { get; set; }
 
+
+        //  |IsAvailable    |   OnDuty      |   to TaxiStatus
+        //  +---------------+---------------+----------------------
+        //  |       0       |       0       | TaxiStatus.Busy
+        //  |       0       |       1       | TaxiStatus.Busy
+        //  |       1       |       0       | TaxiStatus.OffDuty
+        //  |       1       |       1       | TaxiStatus.Available
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
             configuration.CreateMap<Taxi, TaxiDTO>()

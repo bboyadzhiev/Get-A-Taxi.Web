@@ -49,6 +49,13 @@ namespace Get_A_Taxi.Web.Models
         [JsonProperty(PropertyName = "bill")]
         public decimal Bill { get; set; }
 
+
+        //  |    isFinished |  isWaiting   >>>  OrderStatus |
+        //  +---------------+---------------+---------------+
+        //  |       0       |       0       |   InProgress  |
+        //  |       0       |       1       |   Waiting     |
+        //  |       1       |       0       |   Finished    |
+        //  |       1       |       1       |   Cancelled   |
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<Order, OrderDetailsDTO>()

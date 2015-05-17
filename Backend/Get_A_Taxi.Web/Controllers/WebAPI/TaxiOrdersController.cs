@@ -203,21 +203,25 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
                 // Notify all about order's assignment
                 this.ordersBridge.AssignOrder(orderToAssign.OrderId, taxi.TaxiId, orderToAssign.District.DistrictId);
-            }
-            else if (orderToAssign.OrderStatus == OrderStatus.InProgress
-                && orderToAssign.AssignedTaxi.TaxiId == taxi.TaxiId)
-            {
-                orderToAssign.AssignedTaxi = null;
-                orderToAssign.Driver = null;
-                orderToAssign.OrderStatus = OrderStatus.Waiting;
-                this.Data.Orders.Update(orderToAssign);
-                this.Data.Orders.SaveChanges();
 
-                this.ordersBridge.CancelOrder(orderToAssign.OrderId, driver.District.DistrictId);
+
+                //    if (orderToAssign.OrderStatus == OrderStatus.InProgress
+                //    && orderToAssign.AssignedTaxi.TaxiId == taxi.TaxiId)
+                //{
+                //    orderToAssign.AssignedTaxi = null;
+                //    orderToAssign.Driver = null;
+                //    orderToAssign.OrderStatus = OrderStatus.Waiting;
+                //    this.Data.Orders.Update(orderToAssign);
+                //    this.Data.Orders.SaveChanges();
+
+                //    this.ordersBridge.CancelOrder(orderToAssign.OrderId, driver.District.DistrictId);
+                //}
+
+                var assignedOrderModel = Mapper.Map<OrderDetailsDTO>(orderToAssign);
+                return Ok(assignedOrderModel);
             }
 
-            var assignedOrderModel = Mapper.Map<OrderDetailsDTO>(orderToAssign);
-            return Ok(assignedOrderModel);
+            return BadRequest();
         }
 
         // TODO: Review order changes by taxi
@@ -277,6 +281,10 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             {
                 orderToUpdate.OrderStatus = OrderStatus.InProgress;
             }
+            if (model.IsWaiting == true && model.IsFinished == false)
+            {
+                orderToUpdate.OrderStatus = OrderStatus.Waiting;
+            }
 
             this.Data.Orders.Update(orderToUpdate);
             this.Data.Orders.SaveChanges();
@@ -286,10 +294,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
             return Ok(model);
         }
-
-
-
-
+        
         /// <summary>
         /// Cancel order by taxi driver
         /// </summary>

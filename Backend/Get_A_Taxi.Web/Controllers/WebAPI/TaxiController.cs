@@ -64,7 +64,6 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 .Project().To<TaxiDetailsDTO>()
                 .FirstOrDefault();
 
-
             if (taxiDetails == null)
             {
                 return NotFound();
@@ -123,10 +122,10 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return BadRequest("Taxi is not available for driver change!");
             }
 
-            var driversCurrentTaxi = this.Data.Taxies.SearchFor(t => t.Driver.Id == driver.Id).FirstOrDefault();
-            if (driversCurrentTaxi != null)
+            var taxiWithThisDriver = this.Data.Taxies.SearchFor(t => t.Driver.Id == driver.Id).FirstOrDefault();
+            if (taxiWithThisDriver != null && taxiWithThisDriver.TaxiId != taxi.TaxiId)
             {
-                return BadRequest("You are already assigned to another taxi: " + driversCurrentTaxi.Plate + "!");
+                return BadRequest("You are already assigned to another taxi: " + taxiWithThisDriver.Plate + "!");
             }
 
             taxi.Driver = driver;
