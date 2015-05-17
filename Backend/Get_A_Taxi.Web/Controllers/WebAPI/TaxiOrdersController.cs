@@ -139,6 +139,9 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             newOrder.Customer = driver;
             newOrder.OrderStatus = OrderStatus.InProgress;
             newOrder.AssignedTaxi = taxi;
+            newOrder.OrderedAt = DateTime.Now;
+            newOrder.ArrivalTime = 0;
+            newOrder.PickupTime = 0;
 
             this.Data.Orders.Add(newOrder);
             //this.Data.Orders.SaveChanges();
@@ -189,9 +192,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             }
 
             // Check if order is still waiting for an assignment
-            //return BadRequest("The order is already processed!");
-
-
+           
             if (orderToAssign.OrderStatus == OrderStatus.Waiting)
             {
                 // Checks passed at this point, assigning order
@@ -220,8 +221,20 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 var assignedOrderModel = Mapper.Map<OrderDetailsDTO>(orderToAssign);
                 return Ok(assignedOrderModel);
             }
+            if (orderToAssign.OrderStatus == OrderStatus.InProgress)
+            {
+                if (orderToAssign.AssignedTaxi != null && orderToAssign.AssignedTaxi.TaxiId == taxi.TaxiId)
+                {
+                    var assignedOrderModel = Mapper.Map<OrderDetailsDTO>(orderToAssign);
+                    return Ok(assignedOrderModel);
+                }
+                else
+                {
+                    return BadRequest("Order was assigned to a different taxi!");
+                }
+            }
 
-            return BadRequest();
+            return BadRequest("The order was already processed!");
         }
 
         // TODO: Review order changes by taxi
