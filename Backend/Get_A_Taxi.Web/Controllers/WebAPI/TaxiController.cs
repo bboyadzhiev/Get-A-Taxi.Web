@@ -41,13 +41,17 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         public IHttpActionResult Get()
         {
             var driver = this.GetUser();
-            var district = driver.District;
-            var freeTaxies = this.Data.Taxies.All()
-                .Where(t => t.Driver.Id == null && t.Status == TaxiStatus.OffDuty)
-                .AsQueryable()
-                .Take(RESULTS_COUNT)
-                .Project().To<TaxiDetailsDTO>().ToList();
-            return Ok(freeTaxies);
+            if (driver != null) { 
+                var name = driver.FirstName;
+                var district = driver.District;
+                var freeTaxies = this.Data.Taxies.All()
+                    .Where(t => t.Driver.Id == null && t.Status == TaxiStatus.OffDuty)
+                    .AsQueryable()
+                    .Take(RESULTS_COUNT)
+                    .Project().To<TaxiDetailsDTO>().ToList();
+                return Ok(freeTaxies);
+            }
+            return BadRequest("Driver is null!");
         }
 
         /// <summary>
