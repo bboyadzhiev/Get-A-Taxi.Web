@@ -43,9 +43,9 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             var driver = this.GetUser();
             if (driver != null) { 
                 var name = driver.FirstName;
-                var district = driver.District;
+                var districtId = driver.District.DistrictId;
                 var freeTaxies = this.Data.Taxies.All()
-                    .Where(t => t.Driver.Id == null && t.Status == TaxiStatus.OffDuty)
+                    .Where(t => t.District.DistrictId == districtId && t.Status == TaxiStatus.OffDuty && t.Driver == null)
                     .AsQueryable()
                     .Take(RESULTS_COUNT)
                     .Project().To<TaxiDetailsDTO>().ToList();
