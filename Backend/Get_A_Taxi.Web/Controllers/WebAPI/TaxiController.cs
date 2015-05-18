@@ -41,8 +41,8 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         public IHttpActionResult Get()
         {
             var driver = this.GetUser();
+            var name = driver.FirstName;
             if (driver != null) { 
-                var name = driver.FirstName;
                 var districtId = driver.District.DistrictId;
                 var freeTaxies = this.Data.Taxies.All()
                     .Where(t => t.District.DistrictId == districtId && t.Status == TaxiStatus.OffDuty && t.Driver == null)
