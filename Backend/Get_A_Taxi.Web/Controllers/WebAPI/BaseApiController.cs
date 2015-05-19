@@ -8,6 +8,8 @@
     using System.Linq;
     using System.Web;
     using System.Threading;
+    using System;
+    using System.Web.Routing;
 
     public class BaseApiController : ApiController
     {
@@ -37,8 +39,15 @@
         {
             get
             {
-                var user = UserManager.FindByName(User.Identity.Name);
-                return user.Id;
+                //var user = UserManager.FindByName(User.Identity.Name);
+                //return user.Id;
+
+                var uident = User.Identity;
+
+                var userobject = UserManager.FindByNameAsync(uident.Name);
+
+                var userid = userobject.Result.Id;
+                return userid;
             }
         }
 
@@ -55,6 +64,8 @@
             }
             set { _member = value; }
         }
+
+
         #endregion
     }
 }

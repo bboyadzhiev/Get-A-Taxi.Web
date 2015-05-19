@@ -48,6 +48,9 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             //var driver = this.GetUser();
             //var userId = Thread.CurrentPrincipal.Identity.GetUserId();
             var userId = UserIdentityId;
+
+            
+
             var driver = this.Data.Users.SearchFor(u => u.Id == userId).FirstOrDefault();
             if (driver == null)
             {
