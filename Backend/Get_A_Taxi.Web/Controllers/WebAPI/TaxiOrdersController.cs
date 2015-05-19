@@ -24,13 +24,13 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
     {
 
         private const int RESULTS_COUNT = 10;
-        private IOrderBridge ordersBridge;
-        private ITaxiesBridge taxiesBrigde;
+        private IOrderBridge _ordersBridge;
+        private ITaxiesBridge _taxiesBrigde;
         public TaxiOrdersController(IGetATaxiData data, IOrderBridge ordersBridge, ITaxiesBridge taxiesBridge)
             : base(data)
         {
-            this.ordersBridge = ordersBridge;
-            this.taxiesBrigde = taxiesBrigde;
+            this._ordersBridge = ordersBridge;
+            this._taxiesBrigde = taxiesBridge;
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             // When an order is placed from the taxi it is automatically set as busy
             // Notify the district about the new taxi state
             var taxiDM = Mapper.Map<TaxiDTO>(taxi);
-            this.taxiesBrigde.TaxiUpdated(taxiDM, taxi.District.DistrictId);
+            this._taxiesBrigde.TaxiUpdated(taxiDM, taxi.District.DistrictId);
 
             return Ok(addedOrderModel);
 
@@ -203,7 +203,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 this.Data.Orders.SaveChanges();
 
                 // Notify all about order's assignment
-                this.ordersBridge.AssignOrder(orderToAssign.OrderId, taxi.TaxiId, orderToAssign.District.DistrictId);
+                this._ordersBridge.AssignOrder(orderToAssign.OrderId, taxi.TaxiId, orderToAssign.District.DistrictId);
 
 
                 //    if (orderToAssign.OrderStatus == OrderStatus.InProgress
@@ -303,7 +303,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             this.Data.Orders.SaveChanges();
 
             // Notify all about order's update
-            this.ordersBridge.UpdateOrder(model, orderToUpdate.District.DistrictId);
+            this._ordersBridge.UpdateOrder(model, orderToUpdate.District.DistrictId);
 
             return Ok(model);
         }
@@ -334,7 +334,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             this.Data.Orders.Update(orderToCancel);
             this.Data.Orders.SaveChanges();
 
-            this.ordersBridge.CancelOrder(orderToCancel.OrderId, orderToCancel.District.DistrictId);
+            this._ordersBridge.CancelOrder(orderToCancel.OrderId, orderToCancel.District.DistrictId);
 
             return Ok(id);
         }
