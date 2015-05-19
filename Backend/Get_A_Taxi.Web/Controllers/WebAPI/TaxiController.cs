@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Microsoft.AspNet.Identity;
 
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -40,9 +41,14 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         [HttpGet]
         public IHttpActionResult Get()
         {
-            var driver = this.GetUser();
+            string userId = this.User.Identity.GetUserId();
+            //var driver = this.GetUser();
+            var driver = this.Data.Users.SearchFor(u => u.Id == userId).FirstOrDefault();
+            if (driver == null)
+            {
+                return BadRequest("Driver not found");
+            }
             var name = driver.FirstName;
-            if (driver != null) { 
                 var districtId = driver.District.DistrictId;
                 var freeTaxies = this.Data.Taxies.All()
                     .Where(t => t.District.DistrictId == districtId && t.Status == TaxiStatus.OffDuty && t.Driver == null)
@@ -50,8 +56,6 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                     .Take(RESULTS_COUNT)
                     .Project().To<TaxiDetailsDTO>().ToList();
                 return Ok(freeTaxies);
-            }
-            return BadRequest("Driver is null!");
         }
 
         /// <summary>
