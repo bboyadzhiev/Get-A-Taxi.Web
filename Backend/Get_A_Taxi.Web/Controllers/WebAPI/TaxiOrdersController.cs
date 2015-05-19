@@ -41,6 +41,10 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         public IHttpActionResult Get()
         {
             var driver = this.GetUser();
+            if (driver == null)
+            {
+                return BadRequest("Driver not found");
+            }
             var taxi = this.Data.Taxies.SearchFor(t => t.Driver.Id == driver.Id).FirstOrDefault();
             var check = CheckTaxi(taxi);
             if (check != null)
