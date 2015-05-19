@@ -51,6 +51,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             var driver = this.Data.Users.SearchFor(u => u.Id == userId).FirstOrDefault();
             if (driver == null)
             {
+                List<TaxiDetailsDTO> errorTaxies = new List<TaxiDetailsDTO>();
                 TaxiDetailsDTO errorTaxi = new TaxiDetailsDTO();
                 errorTaxi.TaxiId = -5;
                 if (String.IsNullOrEmpty(userId))
@@ -71,8 +72,8 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 errorTaxi.TaxiStandAlias = "FALSE";
                 errorTaxi.TaxiStandId = -5;
                 errorTaxi.Phone = "-5";
-
-                return Ok(errorTaxi);
+                errorTaxies.Add(errorTaxi);
+                return Ok(errorTaxies);
             }
             var name = driver.FirstName;
                 var districtId = driver.District.DistrictId;
