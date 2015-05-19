@@ -1,16 +1,31 @@
 ﻿namespace Get_A_Taxi.Web.Controllers
 {
-    using Get_A_Taxi.Data;
-    using Get_A_Taxi.Models;
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.Owin;
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Http;
+    using System.Security.Claims;
+    using System.Security.Cryptography;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using System.Web;
     using System.Web.Http;
     using System.Linq;
-    using System.Web;
-    using System.Threading;
-    using System;
-    using System.Web.Routing;
-    using System.Security.Claims;
+
+    using Get_A_Taxi.Data;
+    using Get_A_Taxi.Models;
+
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Microsoft.AspNet.Identity.Owin;
+
+    using Microsoft.Owin.Security;
+    using Microsoft.Owin.Security.Cookies;
+    using Microsoft.Owin.Security.OAuth;
+
+
+ 
+
 
     public class BaseApiController : ApiController
     {
@@ -31,22 +46,39 @@
 
         private ApplicationUser _member;
 
-        public ApplicationUserManager UserManager
+        
+        //try  n
+        private ApplicationUserManager _userManager;
+
+        public ApplicationUserManager UserManager1
+        {
+            get
+            {
+                return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        // try 2
+        public ApplicationUserManager UserManager2
         {
             get { return HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
         }
-
         public string UserIdentityId
         {
             get
             {
                 //var user = UserManager.FindByName(User.Identity.Name);
                 //return user.Id;
-
+                var username = RequestContext.Principal.Identity.GetUserName();
+                
                // var userobject = UserManager.FindByNameAsync(uident.Name);
-                ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
-                string username = identity.Claims.First().Value;
-                var userobject = UserManager.FindByNameAsync(username);
+             //   ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
+             //   string username = identity.Claims.First().Value;
+                var userobject = UserManager2.FindByNameAsync(username);
                 var userid = userobject.Result.Id;
                 return userid;
             }
@@ -60,7 +92,7 @@
                 {
                     return _member;
                 }
-                _member = UserManager.FindByEmail(Thread.CurrentPrincipal.Identity.Name);
+                _member = UserManager2.FindByEmail(Thread.CurrentPrincipal.Identity.Name);
                 return _member;
             }
             set { _member = value; }

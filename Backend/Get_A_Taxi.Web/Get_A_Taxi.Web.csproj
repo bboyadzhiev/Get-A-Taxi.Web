@@ -237,6 +237,7 @@
     <Compile Include="Hubs\OrdersHub.cs" />
     <Compile Include="Hubs\TaxiesHub.cs" />
     <Compile Include="Hubs\TrackingHub.cs" />
+    <Compile Include="Infrastructure\AuthorizeWebApiRolesAttribute.cs" />
     <Compile Include="Infrastructure\Bridges\OrderBridgeEventArgs.cs" />
     <Compile Include="Infrastructure\BrowserJsonFormatter.cs" />
     <Compile Include="Infrastructure\OrderEvents.cs" />

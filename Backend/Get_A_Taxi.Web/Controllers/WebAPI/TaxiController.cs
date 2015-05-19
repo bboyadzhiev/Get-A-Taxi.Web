@@ -21,7 +21,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
     /// <summary>
     /// Manages driver assignment to a taxi
     /// </summary>
-    [AuthorizeRoles(UserRole = UserRoles.Driver)]
+    [AuthorizeWebApiRoles(UserRole = UserRoles.Driver)]
     [RoutePrefix("api/Taxi")]
     public class TaxiController : BaseApiController, IRESTController<TaxiDTO>
     {
@@ -47,9 +47,9 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             //var userId = Request.GetOwinContext().Request.User.Identity.GetUserId();
             //var driver = this.GetUser();
             //var userId = Thread.CurrentPrincipal.Identity.GetUserId();
-            var userId = UserIdentityId;
-
-            
+            //var userId = UserIdentityId;
+            Guid userGuid = (Guid)ActionContext.Request.Properties["userId"];
+            var userId = userGuid.ToString();
 
             var driver = this.Data.Users.SearchFor(u => u.Id == userId).FirstOrDefault();
             if (driver == null)
