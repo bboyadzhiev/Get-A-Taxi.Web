@@ -14,6 +14,7 @@ using Get_A_Taxi.Models;
 using Get_A_Taxi.Web.Infrastructure;
 using Get_A_Taxi.Web.Infrastructure.Bridges;
 using Get_A_Taxi.Web.Models;
+using System.Security.Principal;
 
 namespace Get_A_Taxi.Web.Controllers.WebAPI
 {
@@ -41,7 +42,9 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         [HttpGet]
         public IHttpActionResult Get()
         {
-            string userId = this.User.Identity.GetUserId();
+            
+            //string userId = this.User.Identity.GetUserId();
+            string userId = Request.GetOwinContext().Request.User.Identity.GetUserId();
             //var driver = this.GetUser();
             var driver = this.Data.Users.SearchFor(u => u.Id == userId).FirstOrDefault();
             if (driver == null)
