@@ -46,6 +46,10 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             var driver = this.Data.Users.SearchFor(u => u.Id == userId).FirstOrDefault();
             if (driver == null)
             {
+                TaxiDetailsDTO errorTaxi = new TaxiDetailsDTO();
+                errorTaxi.TaxiId = -55;
+                errorTaxi.Plate = userId;
+
                 return Ok(userId);
             }
             var name = driver.FirstName;
