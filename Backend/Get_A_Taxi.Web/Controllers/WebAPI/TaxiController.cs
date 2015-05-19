@@ -50,8 +50,25 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             if (driver == null)
             {
                 TaxiDetailsDTO errorTaxi = new TaxiDetailsDTO();
-                errorTaxi.TaxiId = -55;
-                errorTaxi.Plate = userId;
+                errorTaxi.TaxiId = -5;
+                if (String.IsNullOrEmpty(userId))
+                {
+                    errorTaxi.Plate = "nullUID";
+                }
+                else
+                {
+                    errorTaxi.Plate = userId;
+                }
+                errorTaxi.DriverName = "FALSE";
+                errorTaxi.DistrictId = -5;
+                errorTaxi.Address = "FALSE";
+                errorTaxi.IsAvailable = true;
+                errorTaxi.Latitude = 0;
+                errorTaxi.Longitude = 0;
+                errorTaxi.OnDuty = true;
+                errorTaxi.TaxiStandAlias = "FALSE";
+                errorTaxi.TaxiStandId = -5;
+                errorTaxi.Phone = "-5";
 
                 return Ok(errorTaxi);
             }
