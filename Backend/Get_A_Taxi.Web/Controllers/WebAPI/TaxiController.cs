@@ -59,7 +59,16 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 errorTaxi.TaxiId = -5;
                 if (String.IsNullOrEmpty(userId))
                 {
-                    errorTaxi.Plate = "nullUID";
+                    var identityName = User.Identity.GetUserName();
+                    if (String.IsNullOrEmpty(identityName))
+                    {
+                        errorTaxi.Plate = "nullUID";
+
+                    }
+                    else
+                    {
+                        errorTaxi.Plate = identityName;
+                    }
                 }
                 else
                 {

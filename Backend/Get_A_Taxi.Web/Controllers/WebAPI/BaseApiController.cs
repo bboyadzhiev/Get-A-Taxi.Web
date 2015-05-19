@@ -44,8 +44,8 @@
 
                 var uident = User.Identity;
 
-                var userobject = UserManager.FindByNameAsync(uident.Name);
-
+               // var userobject = UserManager.FindByNameAsync(uident.Name);
+                var userobject = UserManager.FindByNameAsync(User.Identity.GetUserName());
                 var userid = userobject.Result.Id;
                 return userid;
             }
