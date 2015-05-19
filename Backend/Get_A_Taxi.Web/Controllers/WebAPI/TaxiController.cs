@@ -50,7 +50,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 errorTaxi.TaxiId = -55;
                 errorTaxi.Plate = userId;
 
-                return Ok(userId);
+                return Ok(errorTaxi);
             }
             var name = driver.FirstName;
                 var districtId = driver.District.DistrictId;
