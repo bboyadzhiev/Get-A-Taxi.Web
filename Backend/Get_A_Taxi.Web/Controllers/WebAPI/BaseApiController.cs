@@ -10,6 +10,7 @@
     using System.Threading;
     using System;
     using System.Web.Routing;
+    using System.Security.Claims;
 
     public class BaseApiController : ApiController
     {
@@ -42,10 +43,10 @@
                 //var user = UserManager.FindByName(User.Identity.Name);
                 //return user.Id;
 
-                var uident = User.Identity;
-
                // var userobject = UserManager.FindByNameAsync(uident.Name);
-                var userobject = UserManager.FindByNameAsync(User.Identity.GetUserName());
+                ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
+                string username = identity.Claims.First().Value;
+                var userobject = UserManager.FindByNameAsync(username);
                 var userid = userobject.Result.Id;
                 return userid;
             }
