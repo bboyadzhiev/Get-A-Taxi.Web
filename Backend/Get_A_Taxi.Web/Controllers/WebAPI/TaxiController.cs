@@ -46,7 +46,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             var driver = this.Data.Users.SearchFor(u => u.Id == userId).FirstOrDefault();
             if (driver == null)
             {
-                return BadRequest("Driver not found");
+                return Ok(userId);
             }
             var name = driver.FirstName;
                 var districtId = driver.District.DistrictId;
