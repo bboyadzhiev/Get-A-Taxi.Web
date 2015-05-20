@@ -14,19 +14,19 @@ namespace Get_A_Taxi.Web.Infrastructure
 {
     public class AuthorizeWebApiRolesAttribute : AuthorizeAttribute
     {
-        public UserRoles UserRole { get; set; }
-        public UserRoles SecondRole { get; set; }
+        //public UserRoles UserRole { get; set; }
+        //public UserRoles SecondRole { get; set; }
 
         public override async Task OnAuthorizationAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {
-            if (UserRole != 0)
-            {
-                Roles = UserRole.ToString();
-                if (SecondRole != 0)
-                {
-                    Roles = Roles + "," + SecondRole.ToString();
-                }
-            }
+            //if (UserRole != 0)
+            //{
+            //    Roles = UserRole.ToString();
+            //    if (SecondRole != 0)
+            //    {
+            //        Roles = Roles + "," + SecondRole.ToString();
+            //    }
+            //}
 
             if (actionContext.ActionDescriptor.GetCustomAttributes<System.Web.Http.AllowAnonymousAttribute>().Any()) return;
 
