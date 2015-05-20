@@ -42,60 +42,26 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         [HttpGet]
         public IHttpActionResult Get()
         {
+            var driver = this.GetDriver();
             
-            //string userId = this.User.Identity.GetUserId();
-            //var userId = Request.GetOwinContext().Request.User.Identity.GetUserId();
-            //var driver = this.GetUser();
-            //var userId = Thread.CurrentPrincipal.Identity.GetUserId();
-            //var userId = UserIdentityId;
-            Guid userGuid = (Guid)ActionContext.Request.Properties["userId"];
-            var userId = userGuid.ToString();
-
-            var driver = this.Data.Users.SearchFor(u => u.Id == userId).FirstOrDefault();
-            if (driver == null)
+            // check if already assigned to a taxi
+            var taxiWithThisDriver = this.Data.Taxies.SearchFor(t => t.Driver.Id == driver.Id).FirstOrDefault();
+            if (taxiWithThisDriver != null)
             {
-                List<TaxiDetailsDTO> errorTaxies = new List<TaxiDetailsDTO>();
-                TaxiDetailsDTO errorTaxi = new TaxiDetailsDTO();
-                errorTaxi.TaxiId = -5;
-                if (String.IsNullOrEmpty(userId))
-                {
-                    var identityName = User.Identity.GetUserName();
-                    if (String.IsNullOrEmpty(identityName))
-                    {
-                        errorTaxi.Plate = "nullUID";
-
-                    }
-                    else
-                    {
-                        errorTaxi.Plate = identityName;
-                    }
-                }
-                else
-                {
-                    errorTaxi.Plate = userId;
-                }
-                errorTaxi.DriverName = "FALSE";
-                errorTaxi.DistrictId = -5;
-                errorTaxi.Address = "FALSE";
-                errorTaxi.IsAvailable = true;
-                errorTaxi.Latitude = 0;
-                errorTaxi.Longitude = 0;
-                errorTaxi.OnDuty = true;
-                errorTaxi.TaxiStandAlias = "FALSE";
-                errorTaxi.TaxiStandId = -5;
-                errorTaxi.Phone = "-5";
-                errorTaxies.Add(errorTaxi);
-                return Ok(errorTaxies);
+                var assignedTaxi = Mapper.Map<TaxiDetailsDTO>(taxiWithThisDriver);
+                return Ok(new List<TaxiDetailsDTO>() { assignedTaxi });
             }
-            var name = driver.FirstName;
-                var districtId = driver.District.DistrictId;
-                var freeTaxies = this.Data.Taxies.All()
-                    .Where(t => t.District.DistrictId == districtId && t.Status == TaxiStatus.OffDuty && t.Driver == null)
-                    .AsQueryable()
-                    .Take(RESULTS_COUNT)
-                    .Project().To<TaxiDetailsDTO>().ToList();
-                return Ok(freeTaxies);
+
+            var districtId = driver.District.DistrictId;
+            var freeTaxies = this.Data.Taxies.All()
+                .Where(t => t.District.DistrictId == districtId && t.Status == TaxiStatus.OffDuty && t.Driver == null)
+                .AsQueryable()
+                .Take(RESULTS_COUNT)
+                .Project().To<TaxiDetailsDTO>().ToList();
+            return Ok(freeTaxies);
         }
+
+  
 
         /// <summary>
         /// Get taxi details, only if the driver and the taxi are in the same district
@@ -104,7 +70,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         /// <returns>Taxi details data model</returns>
         public IHttpActionResult Get(int id)
         {
-            var driver = this.GetUser();
+            var driver = this.GetDriver();
             var districtId = driver.District.DistrictId;
             var taxiDetails = this.Data.Taxies
                 .SearchFor(t => t.TaxiId == id && t.District.DistrictId == districtId)
@@ -131,7 +97,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         /// <returns>List of free for assignment taxies' data models</returns>
         public IHttpActionResult GetPaged(int page)
         {
-            var driver = this.GetUser();
+            var driver = this.GetDriver();
             var district = driver.District;
             var freeTaxies = this.Data.Taxies.All()
                 .Where(t => t.Driver.Id == null && t.Status == TaxiStatus.OffDuty)
@@ -149,7 +115,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         /// <returns>The detailed data model of the taxi that the driver was assigned to</returns>
         public IHttpActionResult Post([FromBody]TaxiDTO model)
         {
-            var driver = this.GetUser();
+            var driver = this.GetDriver();
             var districtId = driver.District.DistrictId;
             var taxi = this.Data.Taxies
                 .SearchFor(t => t.TaxiId == model.TaxiId)
@@ -164,21 +130,31 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return BadRequest("Taxi is not in your district!");
             }
 
+            var taxiWithThisDriver = this.Data.Taxies.SearchFor(t => t.Driver.Id == driver.Id).FirstOrDefault();
+            if (taxiWithThisDriver != null )
+            {
+                if (taxiWithThisDriver.TaxiId == taxi.TaxiId)
+                {
+                    var assignedTaxi = Mapper.Map<TaxiDetailsDTO>(taxi);
+                    return Ok(assignedTaxi);
+                }
+
+                if (taxiWithThisDriver.TaxiId != taxi.TaxiId)
+                {
+                 return BadRequest("You are already assigned to another taxi: " + taxiWithThisDriver.Plate + "!");
+                }
+            }
+
             if (taxi.Status != TaxiStatus.OffDuty)
             {
                 return BadRequest("Taxi is not available for driver change!");
             }
 
-            var taxiWithThisDriver = this.Data.Taxies.SearchFor(t => t.Driver.Id == driver.Id).FirstOrDefault();
-            if (taxiWithThisDriver != null && taxiWithThisDriver.TaxiId != taxi.TaxiId)
-            {
-                return BadRequest("You are already assigned to another taxi: " + taxiWithThisDriver.Plate + "!");
-            }
 
             taxi.Driver = driver;
             taxi.Latitude = model.Latitude;
             taxi.Longitude = model.Longitude;
-            taxi.Status = TaxiStatus.Available;
+            taxi.Status = TaxiStatus.Busy;
 
             this.Data.Taxies.Update(taxi);
             this.Data.Taxies.SaveChanges();
@@ -201,7 +177,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             {
                 return BadRequest("Invalid model state!");
             }
-            var driver = this.GetUser();
+            var driver = this.GetDriver();
             var districtId = driver.District.DistrictId;
             var taxi = this.Data.Taxies
                 .SearchFor(t => t.TaxiId == model.TaxiId && t.Driver.Id == driver.Id)
@@ -226,8 +202,6 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return BadRequest("Taxi is serving an order - cannot get off-duty!");
             }
 
-
-
             taxi.Latitude = model.Latitude;
             taxi.Longitude = model.Longitude;
             taxi.Status = FromModelStatus(model);
@@ -248,7 +222,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         /// <returns>The taxi's data model that the driver was assigned to</returns>
         public IHttpActionResult Delete(int taxiId)
         {
-            var driver = this.GetUser();
+            var driver = this.GetDriver();
             var districtId = driver.District.DistrictId;
             var taxi = this.Data.Taxies
                 .SearchFor(t => t.TaxiId == taxiId && t.Driver.Id == driver.Id)
@@ -294,6 +268,15 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             {
                 return TaxiStatus.Busy;
             }
+        }
+
+        private ApplicationUser GetDriver()
+        {
+            Guid userGuid = (Guid)ActionContext.Request.Properties["userId"];
+            var userId = userGuid.ToString();
+
+            var driver = this.Data.Users.SearchFor(u => u.Id == userId).FirstOrDefault();
+            return driver;
         }
         #endregion
     }

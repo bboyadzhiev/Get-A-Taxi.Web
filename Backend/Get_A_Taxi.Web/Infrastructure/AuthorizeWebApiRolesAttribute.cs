@@ -37,27 +37,10 @@ namespace Get_A_Taxi.Web.Infrastructure
             if (actionContext.RequestContext.Principal.Identity.IsAuthenticated
                 && Guid.TryParse(actionContext.RequestContext.Principal.Identity.GetUserId(), out userId))
             {
-               // if (actionContext.Request.Properties["userId"] == null) { 
-                    actionContext.Request.Properties.Remove("userId");
-                    //actionContext.Request.Properties.Add("userId", actionContext.RequestContext.Principal.Identity.GetUserId());
-                    actionContext.Request.Properties.Add("userId", userId);
-               // }
+                actionContext.Request.Properties.Remove("userId");
+                actionContext.Request.Properties.Add("userId", userId);
             }
         }
-
-        //public override void OnAuthorization(HttpActionContext actionContext)
-        //{
-        //    if (actionContext.ActionDescriptor.GetCustomAttributes<System.Web.Http.AllowAnonymousAttribute>().Any()) return;
-
-        //    base.OnAuthorization(actionContext);
-
-        //    Guid userId;
-
-        //    if (actionContext.RequestContext.Principal.Identity.IsAuthenticated
-        //        && Guid.TryParse(actionContext.RequestContext.Principal.Identity.GetUserId(), out userId))
-        //    {
-        //        //actionContext.Request.Properties.Add("userId", actionContext.RequestContext.Principal.Identity.GetUserId());
-        //    }
-        //}
+       
     }
 }
