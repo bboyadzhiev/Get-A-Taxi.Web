@@ -37,9 +37,9 @@ namespace Get_A_Taxi.Web.Infrastructure
             if (actionContext.RequestContext.Principal.Identity.IsAuthenticated
                 && Guid.TryParse(actionContext.RequestContext.Principal.Identity.GetUserId(), out userId))
             {
-                if (actionContext.Request.Properties["userId"] == null) { 
+               // if (actionContext.Request.Properties["userId"] == null) { 
                     actionContext.Request.Properties.Add("userId", actionContext.RequestContext.Principal.Identity.GetUserId());
-                }
+               // }
             }
         }
 
