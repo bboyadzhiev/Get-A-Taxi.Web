@@ -21,7 +21,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
     /// <summary>
     /// Manages driver assignment to a taxi
     /// </summary>
-    [AuthorizeWebApiRoles]
+    [AuthorizeWebApi]
     [RoutePrefix("api/Taxi")]
     public class TaxiController : BaseApiController, IRESTController<TaxiDTO>
     {

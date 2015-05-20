@@ -12,7 +12,7 @@ using Get_A_Taxi.Models;
 
 namespace Get_A_Taxi.Web.Infrastructure
 {
-    public class AuthorizeWebApiRolesAttribute : AuthorizeAttribute
+    public class AuthorizeWebApiAttribute : AuthorizeAttribute
     {
         //public UserRoles UserRole { get; set; }
         //public UserRoles SecondRole { get; set; }
