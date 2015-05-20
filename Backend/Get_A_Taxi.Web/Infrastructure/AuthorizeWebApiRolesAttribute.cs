@@ -14,19 +14,19 @@ namespace Get_A_Taxi.Web.Infrastructure
 {
     public class AuthorizeWebApiAttribute : AuthorizeAttribute
     {
-        //public UserRoles UserRole { get; set; }
-        //public UserRoles SecondRole { get; set; }
+        public UserRoles UserRole { get; set; }
+        public UserRoles SecondRole { get; set; }
 
         public override async Task OnAuthorizationAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {
-            //if (UserRole != 0)
-            //{
-            //    Roles = UserRole.ToString();
-            //    if (SecondRole != 0)
-            //    {
-            //        Roles = Roles + "," + SecondRole.ToString();
-            //    }
-            //}
+            if (UserRole != 0)
+            {
+                Roles = UserRole.ToString();
+                if (SecondRole != 0)
+                {
+                    Roles = Roles + "," + SecondRole.ToString();
+                }
+            }
 
             if (actionContext.ActionDescriptor.GetCustomAttributes<System.Web.Http.AllowAnonymousAttribute>().Any()) return;
 
@@ -37,23 +37,25 @@ namespace Get_A_Taxi.Web.Infrastructure
             if (actionContext.RequestContext.Principal.Identity.IsAuthenticated
                 && Guid.TryParse(actionContext.RequestContext.Principal.Identity.GetUserId(), out userId))
             {
-                actionContext.Request.Properties.Add("userId", actionContext.RequestContext.Principal.Identity.GetUserId());
+                if (actionContext.Request.Properties["userId"] == null) { 
+                    actionContext.Request.Properties.Add("userId", actionContext.RequestContext.Principal.Identity.GetUserId());
+                }
             }
         }
 
-        public override void OnAuthorization(HttpActionContext actionContext)
-        {
-            if (actionContext.ActionDescriptor.GetCustomAttributes<System.Web.Http.AllowAnonymousAttribute>().Any()) return;
+        //public override void OnAuthorization(HttpActionContext actionContext)
+        //{
+        //    if (actionContext.ActionDescriptor.GetCustomAttributes<System.Web.Http.AllowAnonymousAttribute>().Any()) return;
 
-            base.OnAuthorization(actionContext);
+        //    base.OnAuthorization(actionContext);
 
-            Guid userId;
+        //    Guid userId;
 
-            if (actionContext.RequestContext.Principal.Identity.IsAuthenticated
-                && Guid.TryParse(actionContext.RequestContext.Principal.Identity.GetUserId(), out userId))
-            {
-                actionContext.Request.Properties.Add("userId", actionContext.RequestContext.Principal.Identity.GetUserId());
-            }
-        }
+        //    if (actionContext.RequestContext.Principal.Identity.IsAuthenticated
+        //        && Guid.TryParse(actionContext.RequestContext.Principal.Identity.GetUserId(), out userId))
+        //    {
+        //        //actionContext.Request.Properties.Add("userId", actionContext.RequestContext.Principal.Identity.GetUserId());
+        //    }
+        //}
     }
 }
