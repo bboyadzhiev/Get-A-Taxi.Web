@@ -64,8 +64,8 @@
         }
 
         function orderItemClick(data) {
-            gATMap.map.setCenter(data.startLat(),data.startLng());
-            gATMap.map.setZoom(17);
+            gATMap.setCenter(data.startLat(),data.startLng());
+            gATMap.setZoom(17);
             $('#phoneSearchBox').val(data.custPhone());
             $('#phoneSearchBox').enabled = false;
             $('#orderInputPartial').appendTo('#updateOrderInputPlaceholder');

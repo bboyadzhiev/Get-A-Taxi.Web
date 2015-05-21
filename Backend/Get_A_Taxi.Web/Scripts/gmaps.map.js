@@ -1,17 +1,33 @@
 ﻿
 var gATMap = (function () {
 
-    var map = new GMaps({
-        div: '#map',
-        lat: defaultLat,
-        lng: defaultLon,
-        zoom_changed: function (map) {
-            zoomChanged(map);
-        },
-        click: function (e) {
-            mapClicked(e);
-        }
-    });
+    var map;
+    //    = new GMaps({
+    //    div: '#map',
+    //    lat: defaultLat,
+    //    lng: defaultLon,
+    //    zoom_changed: function (map) {
+    //        zoomChanged(map);
+    //    },
+    //    click: function (e) {
+    //        mapClicked(e);
+    //    }
+    //});
+
+    function initMap(div, lat, lng, zoom_callback, click_callback) {
+        map = new GMaps({
+            div: div,
+            lat: lat,
+            lng: lng,
+            zoom_changed: function (e) {
+                zoom_callback(e)
+            },
+            click: function (e) {
+                click_callback(e)
+            }
+        })
+    }
+
     function getAddress(latVal, lngVal, getAddressCallback) {
         GMaps.geocode({
             lat: latVal,
@@ -113,13 +129,29 @@ var gATMap = (function () {
         return markerToRemove;
     }
 
+    function setZoom(zoom) {
+        map.setZoom(zoom);
+    }
+
+    function setCenter(lat, lng) {
+        map.setCenter(lat, lng);
+    }
+
+    function clearMarkers() {
+        map.removeMarkers();
+    }
+
     return {
+        initMap: initMap,
         map: map,
+        setCenter: setCenter,
+        setZoom: setZoom,
         addMarker: addMarker,
         getAddress: getAddress,
         getCoordinates: getCoordinates,
         updateMarker: updateMarker,
-        removeMarker: removeMarker
+        removeMarker: removeMarker,
+        clearMarkers: clearMarkers
     }
 
 })();

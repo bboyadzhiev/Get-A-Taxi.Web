@@ -73,6 +73,7 @@
 <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 @Scripts.Render("~/bundles/gmaps")
 <script type="text/javascript">
+    gATMap.initMap('#map', lat, lon, zoomChanged, mapClicked);
     var districtMap = function () {
         var districtMarkers = [];
         function updateUI(latlng, formattedAddress) {
@@ -118,8 +119,8 @@
     }
 
     function mapClicked(e) {
-        gATMap.map.removeMarkers();
-        gATMap.map.setCenter(e.latLng.lat(), e.latLng.lng());
+        gATMap.clearMarkers();
+        gATMap.setCenter(e.latLng.lat(), e.latLng.lng());
         gATMap.getAddress(e.latLng.lat(),  e.latLng.lng(), createDistrict.updateUI);
     }
 </script>

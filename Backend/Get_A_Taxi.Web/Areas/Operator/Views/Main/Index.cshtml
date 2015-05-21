@@ -52,9 +52,8 @@
 @Scripts.Render("~/bundles/gmaps.taxies")
 
 <div id="currentOrdersPartial" class="rightBottomHover">
-    @*@Html.Partial("_CurrentOrdersPartialView")*@
+    @Html.Partial("_CurrentOrdersPartialView")
 </div>
-
 <script>
     $('#orderInputPartial').appendTo('#addOrderInputPlaceholder');
     $('#addOrderPartial').hide();
@@ -78,7 +77,10 @@
         }
     }();
 
+    gATMap.initMap('#map', lat, lon, zoomChanged, mapClicked);
+
     function mapClicked(e) {
+        console.log('Map clicked');
         console.log(e);
         gATMap.map.setCenter(e.latLng.lat(), e.latLng.lng());
         // map.removeMarkers();
@@ -87,6 +89,10 @@
 
     function zoomChanged(map) {
         //    $('#MapZoom').val(map.zoom);
+        console.log('Zoom changed');
+        console.log(map);
     }
 
+
 </script>
+
