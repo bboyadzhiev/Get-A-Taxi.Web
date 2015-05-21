@@ -79,7 +79,13 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return check;
             }
 
-            var orderDetails = this.Data.Orders.SearchFor(o => o.OrderId == id).Project().To<OrderDetailsDTO>().FirstOrDefault();
+            var order = this.Data.Orders.SearchFor(o => o.OrderId == id).FirstOrDefault();
+            if (order == null)
+            {
+                return NotFound();
+            }
+            
+            var orderDetails = Mapper.Map<Order, OrderDetailsDTO>(order);
 
             return Ok(orderDetails);
         }

@@ -50,11 +50,11 @@ namespace Get_A_Taxi.Web.Models
         public decimal Bill { get; set; }
 
 
-        //  |    isFinished |  isWaiting   >>>  OrderStatus |
+        //  |  isWaiting    |  isFinished  >>>  OrderStatus |
         //  +---------------+---------------+---------------+
         //  |       0       |       0       |   InProgress  |
-        //  |       0       |       1       |   Waiting     |
-        //  |       1       |       0       |   Finished    |
+        //  |       0       |       1       |   Finished    |
+        //  |       1       |       0       |   Waiting     |
         //  |       1       |       1       |   Cancelled   |
         public void CreateMappings(IConfiguration configuration)
         {
