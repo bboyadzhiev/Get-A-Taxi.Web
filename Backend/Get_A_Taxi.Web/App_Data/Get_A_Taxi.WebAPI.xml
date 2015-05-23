@@ -195,7 +195,7 @@
             <summary>
             Unassigns a driver from a taxi
             </summary>
-            <param name="taxiId">The id of a taxi the driver will be assigned to</param>
+            <param name="id">The id of a taxi the driver will be assigned to</param>
             <returns>The taxi's data model that the driver was assigned to</returns>
         </member>
         <member name="T:Get_A_Taxi.Web.Controllers.WebAPI.TaxiOrdersController">

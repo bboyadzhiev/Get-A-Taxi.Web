@@ -154,7 +154,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             taxi.Driver = driver;
             taxi.Latitude = model.Latitude;
             taxi.Longitude = model.Longitude;
-            taxi.Status = TaxiStatus.Busy;
+            taxi.Status = TaxiStatus.Available;
 
             this.Data.Taxies.Update(taxi);
             this.Data.Taxies.SaveChanges();
@@ -218,14 +218,14 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         /// <summary>
         /// Unassigns a driver from a taxi
         /// </summary>
-        /// <param name="taxiId">The id of a taxi the driver will be assigned to</param>
+        /// <param name="id">The id of a taxi the driver will be assigned to</param>
         /// <returns>The taxi's data model that the driver was assigned to</returns>
-        public IHttpActionResult Delete(int taxiId)
+        public IHttpActionResult Delete(int id)
         {
             var driver = this.GetDriver();
             var districtId = driver.District.DistrictId;
             var taxi = this.Data.Taxies
-                .SearchFor(t => t.TaxiId == taxiId && t.Driver.Id == driver.Id)
+                .SearchFor(t => t.TaxiId == id && t.Driver.Id == driver.Id)
                 .FirstOrDefault();
 
             if (taxi == null)
@@ -259,15 +259,11 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 {
                     return TaxiStatus.OffDuty;
                 }
-                else
-                {
-                    return TaxiStatus.Available;
-                }
+
+                return TaxiStatus.Available;
             }
-            else
-            {
-                return TaxiStatus.Busy;
-            }
+                
+            return TaxiStatus.Busy;
         }
 
         private ApplicationUser GetDriver()

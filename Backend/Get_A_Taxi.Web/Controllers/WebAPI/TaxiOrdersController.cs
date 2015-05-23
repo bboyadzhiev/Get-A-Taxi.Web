@@ -185,9 +185,9 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         /// <param name="orderId">The order's id</param>
         /// <returns>The assigned order data model</returns>
         [HttpPut]
-        public IHttpActionResult Put(int orderId)
+        public IHttpActionResult Put(int id)
         {
-            var orderToAssign = this.Data.Orders.SearchFor(o => o.OrderId == orderId).FirstOrDefault();
+            var orderToAssign = this.Data.Orders.SearchFor(o => o.OrderId == id).FirstOrDefault();
             if (orderToAssign == null)
             {
                 return NotFound();
