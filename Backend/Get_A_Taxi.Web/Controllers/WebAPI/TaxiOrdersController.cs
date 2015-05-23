@@ -52,6 +52,15 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return check;
             }
 
+            var orderWithThisTaxi = this.Data.Orders
+                .SearchFor(o => o.AssignedTaxi.TaxiId == taxi.TaxiId && o.OrderStatus == OrderStatus.InProgress)
+                .FirstOrDefault();
+            if (orderWithThisTaxi != null)
+            {
+                var orderWithThisTaxiDTO = Mapper.Map<OrderDTO>(orderWithThisTaxi);
+                return Ok(new List<OrderDTO>() { orderWithThisTaxiDTO });
+            }
+
             var districtId = driver.District.DistrictId;
             var orders = this.Data.Orders.All()
                 .Where(o => o.District.DistrictId == districtId && o.OrderStatus == OrderStatus.Waiting)
@@ -209,6 +218,8 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 orderToAssign.AssignedTaxi = taxi;
                 orderToAssign.Driver = driver;
                 orderToAssign.OrderStatus = OrderStatus.InProgress;
+                var customer = orderToAssign.Customer;
+                var district = orderToAssign.District;
                 this.Data.Orders.Update(orderToAssign);
                 this.Data.Orders.SaveChanges();
 
