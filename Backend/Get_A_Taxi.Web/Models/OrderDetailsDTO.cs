@@ -63,8 +63,8 @@ namespace Get_A_Taxi.Web.Models
                 .ForMember(vm => vm.FirstName, opt => opt.MapFrom(m => m.Customer.FirstName))
                 .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.Customer.LastName))
                 .ForMember(vm => vm.CustomerPhoneNumber, opt => opt.MapFrom(m => m.Customer.PhoneNumber))
-                .ForMember(vm => vm.IsWaiting, opt => opt.MapFrom(m => m.OrderStatus == OrderStatus.Waiting))
-                .ForMember(vm => vm.IsFinished, opt => opt.MapFrom(m => m.OrderStatus == OrderStatus.Finished))
+                .ForMember(vm => vm.IsWaiting, opt => opt.MapFrom(m => m.OrderStatus == OrderStatus.Waiting || m.OrderStatus == OrderStatus.Cancelled))
+                .ForMember(vm => vm.IsFinished, opt => opt.MapFrom(m => m.OrderStatus == OrderStatus.Finished || m.OrderStatus == OrderStatus.Cancelled))
                 .ForMember(vm => vm.TaxiId, opt => opt.MapFrom(m => (m.AssignedTaxi != null) ? m.AssignedTaxi.TaxiId : -1))
                 .ForMember(vm => vm.TaxiPlate, opt => opt.MapFrom(m => (m.AssignedTaxi != null) ? m.AssignedTaxi.Plate : ""))
                 .ForMember(vm => vm.DriverPhone, opt => opt.MapFrom(m => (m.AssignedTaxi != null && m.AssignedTaxi.Driver != null) ? m.AssignedTaxi.Driver.PhoneNumber : String.Empty));
