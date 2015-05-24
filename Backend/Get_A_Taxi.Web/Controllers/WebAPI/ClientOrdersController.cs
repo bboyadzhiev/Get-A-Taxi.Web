@@ -99,58 +99,51 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return BadRequest("Invalid model state!");
             }
 
-            var user = GetUser();
+            var customer = GetUser();
 
-            // Checking for unfinished orders
+            // Checking for unfinished orders for this customer
             var order = this.Data.Orders.All()
-                .Where(o => o.Customer.Id == user.Id && (o.OrderStatus == OrderStatus.Waiting || o.OrderStatus == OrderStatus.InProgress))
+                .Where(o => o.Customer.Id == customer.Id && (o.OrderStatus == OrderStatus.Waiting || o.OrderStatus == OrderStatus.InProgress))
                 .FirstOrDefault();
 
+            // Finds the closes district
+            // HACK: Review distance calculation
+            var closestDistrict = this.Data.Districts.All().OrderBy(d => ((d.CenterLatitude - model.OrderLatitude) + (d.CenterLongitude - model.OrderLongitude))).FirstOrDefault();
             if (order != null)
             {
+
+                var newStatus = order.OrderStatus;
                 // Previous order is not finished, updating with new details and returning new model
-                order.OrderLatitude = model.OrderLatitude;
-                order.OrderLongitude = model.OrderLongitude;
-                order.OrderAddress = model.OrderAddress;
-                order.UserComment = model.UserComment;
-                order.DestinationAddress = model.DestinationAddress;
-                order.DestinationLatitude = model.DestinationLatitude;
-                order.DestinationLongitude = model.DestinationLongitude;
+                order = UpdateOrderFromModel(model, customer, order, closestDistrict, newStatus);
 
                 this.Data.Orders.Update(order);
                 this.Data.Orders.SaveChanges();
 
                 var updatedOrder = this.Data.Orders.SearchFor(o => o.OrderId == order.OrderId).FirstOrDefault();
-                var updatedOrderModel = Mapper.Map<OrderDTO>(updatedOrder);
+                var updatedOrderModel = Mapper.Map<OrderDetailsDTO>(updatedOrder);
+                this.bridge.UpdateOrder(updatedOrderModel, updatedOrder.District.DistrictId);
 
-                //IHttpActionResult response;
-                //HttpResponseMessage responseMsg = Request.CreateResponse<OrderDTO>(HttpStatusCode.Found, updatedOrderModel);
-                //response = ResponseMessage(responseMsg);
-                //return response;
                 return Ok(updatedOrderModel);
             }
-
-            // HACK: Review distance calculation
+            
             // New order
-            // Finds the closes district
-            var closestDistrict = this.Data.Districts.All().OrderBy(d => ((d.CenterLatitude - model.OrderLatitude) + (d.CenterLongitude - model.OrderLongitude))).FirstOrDefault();
-            order = Mapper.Map<Order>(model);
+            order = OrderDetailsDTO.ToOrderModel(model, customer);
 
+            order.Customer = customer;
             order.District = closestDistrict;
-            order.Customer = user;
-            order.OrderStatus = OrderStatus.Waiting;
 
             this.Data.Orders.Add(order);
             this.Data.Orders.SaveChanges();
 
             var addedOrder = this.Data.Orders.SearchFor(o => o.OrderId == order.OrderId).FirstOrDefault();
-            var addedOrderModel = Mapper.Map<OrderDTO>(addedOrder);
 
-            var orderDTO = Mapper.Map<OrderDetailsDTO>(addedOrder);
-            this.bridge.AddOrder(orderDTO, addedOrder.District.DistrictId);
+            var addedOrderModel = Mapper.Map<OrderDetailsDTO>(addedOrder);
+            this.bridge.AddOrder(addedOrderModel, addedOrder.District.DistrictId);
 
             return Ok(addedOrderModel);
         }
+
+       
 
         /// <summary>
         /// Updates a client order. Possible only if it's in the "Waiting" state.
@@ -171,20 +164,30 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return NotFound();
             }
 
-            if (orderToUpdate.OrderStatus != OrderStatus.Waiting)
+            var customer = this.GetUser();
+
+            if (orderToUpdate.Customer.Id != customer.Id)
             {
-                return BadRequest("Order can be changed by user only in waiting state!");
+                return BadRequest("This is not your order!");
             }
 
-            orderToUpdate = Mapper.Map<Order>(model);
+            if (orderToUpdate.OrderStatus != OrderStatus.Waiting)
+            {
+                return BadRequest("Order can be changed by customer only in waiting state!");
+            }
+
+            var district = orderToUpdate.District;
+
+            orderToUpdate = UpdateOrderFromModel(model, customer, orderToUpdate, district, orderToUpdate.OrderStatus);
 
             this.Data.Orders.Update(orderToUpdate);
             this.Data.Orders.SaveChanges();
 
-            var orderDTO = Mapper.Map<OrderDetailsDTO>(orderToUpdate);
-            this.bridge.UpdateOrder(orderDTO, orderToUpdate.District.DistrictId);
+            var updatedOrder = this.Data.Orders.SearchFor(o => o.OrderId == orderToUpdate.OrderId).FirstOrDefault();
+            var updatedOrderModel = Mapper.Map<OrderDetailsDTO>(updatedOrder);
+            this.bridge.UpdateOrder(updatedOrderModel, updatedOrder.District.DistrictId);
 
-            return Ok(model);
+            return Ok(updatedOrderModel);
 
         }
 
@@ -201,10 +204,17 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return NotFound();
             }
 
+            var customer = this.GetUser();
+            if (orderToCancel.Customer.Id != customer.Id)
+            {
+                return BadRequest("This is not your order!");
+            }
+
             if (orderToCancel.OrderStatus == OrderStatus.Waiting || orderToCancel.OrderStatus == OrderStatus.InProgress)
             {
                 orderToCancel.OrderStatus = OrderStatus.Cancelled;
-
+                var district = orderToCancel.District;
+                
                 this.Data.Orders.Update(orderToCancel);
                 this.Data.SaveChanges();
 
@@ -217,5 +227,32 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
             return BadRequest("Order can be cancelled only in waiting or progress states!");
         }
+
+        #region Helpers
+        [NonAction]
+        private static Order UpdateOrderFromModel(OrderDetailsDTO model, ApplicationUser customer, Order order, District closestDistrict, OrderStatus newStatus)
+        {
+            order.OrderLatitude = model.OrderLatitude;
+            order.OrderLongitude = model.OrderLongitude;
+            order.OrderAddress = model.OrderAddress;
+
+            if (!string.IsNullOrEmpty(model.UserComment))
+            {
+                order.UserComment = model.UserComment;
+            }
+
+            if (!string.IsNullOrEmpty(model.DestinationAddress))
+            {
+                order.DestinationAddress = model.DestinationAddress;
+                order.DestinationLatitude = model.DestinationLatitude;
+                order.DestinationLongitude = model.DestinationLongitude;
+            }
+
+            order.Customer = customer;
+            order.District = closestDistrict;
+            order.OrderStatus = newStatus;
+            return order;
+        }
+        #endregion
     }
 }

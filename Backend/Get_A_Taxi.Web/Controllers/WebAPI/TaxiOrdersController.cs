@@ -364,6 +364,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
             //Checks passed
             orderToCancel.OrderStatus = OrderStatus.Cancelled;
+            var district = orderToCancel.District;
             this.Data.Orders.Update(orderToCancel);
             this.Data.Orders.SaveChanges();
 

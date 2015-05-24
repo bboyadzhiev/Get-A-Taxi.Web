@@ -69,5 +69,26 @@ namespace Get_A_Taxi.Web.Models
                 .ForMember(vm => vm.TaxiPlate, opt => opt.MapFrom(m => (m.AssignedTaxi != null) ? m.AssignedTaxi.Plate : ""))
                 .ForMember(vm => vm.DriverPhone, opt => opt.MapFrom(m => (m.AssignedTaxi != null && m.AssignedTaxi.Driver != null) ? m.AssignedTaxi.Driver.PhoneNumber : String.Empty));
         }
+
+        // TODO: Replace with automapper and custom mappings
+        public static Func<OrderDetailsDTO, ApplicationUser, Order> ToOrderModel
+        {
+            get
+            {
+                return (o, u) => new Order
+                {
+                    OrderAddress = o.OrderAddress,
+                    OrderLatitude = o.OrderLatitude,
+                    OrderLongitude = o.OrderLongitude,
+                    OrderedAt = DateTime.Now,
+                    DestinationAddress = o.DestinationAddress,
+                    DestinationLatitude = o.DestinationLatitude,
+                    DestinationLongitude = o.DestinationLongitude,
+                    UserComment = o.UserComment,
+                    OrderStatus = OrderStatus.Waiting,
+                    Customer = u
+                };
+            }
+        }
     }
 }
