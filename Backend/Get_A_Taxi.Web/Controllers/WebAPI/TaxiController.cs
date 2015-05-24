@@ -61,31 +61,41 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             return Ok(freeTaxies);
         }
 
-  
-
         /// <summary>
         /// Get taxi details, only if the driver and the taxi are in the same district
         /// </summary>
         /// <param name="id">Id of the taxi</param>
         /// <returns>Taxi details data model</returns>
+        [AllowAnonymous]
         public IHttpActionResult Get(int id)
         {
-            var driver = this.GetDriver();
-            var districtId = driver.District.DistrictId;
-            var taxiDetails = this.Data.Taxies
-                .SearchFor(t => t.TaxiId == id && t.District.DistrictId == districtId)
-                .Project().To<TaxiDetailsDTO>()
+            //var driver = this.GetDriver();
+            //var districtId = driver.District.DistrictId;
+            //var taxiDetails = this.Data.Taxies
+            //    .SearchFor(t => t.TaxiId == id && t.District.DistrictId == districtId)
+            //    .Project().To<TaxiDetailsDTO>()
+            //    .FirstOrDefault();
+
+            var taxi = this.Data.Taxies
+                .SearchFor(t => t.TaxiId == id)
                 .FirstOrDefault();
 
-            if (taxiDetails == null)
+            //if (taxi.DistrictId != districtId)
+            //{
+            //    return BadRequest("Taxi is not in your district!");
+            //}
+
+            if (taxi == null)
             {
                 return NotFound();
             }
 
-            if (taxiDetails.DistrictId != districtId)
+            if (taxi.Status == TaxiStatus.Decommissioned)
             {
-                return BadRequest("Taxi is not in your district!");
+                return BadRequest("Taxi has been decommisioned!");
             }
+
+            var taxiDetails = Mapper.Map<OrderDetailsDTO>(taxi);
 
             return Ok(taxiDetails);
         }
@@ -213,7 +223,6 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             this.taxiesBridge.TaxiUpdated(model, districtId);
             return Ok();
         }
-
 
         /// <summary>
         /// Unassigns a driver from a taxi

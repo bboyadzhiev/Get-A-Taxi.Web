@@ -301,7 +301,13 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             }
 
             // Checks passed at this point, updating order's details
-            orderToUpdate = Mapper.Map<Order>(model);
+
+            var customer = orderToUpdate.Customer;
+            var district = orderToUpdate.District;
+
+           // orderToUpdate = Mapper.Map<Order>(model);
+            orderToUpdate.DestinationLatitude = model.OrderLatitude;
+            orderToUpdate.DestinationLongitude = model.DestinationLongitude;
 
             if (model.IsWaiting == true && model.IsFinished == true)
             {
@@ -320,11 +326,17 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 orderToUpdate.OrderStatus = OrderStatus.Waiting;
             }
 
+            
+            //updatedOrder.Driver = driver;
+            //updatedOrder.Customer = customer;
+            //updatedOrder.District = district;
+            //updatedOrder.AssignedTaxi = taxi;
+
             this.Data.Orders.Update(orderToUpdate);
             this.Data.Orders.SaveChanges();
-
+            model.CustomerId = orderToUpdate.Customer.Id;
             // Notify all about order's update
-            this._ordersBridge.UpdateOrder(model, orderToUpdate.District.DistrictId);
+            this._ordersBridge.UpdateOrder(model, district.DistrictId);
 
             return Ok(model);
         }

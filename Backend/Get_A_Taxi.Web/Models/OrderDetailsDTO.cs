@@ -12,7 +12,7 @@ namespace Get_A_Taxi.Web.Models
     public class OrderDetailsDTO : OrderDTO, IHaveCustomMappings
     {
         // Customer details
-        [JsonProperty(PropertyName = "custmerId")]
+        [JsonProperty(PropertyName = "customerId")]
         public string CustomerId { get; set; }
 
         [JsonProperty(PropertyName = "firstName")]

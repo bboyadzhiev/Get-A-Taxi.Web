@@ -129,7 +129,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                 var order = this.Data.Orders.SearchFor(o => o.OrderId == orderVm.OrderId).FirstOrDefault();
                 if (order != null)
                 {
-                    // HACK: re-assigning district and customer
+                    // HACK: (EF hack) re-assigning district and customer
                     var operatorUser = this.Data.Users.SearchFor(u => u.Id == UserProfile.Id).FirstOrDefault();
                     var district = operatorUser.District;
                     var customer = this.Data.Users.SearchFor(u => u.Id == order.Customer.Id).FirstOrDefault();
