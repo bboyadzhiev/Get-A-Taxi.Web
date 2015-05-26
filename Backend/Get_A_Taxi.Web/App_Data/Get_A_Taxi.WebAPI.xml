@@ -250,7 +250,7 @@
         </member>
         <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiOrdersController.Delete(System.Int32)">
             <summary>
-            Cancel order by taxi driver
+            Cancel order by taxi driver, allow it to be taken from another taxi
             </summary>
             <param name="id">The order to be cancelled </param>
             <returns>The cancelled order id</returns>

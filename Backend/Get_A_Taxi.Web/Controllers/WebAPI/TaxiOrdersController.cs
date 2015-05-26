@@ -342,7 +342,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         }
         
         /// <summary>
-        /// Cancel order by taxi driver
+        /// Cancel order by taxi driver, allow it to be taken from another taxi
         /// </summary>
         /// <param name="id">The order to be cancelled </param>
         /// <returns>The cancelled order id</returns>
@@ -363,12 +363,15 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             }
 
             //Checks passed
-            orderToCancel.OrderStatus = OrderStatus.Cancelled;
+            orderToCancel.OrderStatus = OrderStatus.Waiting;
             var district = orderToCancel.District;
             this.Data.Orders.Update(orderToCancel);
             this.Data.Orders.SaveChanges();
 
-            this._ordersBridge.CancelOrder(orderToCancel.OrderId, orderToCancel.District.DistrictId);
+            var orderDetailsDTO = Mapper.Map<OrderDetailsDTO>(orderToCancel);
+
+            // allow other taxi to take the order
+            this._ordersBridge.UpdateOrder(orderDetailsDTO, district.DistrictId);
 
             return Ok(id);
         }
