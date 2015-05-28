@@ -12,11 +12,14 @@ namespace Get_A_Taxi.Models
     {
         /// <summary>
         /// New order waiting to be assigned to a taxi
+        /// Or assigned but not yet picked up
+        /// Can be cancelled by the driver (for re-assignment) or cancelled by the client
         /// </summary>
         Waiting = 0,
 
         /// <summary>
-        /// Order assigned to a taxi and in progress
+        /// Order assigned to a taxi and in progress (picked up)
+        /// Cannot be cancelled
         /// </summary>
         InProgress = 1,
 

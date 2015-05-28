@@ -63,7 +63,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
             var districtId = driver.District.DistrictId;
             var orders = this.Data.Orders.All()
-                .Where(o => o.District.DistrictId == districtId && o.OrderStatus == OrderStatus.Waiting)
+                .Where(o => o.Driver == null && o.District.DistrictId == districtId && o.OrderStatus == OrderStatus.Waiting)
                 .OrderBy(o => (o.OrderLatitude - taxi.Latitude) + (o.OrderLongitude - taxi.Longitude))
                 .Take(RESULTS_COUNT)
                 .Project().To<OrderDTO>()
@@ -117,7 +117,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
             var districtId = driver.District.DistrictId;
             var orders = this.Data.Orders.All()
-                .Where(o => o.District.DistrictId == districtId)
+                .Where(o => o.Driver == null && o.District.DistrictId == districtId && o.OrderStatus == OrderStatus.Waiting)
                 .OrderBy(o => (o.OrderLatitude - taxi.Latitude) + (o.OrderLongitude - taxi.Longitude))
                 .Skip(page * RESULTS_COUNT)
                 .Take(RESULTS_COUNT)
@@ -208,6 +208,15 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             if (taxiErrorCheck != null)
             {
                 return taxiErrorCheck;
+            }
+
+            var orderWithThisTaxi = this.Data.Orders
+               .SearchFor(o => o.AssignedTaxi.TaxiId == taxi.TaxiId && o.OrderStatus == OrderStatus.InProgress)
+               .FirstOrDefault();
+            if (orderWithThisTaxi != null)
+            {
+                var orderWithThisTaxiDTO = Mapper.Map<OrderDetailsDTO>(orderWithThisTaxi);
+                return Ok(orderWithThisTaxiDTO);
             }
 
             // Check if order is still waiting for an assignment
@@ -357,9 +366,9 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return NotFound();
             }
 
-            if (orderToCancel.OrderStatus != OrderStatus.InProgress)
+            if (orderToCancel.OrderStatus != OrderStatus.Waiting)
             {
-                return BadRequest("Order not in progress - cannot be cancelled!");
+                return BadRequest("Order cannot be cancelled!");
             }
 
             //Checks passed
