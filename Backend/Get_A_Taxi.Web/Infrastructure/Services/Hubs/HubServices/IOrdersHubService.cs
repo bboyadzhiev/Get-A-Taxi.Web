@@ -10,6 +10,7 @@ namespace Get_A_Taxi.Web.Infrastructure.Services.Hubs.HubServices
     public interface IOrdersHubService
     {
         IQueryable<Order> AllOrders();
+        IQueryable<Order> ByDistrict(IQueryable<Order> orders, int districtId);
         IQueryable<Order> GetUnfinished(IQueryable<Order> orders);
     }
 }

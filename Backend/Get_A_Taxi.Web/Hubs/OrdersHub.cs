@@ -33,7 +33,8 @@
         {
             var districtGroup = districtId.ToString();
 
-            var result = this._service.AllOrders().Where(o => o.District.DistrictId == districtId);
+            var result = this._service.AllOrders();
+            result = this._service.ByDistrict(result, districtId);
             result = this._service.GetUnfinished(result);
             var ordersDisplayDTOList = result.Project().To<OrderDetailsDTO>().ToList();
 

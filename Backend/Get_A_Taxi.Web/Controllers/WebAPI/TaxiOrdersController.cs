@@ -64,7 +64,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             var districtId = driver.District.DistrictId;
             var orders = this.Data.Orders.All()
                 .Where(o => o.Driver == null && o.District.DistrictId == districtId && o.OrderStatus == OrderStatus.Waiting)
-                .OrderBy(o => (o.OrderLatitude - taxi.Latitude) + (o.OrderLongitude - taxi.Longitude))
+                .OrderBy(o => (Math.Abs(o.OrderLatitude - taxi.Latitude) + Math.Abs(o.OrderLongitude - taxi.Longitude)))
                 .Take(RESULTS_COUNT)
                 .Project().To<OrderDTO>()
                 .ToList();
@@ -118,7 +118,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             var districtId = driver.District.DistrictId;
             var orders = this.Data.Orders.All()
                 .Where(o => o.Driver == null && o.District.DistrictId == districtId && o.OrderStatus == OrderStatus.Waiting)
-                .OrderBy(o => (o.OrderLatitude - taxi.Latitude) + (o.OrderLongitude - taxi.Longitude))
+                .OrderBy(o => (Math.Abs(o.OrderLatitude - taxi.Latitude) + Math.Abs(o.OrderLongitude - taxi.Longitude)))
                 .Skip(page * RESULTS_COUNT)
                 .Take(RESULTS_COUNT)
                 .Project().To<OrderDTO>()

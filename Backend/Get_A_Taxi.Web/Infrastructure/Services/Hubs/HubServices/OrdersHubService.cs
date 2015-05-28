@@ -25,5 +25,11 @@ namespace Get_A_Taxi.Web.Infrastructure.Services.Hubs.HubServices
         {
             return orders.Where(o => o.OrderStatus != OrderStatus.Finished && o.OrderStatus != OrderStatus.Cancelled);
         }
+
+
+        public IQueryable<Order> ByDistrict(IQueryable<Order> orders, int districtId)
+        {
+            return orders.Where(o => o.District.DistrictId == districtId);
+        }
     }
 }

@@ -34,7 +34,7 @@
         {
             return this.Data.Orders.All()
                 .Where(o => o.OrderStatus == OrderStatus.InProgress)
-                .OrderBy(o => ((o.OrderLatitude-lat) + (o.OrderLongitude - lon)));
+                .OrderBy(o => (Math.Abs(o.OrderLatitude-lat) + Math.Abs(o.OrderLongitude - lon)));
         }
     }
 }
