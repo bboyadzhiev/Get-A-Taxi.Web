@@ -33,7 +33,7 @@ namespace Get_A_Taxi.Web.Infrastructure.Services
 
         public IQueryable<TaxiStand> ByNearestLocation(IQueryable<TaxiStand> taxiStands, double lat, double lng)
         {
-            return taxiStands.OrderBy(ts => ((ts.Latitude - lat) + (ts.Longitude - lng)));
+            return taxiStands.OrderBy(ts => (Math.Abs(ts.Latitude - lat) + Math.Abs(ts.Longitude - lng)));
         }
     }
 }

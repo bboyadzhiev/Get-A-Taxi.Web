@@ -20,19 +20,25 @@ namespace Get_A_Taxi.Models
         Available = 0,
 
         /// <summary>
-        /// On duty, assigned to an order or something else
+        /// On duty, assigned to an order
         /// </summary>
         Busy = 1,
 
+
         /// <summary>
-        /// Off-duty - availabe for decommissioning or driver assignment
+        /// OffDuty - not available for order assignment
         /// </summary>
-        OffDuty = 2,
+         OffDuty = 2,
+
+        /// <summary>
+        /// Unassigned - availabe for decommissioning or driver assignment
+        /// </summary>
+        Unassigned = 3,
 
         /// <summary>
         /// Decommissioned and off-duty, driver can not be assigned
         /// </summary>
-        Decommissioned = 3
+        Decommissioned = 4
     }
 
     [Table("Taxies")]
@@ -55,7 +61,7 @@ namespace Get_A_Taxi.Models
         [Required]
         public int Luggage { get; set; }
 
-        [DefaultValue(TaxiStatus.OffDuty)]
+        [DefaultValue(TaxiStatus.Unassigned)]
         public TaxiStatus Status { get; set; }
 
         public double Latitude { get; set; }

@@ -54,7 +54,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
             var districtId = driver.District.DistrictId;
             var freeTaxies = this.Data.Taxies.All()
-                .Where(t => t.District.DistrictId == districtId && t.Status == TaxiStatus.OffDuty && t.Driver == null)
+                .Where(t => t.District.DistrictId == districtId && t.Status == TaxiStatus.Unassigned && t.Driver == null)
                 .AsQueryable()
                 .Take(RESULTS_COUNT)
                 .Project().To<TaxiDetailsDTO>().ToList();
@@ -110,7 +110,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             var driver = this.GetDriver();
             var district = driver.District;
             var freeTaxies = this.Data.Taxies.All()
-                .Where(t => t.Driver.Id == null && t.Status == TaxiStatus.OffDuty)
+                .Where(t => t.Driver.Id == null && t.Status == TaxiStatus.Unassigned)
                 .AsQueryable()
                 .Skip(page * RESULTS_COUNT)
                 .Take(RESULTS_COUNT)
@@ -155,7 +155,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 }
             }
 
-            if (taxi.Status != TaxiStatus.OffDuty)
+            if (taxi.Status != TaxiStatus.Unassigned)
             {
                 return BadRequest("Taxi is not available for driver change!");
             }
@@ -242,13 +242,16 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return NotFound();
             }
 
+            //var order = this.Data.Orders.All().Where(o => o.AssignedTaxi.TaxiId == taxi.TaxiId && o.OrderStatus == OrderStatus.Waiting || o.OrderStatus == OrderStatus.InProgress).FirstOrDefault();
+
+
             if (taxi.Status != TaxiStatus.Available)
             {
                 return BadRequest("Taxi must be on-duty to be un-assigned!");
             }
 
             taxi.Driver = null;
-            taxi.Status = TaxiStatus.OffDuty;
+            taxi.Status = TaxiStatus.Unassigned;
 
             this.Data.Taxies.Update(taxi);
             this.Data.Taxies.SaveChanges();
@@ -266,12 +269,15 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             {
                 if (!model.OnDuty)
                 {
-                    return TaxiStatus.OffDuty;
+                    return TaxiStatus.Unassigned;
                 }
 
                 return TaxiStatus.Available;
-            }
-                
+            } 
+            else if (!model.OnDuty)
+            {
+                return TaxiStatus.OffDuty;
+            } 
             return TaxiStatus.Busy;
         }
 

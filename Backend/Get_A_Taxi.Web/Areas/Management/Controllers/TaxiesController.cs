@@ -195,7 +195,7 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
             var driver = this.Data.Users.All()
                 .FirstOrDefault(u => u.Id == userId);
 
-            if (taxi.Status != TaxiStatus.OffDuty)
+            if (taxi.Status != TaxiStatus.Unassigned)
             {
                 TempData["Error"] = "Taxi not available for driver change!";
                 return RedirectToAction("Index");
@@ -222,7 +222,7 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
                 .FirstOrDefault();
             if (taxi != null && taxi.Driver != null)
             {
-                if(taxi.Status != TaxiStatus.OffDuty){
+                if(taxi.Status != TaxiStatus.Unassigned){
                     TempData["Error"] = "Taxi not available for driver change!";
                     return RedirectToAction("Index");
                 }
@@ -313,7 +313,7 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
                         }
                         taxi.District = district;
                     }
-                    taxi.Status = TaxiStatus.OffDuty;
+                    taxi.Status = TaxiStatus.Unassigned;
                     this.Data.Taxies.Update(taxi);
                     this.Data.SaveChanges();
 
@@ -343,7 +343,7 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
                 return RedirectToAction("Index");
             }
 
-            if (taxi.Status != TaxiStatus.OffDuty)
+            if (taxi.Status != TaxiStatus.Unassigned)
             {
                 TempData["Error"] = "Taxi is not available for decommissioning!!";
                 return RedirectToAction("Index");

@@ -83,7 +83,7 @@ namespace Get_A_Taxi.Web.ViewModels
                     Plate = t.Plate,
                     Seats = t.Seats,
                     Luggage = t.Luggage,
-                    Status = TaxiStatus.OffDuty,
+                    Status = TaxiStatus.Unassigned,
                     District = d
                 };
             }

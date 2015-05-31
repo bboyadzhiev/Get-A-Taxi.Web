@@ -235,18 +235,13 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 // Notify all about order's assignment
                 this._ordersBridge.AssignOrder(orderToAssign.OrderId, taxi.TaxiId, orderToAssign.District.DistrictId);
 
+                taxi.Status = TaxiStatus.Busy;
+                this.Data.Taxies.Update(taxi);
+                this.Data.Taxies.SaveChanges();
 
-                //    if (orderToAssign.OrderStatus == OrderStatus.InProgress
-                //    && orderToAssign.AssignedTaxi.TaxiId == taxi.TaxiId)
-                //{
-                //    orderToAssign.AssignedTaxi = null;
-                //    orderToAssign.Driver = null;
-                //    orderToAssign.OrderStatus = OrderStatus.Waiting;
-                //    this.Data.Orders.Update(orderToAssign);
-                //    this.Data.Orders.SaveChanges();
-
-                //    this.ordersBridge.CancelOrder(orderToAssign.OrderId, driver.District.DistrictId);
-                //}
+                var taxiDM = Mapper.Map<TaxiDTO>(taxi);
+                district = taxi.District;
+                this._taxiesBrigde.TaxiUpdated(taxiDM, district.DistrictId);
 
                 var assignedOrderModel = Mapper.Map<OrderDetailsDTO>(orderToAssign);
                 return Ok(assignedOrderModel);
@@ -381,6 +376,14 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
             // allow other taxi to take the order
             this._ordersBridge.UpdateOrder(orderDetailsDTO, district.DistrictId);
+
+            district = taxi.District;
+            taxi.Status = TaxiStatus.Available;
+            this.Data.Taxies.Update(taxi);
+            this.Data.Taxies.SaveChanges();
+            var taxiDM = Mapper.Map<TaxiDTO>(taxi);
+
+            this._taxiesBrigde.TaxiUpdated(taxiDM, district.DistrictId);
 
             return Ok(id);
         }

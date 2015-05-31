@@ -31,9 +31,9 @@ namespace Get_A_Taxi.Web.Models
 
         //  |IsAvailable    |   OnDuty      |   to TaxiStatus
         //  +---------------+---------------+----------------------
-        //  |       0       |       0       | TaxiStatus.Busy
+        //  |       0       |       0       | TaxiStatus.OffDuty
         //  |       0       |       1       | TaxiStatus.Busy
-        //  |       1       |       0       | TaxiStatus.OffDuty
+        //  |       1       |       0       | TaxiStatus.Unassigned
         //  |       1       |       1       | TaxiStatus.Available
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
