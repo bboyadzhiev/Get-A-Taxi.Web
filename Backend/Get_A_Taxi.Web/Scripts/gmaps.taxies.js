@@ -4,17 +4,29 @@ var taxies = function (districtId, operatorId) {
     var busyMarkers = [];
     var taxiesHub;
 
-    function addNewTaxiMarker(data) {
+    function updateTaxiMarker(data) {
         if (data.isAvailable == true) {
-            gATMap.addMarker(data.taxiId, data.lat, data.lon, '/Content/Images/Map/taxi_available.png', data.plate + ' ' + data.phone, clkW, availableMarkers);
+            if (data.onDuty) {
+                console.log("Available");
+                gATMap.addMarker(data.taxiId, data.lat, data.lon, '/Content/Images/Map/taxi_available.png', data.plate + ' ' + data.phone, clkW, availableMarkers);
+            } else {
+                console.log("Unassigned");
+            //    gATMap.removeMarker(data.taxiId, availableMarkers);
+            }
         } else {
-            gATMap.addMarker(data.taxiId, data.lat, data.lon, '/Content/Images/Map/taxi_busy.png', data.plate + ' ' + data.phone, clkP, busyMarkers);
+            if (data.onDuty) {
+                console.log("Busy");
+                gATMap.addMarker(data.taxiId, data.lat, data.lon, '/Content/Images/Map/taxi_busy.png', data.plate + ' ' + data.phone, clkP, busyMarkers);
+            } else {
+                console.log("OffDuty");
+              //  gATMap.removeMarker(data.taxiId, busyMarkers);
+            }
         }
     }
 
     function addTaxiesMarkers(data) {
         for (var i = 0; i < data.length; i++) {
-            addNewTaxiMarker(data[i]);
+            updateTaxiMarker(data[i]);
         }
     }
 
@@ -37,22 +49,28 @@ var taxies = function (districtId, operatorId) {
     };
 
     taxiesHub.client.taxiOnDuty = function (data) {
-        console.log('Taxi ' + taxiId + ' on duty!');
-        addNewTaxiMarker(data);
+        console.log('Taxi ' + data.taxiId + ' on duty!');
+        updateTaxiMarker(data);
     }
 
     taxiesHub.client.taxiOffDuty = function (taxiId) {
         console.log('Taxi ' + taxiId + ' is off duty!');
         var markerToRemove = gATMap.removeMarker(taxiId, availableMarkers);
+        var busy = gATMap.removeMarker(taxiId, busyMarkers);
     }
 
     taxiesHub.client.taxiUpdated = function (data) {
         console.log('Taxi ' + data.taxiId + ' updated!');
-
-        var taxiMarkerToUpdate = gATMap.removeMarker(data.taxiId, availableMarkers);
-        taxiMarkerToUpdate.lat = data.lat;
-        taxiMarkerToUpdate.lon = data.lon;
-        addNewTaxiMarker(taxiMarkerToUpdate);
+        var busy = gATMap.removeMarker(data.taxiId, busyMarkers);
+        var available = gATMap.removeMarker(data.taxiId, availableMarkers);
+        if (busy != null) {
+            console.log("Updating busy");
+        }
+        if (available != null) {
+            console.log("Updating available");
+        }
+        updateTaxiMarker(data);
+       
     }
 
     $.connection.hub.start().done(function () {
@@ -63,4 +81,10 @@ var taxies = function (districtId, operatorId) {
     $(window).unload(function () {
         taxiesHub.invoke("close", districtId);
     });
+
+    return {
+        availableMarkers: availableMarkers,
+        busyMarkers: busyMarkers
+    }
+
 }(district, operator);

@@ -1,4 +1,5 @@
-﻿var createTaxiStand = function () {
+﻿
+var createTaxiStand = function () {
 var markers = [];
     function updateUI(lat,lng, formattedAddress) {
         $('#Latitude').val(lat);
@@ -32,9 +33,11 @@ var markers = [];
 
 }();
 
+gATMap.initMap('#map', lat, lon, zoomChanged, mapClicked);
+
 function mapClicked(e) {
-    gATMap.map.removeMarkers();
-    gATMap.map.setCenter(e.latLng.lat(), e.latLng.lng());
+    gATMap.clearMarkers();
+    gATMap.setCenter(e.latLng.lat(), e.latLng.lng());
     gATMap.getAddress(e.latLng.lat(), e.latLng.lng(), createTaxiStand.updateUI);
 }
 

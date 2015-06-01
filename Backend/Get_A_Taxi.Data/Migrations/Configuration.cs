@@ -53,7 +53,7 @@ namespace Get_A_Taxi.Data.Migrations
                 // two taxies near Orlov most, sofia
                 context.Taxies.AddOrUpdate(
                new Taxi { Plate = "CA 0001 AA", Seats = 5, Luggage = 2, District = sofia, Status = TaxiStatus.Unassigned, Latitude = 42.690284, Longitude = 23.338264 },
-               new Taxi { Plate = "CA 0002 AA", Seats = 5, Luggage = 2, District = sofia, Status = TaxiStatus.Unassigned, Latitude = 42.690284, Longitude = 23.338264 }
+               new Taxi { Plate = "CA 0002 AA", Seats = 5, Luggage = 2, District = sofia, Status = TaxiStatus.Unassigned, Latitude = 42.690456, Longitude = 23.338730 }
                 );
 
                 context.Stands.AddOrUpdate(

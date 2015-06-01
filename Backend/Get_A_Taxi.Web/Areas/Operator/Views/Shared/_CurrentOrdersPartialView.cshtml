@@ -25,7 +25,9 @@
             <td data-bind="text: custComment"></td>
             <td data-bind="text: driverPhone"></td>
         </tr>
+        
         <!-- /ko -->
+        <tr data-bind="if: orders().length == 0"><td colspan="6"><strong> No orders to display</strong></td></tr>
     </tbody>
 </table>
 
@@ -39,9 +41,9 @@
         function addOrdersMarkers(data) {
             for (var i = 0; i < data.length; i++) {
                 if(data[i].isWaiting == true){
-                    gATMap.addMarker(data[i].orderId, data[i].startLat, data[i].startLng, '/Content/Images/Map/red_m.png', data[i].firstName + ' ' + data[i].lastName, clkW, waitingMarkers );
+                    gATMap.addMarker(data[i].orderId, data[i].startLat, data[i].startLng, '/Content/Images/Map/order_waiting.png', data[i].firstName + ' ' + data[i].lastName, clkW, waitingMarkers );
                 }else {
-                    gATMap.addMarker(data[i].orderId, data[i].startLat, data[i].startLng, '/Content/Images/Map/blue_m.png', data[i].firstName + ' ' + data[i].lastName, clkP, inProgressMarkers);
+                    gATMap.addMarker(data[i].orderId, data[i].startLat, data[i].startLng, '/Content/Images/Map/order_assigned.png', data[i].firstName + ' ' + data[i].lastName, clkP, inProgressMarkers);
                 }
             }
             console.log('waiting orders markers: '+waitingMarkers.length);
@@ -49,9 +51,9 @@
 
         function addNewOrderMarker(data) {
             if(data.isWaiting == true){
-                gATMap.addMarker(data.orderId, data.startLat, data.startLng, '/Content/Images/Map/red_m.png', data.firstName, clkW, waitingMarkers );
+                gATMap.addMarker(data.orderId, data.startLat, data.startLng, '/Content/Images/Map/order_waiting.png', data.firstName, clkW, waitingMarkers );
             }else {
-                gATMap.addMarker(data.orderId, data.startLat, data.startLng, '/Content/Images/Map/blue_m.png', data.firstName, clkP, inProgressMarkers);
+                gATMap.addMarker(data.orderId, data.startLat, data.startLng, '/Content/Images/Map/order_assigned.png', data.firstName, clkP, inProgressMarkers);
             }
         }
 
@@ -157,9 +159,27 @@
 
         ordersHub.client.updatedOrder = function (order) {
             console.log('Order '+order.orderId+' updated!');
-            var markerToRemove = gATMap.removeMarker(order.orderId, waitingMarkers);
-            addNewOrderMarker(order);
-            updateOrder(order);
+            if(order.isWaiting){
+                if(order.isFinished){
+                    // Cancelled
+                    var markerToRemove = gATMap.removeMarker(order.orderId, waitingMarkers);
+                } else {
+                    // Waiting
+                    var markerToRemove = gATMap.removeMarker(order.orderId, inProgressMarkers);
+                    addNewOrderMarker(order);
+                    updateOrder(order);
+                }
+            } else {
+                if(order.isFinished){
+                    // Finished
+                    var markerToRemove = gATMap.removeMarker(order.orderId, inProgressMarkers);
+                } else {
+                    // InProgress
+                    var markerToRemove = gATMap.removeMarker(order.orderId, waitingMarkers);
+                    addNewOrderMarker(order);
+                    updateOrder(order);
+                }
+            } 
         }
 
         ordersHub.client.assignedOrder = function (orderId, taxiId) {
@@ -171,7 +191,11 @@
             //var jsOrder = ko.mapping.toJS(observableOrder);
 
             var availabeTaxies = taxies.availableMarkers;
-            if (availabeTaxies != null) {
+            var busyTaxies = taxies.busyMarkers;
+            if (availabeTaxies != null && availabeTaxies.length > 0) {
+                var taxi = taxies.filter(function(t){ return t.taxiId == taxiId})[0];
+                observableOrder.driverPhone(taxi.phone);
+            } else if(busyTaxies != null && busyTaxies.length > 0){
                 var taxi = taxies.filter(function(t){ return t.taxiId == taxiId})[0];
                 observableOrder.driverPhone(taxi.phone);
             }

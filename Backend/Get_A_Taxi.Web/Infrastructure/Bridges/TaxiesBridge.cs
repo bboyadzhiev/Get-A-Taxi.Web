@@ -61,7 +61,10 @@
                 var districtGroup = e.districtId.ToString();
                 Clients.Group(districtGroup).taxiOffDuty(e.taxiId);
             };
-        }
 
+            TaxiOnDutyEvent += taxiOnDutyHandler;
+            TaxiUpdatedEvent += taxiUpdatedHandler;
+            TaxiOffDutyEvent += taxiOffDutyHandler;
+        }
     }
 }

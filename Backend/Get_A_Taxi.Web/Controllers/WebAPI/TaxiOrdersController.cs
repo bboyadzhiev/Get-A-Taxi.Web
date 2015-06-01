@@ -63,7 +63,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
             var districtId = driver.District.DistrictId;
             var orders = this.Data.Orders.All()
-                .Where(o => o.Driver == null && o.District.DistrictId == districtId && o.OrderStatus == OrderStatus.Waiting)
+                .Where(o => o.AssignedTaxi == null && o.District.DistrictId == districtId && o.OrderStatus == OrderStatus.Waiting)
                 .OrderBy(o => (Math.Abs(o.OrderLatitude - taxi.Latitude) + Math.Abs(o.OrderLongitude - taxi.Longitude)))
                 .Take(RESULTS_COUNT)
                 .Project().To<OrderDTO>()
@@ -220,13 +220,13 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             }
 
             // Check if order is still waiting for an assignment
-           
-            if (orderToAssign.OrderStatus == OrderStatus.Waiting)
+
+            if (orderToAssign.AssignedTaxi == null && orderToAssign.OrderStatus == OrderStatus.Waiting)
             {
                 // Checks passed at this point, assigning order
                 orderToAssign.AssignedTaxi = taxi;
                 orderToAssign.Driver = driver;
-                orderToAssign.OrderStatus = OrderStatus.InProgress;
+                //orderToAssign.OrderStatus = OrderStatus.InProgress;
                 var customer = orderToAssign.Customer;
                 var district = orderToAssign.District;
                 this.Data.Orders.Update(orderToAssign);
@@ -246,6 +246,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 var assignedOrderModel = Mapper.Map<OrderDetailsDTO>(orderToAssign);
                 return Ok(assignedOrderModel);
             }
+
             if (orderToAssign.OrderStatus == OrderStatus.InProgress)
             {
                 if (orderToAssign.AssignedTaxi != null && orderToAssign.AssignedTaxi.TaxiId == taxi.TaxiId)
@@ -310,7 +311,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             var district = orderToUpdate.District;
 
            // orderToUpdate = Mapper.Map<Order>(model);
-            orderToUpdate.DestinationLatitude = model.OrderLatitude;
+            orderToUpdate.DestinationLatitude = model.DestinationLatitude;
             orderToUpdate.DestinationLongitude = model.DestinationLongitude;
 
             if (model.IsWaiting == true && model.IsFinished == true)
