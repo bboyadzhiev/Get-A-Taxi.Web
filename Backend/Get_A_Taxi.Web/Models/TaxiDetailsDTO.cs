@@ -36,14 +36,15 @@ namespace Get_A_Taxi.Web.Models
 
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
+           
             configuration.CreateMap<Taxi, TaxiDetailsDTO>()
                 .ForMember(dm => dm.DistrictId, opt => opt.MapFrom(m => m.District.DistrictId))
                 .ForMember(dm => dm.DriverName, opt => opt.MapFrom(m => m.Driver.FirstName + " " + m.Driver.LastName))
                 .ForMember(dm => dm.Phone, opt => opt.MapFrom(m => m.Driver.PhoneNumber))
                 .ForMember(dm => dm.TaxiStandId, opt => opt.MapFrom(m => m.TaxiStand != null ? m.TaxiStand.TaxiStandId : -1))
-                .ForMember(dm => dm.TaxiStandAlias, opt => opt.MapFrom(m => m.TaxiStand != null ? m.TaxiStand.Alias : "new"));
-               // .ForMember(dm => dm.IsAvailable, opt => opt.MapFrom(m => m.Status == TaxiStatus.Available))
-               //.ForMember(dm => dm.OnDuty, opt => opt.MapFrom(m => m.Status == TaxiStatus.Available || m.Status == TaxiStatus.Busy));
+                .ForMember(dm => dm.TaxiStandAlias, opt => opt.MapFrom(m => m.TaxiStand != null ? m.TaxiStand.Alias : "new"))
+               .ForMember(dm => dm.IsAvailable, opt => opt.MapFrom(m => m.Status == TaxiStatus.Available || m.Status == TaxiStatus.Unassigned))
+               .ForMember(dm => dm.OnDuty, opt => opt.MapFrom(m => m.Status == TaxiStatus.Available || m.Status == TaxiStatus.Busy));
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Get_A_Taxi.Data.Migrations
                 context.Stands.AddOrUpdate(
                     new TaxiStand { Active = true, Alias = "Hotel Pliska", Latitude = 42.675604, Longitude = 23.359076, Address = "boulevard Tsarigradsko shose 83", District = sofia },
                     new TaxiStand { Active = true, Alias = "Terminal 2", Latitude = 42.688151, Longitude = 23.413509, Address = "Sofia Airport Terminal 2", District = sofia },
-                    new TaxiStand { Active = true, Alias = "Central Railway Station Sofia", Latitude = 42.711869, Longitude = 23.320702, Address = "бул. Княгиня Мария Луиза 102А", District = sofia },
+                    new TaxiStand { Active = true, Alias = "Central Railway Station Sofia", Latitude = 42.711869, Longitude = 23.320702, Address = "bulevard Kniaginya Maria Luiza 102A", District = sofia },
                     new TaxiStand { Active = true, Alias = "Studentski Grad", Latitude = 42.651421, Longitude = 23.342664, Address = "ul. 8-mi dekemvri 9 1700 Sofia", District = sofia }
                 );
 

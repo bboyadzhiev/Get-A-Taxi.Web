@@ -38,7 +38,7 @@ namespace Get_A_Taxi.Web.Models
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
             configuration.CreateMap<Taxi, TaxiDTO>()
-               .ForMember(dm => dm.IsAvailable, opt => opt.MapFrom(m => m.Status == TaxiStatus.Available))
+               .ForMember(dm => dm.IsAvailable, opt => opt.MapFrom(m => m.Status == TaxiStatus.Available || m.Status == TaxiStatus.Unassigned))
                .ForMember(dm => dm.OnDuty, opt => opt.MapFrom(m => m.Status == TaxiStatus.Available || m.Status == TaxiStatus.Busy));
         }
     }
