@@ -34,7 +34,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         }
 
         /// <summary>
-        /// Get all waiting orders for the district, order ascending by distance to taxi's position
+        /// Get all unassigned orders for the district, order ascending by distance to taxi's position
         /// Returns top RESULTS_COUNT results
         /// </summary>
         /// <returns>A list of order data models</returns>
@@ -53,7 +53,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             }
 
             var orderWithThisTaxi = this.Data.Orders
-                .SearchFor(o => o.AssignedTaxi.TaxiId == taxi.TaxiId && o.OrderStatus == OrderStatus.InProgress)
+                .SearchFor(o => o.AssignedTaxi.TaxiId == taxi.TaxiId && (o.OrderStatus == OrderStatus.InProgress || o.OrderStatus == OrderStatus.Waiting))
                 .FirstOrDefault();
             if (orderWithThisTaxi != null)
             {
@@ -63,7 +63,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
             var districtId = driver.District.DistrictId;
             var orders = this.Data.Orders.All()
-                .Where(o => o.AssignedTaxi == null && o.District.DistrictId == districtId && o.OrderStatus == OrderStatus.Waiting)
+                .Where(o => o.AssignedTaxi == null && o.District.DistrictId == districtId && o.OrderStatus == OrderStatus.Unassigned)
                 .OrderBy(o => (Math.Abs(o.OrderLatitude - taxi.Latitude) + Math.Abs(o.OrderLongitude - taxi.Longitude)))
                 .Take(RESULTS_COUNT)
                 .Project().To<OrderDTO>()
@@ -100,7 +100,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         }
 
         /// <summary>
-        /// Get a specific page of all the waiting orders for the district, 
+        /// Get a specific page of all the unassigned orders for the district, 
         /// ordered ascending by distance to taxi's position
         /// </summary>
         /// <param name="page">The page number</param>
@@ -117,7 +117,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
             var districtId = driver.District.DistrictId;
             var orders = this.Data.Orders.All()
-                .Where(o => o.Driver == null && o.District.DistrictId == districtId && o.OrderStatus == OrderStatus.Waiting)
+                .Where(o => o.Driver == null && o.District.DistrictId == districtId && o.OrderStatus == OrderStatus.Unassigned)
                 .OrderBy(o => (Math.Abs(o.OrderLatitude - taxi.Latitude) + Math.Abs(o.OrderLongitude - taxi.Longitude)))
                 .Skip(page * RESULTS_COUNT)
                 .Take(RESULTS_COUNT)
@@ -211,7 +211,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             }
 
             var orderWithThisTaxi = this.Data.Orders
-               .SearchFor(o => o.AssignedTaxi.TaxiId == taxi.TaxiId && o.OrderStatus == OrderStatus.InProgress)
+               .SearchFor(o => o.AssignedTaxi.TaxiId == taxi.TaxiId && (o.OrderStatus == OrderStatus.InProgress || o.OrderStatus == OrderStatus.Waiting))
                .FirstOrDefault();
             if (orderWithThisTaxi != null)
             {
@@ -221,12 +221,12 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
             // Check if order is still waiting for an assignment
 
-            if (orderToAssign.AssignedTaxi == null && orderToAssign.OrderStatus == OrderStatus.Waiting)
+            if (orderToAssign.AssignedTaxi == null && orderToAssign.OrderStatus == OrderStatus.Unassigned)
             {
                 // Checks passed at this point, assigning order
                 orderToAssign.AssignedTaxi = taxi;
                 orderToAssign.Driver = driver;
-                //orderToAssign.OrderStatus = OrderStatus.InProgress;
+                orderToAssign.OrderStatus = OrderStatus.Waiting;
                 var customer = orderToAssign.Customer;
                 var district = orderToAssign.District;
                 this.Data.Orders.Update(orderToAssign);
@@ -247,7 +247,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return Ok(assignedOrderModel);
             }
 
-            if (orderToAssign.OrderStatus == OrderStatus.InProgress)
+            if (orderToAssign.OrderStatus == OrderStatus.Waiting)
             {
                 if (orderToAssign.AssignedTaxi != null && orderToAssign.AssignedTaxi.TaxiId == taxi.TaxiId)
                 {
@@ -297,14 +297,12 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return BadRequest("Order can be changed by taxi driver only in waiting or progress state!");
             }
 
-            if (orderToUpdate.OrderStatus == OrderStatus.InProgress)
+            if (orderToUpdate.AssignedTaxi.TaxiId != taxi.TaxiId)
             {
-                if (orderToUpdate.AssignedTaxi.TaxiId != taxi.TaxiId)
-                {
-                    return BadRequest("This order is already assigned to another taxi!");
-                }
+                return BadRequest("This order is already assigned to another taxi!");
             }
 
+            
             // Checks passed at this point, updating order's details
 
             var customer = orderToUpdate.Customer;
@@ -314,23 +312,8 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             orderToUpdate.DestinationLatitude = model.DestinationLatitude;
             orderToUpdate.DestinationLongitude = model.DestinationLongitude;
 
-            if (model.IsWaiting == true && model.IsFinished == true)
-            {
-                orderToUpdate.OrderStatus = OrderStatus.Cancelled;
-            }
-            if (model.IsWaiting == false && model.IsFinished == true)
-            {
-                orderToUpdate.OrderStatus = OrderStatus.Finished;
-            }
-            if (model.IsWaiting == false && model.IsFinished == false)
-            {
-                orderToUpdate.OrderStatus = OrderStatus.InProgress;
-            }
-            if (model.IsWaiting == true && model.IsFinished == false)
-            {
-                orderToUpdate.OrderStatus = OrderStatus.Waiting;
-            }
-
+    
+            orderToUpdate.OrderStatus = (OrderStatus)model.Status;
             
             //updatedOrder.Driver = driver;
             //updatedOrder.Customer = customer;
@@ -362,13 +345,21 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return NotFound();
             }
 
-            if (orderToCancel.OrderStatus != OrderStatus.Waiting)
+            // HACK failsafe
+            if (orderToCancel.OrderStatus == OrderStatus.Finished || orderToCancel.OrderStatus == OrderStatus.Cancelled)
             {
-                return BadRequest("Order cannot be cancelled!");
+                return Ok(id);
+            }
+
+            if (orderToCancel.OrderStatus == OrderStatus.InProgress)
+            {
+                return BadRequest("Order in progress cannot be cancelled!");
             }
 
             //Checks passed
-            orderToCancel.OrderStatus = OrderStatus.Waiting;
+            orderToCancel.OrderStatus = OrderStatus.Unassigned;
+            orderToCancel.AssignedTaxi = null;
+            orderToCancel.Driver = null;
             var customer = orderToCancel.Customer;
             var district = orderToCancel.District;
             this.Data.Orders.Update(orderToCancel);

@@ -207,21 +207,21 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return BadRequest("Unauthorized operation!");
             }
 
-            if (taxi.Status == TaxiStatus.Busy && model.OnDuty == false)
+            if (taxi.Status == TaxiStatus.Busy && model.Status == (int)TaxiStatus.OffDuty)
             {
                 return BadRequest("Taxi is serving an order - cannot get off-duty!");
             }
 
             taxi.Latitude = model.Latitude;
             taxi.Longitude = model.Longitude;
-            taxi.Status = FromModelStatus(model);
+            taxi.Status = (TaxiStatus)model.Status;
 
             this.Data.Taxies.Update(taxi);
             this.Data.Taxies.SaveChanges();
 
             // Update the district about the new taxi state
             this.taxiesBridge.TaxiUpdated(model, districtId);
-            return Ok();
+            return Ok((int)taxi.Status);
         }
 
         /// <summary>
@@ -262,24 +262,6 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         }
 
         #region Helpers
-        [NonAction]
-        private TaxiStatus FromModelStatus(TaxiDTO model)
-        {
-            if (model.IsAvailable)
-            {
-                if (!model.OnDuty)
-                {
-                    return TaxiStatus.Unassigned;
-                }
-
-                return TaxiStatus.Available;
-            } 
-            else if (!model.OnDuty)
-            {
-                return TaxiStatus.OffDuty;
-            } 
-            return TaxiStatus.Busy;
-        }
 
         private ApplicationUser GetDriver()
         {

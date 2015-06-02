@@ -11,27 +11,31 @@ namespace Get_A_Taxi.Models
     public enum OrderStatus
     {
         /// <summary>
-        /// New order waiting to be assigned to a taxi
-        /// Or assigned but not yet picked up
+        /// Unassigned
+        /// </summary>
+        Unassigned = 0,
+
+        /// <summary>
+        /// New order waiting for its taxi
         /// Can be cancelled by the driver (for re-assignment) or cancelled by the client
         /// </summary>
-        Waiting = 0,
+        Waiting = 1,
 
         /// <summary>
         /// Order assigned to a taxi and in progress (picked up)
         /// Cannot be cancelled
         /// </summary>
-        InProgress = 1,
+        InProgress = 2,
 
         /// <summary>
         /// A finished order
         /// </summary>
-        Finished = 2,
+        Finished = 3,
 
         /// <summary>
         /// Cancelled order
         /// </summary>
-        Cancelled = 3
+        Cancelled = 4
     }
 
     [Table("Orders")]

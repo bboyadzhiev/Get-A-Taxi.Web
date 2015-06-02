@@ -205,7 +205,7 @@
         </member>
         <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiOrdersController.Get">
             <summary>
-            Get all waiting orders for the district, order ascending by distance to taxi's position
+            Get all unassigned orders for the district, order ascending by distance to taxi's position
             Returns top RESULTS_COUNT results
             </summary>
             <returns>A list of order data models</returns>
@@ -219,7 +219,7 @@
         </member>
         <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiOrdersController.GetPaged(System.Int32)">
             <summary>
-            Get a specific page of all the waiting orders for the district, 
+            Get a specific page of all the unassigned orders for the district, 
             ordered ascending by distance to taxi's position
             </summary>
             <param name="page">The page number</param>

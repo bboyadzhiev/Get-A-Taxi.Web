@@ -90,8 +90,12 @@ textarea {
     background-color: rgba(128,128,128,0.5);
 }
 
-.orderWaitingRow{
+.orderUnassignedRow{
     background-color: rgba(255,128,128,0.5);
+}
+
+.orderWaitingRow{
+     background-color: rgba(128,128,255,0.5);
 }
 
 .orderInProgressRow{

@@ -367,7 +367,7 @@
     <Content Include="Content\Images\Map\blue_m.png" />
     <Content Include="Content\Images\Map\green_m.png" />
     <Content Include="Content\Images\Map\orange_m.png" />
-    <Content Include="Content\Images\Map\order_assigned.png" />
+    <Content Include="Content\Images\Map\order_unassigned.png" />
     <Content Include="Content\Images\Map\order_waiting.png" />
     <Content Include="Content\Images\Map\purple_m.png" />
     <Content Include="Content\Images\Map\red_m.png" />

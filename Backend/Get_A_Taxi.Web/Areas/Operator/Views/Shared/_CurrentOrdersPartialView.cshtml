@@ -1,8 +1,6 @@
 ﻿<table class="table table-hover">
     <thead>
         <tr>
-            @*<th>id</th>*@
-            @*<th>Type</th>*@
             <th>From</th>
             <th>To</th>
             <th>Name</th>
@@ -15,9 +13,7 @@
         <!-- ko foreach: orders -->
         @{// HACK: using &#123; - &#125; instead of { - } in data-binding due to RAZOR bug
         }
-        <tr data-bind="click: clicked, attr: &#123;  class:  isWaiting ? 'orderWaitingRow': 'orderInProgressRow' &#125;">
-            @*<td data-bind="text: orderId"></td>*@
-            @*<td><img data-bind="attr: &#123; src: isWaiting ? '/Content/Images/Map/red_m.png' : '/Content/Images/Map/blue_m.png'  &#125;" /></td>*@
+        <tr data-bind="click: clicked, attr: &#123;  class:  status() == 0 ? 'orderUnassignedRow' : ( status() == 1 ? 'orderWaitingRow' :'orderInProgressRow') &#125;">
             <td class="trimmedText" data-bind="text: start"></td>
             <td class="trimmedText" data-bind="text: end"></td>
             <td><span data-bind="text: firstName"></span> <span data-bind="text: lastName"></span></td>
@@ -27,33 +23,52 @@
         </tr>
         
         <!-- /ko -->
-        <tr data-bind="if: orders().length == 0"><td colspan="6"><strong> No orders to display</strong></td></tr>
+        <tr data-bind="if: orders() == undefined"><td colspan="6"><strong> Fetching results</strong></td></tr>
+        <tr data-bind="if: orders() != null  && orders().length == 0"><td colspan="6"><strong> No orders to display</strong></td></tr>
     </tbody>
 </table>
 
 <script type="text/javascript">
     // ORDERS
     var currentOrdersPartial = function (districtId, operatorId) {
+        var unassignedMarkers = [];
         var waitingMarkers = [];
-        var inProgressMarkers = [];
         var m = [];
         var ordersHub;
         function addOrdersMarkers(data) {
             for (var i = 0; i < data.length; i++) {
-                if(data[i].isWaiting == true){
-                    gATMap.addMarker(data[i].orderId, data[i].startLat, data[i].startLng, '/Content/Images/Map/order_waiting.png', data[i].firstName + ' ' + data[i].lastName, clkW, waitingMarkers );
-                }else {
-                    gATMap.addMarker(data[i].orderId, data[i].startLat, data[i].startLng, '/Content/Images/Map/order_assigned.png', data[i].firstName + ' ' + data[i].lastName, clkP, inProgressMarkers);
+                if(data[i].status == 0){
+                    gATMap.addMarker(data[i].orderId, data[i].startLat, data[i].startLng, '/Content/Images/Map/order_unassigned.png', data[i].firstName + ' ' + data[i].lastName, clkW, unassignedMarkers );
+                }
+                if(data[i].status == 1) {
+                    gATMap.addMarker(data[i].orderId, data[i].startLat, data[i].startLng, '/Content/Images/Map/order_waiting.png', data[i].firstName + ' ' + data[i].lastName, clkP, waitingMarkers);
                 }
             }
-            console.log('waiting orders markers: '+waitingMarkers.length);
+            console.log('Unassigned orders markers: '+unassignedMarkers.length);
         }
 
         function addNewOrderMarker(data) {
-            if(data.isWaiting == true){
-                gATMap.addMarker(data.orderId, data.startLat, data.startLng, '/Content/Images/Map/order_waiting.png', data.firstName, clkW, waitingMarkers );
-            }else {
-                gATMap.addMarker(data.orderId, data.startLat, data.startLng, '/Content/Images/Map/order_assigned.png', data.firstName, clkP, inProgressMarkers);
+            if(data.status == 0){
+                gATMap.addMarker(data.orderId, data.startLat, data.startLng, '/Content/Images/Map/order_unassigned.png', data.firstName, clkW, unassignedMarkers );
+            }
+            if(data.status == 1)
+            {
+                gATMap.addMarker(data.orderId, data.startLat, data.startLng, '/Content/Images/Map/order_waiting.png', data.firstName, clkP, waitingMarkers);
+            }
+        }
+
+        function updateOrderMarker(data) {
+            var removed = gATMap.removeMarker(data.orderId, waitingMarkers);
+            if(removed == null){
+                removed = gATMap.removeMarker(data.orderId, unassignedMarkers);
+            }
+        
+            console.log(data);
+            if (data.status == 0) { // Unassigned
+                gATMap.addMarker(data.orderId, data.startLat, data.startLng, '/Content/Images/Map/order_unassigned.png', data.firstName, clkW, unassignedMarkers );
+            }
+            if (data.status == 1) { // Waiting
+                gATMap.addMarker(data.orderId, data.startLat, data.startLng, '/Content/Images/Map/order_waiting.png', data.firstName, clkP, waitingMarkers);
             }
         }
 
@@ -95,6 +110,7 @@
                 order.endLng(updatedOrder.endLng);
                 order.end(updatedOrder.end);
                 order.custComment(updatedOrder.custComment);
+                order.status(updatedOrder.status);
             }
 
             this.addOrder = function (newOrder) {
@@ -154,52 +170,61 @@
             console.log('Order '+orderId+' cancelled!');
 
             cancelOrder(orderId);
-            var markerToRemove = gATMap.removeMarker(orderId, waitingMarkers);
+            var markerToRemove = gATMap.removeMarker(orderId, unassignedMarkers);
+            if (markerToRemove == null) {
+                markerToRemove = gATMap.removeMarker(orderId, waitingMarkers);
+            }
         }
 
         ordersHub.client.updatedOrder = function (order) {
             console.log('Order '+order.orderId+' updated!');
-            if(order.isWaiting){
-                if(order.isFinished){
-                    // Cancelled
-                    var markerToRemove = gATMap.removeMarker(order.orderId, waitingMarkers);
-                } else {
-                    // Waiting
-                    var markerToRemove = gATMap.removeMarker(order.orderId, inProgressMarkers);
-                    addNewOrderMarker(order);
-                    updateOrder(order);
-                }
-            } else {
-                if(order.isFinished){
-                    // Finished
-                    var markerToRemove = gATMap.removeMarker(order.orderId, inProgressMarkers);
-                } else {
-                    // InProgress
-                    var markerToRemove = gATMap.removeMarker(order.orderId, waitingMarkers);
-                    addNewOrderMarker(order);
-                    updateOrder(order);
-                }
-            } 
+            updateOrderMarker(order);
+            updateOrder(order);
+            //if(order.status == 0){ // Unassigned
+            //    var markerToRemove = gATMap.removeMarker(order.orderId, waitingMarkers);
+            //    updateOrderMarker(order);
+            //    updateOrder(order);
+            //}
+            //if(order.status == 1){ // Waiting
+            //    var markerToRemove = gATMap.removeMarker(order.orderId, unassignedMarkers);
+            //    updateOrderMarker(order);
+            //    updateOrder(order);
+            //}
+            //if(order.status > 1 ) {// Finished, Cancelled or InProgress
+            //    var unassignedCleanup = gATMap.removeMarker(order.orderId, unassignedMarkers);
+            //    var waitingCleanup = gATMap.removeMarker(order.orderId, waitingMarkers);
+            //}
         }
 
         ordersHub.client.assignedOrder = function (orderId, taxiId) {
             var observableOrder = ko.utils.arrayFirst(orders(), function (ord) {
                 return ord.orderId() == orderId;
             });
-            observableOrder.isWaiting(false);
-
+            observableOrder.status(1);
+            console.log(observableOrder);
             //var jsOrder = ko.mapping.toJS(observableOrder);
 
             var availabeTaxies = taxies.availableMarkers;
             var busyTaxies = taxies.busyMarkers;
             if (availabeTaxies != null && availabeTaxies.length > 0) {
-                var taxi = taxies.filter(function(t){ return t.taxiId == taxiId})[0];
-                observableOrder.driverPhone(taxi.phone);
+                var taxi = availabeTaxies.filter(function(t){ return t.taxiId == taxiId})[0];
+                console.log(taxi);
+                if(taxi!=null) observableOrder.driverPhone(taxi.phone());
             } else if(busyTaxies != null && busyTaxies.length > 0){
-                var taxi = taxies.filter(function(t){ return t.taxiId == taxiId})[0];
-                observableOrder.driverPhone(taxi.phone);
+                var taxi = busyTaxies.filter(function(t){ return t.taxiId == taxiId})[0];
+                console.log(taxi);
+                if(taxi!=null) observableOrder.driverPhone(taxi.phone());
             }
+
+            var assignedOrder = new Object();
+            assignedOrder.status = 1;
+            assignedOrder.orderId = orderId;
+            assignedOrder.startLat = observableOrder.startLat();
+            assignedOrder.startLng = observableOrder.startLng();
+            assignedOrder.firstName = observableOrder.firstName();
             
+            updateOrderMarker(assignedOrder);
+            console.log(observableOrder.driverPhone);
             console.log('Order '+orderId+' assigned to taxi '+ taxiId);
         }
 

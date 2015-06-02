@@ -53,7 +53,7 @@
                     DestinationLatitude = o.DestinationLatitude,
                     DestinationLongitude = o.DestinationLongitude,
                     UserComment = o.UserComment,
-                    OrderStatus = OrderStatus.Waiting,
+                   // OrderStatus = OrderStatus.Unassigned,
                     Customer = u
                 };
             }

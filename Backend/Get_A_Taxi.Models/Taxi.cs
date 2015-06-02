@@ -24,7 +24,6 @@ namespace Get_A_Taxi.Models
         /// </summary>
         Busy = 1,
 
-
         /// <summary>
         /// OffDuty - not available for order assignment
         /// </summary>

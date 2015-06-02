@@ -22,24 +22,13 @@ namespace Get_A_Taxi.Web.Models
         [JsonProperty(PropertyName = "lon")]
         public double Longitude { get; set; }
 
-        [JsonProperty(PropertyName = "onDuty")]
-        public bool OnDuty { get; set; }
-
-        [JsonProperty(PropertyName = "isAvailable")]
-        public bool IsAvailable { get; set; }
-
-
-        //  |IsAvailable    |   OnDuty      |   to TaxiStatus
-        //  +---------------+---------------+----------------------
-        //  |       0       |       0       | TaxiStatus.OffDuty
-        //  |       0       |       1       | TaxiStatus.Busy
-        //  |       1       |       0       | TaxiStatus.Unassigned
-        //  |       1       |       1       | TaxiStatus.Available
+        [JsonProperty(PropertyName = "status")]
+        public int Status { get; set; }
+        
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
             configuration.CreateMap<Taxi, TaxiDTO>()
-               .ForMember(dm => dm.IsAvailable, opt => opt.MapFrom(m => m.Status == TaxiStatus.Available || m.Status == TaxiStatus.Unassigned))
-               .ForMember(dm => dm.OnDuty, opt => opt.MapFrom(m => m.Status == TaxiStatus.Available || m.Status == TaxiStatus.Busy));
+               .ForMember(dm => dm.Status, opt => opt.MapFrom(m => (int)m.Status));
         }
     }
 }

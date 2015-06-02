@@ -63,6 +63,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                 {
                     // Known client, new order
                     order = OrderInputVM.ToOrderDataModel(orderVm, knownClient);
+                    order.OrderStatus = OrderStatus.Unassigned;
                     order.District = district;
                     this.Data.Orders.Add(order);
                     this.Data.Orders.SaveChanges();
@@ -90,6 +91,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                     {
                         //New order for the new client
                         order = OrderInputVM.ToOrderDataModel(orderVm, newClient);
+                        order.OrderStatus = OrderStatus.Unassigned;
                         order.District = district;
                         this.Data.Orders.Add(order);
                         this.Data.Orders.SaveChanges();
@@ -181,7 +183,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
             var order = this.Data.Orders.SearchFor(o => o.OrderId == cancelOrderId).FirstOrDefault();
             if (order != null)
             {
-                if (order.OrderStatus == OrderStatus.Finished)
+                if (order.OrderStatus == OrderStatus.Finished || order.OrderStatus == OrderStatus.Cancelled)
                 {
                     var error = "Order could not be found!";
                     ViewBag.Error = error;
