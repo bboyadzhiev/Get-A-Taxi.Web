@@ -51,7 +51,6 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         /// <param name="lat">The latitude</param>
         /// <param name="lon">The longitude</param>
         /// <returns>List of top 10 nearest locations</returns>
-
         [HttpGet]
         public IHttpActionResult Get(double lat, double lon)
         {
@@ -83,7 +82,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             return Ok(taxiStandsDTOList);
         }
 
-      
+
         [HttpPost]
         public IHttpActionResult Post(TaxiStandDTO model)
         {
