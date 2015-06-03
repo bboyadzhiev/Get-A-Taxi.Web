@@ -210,7 +210,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return BadRequest("This is not your order!");
             }
 
-            if (orderToCancel.OrderStatus == OrderStatus.Waiting || orderToCancel.OrderStatus == OrderStatus.InProgress)
+            if (orderToCancel.OrderStatus == OrderStatus.Unassigned || orderToCancel.OrderStatus == OrderStatus.Waiting)
             {
                 orderToCancel.OrderStatus = OrderStatus.Cancelled;
                 var district = orderToCancel.District;
@@ -225,7 +225,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return Ok(orderDM);
             }
 
-            return BadRequest("Order can be cancelled only in waiting or progress states!");
+            return BadRequest("Order can be cancelled only if it is unassigned of waiting!");
         }
 
         #region Helpers
