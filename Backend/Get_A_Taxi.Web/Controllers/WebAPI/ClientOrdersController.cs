@@ -30,16 +30,26 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         }
 
         /// <summary>
-        /// Get all client orders
+        /// Get last unfinished order for this client
         /// </summary>
-        /// <returns>List of data models of client orders</returns>
+        /// <returns>The latest found unfinished order or empty</returns>
         [HttpGet]
         public IHttpActionResult Get()
         {
             var user = GetUser();
-            var orders = this.Data.Orders.All().Where(o => o.Customer.Id == user.Id)
-                .Project().To<OrderDTO>().ToList();
-            return Ok(orders);
+            var order = this.Data.Orders.All()
+                .Where(o => o.Customer.Id == user.Id
+                    && (o.OrderStatus != OrderStatus.Cancelled || o.OrderStatus != OrderStatus.Finished))
+                .OrderByDescending(o => o.OrderedAt)
+                .FirstOrDefault();
+
+            if (order != null)
+            {
+                var result = Mapper.Map<OrderDetailsDTO>(order);
+                return Ok(result);
+            }
+
+            return Ok();
         }
 
         /// <summary>
@@ -65,7 +75,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             //    return BadRequest("Order not yet assigned");
             //}
 
-            var orderDTO = Mapper.Map<Order, AssignedOrderDTO>(order);
+            var orderDTO = Mapper.Map<Order, OrderDetailsDTO>(order);
 
             return Ok(orderDTO);
         }

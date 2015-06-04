@@ -37,13 +37,8 @@ namespace Get_A_Taxi.Web.Models
         [JsonProperty(PropertyName = "driverPhone")]
         public string DriverPhone { get; set; }
 
-        //[JsonProperty(PropertyName = "isWaiting")]
-        //public bool IsWaiting { get; set; }
-
-        //[JsonProperty(PropertyName = "isFinished")]
-        //public bool IsFinished { get; set; }
-        [JsonProperty(PropertyName = "status")]
-        public int Status { get; set; }
+        [JsonProperty(PropertyName = "driverName")]
+        public string DriverName { get; set; }
 
         [JsonProperty(PropertyName = "arrivalTime")] // in minutes
         public int ArrivalTime { get; set; }
@@ -51,13 +46,6 @@ namespace Get_A_Taxi.Web.Models
         [JsonProperty(PropertyName = "bill")]
         public decimal Bill { get; set; }
 
-
-        //  |  isWaiting    |  isFinished  >>>  OrderStatus |
-        //  +---------------+---------------+---------------+
-        //  |       0       |       0       |   InProgress  |
-        //  |       0       |       1       |   Finished    |
-        //  |       1       |       0       |   Waiting     |
-        //  |       1       |       1       |   Cancelled   |
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<Order, OrderDetailsDTO>()
@@ -65,12 +53,11 @@ namespace Get_A_Taxi.Web.Models
                 .ForMember(vm => vm.FirstName, opt => opt.MapFrom(m => m.Customer.FirstName))
                 .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.Customer.LastName))
                 .ForMember(vm => vm.CustomerPhoneNumber, opt => opt.MapFrom(m => m.Customer.PhoneNumber))
-                //.ForMember(vm => vm.IsWaiting, opt => opt.MapFrom(m => m.OrderStatus == OrderStatus.Waiting || m.OrderStatus == OrderStatus.Cancelled))
-                //.ForMember(vm => vm.IsFinished, opt => opt.MapFrom(m => m.OrderStatus == OrderStatus.Finished || m.OrderStatus == OrderStatus.Cancelled))
                 .ForMember(vm => vm.Status, opt => opt.MapFrom(m => (int)m.OrderStatus))
                 .ForMember(vm => vm.TaxiId, opt => opt.MapFrom(m => (m.AssignedTaxi != null) ? m.AssignedTaxi.TaxiId : -1))
                 .ForMember(vm => vm.TaxiPlate, opt => opt.MapFrom(m => (m.AssignedTaxi != null) ? m.AssignedTaxi.Plate : ""))
-                .ForMember(vm => vm.DriverPhone, opt => opt.MapFrom(m => (m.AssignedTaxi != null && m.AssignedTaxi.Driver != null) ? m.AssignedTaxi.Driver.PhoneNumber : String.Empty));
+                .ForMember(vm => vm.DriverPhone, opt => opt.MapFrom(m => (m.AssignedTaxi != null && m.AssignedTaxi.Driver != null) ? m.AssignedTaxi.Driver.PhoneNumber : String.Empty))
+                .ForMember(vm => vm.DriverName, opt => opt.MapFrom(m => m.Driver.FirstName + " " + m.Driver.LastName));
         }
 
         // TODO: Replace with automapper and custom mappings

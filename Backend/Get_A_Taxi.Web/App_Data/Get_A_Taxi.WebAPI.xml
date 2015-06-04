@@ -113,9 +113,9 @@
         </member>
         <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.ClientOrdersController.Get">
             <summary>
-            Get all client orders
+            Get last unfinished order for this client
             </summary>
-            <returns>List of data models of client orders</returns>
+            <returns>The latest found unfinished order or empty</returns>
         </member>
         <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.ClientOrdersController.Get(System.Int32)">
             <summary>

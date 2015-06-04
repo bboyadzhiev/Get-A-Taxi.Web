@@ -35,6 +35,11 @@ namespace Get_A_Taxi.Web.Hubs
             Clients.OthersInGroup(orderId.ToString()).updatePeerLocation(lat, lon);
         }
 
+        public void TaxiAssignedToOrder(int orderId, int taxiId, string plate)
+        {
+            Clients.OthersInGroup(orderId.ToString()).taxiAssigned(taxiId, plate);
+        }
+
         public Task Close(int orderId)
         {
             return Groups.Remove(Context.ConnectionId, orderId.ToString());

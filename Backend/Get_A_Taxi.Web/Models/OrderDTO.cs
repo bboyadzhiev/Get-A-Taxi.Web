@@ -9,7 +9,7 @@ using System.Web;
 
 namespace Get_A_Taxi.Web.Models
 {
-    public class OrderDTO : IMapFrom<Order>
+    public class OrderDTO : IMapFrom<Order>, IHaveCustomMappings
     {
         [JsonProperty(PropertyName = "orderId")]
         public int OrderId { get; set; }
@@ -39,7 +39,16 @@ namespace Get_A_Taxi.Web.Models
         [JsonProperty(PropertyName = "custComment")]
         public string UserComment { get; set; }
 
+        [JsonProperty(PropertyName = "status")]
+        public int Status { get; set; }
+
         [JsonProperty(PropertyName = "pickupTime")] // in minutes
         public int PickupTime { get; set; }
+
+        public void CreateMappings(AutoMapper.IConfiguration configuration)
+        {
+            configuration.CreateMap<Order, OrderDTO>()
+                .ForMember(vm => vm.Status, opt => opt.MapFrom(m => (int)m.OrderStatus));
+        }
     }
 }
