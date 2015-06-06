@@ -40,6 +40,11 @@ namespace Get_A_Taxi.Web.Hubs
             Clients.OthersInGroup(orderId.ToString()).taxiAssigned(taxiId, plate);
         }
 
+        public void OrderStatusChanged(int orderId)
+        {
+            Clients.OthersInGroup(orderId.ToString()).orderStatusChanged(orderId);
+        }
+
         public Task Close(int orderId)
         {
             return Groups.Remove(Context.ConnectionId, orderId.ToString());
