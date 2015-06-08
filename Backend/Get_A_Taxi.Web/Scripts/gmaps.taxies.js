@@ -13,6 +13,7 @@ var taxies = function (districtId, operatorId) {
         if (removed != null && data.plate == null) {
             data.plate = removed.plate;
             data.phone = removed.phone;
+           
         }
         if (data.status == 0) { // Available
             gATMap.addMarker(data.taxiId, data.lat, data.lon, '/Content/Images/Map/taxi_available.png', data.plate + ' ' + data.phone, clkW, availableMarkers);
@@ -20,6 +21,7 @@ var taxies = function (districtId, operatorId) {
         if (data.status == 1) { // Busy
             gATMap.addMarker(data.taxiId, data.lat, data.lon, '/Content/Images/Map/taxi_busy.png', data.plate + ' ' + data.phone, clkP, busyMarkers);
         }
+        console.log(data.plate);
     }
 
     function addTaxiesMarkers(data) {

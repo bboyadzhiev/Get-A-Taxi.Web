@@ -314,7 +314,14 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
     
             orderToUpdate.OrderStatus = (OrderStatus)model.Status;
-            
+            if (orderToUpdate.OrderStatus == OrderStatus.InProgress)
+            {
+                orderToUpdate.PickupTime = DateTime.Now.Subtract(orderToUpdate.OrderedAt).Minutes;
+            }
+            if (orderToUpdate.OrderStatus == OrderStatus.Finished)
+            {
+                orderToUpdate.ArrivalTime = DateTime.Now.Subtract(orderToUpdate.OrderedAt).Minutes;
+            }
             //updatedOrder.Driver = driver;
             //updatedOrder.Customer = customer;
             //updatedOrder.District = district;

@@ -181,9 +181,9 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return BadRequest("This is not your order!");
             }
 
-            if (orderToUpdate.OrderStatus != OrderStatus.Waiting)
+            if (orderToUpdate.OrderStatus != OrderStatus.Waiting && orderToUpdate.OrderStatus != OrderStatus.Unassigned )
             {
-                return BadRequest("Order can be changed by customer only in waiting state!");
+                return BadRequest("Order can not be changed by customer after pickup!");
             }
 
             var district = orderToUpdate.District;
@@ -234,8 +234,8 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
 
                 return Ok(orderDM);
             }
-
-            return BadRequest("Order can be cancelled only if it is unassigned or waiting!");
+            return Conflict();
+            //return BadRequest("Order can be cancelled only if it is unassigned or waiting!");
         }
 
         #region Helpers

@@ -103,14 +103,19 @@
                 var order = ko.utils.arrayFirst(this.orders(), function (order) {
                     return order.orderId() == updatedOrder.orderId;
                 });
-                order.startLat(updatedOrder.startLat);
-                order.startLng(updatedOrder.startLng);
-                order.start(updatedOrder.start);
-                order.endLat(updatedOrder.endLat);
-                order.endLng(updatedOrder.endLng);
-                order.end(updatedOrder.end);
-                order.custComment(updatedOrder.custComment);
-                order.status(updatedOrder.status);
+                if(order.status == 3 ){
+                    this.orders.remove(order);
+                    console.log("Finished order removed from list!");
+                } else {
+                    order.startLat(updatedOrder.startLat);
+                    order.startLng(updatedOrder.startLng);
+                    order.start(updatedOrder.start);
+                    order.endLat(updatedOrder.endLat);
+                    order.endLng(updatedOrder.endLng);
+                    order.end(updatedOrder.end);
+                    order.custComment(updatedOrder.custComment);
+                    order.status(updatedOrder.status);
+                }
             }
 
             this.addOrder = function (newOrder) {

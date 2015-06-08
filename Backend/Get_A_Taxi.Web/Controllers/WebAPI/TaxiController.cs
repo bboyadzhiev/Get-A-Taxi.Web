@@ -219,8 +219,20 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             this.Data.Taxies.Update(taxi);
             this.Data.Taxies.SaveChanges();
 
-            // Update the district about the new taxi state
-            this.taxiesBridge.TaxiUpdated(model, districtId);
+            if (taxi.Status == TaxiStatus.OffDuty)
+            {
+                this.taxiesBridge.TaxiOffDuty(taxi.TaxiId, districtId);
+            } else if (taxi.Status == TaxiStatus.Available)
+            {
+                var onDutyModel = Mapper.Map<TaxiDetailsDTO>(taxi);
+                this.taxiesBridge.TaxiOnDuty(onDutyModel, districtId);
+            }
+            else
+            {
+                // Update the district about the new taxi state
+                this.taxiesBridge.TaxiUpdated(model, districtId);
+            }
+
             return Ok((int)taxi.Status);
         }
 
