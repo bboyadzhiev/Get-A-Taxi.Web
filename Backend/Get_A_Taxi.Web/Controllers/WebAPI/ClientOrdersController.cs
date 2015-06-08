@@ -167,7 +167,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return BadRequest("Invalid model state!");
             }
 
-            var orderToUpdate = this.Data.Orders.SearchFor(o => o.OrderId == model.OrderId).FirstOrDefault();
+            var orderToUpdate = this.Data.Orders.SearchFor(o => o.OrderId == model.OrderId && o.OrderStatus < OrderStatus.Finished).FirstOrDefault();
 
             if (orderToUpdate == null)
             {
@@ -235,7 +235,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return Ok(orderDM);
             }
 
-            return BadRequest("Order can be cancelled only if it is unassigned of waiting!");
+            return BadRequest("Order can be cancelled only if it is unassigned or waiting!");
         }
 
         #region Helpers
