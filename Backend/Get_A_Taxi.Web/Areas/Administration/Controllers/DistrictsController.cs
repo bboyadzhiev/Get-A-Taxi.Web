@@ -52,6 +52,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
         {
             ViewBag.Lat = this.UserProfile.District.CenterLatitude;
             ViewBag.Lng = this.UserProfile.District.CenterLongitude;
+            ViewBag.MapZoom = this.UserProfile.District.MapZoom;
             return View();
         }
 
@@ -89,6 +90,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
 
             ViewBag.Lat = districtVM.CenterLatitude;
             ViewBag.Lon = districtVM.CenterLongitude;
+            ViewBag.MapZoom = districtVM.MapZoom;
             return View(districtVM);
         }
 

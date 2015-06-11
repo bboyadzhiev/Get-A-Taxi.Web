@@ -37,9 +37,10 @@
 <script>
     var lat = @ViewBag.Lat.ToString("0.000000000").Replace(",", ".");
     var lon = @ViewBag.Lng.ToString("0.000000000").Replace(",", ".");
-    
+    var mapZoom = @ViewBag.MapZoom;
     var defaultLat = parseFloat(lat);
     var defaultLon = parseFloat(lon);
+  
     var district = @ViewBag.DistrictId;
     var operator = "@ViewBag.OperatorId";
 </script>
@@ -78,10 +79,10 @@
     }();
 
     gATMap.initMap('#map', lat, lon, zoomChanged, mapClicked);
-
+    gATMap.setZoom(mapZoom);
     function mapClicked(e) {
         console.log('Map clicked');
-        console.log(e);
+       // console.log(e);
         gATMap.map.setCenter(e.latLng.lat(), e.latLng.lng());
         // map.removeMarkers();
     }
@@ -90,7 +91,7 @@
     function zoomChanged(map) {
         //    $('#MapZoom').val(map.zoom);
         console.log('Zoom changed');
-        console.log(map);
+        //console.log(map);
     }
 
 

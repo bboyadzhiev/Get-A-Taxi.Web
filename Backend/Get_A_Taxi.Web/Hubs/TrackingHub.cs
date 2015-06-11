@@ -30,9 +30,14 @@ namespace Get_A_Taxi.Web.Hubs
         /// <param name="orderId">The order's id</param>
         /// <param name="lat">The location's latitude</param>
         /// <param name="lon">The location's longitude</param>
-        public void LocationChanged(int orderId, double lat, double lon)
+        public void ClientLocationChanged(int orderId, double lat, double lon)
         {
-            Clients.OthersInGroup(orderId.ToString()).updatePeerLocation(lat, lon);
+            Clients.OthersInGroup(orderId.ToString()).updateClientLocation(lat, lon);
+        }
+        
+        public void TaxiLocationChanged(int orderId, double lat, double lon)
+        {
+            Clients.OthersInGroup(orderId.ToString()).updateTaxiLocation(lat, lon);
         }
 
         public void TaxiAssignedToOrder(int orderId, int taxiId, string plate)

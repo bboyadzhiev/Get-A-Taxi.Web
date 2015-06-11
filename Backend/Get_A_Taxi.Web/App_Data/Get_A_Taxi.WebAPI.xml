@@ -316,7 +316,7 @@
             and by the client to track taxi's position on the map
             </summary>
         </member>
-        <member name="M:Get_A_Taxi.Web.Hubs.TrackingHub.LocationChanged(System.Int32,System.Double,System.Double)">
+        <member name="M:Get_A_Taxi.Web.Hubs.TrackingHub.ClientLocationChanged(System.Int32,System.Double,System.Double)">
             <summary>
             Taxi/client reports a location change to the other group member client/taxi
             </summary>

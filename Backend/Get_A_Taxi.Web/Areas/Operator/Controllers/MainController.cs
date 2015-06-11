@@ -34,6 +34,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
         {
             ViewBag.Lat = this.UserProfile.District.CenterLatitude;
             ViewBag.Lng = this.UserProfile.District.CenterLongitude;
+            ViewBag.MapZoom = this.UserProfile.District.MapZoom;
             ViewBag.DistrictId = this.UserProfile.District.DistrictId;
             ViewBag.OperatorId = this.UserProfile.Id;
             return View();
