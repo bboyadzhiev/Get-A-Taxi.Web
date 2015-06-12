@@ -26,7 +26,10 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             this.taxiStandService = taxiStandService;
         }
 
-       
+        /// <summary>
+        /// Not implemented
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IHttpActionResult Get()
         {
@@ -82,21 +85,33 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             return Ok(taxiStandsDTOList);
         }
 
-
+        /// <summary>
+        /// Not implemented
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public IHttpActionResult Post(TaxiStandDTO model)
         {
             return BadRequest();
         }
 
-    
+        /// <summary>
+        /// Not implemented
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPut]
         public IHttpActionResult Put(TaxiStandDTO model)
         {
             return BadRequest();
         }
-
      
+        /// <summary>
+        /// Not implemented
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {

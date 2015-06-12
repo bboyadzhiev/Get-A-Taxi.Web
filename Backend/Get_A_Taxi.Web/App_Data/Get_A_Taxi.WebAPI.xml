@@ -26,6 +26,12 @@
             </summary>
             <param name="kernel">The kernel.</param>
         </member>
+        <member name="T:Get_A_Taxi.Web.Controllers.WebAPI.IRESTController`1">
+            <summary>
+            Common interface for the WebAPI controllers of the system
+            </summary>
+            <typeparam name="T">The Data Transfer Object's (DTO's) model type</typeparam>
+        </member>
         <member name="M:Get_A_Taxi.Web.Areas.Operator.Controllers.MainController.CreateOrder(Get_A_Taxi.Web.Areas.Operator.ViewModels.OrderInputVM)">
             <summary>
             Create a phone order, added by the operator.
@@ -35,6 +41,17 @@
             </summary>
             <param name="orderVm">Input ViewModel of a phone order</param>
             <returns>Partial view with phone order input form</returns>
+        </member>
+        <member name="T:Get_A_Taxi.Web.Controllers.BaseApiController">
+            <summary>
+            Base WebAPI Controller
+            </summary>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.BaseApiController.#ctor(Get_A_Taxi.Data.IGetATaxiData)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="data">Instance of the data context</param>
         </member>
         <member name="T:Get_A_Taxi.Web.Controllers.WebAPI.AccountController">
             <summary>
@@ -115,11 +132,11 @@
             <summary>
             Get last unfinished order for this client
             </summary>
-            <returns>The latest found unfinished order or empty</returns>
+            <returns>The latest found unfinished order or empty result</returns>
         </member>
         <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.ClientOrdersController.Get(System.Int32)">
             <summary>
-            Get assigned client order by id
+            Get the details of a placed order in the system
             </summary>
             <param name="id">Order's id</param>
             <returns>Orders's model with included taxi details</returns>
@@ -136,18 +153,19 @@
             Creates a new client order. The district for it will be the closest one in the system.
             </summary>
             <param name="model">The data model of the new order</param>
-            <returns>The data model of the new order</returns>
+            <returns>The data model of the newly created order</returns>
         </member>
         <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.ClientOrdersController.Put(Get_A_Taxi.Web.Models.OrderDetailsDTO)">
             <summary>
-            Updates a client order. Possible only if it's in the "Waiting" state.
+            Updates a client order. Possible only if it is still in "Unassigned" or "Waiting" state.
             </summary>
             <param name="model">The updated order's data model</param>
             <returns>The updated order's data model</returns>
         </member>
         <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.ClientOrdersController.Delete(System.Int32)">
             <summary>
-            Cancels a client order. Possible only if it's in the "Waiting" state.
+            Cancels a client order. 
+            Possible only if it is still in "Unassigned" or "Waiting" state.
             </summary>
             <param name="id">The id of the client order</param>
             <returns>The cancelled order's data model</returns>
@@ -161,11 +179,11 @@
             <summary>
             Gets all available for driver assignment taxies for the driver's district
             </summary>
-            <returns>List of all free for assignment taxi data models</returns>
+            <returns>List of all free for assignment taxies' data models</returns>
         </member>
         <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiController.Get(System.Int32)">
             <summary>
-            Get taxi details, only if the driver and the taxi are in the same district
+            Get taxi details
             </summary>
             <param name="id">Id of the taxi</param>
             <returns>Taxi details data model</returns>
@@ -186,10 +204,10 @@
         </member>
         <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiController.Put(Get_A_Taxi.Web.Models.TaxiDTO)">
             <summary>
-            Change taxi status
+            Update taxi's details and status
             </summary>
             <param name="model">The taxi's new data model</param>
-            <returns>Appropriate responce</returns>
+            <returns>The updated taxi's Taxi Status id (Available, Busy, OffDuty, etc.)</returns>
         </member>
         <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiController.Delete(System.Int32)">
             <summary>
@@ -232,7 +250,7 @@
             Customer's Id will be the Driver's Id
             </summary>
             <param name="model">A detailed order's data model</param>
-            <returns>The new order's data model</returns>
+            <returns>The newly created order's data model</returns>
         </member>
         <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiOrdersController.Put(System.Int32)">
             <summary>
@@ -255,6 +273,12 @@
             <param name="id">The order to be cancelled </param>
             <returns>The cancelled order id</returns>
         </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiStandsController.Get">
+            <summary>
+            Not implemented
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiStandsController.Get(System.Int32)">
             <summary>
             Get taxi stand by id
@@ -276,6 +300,27 @@
             </summary>
             <param name="page">Page number</param>
             <returns>List of taxi stands</returns>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiStandsController.Post(Get_A_Taxi.Web.Models.TaxiStandDTO)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiStandsController.Put(Get_A_Taxi.Web.Models.TaxiStandDTO)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.TaxiStandsController.Delete(System.Int32)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
         </member>
         <member name="T:Get_A_Taxi.Web.Hubs.ClientsHub">
             <summary>

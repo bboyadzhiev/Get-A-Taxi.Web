@@ -134,7 +134,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         /// Customer's Id will be the Driver's Id
         /// </summary>
         /// <param name="model">A detailed order's data model</param>
-        /// <returns>The new order's data model</returns>
+        /// <returns>The newly created order's data model</returns>
         [HttpPost]
         public IHttpActionResult Post([FromBody]OrderDetailsDTO model)
         {
@@ -263,7 +263,6 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             return BadRequest("The order was already processed!");
         }
 
-        // TODO: Review order changes by taxi
         /// <summary>
         /// Update order's details by taxi driver
         /// </summary>

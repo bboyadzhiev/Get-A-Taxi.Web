@@ -32,7 +32,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         /// <summary>
         /// Get last unfinished order for this client
         /// </summary>
-        /// <returns>The latest found unfinished order or empty</returns>
+        /// <returns>The latest found unfinished order or empty result</returns>
         [HttpGet]
         public IHttpActionResult Get()
         {
@@ -53,7 +53,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         }
 
         /// <summary>
-        /// Get assigned client order by id
+        /// Get the details of a placed order in the system
         /// </summary>
         /// <param name="id">Order's id</param>
         /// <returns>Orders's model with included taxi details</returns>
@@ -69,11 +69,6 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             {
                 return NotFound();
             }
-
-            //if (order.AssignedTaxi == null)
-            //{
-            //    return BadRequest("Order not yet assigned");
-            //}
 
             var orderDTO = Mapper.Map<Order, OrderDetailsDTO>(order);
 
@@ -100,7 +95,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         /// Creates a new client order. The district for it will be the closest one in the system.
         /// </summary>
         /// <param name="model">The data model of the new order</param>
-        /// <returns>The data model of the new order</returns>
+        /// <returns>The data model of the newly created order</returns>
         [HttpPost]
         public IHttpActionResult Post([FromBody]OrderDetailsDTO model)
         {
@@ -156,7 +151,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
        
 
         /// <summary>
-        /// Updates a client order. Possible only if it's in the "Waiting" state.
+        /// Updates a client order. Possible only if it is still in "Unassigned" or "Waiting" state.
         /// </summary>
         /// <param name="model">The updated order's data model</param>
         /// <returns>The updated order's data model</returns>
@@ -202,7 +197,8 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         }
 
         /// <summary>
-        /// Cancels a client order. Possible only if it's in the "Waiting" state.
+        /// Cancels a client order. 
+        /// Possible only if it is still in "Unassigned" or "Waiting" state.
         /// </summary>
         /// <param name="id">The id of the client order</param>
         /// <returns>The cancelled order's data model</returns>

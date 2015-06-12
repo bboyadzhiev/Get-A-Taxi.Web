@@ -38,7 +38,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         /// <summary>
         /// Gets all available for driver assignment taxies for the driver's district
         /// </summary>
-        /// <returns>List of all free for assignment taxi data models</returns>
+        /// <returns>List of all free for assignment taxies' data models</returns>
         [HttpGet]
         public IHttpActionResult Get()
         {
@@ -62,28 +62,16 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         }
 
         /// <summary>
-        /// Get taxi details, only if the driver and the taxi are in the same district
+        /// Get taxi details
         /// </summary>
         /// <param name="id">Id of the taxi</param>
         /// <returns>Taxi details data model</returns>
         [AllowAnonymous]
         public IHttpActionResult Get(int id)
         {
-            //var driver = this.GetDriver();
-            //var districtId = driver.District.DistrictId;
-            //var taxiDetails = this.Data.Taxies
-            //    .SearchFor(t => t.TaxiId == id && t.District.DistrictId == districtId)
-            //    .Project().To<TaxiDetailsDTO>()
-            //    .FirstOrDefault();
-
             var taxi = this.Data.Taxies
                 .SearchFor(t => t.TaxiId == id)
                 .FirstOrDefault();
-
-            //if (taxi.DistrictId != districtId)
-            //{
-            //    return BadRequest("Taxi is not in your district!");
-            //}
 
             if (taxi == null)
             {
@@ -177,10 +165,10 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         }
 
         /// <summary>
-        /// Change taxi status
+        /// Update taxi's details and status
         /// </summary>
         /// <param name="model">The taxi's new data model</param>
-        /// <returns>Appropriate responce</returns>
+        /// <returns>The updated taxi's Taxi Status id (Available, Busy, OffDuty, etc.)</returns>
         public IHttpActionResult Put([FromBody]TaxiDTO model)
         {
             if (!ModelState.IsValid)
