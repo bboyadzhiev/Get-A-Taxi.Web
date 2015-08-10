@@ -170,6 +170,30 @@
             <param name="id">The id of the client order</param>
             <returns>The cancelled order's data model</returns>
         </member>
+        <member name="T:Get_A_Taxi.Web.Controllers.WebAPI.PhotosController">
+            <summary>
+            Manages user's photos
+            </summary>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.PhotosController.#ctor(Get_A_Taxi.Data.IGetATaxiData)">
+            <summary>
+            Constructor for the Photos WebAPI Controller
+            </summary>
+            <param name="data">Data provider instance</param>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.PhotosController.Get">
+            <summary>
+            Get user's account photo
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.PhotosController.Get(System.Int32)">
+            <summary>
+            Get specific photo
+            </summary>
+            <param name="id">Photo's Id</param>
+            <returns></returns>
+        </member>
         <member name="T:Get_A_Taxi.Web.Controllers.WebAPI.TaxiController">
             <summary>
             Manages driver assignment to a taxi

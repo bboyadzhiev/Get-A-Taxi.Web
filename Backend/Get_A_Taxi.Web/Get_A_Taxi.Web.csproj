@@ -230,6 +230,7 @@
     <Compile Include="Controllers\WebAPI\AccountController.cs" />
     <Compile Include="Controllers\WebAPI\LocationsController.cs" />
     <Compile Include="Controllers\WebAPI\ClientOrdersController.cs" />
+    <Compile Include="Controllers\WebAPI\PhotosController.cs" />
     <Compile Include="Controllers\WebAPI\TaxiController.cs" />
     <Compile Include="Controllers\WebAPI\TaxiOrdersController.cs" />
     <Compile Include="Controllers\WebAPI\TaxiStandsController.cs" />
@@ -262,6 +263,7 @@
     <Compile Include="Models\LocationDTO.cs" />
     <Compile Include="Models\OrderDetailsDTO.cs" />
     <Compile Include="Models\OrderDTO.cs" />
+    <Compile Include="Models\PhotoDTO.cs" />
     <Compile Include="Models\TaxiDetailsDTO.cs" />
     <Compile Include="Models\TaxiDTO.cs" />
     <Compile Include="Models\TaxiStandDTO.cs" />
@@ -454,6 +456,7 @@
     <Content Include="Scripts\gmaps.taxistands.js" />
     <Content Include="Areas\Administration\Views\TaxiStands\_TaxiStandsListPartialView.cshtml" />
     <Content Include="Areas\Administration\Views\TaxiStands\_TaxiStandsSearchPartialView.cshtml" />
+    <None Include="Properties\PublishProfiles\Get-A-Taxi Local IIS.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
