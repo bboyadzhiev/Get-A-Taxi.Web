@@ -29,9 +29,9 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         {
         }
         /// <summary>
-        /// Get user's account photo
+        /// Get current user's account photo
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Photo's data model</returns>
         [HttpGet]
         public IHttpActionResult Get()
         {
@@ -53,7 +53,7 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         /// Get specific photo
         /// </summary>
         /// <param name="id">Photo's Id</param>
-        /// <returns></returns>
+        /// <returns>Photo's data model</returns>
         [HttpGet]
         public IHttpActionResult Get(int id)
         {
@@ -75,6 +75,12 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Upload user photo
+        /// Replaces current photo (if exists)
+        /// </summary>
+        /// <param name="model">The new photo's data model</param>
+        /// <returns>The new photo's ID</returns>
         [HttpPost]
         public IHttpActionResult Post(PhotoDTO model)
         {
@@ -92,6 +98,11 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             return Ok(photo.Id);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPut]
         public IHttpActionResult Put(PhotoDTO model)
         {
@@ -100,12 +111,16 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
                 return BadRequest("Invalid model state!");
             }
 
-            var user = GetUser();
             var photo = this.Data.Photos.SearchFor(p => p.Id == model.Id).FirstOrDefault();
 
+            if (photo == null) return BadRequest("No photo to update!");
+
+            var user = GetUser();
+            if (user.Photo != null && user.Photo.Id != photo.Id) return BadRequest("Not your photo!");
+
             photo = Mapper.Map<Photo>(model);
-            this.Data.Photos.Add(photo);
-            user.Photo = photo;
+            
+            this.Data.Photos.Update(photo);
             this.Data.SaveChanges();
 
             return Ok(model);
@@ -126,6 +141,8 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             {
                 return BadRequest("Not your photo!");
             }
+
+            user.Photo = null;
 
             this.Data.Photos.Delete(photo);
             this.Data.Photos.SaveChanges();
