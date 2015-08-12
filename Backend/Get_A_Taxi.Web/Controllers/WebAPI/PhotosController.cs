@@ -123,9 +123,14 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
             this.Data.Photos.Update(photo);
             this.Data.SaveChanges();
 
-            return Ok(model);
+            return Ok(photo.Id);
         }
 
+        /// <summary>
+        /// Delete a photo
+        /// </summary>
+        /// <param name="id">The photo's id</param>
+        /// <returns>The deleted's photo id</returns>
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
