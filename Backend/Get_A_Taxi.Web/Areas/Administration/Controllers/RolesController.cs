@@ -164,11 +164,12 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
             var user = this.Data.Users.Find(userId.ToString());
             user.Roles.Clear();
             this.Data.SaveChanges();
-
-            foreach (string role in selectedRoles)
-            {
-                this.UserManager.AddToRole(userId.ToString(), role);
-            }
+            if (selectedRoles.Length != 0) {
+                foreach (string role in selectedRoles)
+                {
+                    this.UserManager.AddToRole(userId.ToString(), role);
+                }
+            } 
             this.Data.SaveChanges();
 
             return RedirectToAction("Index");

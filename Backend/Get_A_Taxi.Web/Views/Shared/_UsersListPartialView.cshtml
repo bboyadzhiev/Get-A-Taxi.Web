@@ -20,6 +20,7 @@
                 <td>
                     @if (User.IsInRole(UserRoles.Manager.ToString()))
                     {
+                        
                         @Html.ActionLink("Edit", "Edit", "Employees", new { area = "", id = user.Id }, null) 
                         @:|
                     }

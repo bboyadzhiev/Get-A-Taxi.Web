@@ -53,6 +53,12 @@
             </summary>
             <param name="data">Instance of the data context</param>
         </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.EmployeesController.Index">
+            <summary>
+            List all employees
+            </summary>
+            <returns>List of all eployees</returns>
+        </member>
         <member name="T:Get_A_Taxi.Web.Controllers.WebAPI.AccountController">
             <summary>
             Manages the Web API Authentication
@@ -183,16 +189,38 @@
         </member>
         <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.PhotosController.Get">
             <summary>
-            Get user's account photo
+            Get current user's account photo
             </summary>
-            <returns></returns>
+            <returns>Photo's data model</returns>
         </member>
         <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.PhotosController.Get(System.Int32)">
             <summary>
             Get specific photo
             </summary>
             <param name="id">Photo's Id</param>
+            <returns>Photo's data model</returns>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.PhotosController.Post(Get_A_Taxi.Web.Models.PhotoDTO)">
+            <summary>
+            Upload user photo
+            Replaces current photo (if exists)
+            </summary>
+            <param name="model">The new photo's data model</param>
+            <returns>The new photo's ID</returns>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.PhotosController.Put(Get_A_Taxi.Web.Models.PhotoDTO)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
             <returns></returns>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.PhotosController.Delete(System.Int32)">
+            <summary>
+            Delete a photo
+            </summary>
+            <param name="id">The photo's id</param>
+            <returns>The deleted's photo id</returns>
         </member>
         <member name="T:Get_A_Taxi.Web.Controllers.WebAPI.TaxiController">
             <summary>

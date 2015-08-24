@@ -34,10 +34,18 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public AccountController()
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="accessTokenFormat"></param>
         public AccountController(ApplicationUserManager userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
         {

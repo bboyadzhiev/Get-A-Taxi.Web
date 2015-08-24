@@ -83,6 +83,8 @@ namespace Get_A_Taxi.Web.Infrastructure.Services
             const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             StringBuilder res = new StringBuilder();
             Random rnd = new Random();
+            // HACK: remove
+           // return "abcdefghijklmno";
             while (0 < length--)
             {
                 res.Append(valid[rnd.Next(valid.Length)]);

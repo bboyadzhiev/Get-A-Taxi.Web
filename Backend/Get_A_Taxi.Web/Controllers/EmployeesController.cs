@@ -36,6 +36,10 @@ namespace Get_A_Taxi.Web.Controllers
 
 
         // GET: Employees
+        /// <summary>
+        /// List all employees of the current district
+        /// </summary>
+        /// <returns>List of all eployees, assigned to the current district</returns>
         public ActionResult Index()
         {
             ViewBag.UserRoles = this.populator.GetRoles(this.RoleManager);
@@ -49,6 +53,11 @@ namespace Get_A_Taxi.Web.Controllers
         }
 
         // GET: Employees/Details/5
+        /// <summary>
+        /// Get details of an employee
+        /// </summary>
+        /// <param name="id">The ID of the employee</param>
+        /// <returns>A detailed view of the employee</returns>
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -67,10 +76,21 @@ namespace Get_A_Taxi.Web.Controllers
        
 
         // GET: Employees/Create
+        /// <summary>
+        /// Get a new employee registration form
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Create()
         {
             var newUser = new UserDetailsVM();
-            newUser.UserRoles = this.populator.GetRoles(this.RoleManager);
+            if (User.IsInRole(UserRoles.Administrator.ToString()))
+            {
+                newUser.UserRoles = this.populator.GetRoles(this.RoleManager);
+            }
+            else
+            {
+                newUser.UserRoles = this.populator.GetRolesForManagement(this.RoleManager);
+            }
             newUser.DistrictsList = this.populator.GetDistricts();
             return View(newUser);
         }
@@ -114,14 +134,14 @@ namespace Get_A_Taxi.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var user = this.Data.Users.SearchFor(u => u.Id == id);
-            if (user.FirstOrDefault() == null)
+            var userToEdit = this.Data.Users.SearchFor(u => u.Id == id);
+            if (userToEdit.FirstOrDefault() == null)
             {
                 return HttpNotFound();
             }
 
-            var userDetailsVM = user.Project().To<UserDetailsVM>().FirstOrDefault();
-            List<string> userRoles = user.FirstOrDefault().Roles.AsQueryable().Select(r => r.RoleId).ToList();
+            var userDetailsVM = userToEdit.Project().To<UserDetailsVM>().FirstOrDefault();
+            List<string> userRoles = userToEdit.FirstOrDefault().Roles.AsQueryable().Select(r => r.RoleId).ToList();
             IEnumerable<SelectListItem> roleItems;
 
             if (User.IsInRole(UserRoles.Administrator.ToString()))
@@ -158,6 +178,13 @@ namespace Get_A_Taxi.Web.Controllers
                 Mapper.Map<UserDetailsVM, ApplicationUser>(userDetailsVM, employee);
                 employee.Id = id;
 
+                var checkRights = CheckRights(id);
+                if (!String.IsNullOrEmpty(checkRights))
+                {
+                    TempData["Error"] = checkRights;
+                    return RedirectToAction("Index");
+                }
+
                 employee.Roles.Clear();
                 UpdateUserRoles(userDetailsVM.SelectedRoleIds, id);
                 UpdateUserDistrict(userDetailsVM.DistritId, id);
@@ -168,7 +195,7 @@ namespace Get_A_Taxi.Web.Controllers
         }
 
         // GET: Employees/Delete/5
-        [AuthorizeRoles(UserRole = UserRoles.Administrator)]
+      //  [AuthorizeRoles(UserRole = UserRoles.Administrator)]
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -176,23 +203,32 @@ namespace Get_A_Taxi.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var user = this.Data.Users.SearchFor(u => u.Id == id);
-            if (user.FirstOrDefault() == null)
+            var userToDelete = this.Data.Users.SearchFor(u => u.Id == id);
+            if (userToDelete.FirstOrDefault() == null)
             {
                 return HttpNotFound();
             }
+
+             var checkRights = CheckRights(id);
+             if (!String.IsNullOrEmpty(checkRights))
+             { 
+                 TempData["Error"] = checkRights;
+                 return RedirectToAction("Index");
+             }
+            
+
             if (UserManager.IsInRole(id, UserRoles.Driver.ToString()) && this.Data.Taxies.All().Any(t => t.Driver.Id == id))
             {
                 TempData["Error"] = "This driver is assigned to a taxi!";
                 return RedirectToAction("Index");
             }
-            var userDetailsVM = user.Project().To<UserDetailsVM>().FirstOrDefault();
+            var userDetailsVM = userToDelete.Project().To<UserDetailsVM>().FirstOrDefault();
             return View(userDetailsVM);
         }
 
         // Just cleans the user roles
         // POST: Employees/Delete/5
-        [AuthorizeRoles(UserRole = UserRoles.Administrator)]
+        //[AuthorizeRoles(UserRole = UserRoles.Administrator)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
@@ -303,6 +339,16 @@ namespace Get_A_Taxi.Web.Controllers
                     }
                 }
             }
+        }
+
+        private string CheckRights(string managedUserId)
+        {
+            if (User.IsInRole(UserRoles.Manager.ToString())
+               && (UserManager.IsInRole(managedUserId, UserRoles.Administrator.ToString()) || UserManager.IsInRole(managedUserId, UserRoles.Manager.ToString())))
+            {
+               return "Manager cannot edit other managers or administrators!";
+            }
+            return "";
         }
 
         #endregion

@@ -523,9 +523,7 @@
     <Content Include="Views\Shared\_OperatorPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Management\Models\" />
     <Folder Include="Areas\Management\ViewModels\" />
-    <Folder Include="Areas\Operator\Models\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
