@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using System.Net;
+using Get_A_Taxi.Web.Infrastructure.Services;
 
 namespace Get_A_Taxi.Web.Areas.Management.Controllers
 {
@@ -23,15 +24,17 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
     [AuthorizeRoles(UserRole = UserRoles.Administrator, SecondRole = UserRoles.Manager)]
     public class TaxiesController : BaseController
     {
-        private ITaxiService taxiService;
-        private IAccountService accountService;
+        private ITaxiService TaxiService;
+        private IAccountService AccountService;
         private const int TAXI_RESULTS_DEFAULT_COUNT = 10;
 
         public TaxiesController(IGetATaxiData data, ITaxiService taxiService, IAccountService accountService, IDropDownListPopulator populator)
             : base(data, populator)
         {
-            this.taxiService = taxiService;
-            this.accountService = accountService;
+            this.TaxiService = taxiService;
+            this.AccountService = accountService;
+            //this.TaxiService = new TaxiService(data);
+            //this.AccountService = new AccountService(data);
         }
 
 
@@ -43,7 +46,7 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
         public ActionResult Index()
         {
             var district = UserProfile.District;
-            var taxiesListVM = this.Data.Taxies.All()
+            var taxiesListVM = this.TaxiService.AllTaxies()
                 .Where(t => t.District.DistrictId == UserProfile.District.DistrictId)
                 .OrderBy(t => t.Plate)
                 .Take(TAXI_RESULTS_DEFAULT_COUNT)
@@ -71,7 +74,7 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
             };
             ViewBag.DistrictsList = this.populator.GetDistricts();
             ViewBag.UserRoles = driversOnly;
-            var taxiVM = this.Data.Taxies.All().Where(t => t.TaxiId == taxiId).AsQueryable().Project().To<TaxiDetailsVM>().FirstOrDefault();
+            var taxiVM = this.TaxiService.AllTaxies().Where(t => t.TaxiId == taxiId).AsQueryable().Project().To<TaxiDetailsVM>().FirstOrDefault();
             return PartialView("_TaxiDetailsPartialView", taxiVM);
         }
 
@@ -88,14 +91,24 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
                 taxies = taxies.Where(t => drivers.Contains(t.Driver));
             }
 
+            //IQueryable<Taxi> taxies = this.TaxiService.AllTaxies();
+            //if (!String.IsNullOrEmpty(driver))
+            //{
+            //    var driverRoleId = this.RoleManager.Roles.Where(r => r.Name == UserRoles.Driver.ToString()).FirstOrDefault().Id;
+            //    var drivers = this.AccountService.AllUsers();
+            //    drivers = this.AccountService.WithRole(drivers, driverRoleId);//
+            //    drivers = drivers.Where(u => u.FirstName.ToLower().Contains(driver) || u.LastName.ToLower().Contains(driver));
+            //    taxies = taxies.Where(t => drivers.Contains(t.Driver));
+            //}
+
             if (!String.IsNullOrEmpty(plate))
             {
-                taxies = this.taxiService.WithPlateLike(taxies, plate);
+                taxies = this.TaxiService.WithPlateLike(taxies, plate);
             }
 
             if (!String.IsNullOrEmpty(district))
             {
-                taxies = this.taxiService.WithDistrictTitleLike(taxies, district);
+                taxies = this.TaxiService.WithDistrictTitleLike(taxies, district);
             }
 
             var taxiesListVM = taxies
@@ -122,28 +135,28 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Search([Bind(Include = "FirstName,MiddleName,LastName,DistritId")] UserSearchVM userSearchVM)
         {
-            var result = this.accountService.AllUsers();
+            var result = this.AccountService.AllUsers();
 
             var driverRole = this.RoleManager.FindByNameAsync(UserRoles.Driver.ToString()).Result;
-            result = this.accountService.WithRole(result, driverRole.Id.ToString());
+            result = this.AccountService.WithRole(result, driverRole.Id.ToString());
             if (ModelState.IsValid)
             {
                 if (userSearchVM.DistritId != 0)
                 {
                     var district = this.Data.Districts.SearchFor(d => d.DistrictId == userSearchVM.DistritId).FirstOrDefault();
-                    result = this.accountService.WithDistrictLike(result, district.Title);
+                    result = this.AccountService.WithDistrictLike(result, district.Title);
                 }
                 if (userSearchVM.FirstName != null)
                 {
-                    result = this.accountService.WithFirstNameLike(result, userSearchVM.FirstName);
+                    result = this.AccountService.WithFirstNameLike(result, userSearchVM.FirstName);
                 }
                 if (userSearchVM.MiddleName != null)
                 {
-                    result = this.accountService.WithMiddletNameLike(result, userSearchVM.MiddleName);
+                    result = this.AccountService.WithMiddletNameLike(result, userSearchVM.MiddleName);
                 }
                 if (userSearchVM.LastName != null)
                 {
-                    result = this.accountService.WithLastNameLike(result, userSearchVM.LastName);
+                    result = this.AccountService.WithLastNameLike(result, userSearchVM.LastName);
                 }
             }
 
@@ -160,9 +173,9 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
         [HttpGet]
         public ActionResult DriverDetails(string driverId)
         {
-            var result = this.accountService.AllUsers();
+            var result = this.AccountService.AllUsers();
             var driverRole = this.RoleManager.FindByNameAsync(UserRoles.Driver.ToString()).Result;
-            result = this.accountService.WithRole(result, driverRole.Id.ToString());
+            result = this.AccountService.WithRole(result, driverRole.Id.ToString());
 
             if (result.FirstOrDefault(u => u.Id == driverId) == null)
             {
