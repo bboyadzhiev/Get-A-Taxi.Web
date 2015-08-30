@@ -184,14 +184,39 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
             var order = this.Data.Orders.SearchFor(o => o.OrderId == cancelOrderId).FirstOrDefault();
             if (order != null)
             {
-                if (order.OrderStatus == OrderStatus.Finished || order.OrderStatus == OrderStatus.Cancelled)
+                switch (order.OrderStatus)
                 {
-                    var error = "Order could not be found!";
-                    ViewBag.Error = error;
-                    return Json(new
+                    case OrderStatus.Unassigned:
+                        break;
+                    case OrderStatus.Waiting:
+                        break;
+                    case OrderStatus.InProgress: return ErrorResult("Order cannot be cancelled!");
+                    case OrderStatus.Finished: return ErrorResult("Order is already finished!");
+                    case OrderStatus.Cancelled: return ErrorResult("Order is already cancelled!");
+                    default:
+                        break;
+                }
+
+                // Updating or adding a new OperatorOrder entity
+                var operatorUser = this.Data.Users.SearchFor(u => u.Id == UserProfile.Id).FirstOrDefault();
+                var lastOperatorOrder = this.Data.OperatorsOrders.All().Where(o => o.OrderId == cancelOrderId).FirstOrDefault();
+                if (lastOperatorOrder != null)
+                {
+                    // Update operator Id and comment
+                    lastOperatorOrder.OperatorId = operatorUser.Id;
+                    lastOperatorOrder.Comment += " Cancelled at " + DateTime.Now.ToString();
+                    this.Data.OperatorsOrders.Update(lastOperatorOrder);
+                }
+                else
+                {
+                    // Mobile client order that is being cancelled by the operator
+                    var operatorOrder = new OperatorOrder()
                     {
-                        error = error
-                    });
+                        OperatorId = operatorUser.Id,
+                        OrderId = order.OrderId,
+                        Comment = "Cancelled at " + DateTime.Now.ToString()
+                    };
+                    this.Data.OperatorsOrders.Add(operatorOrder);
                 }
 
                 order.OrderStatus = OrderStatus.Cancelled;
@@ -204,10 +229,18 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
             }
             else
             {
-                var error = "Order is already finished!";
-                ViewBag.Error = error;
+                return ErrorResult("Order could not be found!");
             }
             return PartialView("_OrderInputPartialView", new OrderInputVM());
+        }
+
+        private ActionResult ErrorResult(string error)
+        {
+            ViewBag.Error = error;
+            return Json(new
+            {
+                error = error
+            });
         }
 
         [HttpPost]

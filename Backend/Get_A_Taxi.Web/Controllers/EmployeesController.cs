@@ -343,6 +343,8 @@ namespace Get_A_Taxi.Web.Controllers
 
         private string CheckRights(string managedUserId)
         {
+            if (User.IsInRole(UserRoles.Administrator.ToString())) return "";
+
             if (User.IsInRole(UserRoles.Manager.ToString())
                && (UserManager.IsInRole(managedUserId, UserRoles.Administrator.ToString()) || UserManager.IsInRole(managedUserId, UserRoles.Manager.ToString())))
             {

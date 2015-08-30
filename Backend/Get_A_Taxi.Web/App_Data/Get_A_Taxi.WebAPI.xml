@@ -55,14 +55,39 @@
         </member>
         <member name="M:Get_A_Taxi.Web.Controllers.EmployeesController.Index">
             <summary>
-            List all employees
+            List all employees of the current district
             </summary>
-            <returns>List of all eployees</returns>
+            <returns>List of all eployees, assigned to the current district</returns>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.EmployeesController.Details(System.String)">
+            <summary>
+            Get details of an employee
+            </summary>
+            <param name="id">The ID of the employee</param>
+            <returns>A detailed view of the employee</returns>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.EmployeesController.Create">
+            <summary>
+            Get a new employee registration form
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:Get_A_Taxi.Web.Controllers.WebAPI.AccountController">
             <summary>
             Manages the Web API Authentication
             </summary>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.AccountController.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.AccountController.#ctor(Get_A_Taxi.Web.ApplicationUserManager,Microsoft.Owin.Security.ISecureDataFormat{Microsoft.Owin.Security.AuthenticationTicket})">
+            <summary>
+            
+            </summary>
+            <param name="userManager"></param>
+            <param name="accessTokenFormat"></param>
         </member>
         <member name="M:Get_A_Taxi.Web.Controllers.WebAPI.AccountController.Logout">
             <summary>
