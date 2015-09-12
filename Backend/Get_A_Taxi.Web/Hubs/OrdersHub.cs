@@ -5,7 +5,7 @@
     using Microsoft.AspNet.SignalR;
     using Microsoft.AspNet.SignalR.Hubs;
     using AutoMapper.QueryableExtensions;
-    using Get_A_Taxi.Web.Infrastructure.Services.Hubs.HubServices;
+    using Get_A_Taxi.Web.Infrastructure.Services.HubServices;
     using Get_A_Taxi.Web.Models;
 
     /// <summary>
@@ -21,7 +21,6 @@
         public OrdersHub(IOrdersHubService service)
         {
             this._service = service;
-
         }
 
         /// <summary>

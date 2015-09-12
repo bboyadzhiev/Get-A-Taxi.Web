@@ -1,7 +1,6 @@
 ﻿using Get_A_Taxi.Data;
 using Get_A_Taxi.Models;
 using Get_A_Taxi.Web.Areas.Administration.ViewModels;
-using Get_A_Taxi.Web.Controllers;
 using Get_A_Taxi.Web.Infrastructure;
 using Get_A_Taxi.Web.Infrastructure.Populators;
 using Get_A_Taxi.Web.Infrastructure.Services;

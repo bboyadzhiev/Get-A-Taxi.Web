@@ -11,7 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
 using Get_A_Taxi.Web.Infrastructure.Populators;
 
-namespace Get_A_Taxi.Web.Controllers
+namespace Get_A_Taxi.Web.Areas
 {
     public class BaseController : Controller
     {

@@ -12,30 +12,30 @@ using AutoMapper.QueryableExtensions;
 using Get_A_Taxi.Data;
 using Get_A_Taxi.Models;
 using Get_A_Taxi.Web.Infrastructure.Populators;
-using Get_A_Taxi.Web.Controllers;
 using Get_A_Taxi.Web.Areas.Administration.Controllers;
 using Get_A_Taxi.Web.ViewModels;
 using Get_A_Taxi.Web.Infrastructure;
 using Get_A_Taxi.Web.Infrastructure.Services.Contracts;
+using Get_A_Taxi.Web.Infrastructure.Services;
 
 namespace Get_A_Taxi.Web.Areas.Administration
 {
     [AuthorizeRoles(UserRole = UserRoles.Administrator)]
     public class TaxiStandsController : BaseController
     {
-        private const int TAXI_STands_RESULTS_DEFAULT_COUNT = 10;
+        private const int TAXI_STANDS_RESULTS_DEFAULT_COUNT = 10;
         private ITaxiStandService _service;
-        public TaxiStandsController(IGetATaxiData data, IDropDownListPopulator populator, ITaxiStandService service)
+        public TaxiStandsController(IGetATaxiData data, IDropDownListPopulator populator)
             : base(data, populator)
         {
-            this._service = service;
+            this._service = new TaxiStandService(data);
         }
 
         // GET: Administration/TaxiStands
         public ActionResult Index()
         {
-            var taxiStands = this.Data.Stands.All()
-                .Take(TAXI_STands_RESULTS_DEFAULT_COUNT)
+            var taxiStands = this._service.GetAll()
+                .Take(TAXI_STANDS_RESULTS_DEFAULT_COUNT)
                 .Project().To<TaxiStandVM>().ToList();
             ViewBag.DistrictsList = this.populator.GetDistricts();
             return View(taxiStands);
@@ -53,7 +53,7 @@ namespace Get_A_Taxi.Web.Areas.Administration
             result = this._service.ByDistrict(result, districtId);
 
             var taxiStandsList = result.Project().To<TaxiStandVM>()
-                .Take(TAXI_STands_RESULTS_DEFAULT_COUNT)
+                .Take(TAXI_STANDS_RESULTS_DEFAULT_COUNT)
                 .ToList();
 
             return PartialView("_TaxiStandsListPartialView", taxiStandsList);
@@ -66,7 +66,7 @@ namespace Get_A_Taxi.Web.Areas.Administration
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var taxiStandVM = Data.Stands.SearchFor(ts => ts.TaxiStandId == id).Project().To<TaxiStandVM>().FirstOrDefault();
+            var taxiStandVM = this.Data.Stands.SearchFor(ts => ts.TaxiStandId == id).Project().To<TaxiStandVM>().FirstOrDefault();
             if (taxiStandVM == null)
             {
                 return HttpNotFound();

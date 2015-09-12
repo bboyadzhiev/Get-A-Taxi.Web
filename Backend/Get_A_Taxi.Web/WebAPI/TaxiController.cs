@@ -16,7 +16,7 @@ using Get_A_Taxi.Web.Infrastructure.Bridges;
 using Get_A_Taxi.Web.Models;
 using System.Security.Principal;
 
-namespace Get_A_Taxi.Web.Controllers.WebAPI
+namespace Get_A_Taxi.Web.WebAPI
 {
     /// <summary>
     /// Manages driver assignment to a taxi

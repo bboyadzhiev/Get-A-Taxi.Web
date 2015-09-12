@@ -1,4 +1,4 @@
-﻿namespace Get_A_Taxi.Web.Controllers.WebAPI
+﻿namespace Get_A_Taxi.Web.WebAPI
 {
     using System.Web.Http;
 

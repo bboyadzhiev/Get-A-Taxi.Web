@@ -10,8 +10,9 @@ using Get_A_Taxi.Web.Models;
 using Get_A_Taxi.Web.Infrastructure;
 using Get_A_Taxi.Models;
 using Get_A_Taxi.Web.Infrastructure.Services.Contracts;
+using Get_A_Taxi.Web.Infrastructure.Services;
 
-namespace Get_A_Taxi.Web.Controllers.WebAPI
+namespace Get_A_Taxi.Web.WebAPI
 {
     [Authorize]
     [RoutePrefix("api/TaxiStands")]
@@ -20,10 +21,10 @@ namespace Get_A_Taxi.Web.Controllers.WebAPI
         private ITaxiStandService taxiStandService;
         private const int TAXI_STANDS_RESULTS_DEFAULT_COUNT = 10;
 
-        public TaxiStandsController(IGetATaxiData data, ITaxiStandService taxiStandService)
+        public TaxiStandsController(IGetATaxiData data)
             : base(data)
         {
-            this.taxiStandService = taxiStandService;
+            this.taxiStandService = new TaxiStandService(data);
         }
 
         /// <summary>

@@ -12,7 +12,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace Get_A_Taxi.Web.Controllers.WebAPI
+namespace Get_A_Taxi.Web.WebAPI
 {
     /// <summary>
     /// Manages orders for the clients of the system.

@@ -16,9 +16,8 @@ namespace Get_A_Taxi.Web.App_Start
     using Get_A_Taxi.Web.Infrastructure.Services.Contracts;
     using Get_A_Taxi.Web.Infrastructure.Caching;
     using Get_A_Taxi.Web.Infrastructure.Populators;
-    using Get_A_Taxi.Web.Infrastructure.Services.Hubs;
     using System.Web.Routing;
-    using Get_A_Taxi.Web.Infrastructure.Services.Hubs.HubServices;
+    using Get_A_Taxi.Web.Infrastructure.Services.HubServices;
     using Microsoft.AspNet.SignalR.Hubs;
     using Get_A_Taxi.Web.Hubs;
     using Microsoft.AspNet.SignalR.Infrastructure;

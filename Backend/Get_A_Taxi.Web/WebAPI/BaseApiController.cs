@@ -1,4 +1,4 @@
-﻿namespace Get_A_Taxi.Web.Controllers
+﻿namespace Get_A_Taxi.Web.WebAPI
 {
     using System;
     using System.Collections.Generic;

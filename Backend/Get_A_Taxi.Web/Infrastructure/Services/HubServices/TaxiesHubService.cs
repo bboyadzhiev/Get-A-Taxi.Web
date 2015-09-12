@@ -1,19 +1,19 @@
 ﻿using Get_A_Taxi.Data;
 using Get_A_Taxi.Models;
+using Get_A_Taxi.Web.Infrastructure.Services.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Get_A_Taxi.Web.Infrastructure.Services.Hubs.HubServices
+namespace Get_A_Taxi.Web.Infrastructure.Services.HubServices
 {
-    public class TaxiesHubService : ITaxiesHubService
+    public class TaxiesHubService : BaseService, ITaxiesHubService
     {
-        private IGetATaxiData Data { get;  set; }
 
         public TaxiesHubService(IGetATaxiData data)
+            :base(data)
         {
-            this.Data = data;
         }
 
         public IQueryable<Taxi> AllTaxies()

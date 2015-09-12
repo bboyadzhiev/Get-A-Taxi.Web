@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR.Hubs;
-using Get_A_Taxi.Web.Infrastructure.Services.Hubs.HubServices;
+using Get_A_Taxi.Web.Infrastructure.Services.HubServices;
 using Get_A_Taxi.Web.Models;
 
 namespace Get_A_Taxi.Web.Infrastructure.Bridges

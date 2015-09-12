@@ -8,7 +8,6 @@ using System.Web;
 using System.Web.Mvc;
 using Get_A_Taxi.Data;
 using Get_A_Taxi.Web.ViewModels;
-using Get_A_Taxi.Web.Controllers;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Get_A_Taxi.Models;

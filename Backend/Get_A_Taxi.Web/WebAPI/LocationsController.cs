@@ -10,7 +10,7 @@ using System.Web.Http;
 using Get_A_Taxi.Web.Models;
 using Get_A_Taxi.Models;
 
-namespace Get_A_Taxi.Web.Controllers.WebAPI
+namespace Get_A_Taxi.Web.WebAPI
 {
     /// <summary>
     /// Manages user's favorite locations

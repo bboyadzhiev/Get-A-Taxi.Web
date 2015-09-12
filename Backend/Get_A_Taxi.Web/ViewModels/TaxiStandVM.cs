@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Get_A_Taxi.Web.ViewModels
 {
-    public class TaxiStandVM : IMapFrom<TaxiStand>
+    public class TaxiStandVM : IMapFrom<TaxiStand>, IHaveCustomMappings
     {
         [Key]
         [HiddenInput(DisplayValue = false)]

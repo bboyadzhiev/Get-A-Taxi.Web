@@ -10,7 +10,7 @@ using AutoMapper;
 using Get_A_Taxi.Models;
 using Get_A_Taxi.Data;
 
-namespace Get_A_Taxi.Web.Controllers.WebAPI
+namespace Get_A_Taxi.Web.WebAPI
 {
     /// <summary>
     /// Manages user's photos

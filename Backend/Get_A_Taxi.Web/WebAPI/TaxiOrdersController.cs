@@ -13,7 +13,7 @@ using Get_A_Taxi.Web.Infrastructure;
 using AutoMapper;
 using Get_A_Taxi.Web.ViewModels;
 
-namespace Get_A_Taxi.Web.Controllers.WebAPI
+namespace Get_A_Taxi.Web.WebAPI
 {
     /// <summary>
     /// Manages the orders for taxies

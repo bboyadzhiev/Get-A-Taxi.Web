@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Get_A_Taxi.Web.Controllers
+namespace Get_A_Taxi.Web.Areas
 {
     [AuthorizeRoles(UserRole = UserRoles.Administrator, SecondRole =  UserRoles.Manager)]
     public class EmployeesController : BaseController

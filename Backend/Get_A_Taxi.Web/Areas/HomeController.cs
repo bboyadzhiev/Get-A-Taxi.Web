@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Get_A_Taxi.Web.Controllers
+namespace Get_A_Taxi.Web.Areas
 {
     public class HomeController : Controller
     {

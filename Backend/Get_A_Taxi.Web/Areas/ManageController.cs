@@ -9,7 +9,7 @@ using Microsoft.Owin.Security;
 using Get_A_Taxi.Web.ViewModels;
 using Get_A_Taxi.Models;
 
-namespace Get_A_Taxi.Web.Controllers
+namespace Get_A_Taxi.Web.Areas
 {
     [Authorize]
     public class ManageController : Controller

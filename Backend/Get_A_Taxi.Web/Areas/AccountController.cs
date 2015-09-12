@@ -12,7 +12,7 @@ using Get_A_Taxi.Web.ViewModels;
 using Get_A_Taxi.Models;
 using Get_A_Taxi.Web.Infrastructure.Populators;
 
-namespace Get_A_Taxi.Web.Controllers
+namespace Get_A_Taxi.Web.Areas
 {
     [Authorize]
     public class AccountController : Controller

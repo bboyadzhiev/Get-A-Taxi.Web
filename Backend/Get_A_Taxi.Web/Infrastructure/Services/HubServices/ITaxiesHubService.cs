@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Get_A_Taxi.Web.Infrastructure.Services.Hubs.HubServices
+namespace Get_A_Taxi.Web.Infrastructure.Services.HubServices
 {
     public interface ITaxiesHubService
     {
