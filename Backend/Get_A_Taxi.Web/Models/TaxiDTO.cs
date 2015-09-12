@@ -28,7 +28,9 @@ namespace Get_A_Taxi.Web.Models
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
             configuration.CreateMap<Taxi, TaxiDTO>()
-               .ForMember(dm => dm.Status, opt => opt.MapFrom(m => (int)m.Status));
+               .ForMember(dm => 
+                   dm.Status, 
+                   opt => opt.MapFrom(m => (int)m.Status));
         }
     }
 }

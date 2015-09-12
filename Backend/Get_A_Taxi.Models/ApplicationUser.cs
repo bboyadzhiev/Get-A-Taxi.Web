@@ -17,7 +17,6 @@ namespace Get_A_Taxi.Models
         Manager = 2,
         Operator = 4,
         Driver = 8,
-       // Client = 16 - registered user with no role is a client
     }
     public class ApplicationUser : IdentityUser
     {
