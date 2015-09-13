@@ -11,7 +11,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Get_A_Taxi.Models;
 
-namespace Get_A_Taxi.Web.Providers
+namespace Get_A_Taxi.Web.Infrastructure.Providers
 {
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {

@@ -238,10 +238,9 @@
     <Compile Include="Hubs\OrdersHub.cs" />
     <Compile Include="Hubs\TaxiesHub.cs" />
     <Compile Include="Hubs\TrackingHub.cs" />
-    <Compile Include="Infrastructure\AuthorizeWebApiRolesAttribute.cs" />
+    <Compile Include="Infrastructure\Authorization\AuthorizeWebApiRolesAttribute.cs" />
     <Compile Include="Infrastructure\Bridges\OrderBridgeEventArgs.cs" />
     <Compile Include="Infrastructure\BrowserJsonFormatter.cs" />
-    <Compile Include="Infrastructure\OrderEvents.cs" />
     <Compile Include="Infrastructure\ModelBinders\DecimalModelBinder.cs" />
     <Compile Include="Infrastructure\ModelBinders\DoubleModelBinder.cs" />
     <Compile Include="Infrastructure\Services\Contracts\IAccountService.cs" />
@@ -267,14 +266,14 @@
     <Compile Include="Models\TaxiDetailsDTO.cs" />
     <Compile Include="Models\TaxiDTO.cs" />
     <Compile Include="Models\TaxiStandDTO.cs" />
-    <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Infrastructure\Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="ViewModels\DistrictVM.cs" />
     <Compile Include="Areas\Management\Controllers\TaxiesController.cs" />
     <Compile Include="Areas\Administration\Controllers\MainController.cs" />
     <Compile Include="Areas\Administration\ViewModels\RolesEditVM.cs" />
     <Compile Include="Areas\Management\Controllers\MainController.cs" />
     <Compile Include="Areas\Management\ManagementAreaRegistration.cs" />
-    <Compile Include="Infrastructure\AuthorizeRolesAttribute.cs" />
+    <Compile Include="Infrastructure\Authorization\AuthorizeRolesAttribute.cs" />
     <Compile Include="Infrastructure\Caching\ICacheService.cs" />
     <Compile Include="Infrastructure\Caching\InMemoryCache.cs" />
     <Compile Include="Infrastructure\Mapping\IHaveCustomMappings.cs" />
@@ -523,7 +522,6 @@
     <Content Include="Views\Shared\_OperatorPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Management\ViewModels\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

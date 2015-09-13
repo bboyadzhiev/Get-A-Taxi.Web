@@ -10,7 +10,7 @@ using System.Web.Http.Controllers;
 using Microsoft.AspNet.Identity;
 using Get_A_Taxi.Models;
 
-namespace Get_A_Taxi.Web.Infrastructure
+namespace Get_A_Taxi.Web.Infrastructure.Authorization
 {
     public class AuthorizeWebApiAttribute : AuthorizeAttribute
     {

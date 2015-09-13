@@ -446,11 +446,6 @@
             <param name="lat">The location's latitude</param>
             <param name="lon">The location's longitude</param>
         </member>
-        <member name="T:Get_A_Taxi.Web.Infrastructure.OrdersEvents">
-            <summary>
-            Temporary solution, replacement for OrdersBridge bug problem
-            </summary>
-        </member>
         <member name="T:Get_A_Taxi.Web.Infrastructure.Bridges.ITaxiesBridge">
             <summary>
             Taxi location and/or status changed bridge

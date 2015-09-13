@@ -9,7 +9,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using AutoMapper.QueryableExtensions;
-using Get_A_Taxi.Web.Infrastructure;
+using Get_A_Taxi.Web.Infrastructure.Authorization;
 using AutoMapper;
 using Get_A_Taxi.Web.ViewModels;
 

@@ -11,7 +11,7 @@ using AutoMapper.QueryableExtensions;
 
 using Get_A_Taxi.Data;
 using Get_A_Taxi.Models;
-using Get_A_Taxi.Web.Infrastructure;
+using Get_A_Taxi.Web.Infrastructure.Authorization;
 using Get_A_Taxi.Web.Infrastructure.Bridges;
 using Get_A_Taxi.Web.Models;
 using System.Security.Principal;

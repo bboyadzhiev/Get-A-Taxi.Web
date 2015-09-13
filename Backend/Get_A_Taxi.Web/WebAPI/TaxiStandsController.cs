@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Web.Http;
 using AutoMapper.QueryableExtensions;
 using Get_A_Taxi.Web.Models;
-using Get_A_Taxi.Web.Infrastructure;
+using Get_A_Taxi.Web.Infrastructure.Authorization;
 using Get_A_Taxi.Models;
 using Get_A_Taxi.Web.Infrastructure.Services.Contracts;
 using Get_A_Taxi.Web.Infrastructure.Services;

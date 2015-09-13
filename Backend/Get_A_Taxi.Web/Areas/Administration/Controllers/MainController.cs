@@ -1,5 +1,5 @@
 ﻿using Get_A_Taxi.Models;
-using Get_A_Taxi.Web.Infrastructure;
+using Get_A_Taxi.Web.Infrastructure.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;

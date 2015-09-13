@@ -14,7 +14,7 @@ using Get_A_Taxi.Models;
 using Get_A_Taxi.Web.Infrastructure.Populators;
 using Get_A_Taxi.Web.Areas.Administration.Controllers;
 using Get_A_Taxi.Web.ViewModels;
-using Get_A_Taxi.Web.Infrastructure;
+using Get_A_Taxi.Web.Infrastructure.Authorization;
 using Get_A_Taxi.Web.Infrastructure.Services.Contracts;
 using Get_A_Taxi.Web.Infrastructure.Services;
 

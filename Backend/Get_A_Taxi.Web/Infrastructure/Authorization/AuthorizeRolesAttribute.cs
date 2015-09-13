@@ -10,7 +10,7 @@ using System.Web.Http.Controllers;
 using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
 
-namespace Get_A_Taxi.Web.Infrastructure
+namespace Get_A_Taxi.Web.Infrastructure.Authorization
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class AuthorizeRolesAttribute : AuthorizeAttribute

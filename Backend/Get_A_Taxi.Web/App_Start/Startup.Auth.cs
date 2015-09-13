@@ -12,7 +12,7 @@ using Get_A_Taxi.Web.ViewModels;
 using Get_A_Taxi.Data;
 using Get_A_Taxi.Models;
 using Microsoft.Owin.Security.OAuth;
-using Get_A_Taxi.Web.Providers;
+using Get_A_Taxi.Web.Infrastructure.Providers;
 
 namespace Get_A_Taxi.Web
 {

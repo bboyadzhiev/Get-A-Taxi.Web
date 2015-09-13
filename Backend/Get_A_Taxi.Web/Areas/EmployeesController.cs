@@ -3,7 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Get_A_Taxi.Data;
 using Get_A_Taxi.Data.Migrations;
 using Get_A_Taxi.Models;
-using Get_A_Taxi.Web.Infrastructure;
+using Get_A_Taxi.Web.Infrastructure.Authorization;
 using Get_A_Taxi.Web.Infrastructure.Populators;
 using Get_A_Taxi.Web.Infrastructure.Services;
 using Get_A_Taxi.Web.Infrastructure.Services.Contracts;
