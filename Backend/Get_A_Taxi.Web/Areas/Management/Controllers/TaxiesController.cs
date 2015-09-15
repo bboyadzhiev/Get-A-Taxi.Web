@@ -206,6 +206,12 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
             }
             var driver = this.Data.Users.All()
                 .FirstOrDefault(u => u.Id == userId);
+            var taxiWithThisDriver = this.Data.Taxies.SearchFor(t => t.Driver.Id == driver.Id).FirstOrDefault();
+            if (taxiWithThisDriver != null)
+            {
+                TempData["Error"] = "This driver is assigned to another taxi: " + taxiWithThisDriver.Plate + "!";
+                return RedirectToAction("Index");
+            }
 
             if (taxi.Status != TaxiStatus.Unassigned)
             {
@@ -220,6 +226,8 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
             }
 
             taxi.Driver = driver;
+            // HACK Check for conflicts!
+            taxi.Status = TaxiStatus.OffDuty;
             this.Data.SaveChanges();
 
             return RedirectToAction("Index");
@@ -240,6 +248,7 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
                 }
 
                 taxi.Driver = null;
+                taxi.Status = TaxiStatus.Unassigned;
                 this.Data.SaveChanges();
             }
             else

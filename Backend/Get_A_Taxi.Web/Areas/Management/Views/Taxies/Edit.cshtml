@@ -2,18 +2,19 @@
 @model Get_A_Taxi.Web.ViewModels.TaxiDetailsVM
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Taxi Details";
     var districts = (List<SelectListItem>)ViewBag.Districts;
 }
 
-<h2>Edit</h2>
+<h2>@ViewBag.Title</h2>
 
 @using (Ajax.BeginForm("Edit", null, new AjaxOptions
 {
     UpdateTargetId = "taxi-details",
     InsertionMode = InsertionMode.Replace,
     HttpMethod = "POST",
-    OnComplete = "hideLoader()"
+    OnComplete = "hideLoader()",
+    Confirm = Model.Status < TaxiStatus.OffDuty ? "Taxi will be unassigned from the driver! Are you sure?": "Confirm changes!",
 }, new { id = "editTaxiForm" }))
 {
     @Html.AntiForgeryToken()
@@ -46,16 +47,27 @@
                 @Html.ValidationMessageFor(model => model.Luggage, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.Decommissionable, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Decommissionable)
-                    @Html.ValidationMessageFor(model => model.Decommissionable, "", new { @class = "text-danger" })
+                
+                    @if (Model.Status < TaxiStatus.OffDuty)
+                    {
+                        <div class="control-label col-md-1 text-danger">
+                            <strong>@Html.DisplayTextFor(model => model.Status)</strong>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="control-label col-md-1">
+                            @Html.DisplayTextFor(model => model.Status)
+                        </div>
+                    }
+                    
+                <div class="control-label col-md-2">
                 </div>
             </div>
-        </div>*@
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.AssignDistrictId, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -65,7 +77,7 @@
             </div>
         </div>
 
-@if (Model.Status == TaxiStatus.OffDuty && Model.Driver.Id == null)
+@if (Model.Status == TaxiStatus.Unassigned && Model.Driver.Id == null)
 {
      <div class="form-group">
          <div class="col-md-offset-2 col-md-10">
@@ -73,8 +85,8 @@
                 "Decommission Taxi",
                 "Delete",
                 new { id = Model.TaxiId },
-        //new { onclick = "return confirm('Are you sure you want to decommission this taxi?');", @class = "btn btn-default text-danger" })
-     new { @class = "btn btn-default text-danger" })
+        new { onclick = "return confirm('Are you sure you want to decommission this taxi?');", @class = "btn btn-default text-danger" })
+     
          </div>
          </div>
 }

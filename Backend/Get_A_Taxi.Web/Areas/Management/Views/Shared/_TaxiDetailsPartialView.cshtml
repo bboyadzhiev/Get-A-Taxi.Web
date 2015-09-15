@@ -1,5 +1,5 @@
-﻿@model Get_A_Taxi.Web.ViewModels.TaxiDetailsVM
-
+﻿@using Get_A_Taxi.Models
+@model Get_A_Taxi.Web.ViewModels.TaxiDetailsVM
 <fieldset>
     <legend>Taxi Details</legend>
     <table>
@@ -17,7 +17,14 @@
         </tr>
         <tr>
             <th>@Html.LabelFor(model => model.Status)</th>
-            <td>@Html.DisplayFor(model => model.Status)</td>
+            @if (Model.Status < TaxiStatus.OffDuty)
+            {
+                <td class="text-danger">@Html.DisplayFor(model => model.Status)</td>
+            }
+            else
+            {
+                <td>@Html.DisplayFor(model => model.Status)</td>
+            }
         </tr>
     </table>
 </fieldset>
@@ -26,7 +33,7 @@
     <legend>Taxi Driver Details</legend>
     @if (String.IsNullOrEmpty(Model.Driver.Id))
     {
-        <h5>No driver assigned!</h5>
+        <h5 class="text-danger"><strong>No driver assigned!</strong></h5>
        
         <div id="userSearchPartial">
             @Html.Partial("_UserSearchPartialView", new Get_A_Taxi.Web.ViewModels.UserSearchVM())

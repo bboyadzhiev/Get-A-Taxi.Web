@@ -2,11 +2,11 @@
 @model Get_A_Taxi.Web.ViewModels.TaxiStandVM
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create New Taxi Stand";
 }
 <div id="map"></div>
 <div class="mapHoverPanel">
-    <h2>Create</h2>
+    <h2>@ViewBag.Title</h2>
 
     @using (Html.BeginForm())
     {
