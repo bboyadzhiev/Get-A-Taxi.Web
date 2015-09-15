@@ -1,13 +1,13 @@
 ﻿@model Get_A_Taxi.Web.ViewModels.DistrictVM
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create new District";
 }
 
 
 <div id="map"></div>
 <div class="mapHoverPanel">
-    <h4>@ViewBag.Title</h4>
+    <h4 style="padding-left:5px;">@ViewBag.Title</h4>
     <hr />
     <form method="post" id="geocoding_form">
         <div class="form-horizontal">
@@ -51,7 +51,7 @@
                     @Html.ValidationMessageFor(model => model.CenterLongitude, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <input type="button" value="getAddress" id="getAddress" class="btn btn-default" />
+            @*<input type="button" value="getAddress" id="getAddress" class="btn btn-default" />*@
             <div class="form-group">
                 @Html.LabelFor(model => model.MapZoom, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
