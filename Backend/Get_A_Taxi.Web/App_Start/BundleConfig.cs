@@ -31,8 +31,12 @@ namespace Get_A_Taxi.Web
               "~/Scripts/gmaps.js",
               "~/Scripts/gmaps.map.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/gmaps.taxistands").Include(
-              "~/Scripts/gmaps.taxistands.js"));
+            //Used in management of districts and taxistanda
+            bundles.Add(new ScriptBundle("~/bundles/gmaps.manage.taxistands").Include(
+              "~/Scripts/gmaps.manage.taxistands.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/gmaps.manage.districts").Include(
+              "~/Scripts/gmaps.manage.districts.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                 "~/Scripts/knockout*"));
@@ -42,6 +46,9 @@ namespace Get_A_Taxi.Web
 
             bundles.Add(new ScriptBundle("~/bundles/gmaps.taxies").Include(
                 "~/Scripts/gmaps.taxies.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/gmaps.taxistands").Include(
+    "~/Scripts/gmaps.taxistands.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

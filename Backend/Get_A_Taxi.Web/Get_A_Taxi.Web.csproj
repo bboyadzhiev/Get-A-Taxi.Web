@@ -372,6 +372,7 @@
     <Content Include="Content\Images\Map\order_waiting.png" />
     <Content Include="Content\Images\Map\purple_m.png" />
     <Content Include="Content\Images\Map\red_m.png" />
+    <Content Include="Content\Images\Map\taxistandMarker.png" />
     <Content Include="Content\Images\Map\taxi_available.png" />
     <Content Include="Content\Images\Map\taxi_busy.png" />
     <Content Include="Content\Images\Map\yellow_m.png" />
@@ -410,9 +411,10 @@
     <Content Include="Scripts\gmaps.taxies.js" />
     <Content Include="Scripts\getataxi.users.js" />
     <Content Include="Scripts\gmaps.js" />
-    <Content Include="Scripts\gmaps.map - Copy.js" />
-    <Content Include="Scripts\gmaps.districts.js" />
+    <Content Include="Scripts\gmaps.map - Copy1.js" />
+    <Content Include="Scripts\gmaps.manage.districts.js" />
     <Content Include="Scripts\gmaps.map.js" />
+    <Content Include="Scripts\gmaps.taxistands.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\knockout-3.2.0.debug.js" />
@@ -453,7 +455,7 @@
     <Content Include="Areas\Administration\Views\TaxiStands\Edit.cshtml" />
     <Content Include="Areas\Administration\Views\TaxiStands\Index.cshtml" />
     <Content Include="Areas\Management\Views\Taxies\Delete.cshtml" />
-    <Content Include="Scripts\gmaps.taxistands.js" />
+    <Content Include="Scripts\gmaps.manage.taxistands.js" />
     <Content Include="Areas\Administration\Views\TaxiStands\_TaxiStandsListPartialView.cshtml" />
     <Content Include="Areas\Administration\Views\TaxiStands\_TaxiStandsSearchPartialView.cshtml" />
     <None Include="Properties\PublishProfiles\Get-A-Taxi Local IIS.pubxml" />

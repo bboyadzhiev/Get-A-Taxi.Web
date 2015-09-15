@@ -1,7 +1,7 @@
 ﻿
 var gATMap = (function () {
 
-    var map;
+    var mapObject;
     //    = new GMaps({
     //    div: '#map',
     //    lat: defaultLat,
@@ -15,7 +15,7 @@ var gATMap = (function () {
     //});
 
     function initMap(div, lat, lng, zoom_callback, click_callback) {
-        map = new GMaps({
+        mapObject = new GMaps({
             div: div,
             lat: lat,
             lng: lng,
@@ -38,7 +38,7 @@ var gATMap = (function () {
                     var lat = latVal;
                     var lng = lngVal;
                     var formattedAddress = results[0].formatted_address;
-                    map.setCenter(lat, lng);
+                    mapObject.setCenter(lat, lng);
                     getAddressCallback(lat, lng, formattedAddress);
                 }
             }
@@ -53,7 +53,7 @@ var gATMap = (function () {
                     //console.log(results[0]);
                     var latlng = results[0].geometry.location;
                     var formattedAddress = results[0].formatted_address;
-                    map.setCenter(latlng.lat(), latlng.lng());
+                    mapObject.setCenter(latlng.lat(), latlng.lng());
                     getCoordinatesCallback(latlng.lat(), latlng.lng(), formattedAddress);
                 } else {
                     alert("Address could not be found!");
@@ -63,7 +63,7 @@ var gATMap = (function () {
     }
 
     function addMarker(markerId, lat, lng, iconLink, content, clickCallback, arrayReference) {
-        var newMarker = map.addMarker({
+        var newMarker = mapObject.addMarker({
             id: markerId,
             lat: lat,
             lng: lng,
@@ -94,7 +94,7 @@ var gATMap = (function () {
                   clickCallback(markerId, lat, lng, content);
               }
 
-            map.addMarker(markerToUpdate);
+            mapObject.addMarker(markerToUpdate);
             arrayReference.push(markerToUpdate);
             console.log('GATMAP: marker updated!');
         }
@@ -121,7 +121,7 @@ var gATMap = (function () {
         }
         console.log(pos);
         if (pos > -1) {
-            map.removeMarker(markerToRemove);
+            mapObject.removeMarker(markerToRemove);
             arrayReference.splice(pos, 1);
             console.log('GATMAP: marker removed!');
             //  markerToRemove = null;
@@ -129,22 +129,27 @@ var gATMap = (function () {
         return markerToRemove;
     }
 
+    function initialZoom() {
+        return mapObject.zoom;
+    }
+
     function setZoom(zoom) {
-        map.setZoom(zoom);
+        mapObject.setZoom(zoom);
     }
 
     function setCenter(lat, lng) {
-        map.setCenter(lat, lng);
+        mapObject.setCenter(lat, lng);
     }
 
     function clearMarkers() {
-        map.removeMarkers();
+        mapObject.removeMarkers();
     }
 
     return {
         initMap: initMap,
-        map: map,
+        map: mapObject,
         setCenter: setCenter,
+        initialZoom:initialZoom,
         setZoom: setZoom,
         addMarker: addMarker,
         getAddress: getAddress,

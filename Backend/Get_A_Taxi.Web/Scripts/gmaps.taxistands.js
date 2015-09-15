@@ -1,46 +1,20 @@
-﻿
-var createTaxiStand = function () {
-var markers = [];
-    function updateUI(lat,lng, formattedAddress) {
-        $('#Latitude').val(lat);
-        $('#Longitude').val(lng);
-        $('#Address').val(formattedAddress);
-        $('#Alias').val(formattedAddress);
-        gATMap.addMarker(0, lat, lng, "/Content/Images/Map/purple_m.png", formattedAddress, clb, markers);
-    }
+﻿var getTaxiStands = (function () {
+    var taxistands = [];
+    function clkW(id, lat, lng, content) {
 
-    function clb(markerId, lat, lng, content) {
-        // alert(content);
     }
+    $.ajax({
+        url: '/Operator/Main/GetTaxiStands',
+        type: 'GET',
+        contentType: 'application/json',
+        dataType: "json",
+        success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                gATMap.addMarker(i, data[i].lat, data[i].lon, '/Content/Images/Map/taxistandMarker.png', data[i].alias, clkW, taxistands);
+            }
+        },
+        error: function () {
 
-    $("#Address").keyup(function (event) {
-        if (event.keyCode == 13) {
-            gATMap.getCoordinates($('#Address').val().trim(), updateUI);
         }
     });
-
-    function getInputAddress(latInput, lngInput, updateUI) {
-        gATMap.getAddress($(latInput).val(), $(lngInput).val(), updateUI)
-    }
-
-    $('#getAddress').click(function (e) {
-        getInputAddress('#CenterLatitude', '#CenterLongitude', '#Alias')
-
-    });
-    return {
-        updateUI: updateUI
-    }
-
-}();
-
-gATMap.initMap('#map', lat, lon, zoomChanged, mapClicked);
-
-function mapClicked(e) {
-    gATMap.clearMarkers();
-    gATMap.setCenter(e.latLng.lat(), e.latLng.lng());
-    gATMap.getAddress(e.latLng.lat(), e.latLng.lng(), createTaxiStand.updateUI);
-}
-
-function zoomChanged(map) {
-
-}
+})();

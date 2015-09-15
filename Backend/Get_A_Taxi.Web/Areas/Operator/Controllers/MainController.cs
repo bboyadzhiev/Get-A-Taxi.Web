@@ -14,6 +14,7 @@ using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
 using Get_A_Taxi.Web.Infrastructure.Bridges;
 using Get_A_Taxi.Web.Models;
+using Newtonsoft.Json;
 
 namespace Get_A_Taxi.Web.Areas.Operator.Controllers
 {
@@ -37,6 +38,23 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
             ViewBag.DistrictId = this.UserProfile.District.DistrictId;
             ViewBag.OperatorId = this.UserProfile.Id;
             return View();
+        }
+
+       // [AllowAnonymous]
+        [HttpGet]
+        public JsonResult GetTaxiStands()
+        {
+            var result = this.Data.Stands.All()
+                .Where(s => s.District.DistrictId == this.UserProfile.District.DistrictId)
+                .ToList()
+                .Select(x => new 
+                { 
+                    lat = x.Latitude, 
+                    lon = x.Longitude,
+                    alias = x.Alias
+                });
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
