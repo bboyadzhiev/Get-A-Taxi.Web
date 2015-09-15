@@ -16,7 +16,7 @@ namespace Get_A_Taxi.Web.Areas
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Taxi Management System";
 
             return View();
         }
