@@ -14,7 +14,7 @@
     InsertionMode = InsertionMode.Replace,
     HttpMethod = "POST",
     OnComplete = "hideLoader()",
-    Confirm = Model.Status < TaxiStatus.OffDuty ? "Taxi will be unassigned from the driver! Are you sure?": "Confirm changes!",
+    Confirm = Model.Status < TaxiStatus.Unassigned ? "Taxi will be unassigned from the driver! Are you sure?": "Confirm changes?",
 }, new { id = "editTaxiForm" }))
 {
     @Html.AntiForgeryToken()
@@ -51,7 +51,7 @@
             @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 
-                    @if (Model.Status < TaxiStatus.OffDuty)
+                    @if (Model.Status < TaxiStatus.Unassigned)
                     {
                         <div class="control-label col-md-1 text-danger">
                             <strong>@Html.DisplayTextFor(model => model.Status)</strong>
