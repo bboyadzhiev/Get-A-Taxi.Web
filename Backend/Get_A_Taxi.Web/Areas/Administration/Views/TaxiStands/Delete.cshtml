@@ -1,12 +1,12 @@
 ﻿@model Get_A_Taxi.Web.ViewModels.TaxiStandVM
 
 @{
-    ViewBag.Title = "Delete Taxi Stand";
+    ViewBag.Title = "Deactivate Taxi Stand";
 }
 
 <h2>@ViewBag.Title</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to deactivate this?</h3>
 <div>
     <h4>TaxiStand</h4>
     <hr />
@@ -49,7 +49,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <input type="submit" value="Deactivate" class="btn btn-default" /> |
             @Html.ActionLink("Back to List", "Index")
         </div>
     }

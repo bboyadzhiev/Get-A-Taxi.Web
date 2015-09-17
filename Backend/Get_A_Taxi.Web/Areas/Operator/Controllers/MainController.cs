@@ -15,6 +15,7 @@ using AutoMapper.QueryableExtensions;
 using Get_A_Taxi.Web.Infrastructure.Bridges;
 using Get_A_Taxi.Web.Models;
 using Newtonsoft.Json;
+using Get_A_Taxi.Web.Infrastructure.Services;
 
 namespace Get_A_Taxi.Web.Areas.Operator.Controllers
 {
@@ -23,10 +24,10 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
     {
         private IAccountService services;
         private IOrderBridge bridge;
-        public MainController(IGetATaxiData data, IAccountService services, IDropDownListPopulator populator, IOrderBridge bridge)
+        public MainController(IGetATaxiData data, IDropDownListPopulator populator, IOrderBridge bridge)
             : base(data, populator)
         {
-            this.services = services;
+            this.services = new AccountService(data);
             this.bridge = bridge;
         }
         // GET: Operator/Main
@@ -45,7 +46,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
         public JsonResult GetTaxiStands()
         {
             var result = this.Data.Stands.All()
-                .Where(s => s.District.DistrictId == this.UserProfile.District.DistrictId)
+                .Where(ts => ts.District.DistrictId == this.UserProfile.District.DistrictId && ts.Active == true)
                 .ToList()
                 .Select(x => new 
                 { 

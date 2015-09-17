@@ -27,13 +27,11 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
         private IAccountService AccountService;
         private const int TAXI_RESULTS_DEFAULT_COUNT = 10;
 
-        public TaxiesController(IGetATaxiData data, ITaxiService taxiService, IAccountService accountService, IDropDownListPopulator populator)
+        public TaxiesController(IGetATaxiData data, IDropDownListPopulator populator)
             : base(data, populator)
         {
-            this.TaxiService = taxiService;
-            this.AccountService = accountService;
-            //this.TaxiService = new TaxiService(data);
-            //this.AccountService = new AccountService(data);
+            this.TaxiService = new TaxiService(data);
+            this.AccountService = new AccountService(data);
         }
 
 

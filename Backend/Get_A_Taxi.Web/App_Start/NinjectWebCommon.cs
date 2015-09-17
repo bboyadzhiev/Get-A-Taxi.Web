@@ -80,11 +80,6 @@ namespace Get_A_Taxi.Web.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<IGetATaxiData>().To<GetATaxiData>();
-            kernel.Bind<IOrdersService>().To<OrdersService>();
-            kernel.Bind<IAccountService>().To<AccountService>();
-            kernel.Bind<ITaxiService>().To<TaxiService>();
-            kernel.Bind<IOperatorService>().To<OperatorService>();
-            kernel.Bind<ITaxiStandService>().To<TaxiStandService>();
 
             kernel.Bind<ICacheService>().To<InMemoryCache>();
             kernel.Bind<IDropDownListPopulator>().To<DropDownListPopulator>();

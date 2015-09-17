@@ -33,6 +33,8 @@ namespace Get_A_Taxi.Web.ViewModels
         [Display(Name = "District")]
         public string DistrictTitle { get; set; }
 
+        public bool Active { get; set; }
+
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
             configuration.CreateMap<TaxiStand, TaxiStandVM>()

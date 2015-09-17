@@ -28,10 +28,10 @@ namespace Get_A_Taxi.Web.Areas
     {
         private IAccountService services;
 
-        public EmployeesController(IGetATaxiData data, IAccountService services, IDropDownListPopulator populator)
+        public EmployeesController(IGetATaxiData data, IDropDownListPopulator populator)
             : base(data, populator)
         {
-            this.services = services;
+            this.services = new AccountService(data);
         }
 
 

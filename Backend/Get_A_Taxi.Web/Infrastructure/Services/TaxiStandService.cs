@@ -35,5 +35,11 @@ namespace Get_A_Taxi.Web.Infrastructure.Services
         {
             return taxiStands.OrderBy(ts => (Math.Abs(ts.Latitude - lat) + Math.Abs(ts.Longitude - lng)));
         }
+
+
+        public IQueryable<TaxiStand> ActiveOnly(IQueryable<TaxiStand> taxiStands, bool active)
+        {
+            return taxiStands.Where(ts => ts.Active == active);
+        }
     }
 }

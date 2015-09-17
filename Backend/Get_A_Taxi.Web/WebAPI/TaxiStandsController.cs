@@ -59,6 +59,7 @@ namespace Get_A_Taxi.Web.WebAPI
         public IHttpActionResult Get(double lat, double lon)
         {
             var taxiStands = this.taxiStandService.GetAll();
+            taxiStands = this.taxiStandService.ActiveOnly(taxiStands, true);
             var taxiStandsDTOList = this.taxiStandService.ByNearestLocation(taxiStands, lat, lon)
                 .Take(TAXI_STANDS_RESULTS_DEFAULT_COUNT)
                 .Project().To<TaxiStandDTO>()
@@ -78,6 +79,7 @@ namespace Get_A_Taxi.Web.WebAPI
         {
             var driver = this.GetUser();
             var taxiStands = this.taxiStandService.GetAll();
+            taxiStands = this.taxiStandService.ActiveOnly(taxiStands, true);
             var taxiStandsDTOList = this.taxiStandService.ByDistrict(taxiStands, driver.District.DistrictId)
                 .Skip(page * TAXI_STANDS_RESULTS_DEFAULT_COUNT)
                 .Take(TAXI_STANDS_RESULTS_DEFAULT_COUNT)

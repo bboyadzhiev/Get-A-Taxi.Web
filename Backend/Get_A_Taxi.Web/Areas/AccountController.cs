@@ -29,7 +29,6 @@ namespace Get_A_Taxi.Web.Areas
         {
             UserManager = userManager;
             SignInManager = signInManager;
-            
         }
 
         public ApplicationUserManager UserManager
