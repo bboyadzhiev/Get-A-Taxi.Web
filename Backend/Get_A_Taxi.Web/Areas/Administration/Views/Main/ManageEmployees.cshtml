@@ -1,5 +1,7 @@
-﻿@using Get_A_Taxi.Models
-    <h2>Admin Panel</h2>
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource
+@using Get_A_Taxi.Models
+    
+<h2>@Resource.AdminPanel</h2>
 
     <div class="container-liquid" style="margin:0px; padding: 0px">
         <div class="row">
@@ -9,7 +11,7 @@
                         <img src="~/Content/Images/Icons/roles.png" />
                         <img src="~/Content/Images/Badges/edit.png" class="buttoniconbadge" />
                     </div>
-                    <h5>Manage Employees' Roles</h5>
+                    <h5>@Resource.ManageEmployeesRoles</h5>
                 </div>
             </a>
         </div>
@@ -20,7 +22,7 @@
                         <img src="~/Content/Images/Icons/employee.png" />
                         <img src="~/Content/Images/Badges/search.png" class="buttoniconbadge" />
                     </div>
-                    <h5>Search Employee</h5>
+                    <h5>@Resource.Search @Resource.Employee</h5>
                 </div>
             </a>
             @if (User.IsInRole(UserRoles.Manager.ToString()))
@@ -31,7 +33,7 @@
                             <img src="~/Content/Images/Icons/employee.png" />
                             <img src="~/Content/Images/Badges/plus.png" class="buttoniconbadge" />
                         </div>
-                        <h5>Add Employee</h5>
+                        <h5>@Resource.Add @Resource.Employee</h5>
                     </div>
                 </a>
             }

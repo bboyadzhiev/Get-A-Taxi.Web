@@ -1,12 +1,13 @@
-﻿<table class="table table-hover">
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource;
+<table class="table table-hover">
     <thead>
         <tr>
-            <th>From</th>
-            <th>To</th>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Comment</th>
-            <th>Taxi GSM</th>
+            <th>@Resource.From</th>
+            <th>@Resource.To</th>
+            <th>@Resource.Name</th>
+            <th>@Resource.Phone</th>
+            <th>@Resource.Comment</th>
+            <th>@Resource.TaxiGSM</th>
         </tr>
     </thead>
     <tbody class="verticalTableScroll">
@@ -23,8 +24,8 @@
         </tr>
         
         <!-- /ko -->
-        <tr data-bind="if: orders() == undefined"><td colspan="6"><strong> Fetching results</strong></td></tr>
-        <tr data-bind="if: orders() != null  && orders().length == 0"><td colspan="6"><strong> No orders to display</strong></td></tr>
+        <tr data-bind="if: orders() == undefined"><td colspan="6"><strong> @Resource.FetchingResults...</strong></td></tr>
+        <tr data-bind="if: orders() != null  && orders().length == 0"><td colspan="6"><strong> @Resource.NoOrdersToDisplay</strong></td></tr>
     </tbody>
 </table>
 
@@ -240,8 +241,5 @@
         $(window).unload(function () {
             ordersHub.invoke("close", districtId);
         });
-    }(district, operator);
-
-
-   
+    }(district, operator);   
 </script>

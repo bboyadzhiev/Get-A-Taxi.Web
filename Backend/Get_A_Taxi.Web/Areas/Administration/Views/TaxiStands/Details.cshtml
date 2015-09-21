@@ -1,13 +1,14 @@
-﻿@model Get_A_Taxi.Web.ViewModels.TaxiStandVM
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource;
+@model Get_A_Taxi.Web.ViewModels.TaxiStandVM
 
 @{
-    ViewBag.Title = "Taxi Stand Details";
+    ViewBag.Title = @Resource.Details;
 }
 
 <h2>@ViewBag.Title</h2>
 
 <div>
-    <h4>Taxi Stand</h4>
+    <h4>@Resource.TaxiStand</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -45,6 +46,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.TaxiStandId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink(Resource.Edit, "Edit", new { id = Model.TaxiStandId }) |
+    @Html.ActionLink(Resource.BackToList, "Index")
 </p>

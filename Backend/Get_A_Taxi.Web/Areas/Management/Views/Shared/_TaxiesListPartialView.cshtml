@@ -1,10 +1,11 @@
-﻿@using Get_A_Taxi.Models
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource;
+@using Get_A_Taxi.Models
 @model IEnumerable<Get_A_Taxi.Web.ViewModels.TaxiItemVM>
 @if (Model.Any())
 {
     <table class="table table-striped">
         <tr>
-            <th>Select</th>
+            <th>@Resource.Manage</th>
             <th>@Html.LabelFor(m => m.First().Plate)</th>
             <th>@Html.LabelFor(m => m.First().Status)</th>
             <th>@Html.LabelFor(m => m.First().DistrictTitle)</th>
@@ -15,7 +16,7 @@
         {
             <tr>
                 <td>
-                    @Ajax.ActionLink("Manage Driver", "Details", new { taxiId = taxi.TaxiId },
+                    @Ajax.ActionLink(Resource.ManageDriver, "Details", new { taxiId = taxi.TaxiId },
         new AjaxOptions
             {
                 InsertionMode = InsertionMode.Replace,
@@ -24,7 +25,7 @@
                 OnComplete = "taxiDetailsLoaded()"
             })
                     |
-                    @Ajax.ActionLink("Edit", "Edit", new { taxiId = taxi.TaxiId },
+                    @Ajax.ActionLink(Resource.Edit, "Edit", new { taxiId = taxi.TaxiId },
         new AjaxOptions
             {
                 InsertionMode = InsertionMode.Replace,
@@ -37,7 +38,7 @@
             if (taxi.Status == TaxiStatus.OffDuty && taxi.Driver == null)
             {
                 @:|
-                @Html.ActionLink("Decomission", "Delete", new { id = taxi.TaxiId })
+                @Html.ActionLink(Resource.Decomission, "Delete", new { id = taxi.TaxiId })
             }
                 }
                 </td>
@@ -70,7 +71,7 @@
 }
 else
 {
-    <p>No taxies found!</p>
+    <p>@Resource.Taxi @Resource.wasNotFoundM</p>
 }
 
 

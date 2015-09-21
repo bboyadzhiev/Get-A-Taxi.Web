@@ -1,4 +1,4 @@
-﻿@*@using (Html.BeginForm("CreateOrder", "Main", FormMethod.Post, new { id= "newOrderForm"}))*@
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource;
 @using (Ajax.BeginForm("CreateOrder", null, new AjaxOptions
 {
     UpdateTargetId = "orderInputPartial",
@@ -10,9 +10,9 @@
     <div class="form-horizontal">
         <div id="addOrderInputPlaceholder"></div>
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Add Order" class="btn btn-default" onclick="addOrderPartial.submitOrder()" />
-                <input type="button" value="Cancel" class="btn btn-default" onclick="addOrderPartial.cleanPartial()" />
+            <div class="col-md-offset-1 col-md-12">
+                <input type="button" value="@Resource.AddOrder" class="btn btn-default" onclick="addOrderPartial.submitOrder()" />
+                <input type="button" value="@Resource.Cancel" class="btn btn-default" onclick="addOrderPartial.cleanPartial()" />
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 ﻿@model Get_A_Taxi.Web.ViewModels.UserDetailsVM
-
+@using Get_A_Taxi.Web.Infrastructure.LocalResource
 <fieldset>
-    <legend>Details</legend>
+    <legend>@Resource.Details</legend>
     <div style="float:left">
         @if (Model.Photo != null)
         {

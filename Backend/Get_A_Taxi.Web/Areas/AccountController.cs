@@ -11,11 +11,12 @@ using Microsoft.Owin.Security;
 using Get_A_Taxi.Web.ViewModels;
 using Get_A_Taxi.Models;
 using Get_A_Taxi.Web.Infrastructure.Populators;
+using Get_A_Taxi.Web.Infrastructure.LocalResource;
 
 namespace Get_A_Taxi.Web.Areas
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : LocalizationController
     {
         private ApplicationUserManager _userManager;
         private IDropDownListPopulator _populator;

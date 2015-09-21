@@ -1,7 +1,8 @@
-﻿@model Get_A_Taxi.Web.ViewModels.TaxiDetailsVM
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource;
+@model Get_A_Taxi.Web.ViewModels.TaxiDetailsVM
 
 @{
-    ViewBag.Title = "Create New Taxi";
+    ViewBag.Title = Resource.Create + " " + Resource.Taxi;
     var districts = (List<SelectListItem>)ViewBag.Districts;
 }
 
@@ -50,7 +51,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="@Resource.Create" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -60,5 +61,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to Taxies", "Index")
+    @Html.ActionLink(Resource.BackToList, "Index")
 </div>

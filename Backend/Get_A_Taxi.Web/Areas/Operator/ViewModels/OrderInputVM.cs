@@ -1,6 +1,7 @@
 ﻿namespace Get_A_Taxi.Web.Areas.Operator.ViewModels
 {
     using Get_A_Taxi.Models;
+    using Get_A_Taxi.Web.Infrastructure.LocalResource;
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
@@ -14,7 +15,7 @@
         [Required]
         public double OrderLongitude { get; set; }
         [StringLength(100)]
-        [Display(Name="Order address")]
+        [Display(Name = "OrderAddress", ResourceType = typeof(Resource))]
         public string OrderAddress { get; set; }
 
         public double DestinationLatitude { get; set; }
@@ -22,20 +23,20 @@
         public double DestinationLongitude { get; set; }
 
         [StringLength(100)]
-        [Display(Name = "Destination address")]
+        [Display(Name = "DestinationAddress", ResourceType = typeof(Resource))]
         public string DestinationAddress { get; set; }
         [Required]
         [StringLength(20)]
-        [Display(Name = "First name")]
+        [Display(Name = "FirstName", ResourceType = typeof(Resource))]
         public string FirstName { get; set; }
         [Required]
         [StringLength(20)]
-        [Display(Name = "Last name")]
+        [Display(Name = "LastName", ResourceType = typeof(Resource))]
         public string LastName { get; set; }
         [Required]
-        [Display(Name = "Phone number")]
+        [Display(Name = "PhoneNumber", ResourceType = typeof(Resource))]
         public string PhoneNumber { get; set; }
-        [Display(Name = "User comment")]
+        [Display(Name = "UserComment", ResourceType = typeof(Resource))]
         public string UserComment { get; set; }
 
         // TODO: Replace with automapper and custom mappings

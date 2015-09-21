@@ -1,9 +1,10 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource
+@using Microsoft.AspNet.Identity
 @using Get_A_Taxi.Models
 @if (Request.IsAuthenticated && User.IsInRole(UserRoles.Administrator.ToString()))
 {
     <ul class="nav navbar-nav">
-        <li>@Html.ActionLink("Administrator", "Index", "Main", new { area = "Administration" }, htmlAttributes: new { id = "adminLink" })</li>
+        <li>@Html.ActionLink(Resource.Administrator, "Index", "Main", new { area = "Administration" }, htmlAttributes: new { id = "adminLink" })</li>
     </ul>
 }
 

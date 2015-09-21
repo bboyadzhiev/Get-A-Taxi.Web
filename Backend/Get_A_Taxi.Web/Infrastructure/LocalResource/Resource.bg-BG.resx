@@ -1,0 +1,498 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>Относно</value>
+  </data>
+  <data name="Activate" xml:space="preserve">
+    <value>Активирай</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Активно</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Добави</value>
+  </data>
+  <data name="AddOrder" xml:space="preserve">
+    <value>Добави поръчка</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Адрес</value>
+  </data>
+  <data name="Administrator" xml:space="preserve">
+    <value>Администратор</value>
+  </data>
+  <data name="Alias" xml:space="preserve">
+    <value>Означение</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>Борислав Владимиров Бояджиев</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Откажи</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Коментар</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>За контакти</value>
+  </data>
+  <data name="CreateNew" xml:space="preserve">
+    <value>Създай нов</value>
+  </data>
+  <data name="Deactivate" xml:space="preserve">
+    <value>Деактивирай</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Изтрий</value>
+  </data>
+  <data name="Destination" xml:space="preserve">
+    <value>Дестинация</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Детайли</value>
+  </data>
+  <data name="District" xml:space="preserve">
+    <value>Район</value>
+  </data>
+  <data name="Driver" xml:space="preserve">
+    <value>Шофьор</value>
+  </data>
+  <data name="DriverName" xml:space="preserve">
+    <value>Име на шофьор</value>
+  </data>
+  <data name="DriversDistrict" xml:space="preserve">
+    <value>Район на шофьора</value>
+  </data>
+  <data name="DriversName" xml:space="preserve">
+    <value>Име на шофьора</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Редактирай</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>Първо име</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>От</value>
+  </data>
+  <data name="GettingStarted" xml:space="preserve">
+    <value>За системата</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Начало</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Фамилия</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>ширина</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Вход</value>
+  </data>
+  <data name="LoginSubtitle" xml:space="preserve">
+    <value>Използвай локален профил</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Изход</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>дължина</value>
+  </data>
+  <data name="Manage" xml:space="preserve">
+    <value>Управление</value>
+  </data>
+  <data name="ManageDistricts" xml:space="preserve">
+    <value>Управление на райони</value>
+  </data>
+  <data name="ManageDriver" xml:space="preserve">
+    <value>Шофьор</value>
+  </data>
+  <data name="ManageEmployees" xml:space="preserve">
+    <value>Управление на служителите</value>
+  </data>
+  <data name="Manager" xml:space="preserve">
+    <value>Мениждър</value>
+  </data>
+  <data name="ManageTaxi" xml:space="preserve">
+    <value>Такси</value>
+  </data>
+  <data name="ManageTaxies" xml:space="preserve">
+    <value>Управление на такситата</value>
+  </data>
+  <data name="ManageTaxiStands" xml:space="preserve">
+    <value>Управление на стоянките</value>
+  </data>
+  <data name="MiddleName" xml:space="preserve">
+    <value>Презиме</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Име</value>
+  </data>
+  <data name="Operator" xml:space="preserve">
+    <value>Оператор</value>
+  </data>
+  <data name="Overview" xml:space="preserve">
+    <value>Преглед</value>
+  </data>
+  <data name="OverviewTtile" xml:space="preserve">
+    <value>Илюстрация на Системата за мениджмънт на таксиметрови услуги</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Парола</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Телефон</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Телефонен номер</value>
+  </data>
+  <data name="Plate" xml:space="preserve">
+    <value>Рег. номер</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Регистрирай се</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Запиши</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Търси</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Избери</value>
+  </data>
+  <data name="StartAddress" xml:space="preserve">
+    <value>Начален адрес</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Статус</value>
+  </data>
+  <data name="Subtitle" xml:space="preserve">
+    <value>Система за мениджмънт на таксиметрови услуги</value>
+  </data>
+  <data name="Taxi" xml:space="preserve">
+    <value>Такси</value>
+  </data>
+  <data name="TaxiDistrict" xml:space="preserve">
+    <value>Район на таксито</value>
+  </data>
+  <data name="TaxisPlate" xml:space="preserve">
+    <value>Номер на колата</value>
+  </data>
+  <data name="TaxiStand" xml:space="preserve">
+    <value>Стоянка</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Име</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>До</value>
+  </data>
+  <data name="UpdateOrder" xml:space="preserve">
+    <value>Обнови</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Потребител</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Здравей</value>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>Пълно име</value>
+  </data>
+  <data name="Hello" xml:space="preserve">
+    <value>Здравей</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Запомни ме?</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Потвърди паролата</value>
+  </data>
+  <data name="AboutDiagram" xml:space="preserve">
+    <value>about-bg.svg</value>
+  </data>
+  <data name="AdminPanel" xml:space="preserve">
+    <value>Секция за администриране</value>
+  </data>
+  <data name="Assign" xml:space="preserve">
+    <value>Назначи</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Налични</value>
+  </data>
+  <data name="BackToList" xml:space="preserve">
+    <value>Обратно към списъка</value>
+  </data>
+  <data name="CancelOrder" xml:space="preserve">
+    <value>Отмени поръчката</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Затвори</value>
+  </data>
+  <data name="ConfirmChanges" xml:space="preserve">
+    <value>Потвърдете промените</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Създай</value>
+  </data>
+  <data name="DeactivateConfirm" xml:space="preserve">
+    <value>Сигурни ли сте, че желаете да деактивирате това?</value>
+  </data>
+  <data name="Decomission" xml:space="preserve">
+    <value>Бракувай</value>
+  </data>
+  <data name="DecomissionConfirm" xml:space="preserve">
+    <value>Сигурни ли сте, че желаете да бракувате това</value>
+  </data>
+  <data name="DeleteConfirm" xml:space="preserve">
+    <value>Сигурни ли сте, че желаете да изтриете това?</value>
+  </data>
+  <data name="DestinationAddress" xml:space="preserve">
+    <value>Дестинация</value>
+  </data>
+  <data name="Dismiss" xml:space="preserve">
+    <value>Освободи</value>
+  </data>
+  <data name="DismissConfirm" xml:space="preserve">
+    <value>Сигурни ли сте, че желаете да освободите този служител?</value>
+  </data>
+  <data name="Districts" xml:space="preserve">
+    <value>Райони</value>
+  </data>
+  <data name="Employee" xml:space="preserve">
+    <value>Служител</value>
+  </data>
+  <data name="Employees" xml:space="preserve">
+    <value>Служители</value>
+  </data>
+  <data name="FetchingResults" xml:space="preserve">
+    <value>Зареждане</value>
+  </data>
+  <data name="GettingStartedL31" xml:space="preserve">
+    <value>едно за таксиметровите шофьори за обслужване или създаване на поръчки</value>
+  </data>
+  <data name="GettingStartedL32" xml:space="preserve">
+    <value>едно за клиентите на системата за поръчка на такси</value>
+  </data>
+  <data name="GettingStartedLi1" xml:space="preserve">
+    <value>ASP.NET MVC Web интерфейс (този сайт),използван за администрация, мениджмънт и обслужване на обаждания към оператор</value>
+  </data>
+  <data name="GettingStartedLi2" xml:space="preserve">
+    <value>ASP.NET WebAPI,  RESTful Web API за мобилни клиенти, включва няколко SignalR Hub-а (WebSockets) за комуникация в реално време</value>
+  </data>
+  <data name="GettingStartedLi3" xml:space="preserve">
+    <value>Две Android мобилни приложения:</value>
+  </data>
+  <data name="GettingStartedP1" xml:space="preserve">
+    <value>Системата за мениджмънт на таксиметрови услуги се състои от три основни компонента:</value>
+  </data>
+  <data name="LengthError" xml:space="preserve">
+    <value>Полето {0} трябва да бъде с дължина поне {2} символа.</value>
+  </data>
+  <data name="LockedOut" xml:space="preserve">
+    <value>Заключен!</value>
+  </data>
+  <data name="LockedOutText" xml:space="preserve">
+    <value>Този профил е заключен, моля опитайте по-късно!</value>
+  </data>
+  <data name="LoginFormSubtitle" xml:space="preserve">
+    <value>Използвай локален профил</value>
+  </data>
+  <data name="LoginRegisterNewUser" xml:space="preserve">
+    <value>Регистрирай се като нов потребител</value>
+  </data>
+  <data name="LuggageSize" xml:space="preserve">
+    <value>Обем на багажника</value>
+  </data>
+  <data name="ManageEmployeesRoles" xml:space="preserve">
+    <value>Управление на ролите на служителите</value>
+  </data>
+  <data name="ManagerPanel" xml:space="preserve">
+    <value>Секция за мениджмънт</value>
+  </data>
+  <data name="NewF" xml:space="preserve">
+    <value>нова</value>
+  </data>
+  <data name="NewM" xml:space="preserve">
+    <value>нов</value>
+  </data>
+  <data name="NoOrdersToDisplay" xml:space="preserve">
+    <value>Няма налични поръчки</value>
+  </data>
+  <data name="OrderAddress" xml:space="preserve">
+    <value>Адрес на поръчка</value>
+  </data>
+  <data name="RegisterFormSubtitle" xml:space="preserve">
+    <value>Регистрирай нов потребителски профил.</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Роли</value>
+  </data>
+  <data name="SeatsCount" xml:space="preserve">
+    <value>Брой места</value>
+  </data>
+  <data name="SetEmployeeDistrict" xml:space="preserve">
+    <value>Задай район за потребителя</value>
+  </data>
+  <data name="TaxiGSM" xml:space="preserve">
+    <value>Такси-GSM</value>
+  </data>
+  <data name="TaxiStands" xml:space="preserve">
+    <value>Таксиметрови стоянки</value>
+  </data>
+  <data name="UnassignWarning" xml:space="preserve">
+    <value>Таксито ще бъде снето от назначение към шофьора! Сигурни ли сте?</value>
+  </data>
+  <data name="UserComment" xml:space="preserve">
+    <value>Коментар</value>
+  </data>
+  <data name="UserDetails" xml:space="preserve">
+    <value>Потребителски данни</value>
+  </data>
+  <data name="UserPhoto" xml:space="preserve">
+    <value>Потребителска снимка</value>
+  </data>
+  <data name="Userss" xml:space="preserve">
+    <value>Потребителски</value>
+  </data>
+  <data name="wasNotFound" xml:space="preserve">
+    <value>не беше открит!</value>
+  </data>
+  <data name="wasNotFoundM" xml:space="preserve">
+    <value>не беше открито!</value>
+  </data>
+  <data name="Zoom" xml:space="preserve">
+    <value>Увеличение</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Код</value>
+  </data>
+  <data name="ConfirmNewPassword" xml:space="preserve">
+    <value>Потвърди новата парола</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Нова парола</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Роля</value>
+  </data>
+</root>

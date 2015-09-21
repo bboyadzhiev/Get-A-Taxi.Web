@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Get_A_Taxi.Web.ViewModels.TaxiStandVM>
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource
+@model IEnumerable<Get_A_Taxi.Web.ViewModels.TaxiStandVM>
 <table class="table">
     <tr>
         <th>
@@ -39,9 +40,9 @@
             </td>
             
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.TaxiStandId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.TaxiStandId }) |
-                @Html.ActionLink("Deactivate", "Delete", new { id = item.TaxiStandId })
+                @Html.ActionLink(Resource.Edit, "Edit", new { id = item.TaxiStandId }) |
+                @Html.ActionLink(Resource.Details, "Details", new { id = item.TaxiStandId }) |
+                @Html.ActionLink(Resource.Deactivate, "Delete", new { id = item.TaxiStandId })
             </td>
         </tr>
     }

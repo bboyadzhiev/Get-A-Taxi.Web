@@ -1,10 +1,12 @@
 ﻿using Get_A_Taxi.Models;
+using Get_A_Taxi.Web.Infrastructure.LocalResource;
 using Get_A_Taxi.Web.Infrastructure.Mapping;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -18,23 +20,21 @@ namespace Get_A_Taxi.Web.ViewModels
 
         [Required]
         [StringLength(50)]
-        [DisplayName("Title")]
+        [Display(Name = "Title", ResourceType = typeof(Resource))]
         public string Title { get; set; }
 
-        [Required]
-        [DisplayName("Lat")]
        // [DisplayFormat(DataFormatString = "{0:0.000000000}", ApplyFormatInEditMode = true)]
-        public double CenterLatitude { get; set; }
         [Required]
-        [DisplayName("Lng")]
+        [Display(Name = "Latitude", ResourceType = typeof(Resource))]
+        public double CenterLatitude { get; set; }
 
       //  [DisplayFormat(DataFormatString = "{0:0.000000000}", ApplyFormatInEditMode = true)]
+        [Required]
+        [Display(Name = "Longitude", ResourceType = typeof(Resource))]
         public double CenterLongitude { get; set; }
 
         [DefaultValue(10)]
-        [DisplayName("Zoom")]
+        [Display(Name = "Zoom", ResourceType = typeof(Resource))]
         public float MapZoom { get; set; }
-
-
     }
 }

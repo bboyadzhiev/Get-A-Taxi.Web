@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Get_A_Taxi.Models;
+using Get_A_Taxi.Web.Infrastructure.LocalResource;
 using Get_A_Taxi.Web.Infrastructure.Mapping;
 using System;
 using System.Collections.Generic;
@@ -13,40 +14,42 @@ namespace Get_A_Taxi.Web.ViewModels
 {
     public class UserDetailsVM : UserVM, IMapFrom<ApplicationUser>, IHaveCustomMappings
     {
-        [Required]
-        [StringLength(20)]
-        [Display(Name = "First Name")]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
+        [StringLength(20, ErrorMessageResourceName = "AtLeastLength", MinimumLength = 2, ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
+        [Display(Name = "FirstName", ResourceType = typeof(Resource))]
         public string FirstName { get; set; }
 
-        [Required]
-        [StringLength(20)]
-        [Display(Name = "Middle Name")]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
+        [StringLength(20, ErrorMessageResourceName = "AtLeastLength", MinimumLength = 2, ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
+        [Display(Name = "MiddleName", ResourceType = typeof(Resource))]
         public string MiddleName { get; set; }
 
-        [Required]
-        [StringLength(20)]
-        [Display(Name = "Last Name")]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
+        [StringLength(20, ErrorMessageResourceName = "AtLeastLength", MinimumLength = 2, ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
+        [Display(Name = "LastName", ResourceType = typeof(Resource))]
         public string LastName { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        [Display(Name = "User Address")]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
+        [StringLength(50, ErrorMessageResourceName = "AtLeastLength", MinimumLength = 6, ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
+        [Display(Name = "Address", ResourceType = typeof(Resource))]
         public string DefaultAddress { get; set; }
 
         // !!! ////[Required]
         [HiddenInput(DisplayValue = false)]
+        [Display(Name = "SetEmployeeDistrict", ResourceType = typeof(Resource))]
         public int DistritId { get; set; }
-        [Display(Name = "Set Employees's District")]
+
+        
         public IEnumerable<SelectListItem> DistrictsList { get; set; }
 
-        [Display(Name = "User Photo")]
+        [Display(Name = "UserPhoto", ResourceType = typeof(Resource))]
         public Photo Photo { get; set; }
 
         [Required]
         [Display(Name = "employee role")]
         public string[] SelectedRoleIds { get; set; }
 
-        [Display(Name = "Set Employees's roles")]
+        [Display(Name = "Roles", ResourceType = typeof(Resource))]
         public IEnumerable<SelectListItem> UserRoles { get; set; }
 
         public UserDetailsVM()

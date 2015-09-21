@@ -3,13 +3,14 @@ using System.Web.Http;
 using System.Web.Mvc;
 using Get_A_Taxi.Web.Areas.HelpPage.ModelDescriptions;
 using Get_A_Taxi.Web.Areas.HelpPage.Models;
+using Get_A_Taxi.Web.Infrastructure.LocalResource;
 
 namespace Get_A_Taxi.Web.Areas.HelpPage.Controllers
 {
     /// <summary>
     /// The controller that will handle requests for the help page.
     /// </summary>
-    public class HelpController : Controller
+    public class HelpController : LocalizationController
     {
         private const string ErrorViewName = "Error";
 

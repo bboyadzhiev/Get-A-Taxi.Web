@@ -1,4 +1,8 @@
-﻿<h2>Manager Panel</h2>
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource;
+@{
+    ViewBag.Title = Resource.ManagerPanel;
+}
+<h2>ViewBag.Title</h2>
 
 <div class="container-liquid" style="margin:0px; padding: 0px">
     <div class="row">
@@ -8,7 +12,7 @@
                     <img src="~/Content/Images/Icons/managetaxidrivers.png" />
                     <img src="~/Content/Images/Badges/edit.png" class="buttoniconbadge" />
                 </div>
-                <h5>Manage Taxies</h5>
+                <h5>@Resource.ManageTaxies</h5>
             </div>
         </a>
         <a href="@Url.Action("Employees", "Main", new { area = "Management" })">
@@ -17,7 +21,7 @@
                     <img src="~/Content/Images/Icons/employee.png" />
                     <img src="~/Content/Images/Badges/edit.png" class="buttoniconbadge" />
                 </div>
-                <h5>Manage Employees</h5>
+                <h5>@Resource.ManageEmployees</h5>
             </div>
         </a>
     </div>
@@ -28,7 +32,7 @@
                     <img src="~/Content/Images/Icons/managetaxidrivers.png" />
                     <img src="~/Content/Images/Badges/plus.png" class="buttoniconbadge" />
                 </div>
-                <h5>Add Taxi</h5>
+                <h5>@Resource.Add @Resource.Taxi</h5>
             </div>
         </a>
         <a href="@Url.Action("Create", "Employees", new { area = "" })">
@@ -37,7 +41,7 @@
                     <img src="~/Content/Images/Icons/employee.png" />
                     <img src="~/Content/Images/Badges/plus.png" class="buttoniconbadge" />
                 </div>
-                <h5>Add Employee</h5>
+                <h5>@Resource.Add @Resource.Employee</h5>
             </div>
         </a>
     </div>

@@ -1,4 +1,5 @@
-﻿<h2>Manager Panel</h2>
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource;
+<h2>@Resource.ManagerPanel</h2>
 
 <div class="container-liquid" style="margin:0px; padding: 0px">
     <div class="row">
@@ -8,7 +9,7 @@
                     <img src="~/Content/Images/Icons/employee.png" />
                     <img src="~/Content/Images/Badges/search.png" class="buttoniconbadge" />
                 </div>
-                <h5>Search Employee</h5>
+                <h5>@Resource.Search @Resource.Employee</h5>
             </div>
         </a>
     </div>
@@ -18,7 +19,7 @@
                 <div class="buttonicon">
                     <img src="~/Content/Images/Icons/employee.png" />
                     <img src="~/Content/Images/Badges/plus.png" class="buttoniconbadge" />
-                <h5>Add Employee</h5>
+                <h5>@Resource.Add @Resource.Employee</h5>
                 </div>
             </div>
         </a>

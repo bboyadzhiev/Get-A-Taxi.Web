@@ -1,4 +1,5 @@
 ﻿using Get_A_Taxi.Models;
+using Get_A_Taxi.Web.Infrastructure.LocalResource;
 using Get_A_Taxi.Web.Infrastructure.Mapping;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,12 @@ namespace Get_A_Taxi.Web.ViewModels
         [HiddenInput(DisplayValue = false)]
         public int TaxiId { get; set; }
 
-        [Required]
-        [Display(Name = "Plate")]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
+        [Display(Name = "Plate", ResourceType = typeof(Resource))]
         [StringLength(10)]
         public string Plate { get; set; }
 
-        [Display(Name = "Taxi's District")]
+        [Display(Name = "District", ResourceType = typeof(Resource))]
         public string DistrictTitle { get; set; }
 
         //[DefaultValue(true)]
@@ -31,7 +32,7 @@ namespace Get_A_Taxi.Web.ViewModels
         //[Display(Name = "Out of service")]
         //public bool OutOfService { get; set; }
 
-        [Display(Name = "Status")]
+        [Display(Name = "Status", ResourceType = typeof(Resource))]
         public TaxiStatus Status { get; set; }
 
         public void CreateMappings(AutoMapper.IConfiguration configuration)

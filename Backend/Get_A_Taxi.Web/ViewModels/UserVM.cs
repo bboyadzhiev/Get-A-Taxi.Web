@@ -1,4 +1,5 @@
 ﻿using Get_A_Taxi.Models;
+using Get_A_Taxi.Web.Infrastructure.LocalResource;
 using Get_A_Taxi.Web.Infrastructure.Mapping;
 using System;
 using System.Collections.Generic;
@@ -15,18 +16,18 @@ namespace Get_A_Taxi.Web.ViewModels
         [HiddenInput(DisplayValue = false)]
         public string Id { get; set; }
 
-        [Display(Name = "Full Name")]
+        [Display(Name = "FullName", ResourceType = typeof(Resource))]
         public string FullName { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
         [Display(Name = "E-mail")]
         public string Email { get; set; }
 
-        [Required]
-        [Display(Name = "Phone")]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
+        [Display(Name = "PhoneNumber", ResourceType = typeof(Resource))]
         public string PhoneNumber { get; set; }
 
-        [Display(Name = "District")]
+        [Display(Name = "District", ResourceType = typeof(Resource))]
         public string District { get; set; }
 
         public virtual void CreateMappings(AutoMapper.IConfiguration configuration)

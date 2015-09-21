@@ -1,5 +1,6 @@
-﻿@model IEnumerable<Get_A_Taxi.Web.ViewModels.TaxiStandVM>
-<h2>Taxi Stands</h2>
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource;
+@model IEnumerable<Get_A_Taxi.Web.ViewModels.TaxiStandVM>
+<h2>@Resource.TaxiStands</h2>
 <div id="taxiStandsSearchPartial">
     @Html.Partial("_TaxiStandsSearchPartialView", new Get_A_Taxi.Web.ViewModels.TaxiStandVM())
 </div>
@@ -9,6 +10,6 @@
 </div>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink(Resource.Create, "Create")
 </p>
 

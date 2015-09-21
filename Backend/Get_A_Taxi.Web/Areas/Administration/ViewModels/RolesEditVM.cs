@@ -1,4 +1,5 @@
 ﻿using Get_A_Taxi.Models;
+using Get_A_Taxi.Web.Infrastructure.LocalResource;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,7 +17,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.ViewModels
         public string Id { get; set; }
 
         [Required]
-        [Display(Name="Име")]
+        [Display(Name = "Name", ResourceType = typeof(Resource))]
         public string Name { get; set; }
 
         [Required]
@@ -24,6 +25,7 @@ namespace Get_A_Taxi.Web.Areas.Administration.ViewModels
         public string Email { get; set; }
 
         [Required]
+        [Display(Name = "PhoneNumber", ResourceType = typeof(Resource))]
         public string PhoneNumber { get; set; }
 
         

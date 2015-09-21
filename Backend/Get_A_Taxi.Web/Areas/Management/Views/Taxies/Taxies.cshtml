@@ -1,6 +1,7 @@
-﻿@model IEnumerable<Get_A_Taxi.Web.ViewModels.TaxiVM>
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource;
+@model IEnumerable<Get_A_Taxi.Web.ViewModels.TaxiVM>
 @{
-    ViewBag.Title = "Manage Taxies";
+    ViewBag.Title = Resource.ManageTaxies;
 }
 
 <h2>@ViewBag.Title</h2>
@@ -15,12 +16,12 @@
 {
     <p>Search:</p>
     @Html.AntiForgeryToken()
-    <label for="plateSearchTxt">Taxi's plate</label>
-    <input type="text" id="plateSearchTxt" name="plate" oninput="searchTaxies()" title="Taxi's plate" />
-    <label for="driverSearchTxt">Driver's name</label>
-    <input type="text" id="driverSearchTxt" name="driver" oninput="searchTaxies()" title="Driver's name" />
-    <label for="districtSearchTxt">Driver's district</label>
-    <input type="text" id="districtSearchTxt" name="district" oninput="searchTaxies()" title="Driver's district" />
+    <label for="plateSearchTxt">@Resource.Plate</label>
+    <input type="text" id="plateSearchTxt" name="plate" oninput="searchTaxies()" title="@Resource.Plate" />
+    <label for="driverSearchTxt">@Resource.DriversName</label>
+    <input type="text" id="driverSearchTxt" name="driver" oninput="searchTaxies()" title="@Resource.DriversName" />
+    <label for="districtSearchTxt">@Resource.DriversDistrict</label>
+    <input type="text" id="districtSearchTxt" name="district" oninput="searchTaxies()" title="@Resource.DriversDistrict" />
 }
 
 <div id="taxiesResults">

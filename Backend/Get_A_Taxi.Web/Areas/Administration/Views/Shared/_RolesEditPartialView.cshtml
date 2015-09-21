@@ -1,11 +1,9 @@
-﻿@model Get_A_Taxi.Web.Areas.Administration.ViewModels.RolesEditVM
-@{
-    //  List<SelectListItem> userRoles = (List<SelectListItem>)ViewBag.UserRoles;
-}
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource
+@model Get_A_Taxi.Web.Areas.Administration.ViewModels.RolesEditVM
 @using (Html.BeginForm("Update", "Roles", FormMethod.Post, new { @class = "form", enctype = "multipart/form-data" }))
 {
     <fieldset>
-        <legend>User Details</legend>
+        <legend>@Resource.UserDetails</legend>
 
         @Html.AntiForgeryToken()
 
@@ -16,7 +14,7 @@
         @Html.DisplayFor(model => model.PhoneNumber) <br />
     </fieldset>
     <fieldset>
-        <legend>User Roles</legend>
+        <legend>@Resource.Userss @Resource.Roles</legend>
         @foreach (var role in Model.UserRoles)
         {
             <input type="checkbox" id="@role.Value" name="selectedRoles" value="@role.Text"
@@ -25,7 +23,7 @@
             @Html.Label(role.Text)
             <br />
         }
-        <input type="submit" value="Submit" class="btn btn-default" />
-        @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+        <input type="submit" value="@Resource.Save" class="btn btn-default" />
+        @Html.ActionLink(Resource.Cancel, "Index", null, new { @class = "btn btn-default" })
     </fieldset>
 }

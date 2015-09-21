@@ -1,13 +1,14 @@
-﻿@model IEnumerable<Get_A_Taxi.Web.ViewModels.DistrictVM>
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource;
+@model IEnumerable<Get_A_Taxi.Web.ViewModels.DistrictVM>
 
 @{
-    ViewBag.Title = "Available Districts";
+    ViewBag.Title = Resource.Available + " " + Resource.Districts;
 }
 
 <h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink(Resource.CreateNew, "Create")
 </p>
 <table class="table">
     <tr>
@@ -41,9 +42,9 @@
             @Html.DisplayFor(modelItem => item.MapZoom)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.DistrictId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.DistrictId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.DistrictId })
+            @Html.ActionLink(Resource.Edit, "Edit", new { id=item.DistrictId }) |
+            @Html.ActionLink(Resource.Details, "Details", new { id=item.DistrictId }) |
+            @Html.ActionLink(Resource.Delete, "Delete", new { id=item.DistrictId })
         </td>
     </tr>
 }

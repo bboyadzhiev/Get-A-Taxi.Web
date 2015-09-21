@@ -10,10 +10,11 @@ using System.Web.Routing;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
 using Get_A_Taxi.Web.Infrastructure.Populators;
+using Get_A_Taxi.Web.Infrastructure.LocalResource;
 
 namespace Get_A_Taxi.Web.Areas
 {
-    public class BaseController : Controller
+    public class BaseController : LocalizationController
     {
         protected IGetATaxiData Data { get; private set; }
 
@@ -69,6 +70,8 @@ namespace Get_A_Taxi.Web.Areas
                 _roleManager = value;
             }
         }
+
+      
 
         //public ICollection<SelectListItem> GetRolesSelectList()
         //{

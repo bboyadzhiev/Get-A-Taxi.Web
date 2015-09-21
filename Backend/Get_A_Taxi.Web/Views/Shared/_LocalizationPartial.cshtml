@@ -1,0 +1,11 @@
+﻿    @{
+        System.Globalization.CultureInfo currentCulture = System.Threading.Thread.CurrentThread.CurrentCulture;
+        if (currentCulture.Name == "bg-BG")
+        {
+            <li><a href="/Home/ChangeCurrentCulture/0">EN</a></li>
+        }
+        else
+        {
+            <li><a href="/Home/ChangeCurrentCulture/1">BG</a></li>
+        }
+    }

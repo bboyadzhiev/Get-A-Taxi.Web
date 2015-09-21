@@ -51,16 +51,6 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
             return View("Roles",rolesViewModel);
         }
 
-
-        //public ActionResult Search(string query)
-        //{
-        //    var accountsVM = this.services.GetAccountsByTextSearch(query);
-        //    //var roleItems = this.GetRolesSelectList();
-        //    var roleItems = this.populator.GetRoles(this.RoleManager);
-        //    ViewBag.UserRoles = roleItems;
-        //    return this.PartialView("_UsersListPartialView", accountsVM);
-        //}
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Search([Bind(Include = "FirstName,MiddleName,LastName,DistritId,SelectedRoleIds")] UserSearchVM userSearchVM)
@@ -120,33 +110,8 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
                 .FirstOrDefault();
 
             accountVM.UserRoles = roleItems;
-            return View("_RolesEditPartialView", accountVM);
+            return PartialView("_RolesEditPartialView", accountVM);
         }
-
-        //public ActionResult Details(string userId)
-        //{
-        //    var user = this.Data.Users.All().First(u => u.Id == userId);
-        //    List<string> userRoles = user.Roles.AsQueryable().Select(r => r.RoleId).ToList();
-
-        //    var roles = RoleManager.Roles.ToList();
-        //    List<SelectListItem> roleItems = new List<SelectListItem>();
-        //    foreach (var role in roles)
-        //    {
-        //        roleItems.Add(new SelectListItem
-        //        {
-        //            Text = role.Name,
-        //            Value = role.Id,
-        //            Selected = userRoles.Contains(role.Id)
-        //        });
-        //    }
-        //    var accountVM = this.Data.Users.All()
-        //        .Where(u => u.Id == userId)
-        //        .Select(AccountEditVM.FromApplicationUserModel)
-        //        .FirstOrDefault();
-
-        //    // accountVM.UserRoles = userRoles;
-        //    return View("_AccountEditPartialView", accountVM);
-        //}
 
         [HttpPost]
         [AuthorizeRoles(UserRole = UserRoles.Administrator)]
@@ -172,7 +137,6 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
             this.Data.SaveChanges();
 
             return RedirectToAction("Index");
-           //return View("Roles");
         }
     }
 }

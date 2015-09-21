@@ -1,12 +1,13 @@
-﻿@model Get_A_Taxi.Web.ViewModels.DistrictVM
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource;
+@model Get_A_Taxi.Web.ViewModels.DistrictVM
 
 @{
-    ViewBag.Title = "Delete District";
+    ViewBag.Title = Resource.Delete +" "+ Resource.District;
 }
 
 <h2>@ViewBag.Title</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>@Resource.DeleteConfirm</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -48,8 +49,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="@Resource.Delete" class="btn btn-default" /> |
+            @Html.ActionLink(Resource.BackToList, "Index")
         </div>
     }
 </div>

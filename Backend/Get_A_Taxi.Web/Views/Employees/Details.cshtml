@@ -1,14 +1,14 @@
 ﻿@using Get_A_Taxi.Models
+@using Get_A_Taxi.Web.Infrastructure.LocalResource
 @model Get_A_Taxi.Web.ViewModels.UserDetailsVM
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Resource.Details;
 }
 
-<h2>Details</h2>
+<h2>@Resource.Details</h2>
 
 <div>
-    <h4>UserDetailsVM</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -88,10 +88,10 @@
 <p>
     @if (User.IsInRole(UserRoles.Manager.ToString()))
     {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+        @Html.ActionLink(Resource.Edit, "Edit", new { id = Model.Id })
         @: |
-        @Html.ActionLink("Dismiss", "Delete", new { id = Model.Id })
+        @Html.ActionLink(Resource.Dismiss, "Delete", new { id = Model.Id })
         @: |
     }
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink(Resource.BackToList, "Index")
 </p>

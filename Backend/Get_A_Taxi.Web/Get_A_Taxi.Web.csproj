@@ -219,6 +219,38 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Areas\Administration\Controllers\DistrictsController.cs" />
+    <Compile Include="Infrastructure\LocalResource\CultureHelper.cs" />
+    <Compile Include="Infrastructure\LocalResource\Errors.bg-BG.Designer.cs">
+      <DependentUpon>Errors.bg-BG.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Infrastructure\LocalResource\Errors.en-US.Designer.cs">
+      <DependentUpon>Errors.en-US.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Infrastructure\LocalResource\Errors.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Errors.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\LocalResource\LocalizationController.cs" />
+    <Compile Include="Infrastructure\LocalResource\Resource.bg-BG.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.bg-BG.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\LocalResource\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\LocalResource\Resource.en-US.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.en-US.resx</DependentUpon>
+    </Compile>
     <Compile Include="WebAPI\IRESTController.cs" />
     <Compile Include="Areas\Administration\Controllers\RolesController.cs" />
     <Compile Include="Areas\Administration\Controllers\TaxiStandsController.cs" />
@@ -345,6 +377,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\about-bg.svg" />
     <Content Include="Content\Images\about.svg" />
     <Content Include="Content\Images\addtaxi.png" />
     <Content Include="Content\Images\addemployee.png" />
@@ -439,11 +472,9 @@
     <Content Include="Areas\Administration\Views\Main\ManageEmployees.cshtml" />
     <Content Include="Areas\Management\Views\Main\ManageEmployees.cshtml" />
     <Content Include="Scripts\getataxi.maptests.js" />
-    <Content Include="Areas\Administration\Views\Districts\Create - Copy.cshtml" />
     <Content Include="Areas\Management\Views\Shared\_DriversListPartialView.cshtml" />
     <Content Include="Areas\Operator\Views\web.config" />
     <Content Include="Areas\Operator\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Operator\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Operator\Views\Main\Index.cshtml" />
     <Content Include="Areas\Operator\Views\Shared\_AddOrderPartialView.cshtml" />
     <Content Include="Areas\Operator\Views\Shared\_CurrentOrdersPartialView.cshtml" />
@@ -520,12 +551,13 @@
     <Content Include="Views\Employees\Details.cshtml" />
     <Content Include="Views\Employees\Edit.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
-    <Content Include="Views\Employees\Index - Copy.cshtml" />
     <Content Include="Views\Shared\_UserSearchPartialView.cshtml" />
     <Content Include="Views\Shared\_OperatorPartial.cshtml" />
+    <Content Include="Views\Shared\_LocalizationPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Localization\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -543,6 +575,32 @@
       <Project>{10e14b13-f56e-4ef6-a7f7-0fa02cfe3f77}</Project>
       <Name>Get_A_Taxi.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Infrastructure\LocalResource\Errors.bg-BG.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Errors.bg-BG.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Infrastructure\LocalResource\Errors.en-US.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Errors.en-US.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Infrastructure\LocalResource\Errors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Errors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Infrastructure\LocalResource\Resource.bg-BG.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.bg-BG.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Infrastructure\LocalResource\Resource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.en-US.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Infrastructure\LocalResource\Resource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -8,11 +8,12 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Get_A_Taxi.Web.ViewModels;
 using Get_A_Taxi.Models;
+using Get_A_Taxi.Web.Infrastructure.LocalResource;
 
 namespace Get_A_Taxi.Web.Areas
 {
     [Authorize]
-    public class ManageController : Controller
+    public class ManageController : LocalizationController
     {
         public ManageController()
         {

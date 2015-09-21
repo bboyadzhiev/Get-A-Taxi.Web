@@ -1,7 +1,8 @@
-﻿@using Get_A_Taxi.Models
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource;
+@using Get_A_Taxi.Models
 @model Get_A_Taxi.Web.ViewModels.TaxiDetailsVM
 <fieldset>
-    <legend>Taxi Details</legend>
+    <legend>@Resource.Details - @Resource.Taxi</legend>
     <table>
         <tr>
             <th>@Html.LabelFor(model => model.Plate)</th>
@@ -30,7 +31,7 @@
 </fieldset>
 
 <fieldset>
-    <legend>Taxi Driver Details</legend>
+    <legend>@Resource.Details - @Resource.Driver</legend>
     @if (String.IsNullOrEmpty(Model.Driver.Id))
     {
         <h5 class="text-danger"><strong>No driver assigned!</strong></h5>
@@ -48,7 +49,7 @@
                 @Html.Hidden("taxiId", Model.TaxiId)
                 <div id="user-details">
                 </div>
-                <input type="submit" value="Assign Driver" class="btn btn-default" />
+                <input type="submit" value="@Resource.Assign @Resource.Driver" class="btn btn-default" />
             }
         </div>
 
@@ -62,7 +63,7 @@
             <div id="user-details">
                 @Html.Partial("_UserInfoPartialView", Model.Driver)
             </div>
-            <input type="submit" value="Unassign Driver" class="btn btn-default" />
+    <input type="submit" value="@Resource.Dismiss @Resource.Driver" class="btn btn-default" />
         }
     }
 </fieldset>

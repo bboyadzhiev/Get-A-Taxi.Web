@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Get_A_Taxi.Web.Infrastructure.LocalResource;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Get_A_Taxi.Web.ViewModels
@@ -28,7 +29,7 @@ namespace Get_A_Taxi.Web.ViewModels
         [Required]
         public string Provider { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Errors))]
         [Display(Name = "Code")]
         public string Code { get; set; }
         public string ReturnUrl { get; set; }
@@ -41,83 +42,85 @@ namespace Get_A_Taxi.Web.ViewModels
 
     public class ForgotViewModel
     {
-        [Required]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Errors))]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
         [Display(Name = "Email")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessageResourceName = "InvalidEmail", ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Errors))]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Password", ResourceType = typeof(Resource))]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "RememberMe", ResourceType = typeof(Resource))]
         public bool RememberMe { get; set; }
     }
 
     public class RegisterViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
+        [EmailAddress(ErrorMessageResourceName = "InvalidEmail", ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(20)]
-        [Display(Name = "First Name")]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
+        [StringLength(20, ErrorMessageResourceName = "AtLeastLength", MinimumLength = 2, ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
+        [Display(Name = "FirstName", ResourceType = typeof(Resource))]
         public string FirstName { get; set; }
-        [StringLength(20)]
-        [Display(Name = "Middle Name")]
+
+        [StringLength(20, ErrorMessageResourceName = "AtLeastLength", MinimumLength = 2, ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
+        [Display(Name = "MiddleName", ResourceType = typeof(Resource))]
         public string MiddleName { get; set; }
-        [Required]
-        [StringLength(20)]
-        [Display(Name = "Last Name")]
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
+        [StringLength(20, ErrorMessageResourceName = "AtLeastLength", MinimumLength = 2, ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
+        [Display(Name = "LastName", ResourceType = typeof(Resource))]
         public string LastName { get; set; }
 
-        [Required]
-        [Phone]
-        [Display(Name = "Phone Number")]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
+        [Phone(ErrorMessageResourceName = "InvalidPhoneNumber", ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
+        [Display(Name = "PhoneNumber", ResourceType = typeof(Resource))]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Errors))]
+        [StringLength(100, ErrorMessageResourceName = "AtLeastLength", MinimumLength = 6, ErrorMessageResourceType = typeof(Errors))]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Password", ResourceType = typeof(Resource))]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "ConfirmPassword", ResourceType = typeof(Resource))]
+        [Compare("Password", ErrorMessageResourceName = "PasswordMismatch", ErrorMessageResourceType = typeof(Errors))]
         public string ConfirmPassword { get; set; }
 
-        [Display(Name = "District")]
+        [Display(Name = "District", ResourceType = typeof(Resource))]
         public int DistritId { get; set; }
     }
 
     public class ResetPasswordViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
+        [EmailAddress(ErrorMessageResourceName = "InvalidEmail", ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessageResourceName = "AtLeastLength", MinimumLength = 6, ErrorMessageResourceType = typeof(Errors))]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Password", ResourceType = typeof(Resource))]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "ConfirmPassword", ResourceType = typeof(Resource))]
+        [Compare("Password", ErrorMessageResourceName = "PasswordMismatch", ErrorMessageResourceType = typeof(Errors))]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
@@ -125,8 +128,8 @@ namespace Get_A_Taxi.Web.ViewModels
 
     public class ForgotPasswordViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
+        [EmailAddress(ErrorMessageResourceName = "InvalidEmail", ErrorMessageResourceType = typeof(Errors), ErrorMessage = null)]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }

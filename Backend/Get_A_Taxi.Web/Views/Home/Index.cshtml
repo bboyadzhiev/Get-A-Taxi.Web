@@ -1,27 +1,28 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource
+@{
+    ViewBag.Title = Resource.Home;
 }
 
 <div class="jumbotron">
     <h1>Get-A-Taxi</h1>
-    <p class="lead">A Taxi Service Management System</p>
-    @Html.ActionLink("Overview »", "About", "Home", new { area = "" }, new { @class = "btn btn-primary btn-lg" })
+    <p class="lead">@Resource.Subtitle</p>
+    @Html.ActionLink(Resource.Overview + " »", "About", "Home", new { area = "" }, new { @class = "btn btn-primary btn-lg" })
 
 </div>
 
 <div class="row">
     <div class="col-md-12">
-        <h2>Getting started</h2>
+        <h2>@Resource.GettingStarted</h2>
         <p>
-            The management system consists of three major components:
+            @Resource.GettingStartedP1
         </p>
         <ul>
-            <li>ASP.NET MVC Web interface (this site), used for administration, management and call-in operator service </li>
-            <li>ASP.NET WebAPI, a RESTful Web API for mobile clients, includes several SignalR Hubs (WebSockets) for real-time communication and events </li>
-            <li>Two Android applications:
+            <li>@Resource.GettingStartedLi1</li>
+            <li>@Resource.GettingStartedLi2</li>
+            <li>@Resource.GettingStartedLi3
                 <ul>
-                    <li>one for the taxi drivers to serve or place an order</li>
-                    <li>one for the clients of the system for ordering a taxi</li>
+                    <li>@Resource.GettingStartedL31</li>
+                    <li>@Resource.GettingStartedL32</li>
                 </ul>
             </li>
         </ul>

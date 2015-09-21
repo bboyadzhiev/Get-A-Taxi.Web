@@ -1,5 +1,4 @@
-﻿
-@*@using (Html.BeginForm("CreateOrder", "Main", FormMethod.Post, new { id= "newOrderForm"}))*@
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource;
 @using (Ajax.BeginForm("UpdateOrder", null, new AjaxOptions
 {
     UpdateTargetId = "orderInputPartial",
@@ -11,9 +10,9 @@
     <div class="form-horizontal">
         <div id="updateOrderInputPlaceholder"></div>
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Update" class="btn btn-default" onclick="updateOrderPartial.updateOrderClick()" />
-                <input type="button" value="Close" class="btn btn-default" onclick="updateOrderPartial.closeClick()" />
+            <div class="col-md-offset-1 col-md-12">
+                <input type="button" value="@Resource.UpdateOrder" class="btn btn-default" onclick="updateOrderPartial.updateOrderClick()" />
+                <input type="button" value="@Resource.Close" class="btn btn-default" onclick="updateOrderPartial.closeClick()" />
             </div>
         </div>
     </div>
@@ -31,8 +30,8 @@
     @Html.Hidden("cancelOrderId")
     <div class="form-horizontal">
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Cancel order!" class="btn btn-default" onclick="updateOrderPartial.cancelOrderClick()" />
+            <div class="col-md-offset-1 col-md-12">
+                <input type="button" value="@Resource.CancelOrder!" class="btn btn-default" onclick="updateOrderPartial.cancelOrderClick()" />
             </div>
         </div>
     </div>

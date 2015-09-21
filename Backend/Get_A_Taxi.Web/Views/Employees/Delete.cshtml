@@ -1,14 +1,15 @@
-﻿@model Get_A_Taxi.Web.ViewModels.UserDetailsVM
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource
+@model Get_A_Taxi.Web.ViewModels.UserDetailsVM
 
 @{
-    ViewBag.Title = "Dismiss";
+    ViewBag.Title = @Resource.Dismiss;
 }
 
-<h2>Dismiss employee</h2>
+<h2>@Resource.Dismiss @Resource.Employee</h2>
 
-<h3>Are you sure you want to dismiss this employee?</h3>
+<h3>@Resource.DismissConfirm</h3>
 <div>
-    <h4>Employee details</h4>
+    <h4>@Resource.Details</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -89,8 +90,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Dismiss" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="@Resource.Dismiss" class="btn btn-default" /> |
+            @Html.ActionLink(Resource.BackToList, "Index")
         </div>
     }
 </div>

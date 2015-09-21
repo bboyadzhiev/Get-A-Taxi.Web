@@ -1,7 +1,8 @@
-﻿@model Get_A_Taxi.Web.ViewModels.DistrictVM
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource
+@model Get_A_Taxi.Web.ViewModels.DistrictVM
 
 @{
-    ViewBag.Title = "Create new District";
+    ViewBag.Title = Resource.CreateNew + " " + Resource.District;
 }
 <div id="map"></div>
 <div class="mapHoverPanel">
@@ -10,10 +11,10 @@
     <form method="post" id="geocoding_form">
         <div class="form-horizontal">
             <div class="form-group">
-                <label for="address" class="control-label col-md-2">Address:</label>
+                <label for="address" class="control-label col-md-2">@Resource.Address:</label>
                 <div class="col-md-10">
                     <input type="text" id="address" name="address" class="form-control" />
-                    <input type="submit" class="btn btn-default" value="Search" />
+                    <input type="submit" class="btn btn-default" value="@Resource.Search" title="@Resource.Search" />
                 </div>
             </div>
         </div>
@@ -28,31 +29,31 @@
 
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
-                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
                     @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.CenterLatitude, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                @Html.LabelFor(model => model.CenterLatitude, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
                     @Html.EditorFor(model => model.CenterLatitude, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.CenterLatitude, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.CenterLongitude, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                @Html.LabelFor(model => model.CenterLongitude, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
                     @Html.EditorFor(model => model.CenterLongitude, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.CenterLongitude, "", new { @class = "text-danger" })
                 </div>
             </div>
             @*<input type="button" value="getAddress" id="getAddress" class="btn btn-default" />*@
             <div class="form-group">
-                @Html.LabelFor(model => model.MapZoom, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                @Html.LabelFor(model => model.MapZoom, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
                     @Html.EditorFor(model => model.MapZoom, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.MapZoom, "", new { @class = "text-danger" })
                 </div>
@@ -60,8 +61,8 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+                    <input type="submit" value="@Resource.Create" class="btn btn-default" />
+                    @Html.ActionLink(Resource.Cancel, "Index", null, new { @class = "btn btn-default" })
                 </div>
             </div>
         </div>

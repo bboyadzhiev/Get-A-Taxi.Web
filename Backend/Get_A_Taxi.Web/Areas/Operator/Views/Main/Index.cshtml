@@ -1,4 +1,8 @@
-﻿@model Get_A_Taxi.Web.Areas.Operator.ViewModels.OrderInputVM
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource;
+@{
+    ViewBag.Title = Resource.Operator;
+}
+@model Get_A_Taxi.Web.Areas.Operator.ViewModels.OrderInputVM
 <div id="map"></div>
 <div class="mapHoverPanel" id="phoneOrderDiv">
     <div class="form-horizontal">
@@ -13,7 +17,7 @@
         {
             @Html.AntiForgeryToken()
             <div class="form-group">
-                <div class="col-md-10">
+                <div class="col-md-offset-1 col-md-12">
                     @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", id = "phoneSearchBox", oninput = "searchPane.phoneChanged()", placeholder = @Html.DisplayNameFor(m => m.PhoneNumber) } })
                 </div>
             </div>
@@ -55,9 +59,9 @@
     function zoomChanged(map) {
     }
 </script>
-    @Scripts.Render("~/bundles/knockout")
+@Scripts.Render("~/bundles/knockout")
 @Scripts.Render("~/bundles/signalr")
-    <script src="~/signalr/hubs" type="text/javascript"></script>
+<script src="~/signalr/hubs" type="text/javascript"></script>
 
 @Scripts.Render("~/bundles/gmaps.taxies")
 @Scripts.Render("~/bundles/gmaps.taxistands")

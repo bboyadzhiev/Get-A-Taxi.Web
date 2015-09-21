@@ -1,7 +1,8 @@
-﻿@model Get_A_Taxi.Web.ViewModels.DistrictVM
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource;
+@model Get_A_Taxi.Web.ViewModels.DistrictVM
 
 @{
-    ViewBag.Title = "District Details";
+    ViewBag.Title = Resource.Details;
 }
 
 <h2>@ViewBag.Title</h2>
@@ -44,6 +45,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.DistrictId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink(Resource.Edit, "Edit", new { id = Model.DistrictId }) |
+    @Html.ActionLink(Resource.BackToList, "Index")
 </p>

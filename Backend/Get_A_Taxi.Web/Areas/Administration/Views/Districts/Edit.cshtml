@@ -1,7 +1,8 @@
-﻿@model Get_A_Taxi.Web.ViewModels.DistrictVM
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource;
+@model Get_A_Taxi.Web.ViewModels.DistrictVM
 
 @{
-    ViewBag.Title = "Edit District Details";
+    ViewBag.Title = Resource.Edit + " " + Resource.District;
 }
 
 <h2>@ViewBag.Title</h2>
@@ -12,7 +13,6 @@
         @Html.AntiForgeryToken()
         @Html.HiddenFor(model=>model.DistrictId)
         <div class="form-horizontal">
-            <h4>DistrictVM</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.DistrictId)
@@ -52,7 +52,7 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Save" class="btn btn-default" />
-                    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+                    @Html.ActionLink(Resource.Cancel, "Index", null, new { @class = "btn btn-default" })
                 </div>
             </div>
         </div>

@@ -1,4 +1,5 @@
 ﻿using Get_A_Taxi.Models;
+using Get_A_Taxi.Web.Infrastructure.LocalResource;
 using Get_A_Taxi.Web.Infrastructure.Mapping;
 using System;
 using System.Collections.Generic;
@@ -14,21 +15,24 @@ namespace Get_A_Taxi.Web.ViewModels
     {
         [Required]
         [Range(1, 8)]
-        [Display(Name = "Seats count")]
+        [Display(Name = "SeatsCount", ResourceType = typeof(Resource))]
         public int Seats { get; set; }
 
         [Required]
         [Range(0, 10)]
-        [Display(Name = "Luggage size")]
+        [Display(Name = "LuggageSize", ResourceType = typeof(Resource))]
         public int Luggage { get; set; }
 
         public UserDetailsVM Driver { get; set; }
 
+        [Display(Name = "Latitude", ResourceType = typeof(Resource))]
         public double Latitude { get; set; }
+
+         [Display(Name = "Longitude", ResourceType = typeof(Resource))]
         public double Longitude { get; set; }
 
         [Required]
-        [Display(Name = "Select District")]
+        [Display(Name = "District", ResourceType = typeof(Resource))]
         public int AssignDistrictId { get; set; }
 
         public new void CreateMappings(AutoMapper.IConfiguration configuration)

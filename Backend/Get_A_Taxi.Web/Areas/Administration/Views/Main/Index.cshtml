@@ -1,4 +1,5 @@
-﻿<h2>Admin Panel</h2>
+﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource
+<h2>@Resource.AdminPanel</h2>
 
 <div class="container-liquid" style="margin:0px; padding: 0px">
     <div class="row">
@@ -8,7 +9,7 @@
                     <img src="~/Content/Images/Icons/districts.png" />
                     <img src="~/Content/Images/Badges/edit.png" class="buttoniconbadge" />
                 </div>
-                <h5>Manage Districts</h5>
+                <h5>@Resource.ManageDistricts</h5>
             </div>
         </a>
         <a href="@Url.Action("Index", "TaxiStands", new { area = "Administration"})">
@@ -17,7 +18,7 @@
                     <img src="~/Content/Images/Icons/taxistand.png" />
                     <img src="~/Content/Images/Badges/edit.png" class="buttoniconbadge" />
                 </div>
-                <h5>Manage Taxi Stands</h5>
+                <h5>@Resource.ManageTaxiStands</h5>
             </div>
         </a>
     </div>
@@ -28,7 +29,7 @@
                     <img src="~/Content/Images/Icons/employee.png" />
                     <img src="~/Content/Images/Badges/edit.png" class="buttoniconbadge" />
                 </div>
-                <h5>Manage Employees</h5>
+                <h5>@Resource.ManageEmployees</h5>
             </div>
         </a>
     </div>
