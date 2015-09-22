@@ -1,10 +1,10 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet.SignalR.Hubs;
-using AutoMapper.QueryableExtensions;
+﻿using AutoMapper.QueryableExtensions;
 using Get_A_Taxi.Web.Infrastructure.Services.HubServices;
 using Get_A_Taxi.Web.Models;
+using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Get_A_Taxi.Web.Hubs
 {

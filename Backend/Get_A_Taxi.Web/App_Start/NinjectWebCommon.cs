@@ -3,28 +3,18 @@
 
 namespace Get_A_Taxi.Web.App_Start
 {
-    using System;
-    using System.Web;
-
-    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-
-    using Ninject;
-    using Ninject.Web.Common;
-    using Get_A_Taxi.Data.Migrations;
     using Get_A_Taxi.Data;
-    using Get_A_Taxi.Web.Infrastructure.Services;
-    using Get_A_Taxi.Web.Infrastructure.Services.Contracts;
+    using Get_A_Taxi.Web.Infrastructure.Bridges;
     using Get_A_Taxi.Web.Infrastructure.Caching;
     using Get_A_Taxi.Web.Infrastructure.Populators;
-    using System.Web.Routing;
     using Get_A_Taxi.Web.Infrastructure.Services.HubServices;
-    using Microsoft.AspNet.SignalR.Hubs;
-    using Get_A_Taxi.Web.Hubs;
-    using Microsoft.AspNet.SignalR.Infrastructure;
-    using Microsoft.AspNet.SignalR;
-    using Get_A_Taxi.Web.Infrastructure.Bridges;
-    using System.Web.Http;
+    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+    using Ninject;
+    using Ninject.Web.Common;
     using Ninject.Web.WebApi;
+    using System;
+    using System.Web;
+    using System.Web.Http;
 
     public static class NinjectWebCommon
     {

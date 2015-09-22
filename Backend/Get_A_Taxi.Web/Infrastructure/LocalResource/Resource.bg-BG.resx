@@ -253,7 +253,7 @@
     <value>Преглед</value>
   </data>
   <data name="OverviewTtile" xml:space="preserve">
-    <value>Илюстрация на Системата за мениджмънт на таксиметрови услуги</value>
+    <value>Илюстрация на Системата за управление на таксиметрови услуги</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Парола</value>
@@ -286,7 +286,7 @@
     <value>Статус</value>
   </data>
   <data name="Subtitle" xml:space="preserve">
-    <value>Система за мениджмънт на таксиметрови услуги</value>
+    <value>Система за управление на таксиметрови услуги</value>
   </data>
   <data name="Taxi" xml:space="preserve">
     <value>Такси</value>
@@ -403,7 +403,7 @@
     <value>Две Android мобилни приложения:</value>
   </data>
   <data name="GettingStartedP1" xml:space="preserve">
-    <value>Системата за мениджмънт на таксиметрови услуги се състои от три основни компонента:</value>
+    <value>Системата за управление на таксиметрови услуги се състои от три основни компонента:</value>
   </data>
   <data name="LengthError" xml:space="preserve">
     <value>Полето {0} трябва да бъде с дължина поне {2} символа.</value>

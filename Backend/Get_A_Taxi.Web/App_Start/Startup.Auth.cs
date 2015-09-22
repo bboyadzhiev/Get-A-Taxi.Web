@@ -1,18 +1,13 @@
-﻿using System;
+﻿using Get_A_Taxi.Data;
+using Get_A_Taxi.Models;
+using Get_A_Taxi.Web.Infrastructure.Providers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
-using Owin;
-using Microsoft.AspNet.Identity.EntityFramework;
-
-
-using Get_A_Taxi.Web.ViewModels;
-using Get_A_Taxi.Data;
-using Get_A_Taxi.Models;
 using Microsoft.Owin.Security.OAuth;
-using Get_A_Taxi.Web.Infrastructure.Providers;
+using Owin;
+using System;
 
 namespace Get_A_Taxi.Web
 {
@@ -35,7 +30,6 @@ namespace Get_A_Taxi.Web
             PublicClientId = "self";
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
-                //TokenEndpointPath = new PathString("/Token"),
                 TokenEndpointPath = new PathString("/api/Account/login"),
                 Provider = new ApplicationOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
@@ -60,9 +54,7 @@ namespace Get_A_Taxi.Web
                     // This is a security feature which is used when you change a password or add an external login to your account.  
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
                         validateInterval: TimeSpan.FromMinutes(30),
-                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager, DefaultAuthenticationTypes.ApplicationCookie))
-                    // TODO: regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
-                    
+                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager, DefaultAuthenticationTypes.ApplicationCookie))                    
                 }
             }); 
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);

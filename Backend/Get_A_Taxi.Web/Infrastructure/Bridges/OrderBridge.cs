@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Get_A_Taxi.Web.Models;
 using Microsoft.AspNet.SignalR.Hubs;
-using Get_A_Taxi.Web.Infrastructure.Services.HubServices;
-using Get_A_Taxi.Web.Models;
+using System;
 
 namespace Get_A_Taxi.Web.Infrastructure.Bridges
 {

@@ -1,19 +1,11 @@
-﻿using Get_A_Taxi.Data.Migrations;
-using Get_A_Taxi.Web.App_Start;
+﻿using Get_A_Taxi.Web.App_Start;
 using Get_A_Taxi.Web.Hubs;
 using Get_A_Taxi.Web.Infrastructure.Bridges;
-using Get_A_Taxi.Web.Infrastructure.Services.HubServices;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.Owin;
-using Ninject;
-using Ninject.Web.WebApi;
-using Ninject.Web.WebApi.OwinHost;
-using Ninject.Web.Common.OwinHost;
 using Owin;
-using System.Web.Http;
-using System.Web.Mvc;
 
 [assembly: OwinStartupAttribute(typeof(Get_A_Taxi.Web.Startup))]
 namespace Get_A_Taxi.Web

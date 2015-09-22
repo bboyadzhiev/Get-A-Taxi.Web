@@ -1096,18 +1096,6 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="T:Get_A_Taxi.Web.Hubs.ClientsHub">
-            <summary>
-            Mobile clients hub
-            hub group is client Id
-            </summary>
-        </member>
-        <member name="M:Get_A_Taxi.Web.Hubs.ClientsHub.Open(System.String)">
-            <summary>
-            Add SignalR subscribers to clients status changes
-            </summary>
-            <param name="clientId"></param>
-        </member>
         <member name="T:Get_A_Taxi.Web.Hubs.OrdersHub">
             <summary>
             Subscribes operators and taxies to the new orders that are being placed in the district
@@ -1137,11 +1125,40 @@
         </member>
         <member name="M:Get_A_Taxi.Web.Hubs.TrackingHub.ClientLocationChanged(System.Int32,System.Double,System.Double)">
             <summary>
-            Taxi/client reports a location change to the other group member client/taxi
+            Client reports a location change to the other group member - the taxi
             </summary>
             <param name="orderId">The order's id</param>
             <param name="lat">The location's latitude</param>
             <param name="lon">The location's longitude</param>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Hubs.TrackingHub.TaxiLocationChanged(System.Int32,System.Double,System.Double)">
+            <summary>
+            Taxi reports a location change to the other group member - the client
+            </summary>
+            <param name="orderId">The order's id</param>
+            <param name="lat">The location's latitude</param>
+            <param name="lon">The location's longitude</param>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Hubs.TrackingHub.TaxiAssignedToOrder(System.Int32,System.Int32,System.String)">
+            <summary>
+            The taxi notifies the client about the order assignment
+            </summary>
+            <param name="orderId">The order's ID</param>
+            <param name="taxiId">The taxi's ID</param>
+            <param name="plate">The taxi's plate to be displayed in the client notification</param>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Hubs.TrackingHub.OrderStatusChanged(System.Int32)">
+            <summary>
+            Notification to the other participant in the order about changes in the status of the order
+            </summary>
+            <param name="orderId">The order's ID</param>
+        </member>
+        <member name="M:Get_A_Taxi.Web.Hubs.TrackingHub.Close(System.Int32)">
+            <summary>
+            Closes the connection with the hub
+            </summary>
+            <param name="orderId">The order's ID</param>
+            <returns></returns>
         </member>
         <member name="T:Get_A_Taxi.Web.Infrastructure.Bridges.ITaxiesBridge">
             <summary>

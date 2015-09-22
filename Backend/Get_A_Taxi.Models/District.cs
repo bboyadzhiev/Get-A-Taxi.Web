@@ -47,7 +47,5 @@
             this.Taxies = new HashSet<Taxi>();
             this.Orders = new HashSet<Order>();
         }
-
-       
     }
 }

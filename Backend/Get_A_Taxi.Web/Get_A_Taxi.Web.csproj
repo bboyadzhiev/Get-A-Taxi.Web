@@ -266,7 +266,6 @@
     <Compile Include="WebAPI\TaxiController.cs" />
     <Compile Include="WebAPI\TaxiOrdersController.cs" />
     <Compile Include="WebAPI\TaxiStandsController.cs" />
-    <Compile Include="Hubs\ClientsHub.cs" />
     <Compile Include="Hubs\OrdersHub.cs" />
     <Compile Include="Hubs\TaxiesHub.cs" />
     <Compile Include="Hubs\TrackingHub.cs" />

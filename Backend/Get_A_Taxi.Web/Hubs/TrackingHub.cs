@@ -25,7 +25,7 @@ namespace Get_A_Taxi.Web.Hubs
         }
 
         /// <summary>
-        /// Taxi/client reports a location change to the other group member client/taxi
+        /// Client reports a location change to the other group member - the taxi
         /// </summary>
         /// <param name="orderId">The order's id</param>
         /// <param name="lat">The location's latitude</param>
@@ -34,22 +34,43 @@ namespace Get_A_Taxi.Web.Hubs
         {
             Clients.OthersInGroup(orderId.ToString()).updateClientLocation(lat, lon);
         }
-        
+
+        /// <summary>
+        /// Taxi reports a location change to the other group member - the client
+        /// </summary>
+        /// <param name="orderId">The order's id</param>
+        /// <param name="lat">The location's latitude</param>
+        /// <param name="lon">The location's longitude</param>
         public void TaxiLocationChanged(int orderId, double lat, double lon)
         {
             Clients.OthersInGroup(orderId.ToString()).updateTaxiLocation(lat, lon);
         }
 
+        /// <summary>
+        /// The taxi notifies the client about the order assignment
+        /// </summary>
+        /// <param name="orderId">The order's ID</param>
+        /// <param name="taxiId">The taxi's ID</param>
+        /// <param name="plate">The taxi's plate to be displayed in the client notification</param>
         public void TaxiAssignedToOrder(int orderId, int taxiId, string plate)
         {
             Clients.OthersInGroup(orderId.ToString()).taxiAssigned(taxiId, plate);
         }
 
+        /// <summary>
+        /// Notification to the other participant in the order about changes in the status of the order
+        /// </summary>
+        /// <param name="orderId">The order's ID</param>
         public void OrderStatusChanged(int orderId)
         {
             Clients.OthersInGroup(orderId.ToString()).orderStatusChanged(orderId);
         }
 
+        /// <summary>
+        /// Closes the connection with the hub
+        /// </summary>
+        /// <param name="orderId">The order's ID</param>
+        /// <returns></returns>
         public Task Close(int orderId)
         {
             return Groups.Remove(Context.ConnectionId, orderId.ToString());
