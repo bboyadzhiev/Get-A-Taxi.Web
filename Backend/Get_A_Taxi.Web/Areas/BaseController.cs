@@ -21,6 +21,9 @@ namespace Get_A_Taxi.Web.Areas
         protected ApplicationUser UserProfile { get; private set; }
         protected IDropDownListPopulator populator;
 
+        private ApplicationUserManager _userManager;
+        private ApplicationRoleManager _roleManager;
+
         public BaseController(IGetATaxiData data, IDropDownListPopulator populator)
         {
             this.Data = data;
@@ -45,7 +48,6 @@ namespace Get_A_Taxi.Web.Areas
             return RedirectToAction(methodName, controllerName);
         }
 
-        private ApplicationUserManager _userManager;
         public ApplicationUserManager UserManager
         {
             get
@@ -57,8 +59,7 @@ namespace Get_A_Taxi.Web.Areas
                 _userManager = value;
             }
         }
-
-        private ApplicationRoleManager _roleManager;
+        
         public ApplicationRoleManager RoleManager
         {
             get
@@ -70,23 +71,5 @@ namespace Get_A_Taxi.Web.Areas
                 _roleManager = value;
             }
         }
-
-      
-
-        //public ICollection<SelectListItem> GetRolesSelectList()
-        //{
-        //    var roles = RoleManager.Roles.ToList();
-        //    List<SelectListItem> roleItems = new List<SelectListItem>();
-
-        //    foreach (var role in roles)
-        //    {
-        //        roleItems.Add(new SelectListItem
-        //        {
-        //            Text = role.Name,
-        //            Value = role.Id
-        //        });
-        //    }
-        //    return roleItems;
-        //}
     }
 }

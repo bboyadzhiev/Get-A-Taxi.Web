@@ -554,10 +554,7 @@
     <Content Include="Views\Shared\_OperatorPartial.cshtml" />
     <Content Include="Views\Shared\_LocalizationPartial.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Base\" />
-    <Folder Include="Views\Localization\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
