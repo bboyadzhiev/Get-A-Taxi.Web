@@ -8413,8 +8413,7 @@
 			<v:textRect cx="34.0157" cy="509.483" width="68.04" height="38.3465"/>
 			<rect x="0" y="490.31" width="68.0315" height="38.3465" class="st46"/>
 			<text x="4" y="513.68" class="st118" v:langID="1026"><v:paragraph/><v:tabList/>Сървър</text>		</g>
-		<a xlink:href="file://get-a-taxi.apphb.com/Content/Images/GetATaxi-taxi.png"
-				xlink:title="Мобилно приложение за таксиметровия автомобил">
+		<a xlink:href="GetATaxi-taxi.png" xlink:title="Мобилно приложение за таксиметровия автомобил">
 			<g id="group89-1560" transform="translate(138.543,-198.674)" v:mID="89" v:groupContext="group">
 				<title>Sheet.89</title>
 				<g id="group16-1561" v:mID="16" v:groupContext="group">
@@ -8486,7 +8485,7 @@
 				</g>
 			</g>
 		</a>
-		<a xlink:href="file://get-a-taxi.apphb.com/Content/Images/GetATaxi-client.png" xlink:title="Мобилно приложение за клиента">
+		<a xlink:href="GetATaxi-client.png" xlink:title="Мобилно приложение за клиента">
 			<g id="group679-1591" transform="translate(454.71,-199.705)" v:mID="679" v:groupContext="group">
 				<title>Sheet.679</title>
 				<g id="group35-1592" v:mID="35" v:groupContext="group">
