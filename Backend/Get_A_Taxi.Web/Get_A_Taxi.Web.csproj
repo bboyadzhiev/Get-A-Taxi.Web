@@ -492,7 +492,6 @@
     <Content Include="Areas\Administration\Views\TaxiStands\_TaxiStandsSearchPartialView.cshtml" />
     <Content Include="Content\Images\GetATaxi-client.apk" />
     <Content Include="Content\Images\GetATaxi-taxi.apk" />
-    <Content Include="Content\Images\GetATaxi-client.rar" />
     <None Include="Properties\PublishProfiles\Get-A-Taxi Local IIS.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
