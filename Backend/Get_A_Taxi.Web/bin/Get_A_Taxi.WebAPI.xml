@@ -922,6 +922,13 @@
             <param name="id">Photo's Id</param>
             <returns>Photo's data model</returns>
         </member>
+        <member name="M:Get_A_Taxi.Web.WebAPI.PhotosController.GetPaged(System.Int32)">
+            <summary>
+            Not applicable
+            </summary>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
         <member name="M:Get_A_Taxi.Web.WebAPI.PhotosController.Post(Get_A_Taxi.Web.Models.PhotoDTO)">
             <summary>
             Upload user photo

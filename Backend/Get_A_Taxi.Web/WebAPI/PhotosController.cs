@@ -87,7 +87,12 @@ namespace Get_A_Taxi.Web.WebAPI
             return Ok(photoDTO);
         }
 
-        [HttpGet]
+        /// <summary>
+        /// Not applicable
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        [NonAction]
         public IHttpActionResult GetPaged(int page)
         {
             return BadRequest();
