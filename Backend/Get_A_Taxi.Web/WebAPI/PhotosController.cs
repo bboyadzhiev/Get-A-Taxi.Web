@@ -37,16 +37,28 @@ namespace Get_A_Taxi.Web.WebAPI
         {
             var user = GetUser();
 
+            if (user.Photo == null)
+            {
+                return NotFound();
+            }
+
             var photo = this.Data.Photos
                 .All()
-                .Where(p => p.Id == user.Photo.Id)
-                .Project().To<PhotoDTO>().FirstOrDefault();
+                .Where(p => p.Id == user.Photo.Id).FirstOrDefault();
 
             if (photo == null)
             {
                 return NotFound();
             }
-            return Ok(photo);
+
+            var photoDTO = new PhotoDTO()
+            {
+                Id = photo.Id,
+                FileExtension = photo.FileExtension,
+                Content = GetString(photo.Content)
+            };
+
+            return Ok(photoDTO);
         }
 
         /// <summary>
@@ -59,20 +71,26 @@ namespace Get_A_Taxi.Web.WebAPI
         {
             var photo = this.Data.Photos
                 .All()
-                .Where(p => p.Id == id)
-                .Project().To<PhotoDTO>().FirstOrDefault();
+                .Where(p => p.Id == id).FirstOrDefault();
 
             if (photo == null)
             {
                 return NotFound();
             }
-            return Ok(photo);
+            var photoDTO = new PhotoDTO()
+            {
+                Id = photo.Id,
+                FileExtension = photo.FileExtension,
+                Content = GetString(photo.Content)
+            };
+
+            return Ok(photoDTO);
         }
 
         [HttpGet]
         public IHttpActionResult GetPaged(int page)
         {
-            throw new NotImplementedException();
+            return BadRequest();
         }
 
         /// <summary>
@@ -82,14 +100,19 @@ namespace Get_A_Taxi.Web.WebAPI
         /// <param name="model">The new photo's data model</param>
         /// <returns>The new photo's ID</returns>
         [HttpPost]
-        public IHttpActionResult Post(PhotoDTO model)
+        public IHttpActionResult Post([FromBody]PhotoDTO model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest("Invalid model state!");
             }
 
-            var photo = Mapper.Map<Photo>(model);
+            //var photo = Mapper.Map<Photo>(model);
+            var photo = new Photo()
+            {
+                FileExtension = model.FileExtension,
+                Content = GetBytes(model.Content)
+            };
             this.Data.Photos.Add(photo);
 
             var user = GetUser();
@@ -104,7 +127,7 @@ namespace Get_A_Taxi.Web.WebAPI
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut]
-        public IHttpActionResult Put(PhotoDTO model)
+        public IHttpActionResult Put([FromBody]PhotoDTO model)
         {
             if (!ModelState.IsValid)
             {
@@ -153,5 +176,23 @@ namespace Get_A_Taxi.Web.WebAPI
             this.Data.Photos.SaveChanges();
             return Ok(id);
         }
+
+        #region Helpers
+        [NonAction]
+        static byte[] GetBytes(string str)
+        {
+            byte[] bytes = new byte[str.Length * sizeof(char)];
+            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            return bytes;
+        }
+
+        [NonAction]
+        static string GetString(byte[] bytes)
+        {
+            char[] chars = new char[bytes.Length / sizeof(char)];
+            System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
+            return new string(chars);
+        }
+        #endregion
     }
 }

@@ -16,10 +16,10 @@ namespace Get_A_Taxi.Web.Models
 
         [Required]
         [JsonProperty(PropertyName = "content")]
-        public byte[] Content { get; set; }
+        public string Content { get; set; }
 
         [Required]
-        [StringLength(4)]
+        [StringLength(3)]
         [JsonProperty(PropertyName = "fileExtension")]
         public string FileExtension { get; set; }
     }

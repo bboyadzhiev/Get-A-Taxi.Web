@@ -77,7 +77,7 @@ namespace Get_A_Taxi.Data.Migrations
                     MiddleName = "Vladimirov",
                     LastName = "Boyadzhiev",
                     Email = "bboyadzhiev@gmail.com",
-                    PhoneNumber = "0888666777",
+                    PhoneNumber = "0886176803",
                     District = context.Districts.First(d=>d.Title == "Sofia")
                 };
 
@@ -98,7 +98,7 @@ namespace Get_A_Taxi.Data.Migrations
                     MiddleName = "D.",
                     LastName = "Bakshisho",
                     Email = "shisho@getataxi.com",
-                    PhoneNumber = "0111222333",
+                    PhoneNumber = "0888000111",
                     District = context.Districts.First(d => d.Title == "Sofia")
                 };
 
