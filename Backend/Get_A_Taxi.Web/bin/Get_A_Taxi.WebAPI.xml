@@ -173,6 +173,16 @@
               Looks up a localized string similar to Cancel Order.
             </summary>
         </member>
+        <member name="P:Get_A_Taxi.Web.Infrastructure.LocalResource.Resource.ChangeAccountSettings">
+            <summary>
+              Looks up a localized string similar to Change your account settings.
+            </summary>
+        </member>
+        <member name="P:Get_A_Taxi.Web.Infrastructure.LocalResource.Resource.ChangePassword">
+            <summary>
+              Looks up a localized string similar to Change Your Password.
+            </summary>
+        </member>
         <member name="P:Get_A_Taxi.Web.Infrastructure.LocalResource.Resource.Close">
             <summary>
               Looks up a localized string similar to Close.
@@ -216,6 +226,11 @@
         <member name="P:Get_A_Taxi.Web.Infrastructure.LocalResource.Resource.CreateNew">
             <summary>
               Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Get_A_Taxi.Web.Infrastructure.LocalResource.Resource.CurrentPassword">
+            <summary>
+              Looks up a localized string similar to Current Password.
             </summary>
         </member>
         <member name="P:Get_A_Taxi.Web.Infrastructure.LocalResource.Resource.Deactivate">
