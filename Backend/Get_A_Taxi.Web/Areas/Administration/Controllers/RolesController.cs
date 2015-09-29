@@ -128,7 +128,8 @@ namespace Get_A_Taxi.Web.Areas.Administration.Controllers
             var user = this.Data.Users.Find(userId.ToString());
             user.Roles.Clear();
             this.Data.SaveChanges();
-            if (selectedRoles.Length != 0) {
+            if (selectedRoles != null && selectedRoles.Length != 0)
+            {
                 foreach (string role in selectedRoles)
                 {
                     this.UserManager.AddToRole(userId.ToString(), role);
