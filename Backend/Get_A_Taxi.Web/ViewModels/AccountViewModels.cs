@@ -1,6 +1,7 @@
 ﻿using Get_A_Taxi.Web.Infrastructure.LocalResource;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace Get_A_Taxi.Web.ViewModels
 {
@@ -96,13 +97,10 @@ namespace Get_A_Taxi.Web.ViewModels
         [Display(Name = "Password", ResourceType = typeof(Resource))]
         public string Password { get; set; }
 
+        [System.Web.Mvc.CompareAttribute("Password", ErrorMessageResourceName = "PasswordMismatch", ErrorMessageResourceType = typeof(Errors))]
         [DataType(DataType.Password)]
         [Display(Name = "ConfirmPassword", ResourceType = typeof(Resource))]
-        [Compare("Password", ErrorMessageResourceName = "PasswordMismatch", ErrorMessageResourceType = typeof(Errors))]
         public string ConfirmPassword { get; set; }
-
-        [Display(Name = "District", ResourceType = typeof(Resource))]
-        public int DistritId { get; set; }
     }
 
     public class ResetPasswordViewModel
@@ -120,7 +118,7 @@ namespace Get_A_Taxi.Web.ViewModels
 
         [DataType(DataType.Password)]
         [Display(Name = "ConfirmPassword", ResourceType = typeof(Resource))]
-        [Compare("Password", ErrorMessageResourceName = "PasswordMismatch", ErrorMessageResourceType = typeof(Errors))]
+        [System.Web.Mvc.CompareAttribute("Password", ErrorMessageResourceName = "PasswordMismatch", ErrorMessageResourceType = typeof(Errors))]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
