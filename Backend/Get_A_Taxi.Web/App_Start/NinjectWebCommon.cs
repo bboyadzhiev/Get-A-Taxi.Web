@@ -69,6 +69,7 @@ namespace Get_A_Taxi.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            //kernel.Bind<IGetATaxiData>().To<GetATaxiData>();
             kernel.Bind<IGetATaxiData>().To<GetATaxiData>();
 
             kernel.Bind<ICacheService>().To<InMemoryCache>();

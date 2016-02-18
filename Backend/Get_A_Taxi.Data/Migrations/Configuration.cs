@@ -87,11 +87,32 @@ namespace Get_A_Taxi.Data.Migrations
                 manager.AddToRole(user.Id, UserRoles.Operator.ToString());
             }
 
+            if (!context.Users.Any(u => u.UserName == "jack@getataxi.com"))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+
+                var demoManager = new ApplicationUser
+                {
+                    UserName = "jack@getataxi.com",
+                    FirstName = "Jasper",
+                    MiddleName = "Newton",
+                    LastName = "Daniel",
+                    Email = "jack@getataxi.com",
+                    PhoneNumber = "0888333111",
+                    District = context.Districts.First(d => d.Title == "Sofia")
+                };
+
+                manager.Create(demoManager, "JackDaniels");
+                manager.AddToRole(demoManager.Id, UserRoles.Manager.ToString());
+            }
+#if DEBUG
             if (!context.Users.Any(u => u.UserName == "shisho@getataxi.com"))
             {
                 var store = new UserStore<ApplicationUser>(context);
                 var manager = new UserManager<ApplicationUser>(store);
-                var user = new ApplicationUser
+
+                var demoDriver = new ApplicationUser
                 {
                     UserName = "shisho@getataxi.com",
                     FirstName = "Shisho",
@@ -102,9 +123,49 @@ namespace Get_A_Taxi.Data.Migrations
                     District = context.Districts.First(d => d.Title == "Sofia")
                 };
 
-                manager.Create(user, "shisho");
-                manager.AddToRole(user.Id, UserRoles.Driver.ToString());
+                manager.Create(demoDriver, "shisho");
+                manager.AddToRole(demoDriver.Id, UserRoles.Driver.ToString());
             }
+
+            if (!context.Users.Any(u => u.UserName == "maryjane@getataxi.com"))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                var demoOperator1 = new ApplicationUser
+                {
+                    UserName = "maryjane@getataxi.com",
+                    FirstName = "Mary",
+                    MiddleName = "Jane",
+                    LastName = "Watson",
+                    Email = "maryjane@getataxi.com",
+                    PhoneNumber = "0888222555",
+                    District = context.Districts.First(d => d.Title == "Sofia")
+                };
+
+                manager.Create(demoOperator1, "maryjane");
+                manager.AddToRole(demoOperator1.Id, UserRoles.Operator.ToString());
+            }
+
+            if (!context.Users.Any(u => u.UserName == "charlie@getataxi.com"))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+
+                var demoOperator2 = new ApplicationUser
+                {
+                    UserName = "charlie@getataxi.com",
+                    FirstName = "Charlie",
+                    MiddleName = "Donathan",
+                    LastName = "Doe",
+                    Email = "charlie@getataxi.com",
+                    PhoneNumber = "0888222666",
+                    District = context.Districts.First(d => d.Title == "Sofia")
+                };
+
+                manager.Create(demoOperator2, "charlie");
+                manager.AddToRole(demoOperator2.Id, UserRoles.Operator.ToString());
+            }
+#endif
         }
     }
 }

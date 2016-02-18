@@ -25,6 +25,17 @@
                     <li>@Resource.GettingStartedL32</li>
                 </ul>
             </li>
+            @if (HttpContext.Current.IsDebuggingEnabled) 
+            { 
+            <li>Demo accounts
+                <ul>
+                    <li>Jasper Newton Daniel - Manager / login: jack@getataxi.com / pass: JackDaniels</li>
+                    <li>Shisho D. Bakshisho - Driver/ login: shisho@getataxi.com / pass: shisho	</li>
+                    <li>Mary Jane - Operator / login: maryjane@getataxi.com / pass: maryjane</li>
+                    <li>Charlie Donathan Doe - Operator / login: charlie@getataxi.com / pass: charlie</li>
+                </ul>
+            </li>
+            }
         </ul>
     </div>
    

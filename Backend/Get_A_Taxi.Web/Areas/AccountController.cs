@@ -263,6 +263,14 @@ namespace Get_A_Taxi.Web.Areas
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
+#if DEBUG
+            if (user.District != null)
+            {
+                TempData["Error"] = "Cannot reset password on this user!";
+                return RedirectToAction("ResetPasswordConfirmation", "Account");
+            }
+#endif   
+
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
