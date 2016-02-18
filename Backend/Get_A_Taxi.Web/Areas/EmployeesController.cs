@@ -125,7 +125,6 @@ namespace Get_A_Taxi.Web.Areas
                     UserManager.SendEmail(employee.Id, "Welcome, " + employee.FirstName + " " + employee.LastName, "Your password is: " + password);
 #if DEBUG
                     TempData["Error"] = "New employee created: "+ employee.FirstName + " " + employee.LastName + " Password is: " + password;
-                    return RedirectToAction("ResetPasswordConfirmation", "Account");
 #endif   
                 }
                 return RedirectToAction("Index");
