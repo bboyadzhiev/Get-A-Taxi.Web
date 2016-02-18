@@ -14,9 +14,10 @@ namespace Get_A_Taxi.Web.Areas
     {
         public ActionResult Index()
         {
-#if DEBUG
-            ViewBag.Message = "Demo enabled!";
-#endif
+            if (HttpContext.IsDebuggingEnabled)
+            {
+                ViewBag.Message = "Demo mode!";
+            }
             return View();
         }
 

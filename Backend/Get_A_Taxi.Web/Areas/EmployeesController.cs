@@ -107,10 +107,13 @@ namespace Get_A_Taxi.Web.Areas
             {
 
                 var password = this.services.CreatePassword(15);
-#if DEBUG
-                password = "passW0RD";
-                userDetailsVM.FirstName = "_" + userDetailsVM.FirstName ;
-#endif
+
+                if (HttpContext.IsDebuggingEnabled)
+                {
+                    password = "passW0RD";
+                    userDetailsVM.FirstName = "_" + userDetailsVM.FirstName;
+                }
+
                 ApplicationUser employee = new ApplicationUser() { UserName = userDetailsVM.Email };
                 var id = employee.Id;
                 Mapper.Map<UserDetailsVM, ApplicationUser>(userDetailsVM, employee);
@@ -123,9 +126,11 @@ namespace Get_A_Taxi.Web.Areas
                     UpdateUserDistrict(userDetailsVM.DistritId, id);
                     UpdateUserRoles(userDetailsVM.SelectedRoleIds, id);
                     UserManager.SendEmail(employee.Id, "Welcome, " + employee.FirstName + " " + employee.LastName, "Your password is: " + password);
-#if DEBUG
-                    TempData["Error"] = "New employee created: "+ employee.FirstName + " " + employee.LastName + " Password is: " + password;
-#endif   
+
+                    if (HttpContext.IsDebuggingEnabled)
+                    {
+                        TempData["Error"] = "New employee created: " + employee.FirstName + " " + employee.LastName + " Password is: " + password;
+                    }
                 }
                 return RedirectToAction("Index");
             }

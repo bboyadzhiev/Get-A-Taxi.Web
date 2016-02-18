@@ -106,7 +106,7 @@ namespace Get_A_Taxi.Data.Migrations
                 manager.Create(demoManager, "JackDaniels");
                 manager.AddToRole(demoManager.Id, UserRoles.Manager.ToString());
             }
-#if DEBUG
+
             if (!context.Users.Any(u => u.UserName == "shisho@getataxi.com"))
             {
                 var store = new UserStore<ApplicationUser>(context);
@@ -165,7 +165,6 @@ namespace Get_A_Taxi.Data.Migrations
                 manager.Create(demoOperator2, "charlie");
                 manager.AddToRole(demoOperator2.Id, UserRoles.Operator.ToString());
             }
-#endif
         }
     }
 }
