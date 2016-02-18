@@ -12,6 +12,8 @@ using Get_A_Taxi.Web.ViewModels;
 using Get_A_Taxi.Models;
 using Get_A_Taxi.Web.Infrastructure.Populators;
 using Get_A_Taxi.Web.Infrastructure.LocalResource;
+using Recaptcha.Web;
+using Recaptcha.Web.Mvc;
 
 namespace Get_A_Taxi.Web.Areas
 {
@@ -74,6 +76,22 @@ namespace Get_A_Taxi.Web.Areas
             if (!ModelState.IsValid)
             {
                 return View(model);
+            }
+
+            // reCaptcha
+            RecaptchaVerificationHelper recaptchaHelper = this.GetRecaptchaVerificationHelper();
+
+            if (String.IsNullOrEmpty(recaptchaHelper.Response))
+            {
+                ModelState.AddModelError("", "Captcha answer cannot be empty.");
+                return View(model);
+            }
+
+            RecaptchaVerificationResult recaptchaResult = await recaptchaHelper.VerifyRecaptchaResponseTaskAsync();
+
+            if (recaptchaResult != RecaptchaVerificationResult.Success)
+            {
+                ModelState.AddModelError("", "Incorrect captcha answer.");
             }
 
             // This doesn't count login failures towards account lockout
@@ -147,7 +165,6 @@ namespace Get_A_Taxi.Web.Areas
         [AllowAnonymous]
         public ActionResult Register()
         {
-            ViewBag.DistrictsList = this._populator.GetNullableDistricts();
             return View();
         }
 
@@ -158,6 +175,22 @@ namespace Get_A_Taxi.Web.Areas
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            // reCaptcha
+            RecaptchaVerificationHelper recaptchaHelper = this.GetRecaptchaVerificationHelper();
+
+            if (String.IsNullOrEmpty(recaptchaHelper.Response))
+            {
+                ModelState.AddModelError("", "Captcha answer cannot be empty.");
+                return View(model);
+            }
+
+            RecaptchaVerificationResult recaptchaResult = await recaptchaHelper.VerifyRecaptchaResponseTaskAsync();
+
+            if (recaptchaResult != RecaptchaVerificationResult.Success)
+            {
+                ModelState.AddModelError("", "Incorrect captcha answer.");
+            }
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, MiddleName = model.MiddleName, LastName = model.LastName, PhoneNumber = model.PhoneNumber };

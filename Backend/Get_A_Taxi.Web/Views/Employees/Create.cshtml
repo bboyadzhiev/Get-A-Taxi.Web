@@ -79,19 +79,6 @@
                     @Html.ValidationMessageFor(model => model.SelectedRoleIds, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-        @*<div class="form-group">
-            <div class="col-md-10">
-                @foreach (var role in Model.UserRoles)
-                {
-                    <input type="checkbox" id="@role.Value" name="selectedRoles" value="@role.Text"
-                           @if (role.Selected) { @: checked="checked"
-                                                                                                                                                              } />
-                    @Html.Label(role.Text)
-                    <br />
-                }
-            </div>
-        </div>*@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="@Resource.Create" class="btn btn-default" />
