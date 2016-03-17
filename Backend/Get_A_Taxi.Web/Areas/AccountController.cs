@@ -14,11 +14,12 @@ using Get_A_Taxi.Web.Infrastructure.Populators;
 using Get_A_Taxi.Web.Infrastructure.LocalResource;
 using Recaptcha.Web;
 using Recaptcha.Web.Mvc;
+using Get_A_Taxi.Web.Infrastructure.Security;
 
 namespace Get_A_Taxi.Web.Areas
 {
     [Authorize]
-    [RequireHttps]
+    [RequireHttpsCustom]
     public class AccountController : LocalizationController
     {
         private ApplicationUserManager _userManager;

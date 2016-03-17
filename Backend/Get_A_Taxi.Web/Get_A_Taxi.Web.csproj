@@ -255,6 +255,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.en-US.resx</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Security\RequireHttpsCustom.cs" />
     <Compile Include="WebAPI\IRESTController.cs" />
     <Compile Include="Areas\Administration\Controllers\RolesController.cs" />
     <Compile Include="Areas\Administration\Controllers\TaxiStandsController.cs" />
