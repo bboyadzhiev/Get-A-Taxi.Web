@@ -18,6 +18,7 @@ using Recaptcha.Web.Mvc;
 namespace Get_A_Taxi.Web.Areas
 {
     [Authorize]
+    [RequireHttps]
     public class AccountController : LocalizationController
     {
         private ApplicationUserManager _userManager;
