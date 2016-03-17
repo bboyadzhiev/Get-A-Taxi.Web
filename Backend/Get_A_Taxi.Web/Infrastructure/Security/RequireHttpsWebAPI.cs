@@ -10,7 +10,7 @@ namespace Get_A_Taxi.Web.Infrastructure.Security
 {
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public class RequireHttpsCustom : AuthorizationFilterAttribute
+    public class RequireHttpsWebAPI : AuthorizationFilterAttribute
     {
         public override void OnAuthorization(HttpActionContext actionContext)
         {
