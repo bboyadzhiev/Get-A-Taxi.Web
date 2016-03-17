@@ -413,6 +413,11 @@
               Looks up a localized string similar to The {0} must be at least {2} characters long..
             </summary>
         </member>
+        <member name="P:Get_A_Taxi.Web.Infrastructure.LocalResource.Resource.LinkedInAltText">
+            <summary>
+              Looks up a localized string similar to View my LinkedIn profile.
+            </summary>
+        </member>
         <member name="P:Get_A_Taxi.Web.Infrastructure.LocalResource.Resource.LockedOut">
             <summary>
               Looks up a localized string similar to .

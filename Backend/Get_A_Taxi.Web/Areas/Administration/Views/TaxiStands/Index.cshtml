@@ -1,5 +1,8 @@
 ﻿@using Get_A_Taxi.Web.Infrastructure.LocalResource;
 @model IEnumerable<Get_A_Taxi.Web.ViewModels.TaxiStandVM>
+@{
+    ViewBag.Title = Resource.TaxiStands;
+}
 <h2>@Resource.TaxiStands</h2>
 <div id="taxiStandsSearchPartial">
     @Html.Partial("_TaxiStandsSearchPartialView", new Get_A_Taxi.Web.ViewModels.TaxiStandVM())
