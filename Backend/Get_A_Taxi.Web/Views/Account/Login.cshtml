@@ -40,7 +40,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        @Html.Recaptcha(theme: Recaptcha.Web.RecaptchaTheme.Clean, useSsl: Recaptcha.Web.SslBehavior.SameAsRequestUrl)
+                        @Html.Recaptcha(theme: Recaptcha.Web.RecaptchaTheme.Clean, useSsl: Recaptcha.Web.SslBehavior.AlwaysUseSsl)
                     </div>
                     <div class="col-md-offset-2 col-md-10">
                         <input type="submit" value="@Resource.Login" class="btn btn-default" />
