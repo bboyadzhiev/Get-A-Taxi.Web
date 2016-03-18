@@ -504,4 +504,7 @@
   <data name="ChangePassword" xml:space="preserve">
     <value>Change Your Password</value>
   </data>
+  <data name="LinkedInAltText" xml:space="preserve">
+    <value>View my LinkedIn profile</value>
+  </data>
 </root>

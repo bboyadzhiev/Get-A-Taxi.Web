@@ -504,4 +504,7 @@
   <data name="ChangeAccountSettings" xml:space="preserve">
     <value>Промени настройките на профила си</value>
   </data>
+  <data name="LinkedInAltText" xml:space="preserve">
+    <value>Виж профила ми в LinkedIn</value>
+  </data>
 </root>
