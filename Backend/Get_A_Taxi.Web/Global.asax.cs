@@ -26,5 +26,7 @@ namespace Get_A_Taxi.Web
             ModelBinders.Binders.Add(typeof(decimal), new DecimalModelBinder());
             ModelBinders.Binders.Add(typeof(double), new DoubleModelBinder());
         }
+
+        
     }
 }
