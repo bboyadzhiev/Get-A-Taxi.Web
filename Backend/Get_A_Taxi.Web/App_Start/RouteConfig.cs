@@ -13,11 +13,21 @@ namespace Get_A_Taxi.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.IgnoreRoute("{desklineweb4}/{*pathInfo}", new { desklineweb4 = @"deskline*.*" });
+
+            routes.IgnoreRoute("{proxytest}/{*pathInfo}", new { proxytest = @"proxytest*.*" });
+
+          //  routes.MapRoute(
+          //    name: "ReverseProxy",
+          //    url: "proxytest/{controller}/{action}/{id}",
+          //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+          //);
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+           
         }
     }
 }
