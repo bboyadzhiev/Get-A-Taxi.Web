@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape ("http://www.inkscape.org/") -->
+<svg
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:cc="http://creativecommons.org/ns#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:ns1="http://sozi.baierouge.fr"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    id="svg689"
+    sodipodi:docname="kaboom.svg"
+    viewBox="0 0 647.15 641.63"
+    sodipodi:version="0.32"
+    version="1.0"
+    inkscape:output_extension="org.inkscape.output.svg.inkscape"
+    inkscape:version="0.46"
+    sodipodi:docbase="."
+  >
+  <sodipodi:namedview
+      id="base"
+      bordercolor="#666666"
+      inkscape:pageshadow="2"
+      inkscape:window-width="1024"
+      pagecolor="#ffffff"
+      inkscape:zoom="0.30699067"
+      inkscape:window-x="88"
+      showgrid="false"
+      borderopacity="1.0"
+      inkscape:current-layer="svg689"
+      inkscape:cx="304.2856"
+      inkscape:cy="566.07513"
+      inkscape:window-y="45"
+      inkscape:window-height="721"
+      inkscape:pageopacity="0.0"
+  />
+  <g
+      id="g1027"
+      transform="translate(-55.208 -67.309)"
+    >
+    <path
+        id="path693"
+        sodipodi:rx="296.55078"
+        sodipodi:ry="296.55078"
+        style="fill-rule:evenodd;stroke:#e71818;stroke-width:62.185;fill:#ffffff"
+        sodipodi:type="arc"
+        d="m676.6 393.04a296.55 296.55 0 1 1 -593.1 0 296.55 296.55 0 1 1 593.1 0z"
+        transform="matrix(.98802 0 0 .97872 3.289 3.4472)"
+        sodipodi:cy="393.04056"
+        sodipodi:cx="380.04565"
+    />
+    <path
+        id="path1026"
+        sodipodi:nodetypes="ccccccccccc"
+        style="fill-rule:evenodd;fill:#fed420"
+        d="m303.35 377.46c-37.67 15.27-86.53 16.29-83.47-54.96-34.61-38.69-22.4-74.31 28.5-86.53 1.02-19.34 29.52-57 71.25-22.39-10.17-33.6 49.88-73.3 76.35-16.29 5.09-18.32 62.1-44.79 68.2 17.3 15.27-14.25 53.95-12.21 47.85 32.58 26.46-13.24 63.11 22.39 30.53 50.89 21.38 13.24 19.35 59.05-27.48 60.06-4.07 14.25-18.32 28.51-39.7 28.51-43.77-11.2-131.31-13.24-131.31-13.24"
+    />
+    <path
+        id="path1004"
+        sodipodi:nodetypes="cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        style="stroke-width:3pt;fill-rule:evenodd"
+        d="m308.5 364.26c-4.14 0-8.09 0.83-11.66 2.35-3.57 1.51-6.78 3.69-9.48 6.4-2.69 2.72-5.61 8.96-6.37 12.78l-14.86 65.4c-10.24 0.84-18.27 9.29-18.27 19.81v57.53c0 8.04 4.7 14.91 11.47 18.09v15.91 22.75 3.31c4.18 6.25 11.29 10.35 19.33 10.35 8.84 0 16.45-4.99 20.39-12.28v-1.38-20.75-15.47c18.94 0.84 38.53 1.4 58.52 1.69v0.03c6.61 0.07 13.03 0.22 19.73 0.22h1.5 1.46c6.71 0 13.12-0.15 19.73-0.22v-0.06c20-0.29 39.58-0.82 58.52-1.66v15.47 20.75 1.38c3.94 7.29 11.56 12.28 20.39 12.28 8.04 0 15.15-4.07 19.33-10.32v-3.34-22.75-15.91c6.77-3.18 11.47-10.05 11.47-18.09v-57.53c0-10.52-8.03-18.97-18.27-19.81l-14.86-65.4c-0.76-3.82-3.67-10.06-6.37-12.78-2.7-2.71-5.91-4.89-9.48-6.4-3.57-1.52-7.52-2.35-11.65-2.35h-49.08-42.42-49.07zm46.61 17.68c5.56-0.02 13.29 0.07 23.62 0.28 42.56-0.84 35.68 0.62 54.21 0.62 4.68 0 9.89 0.92 13.95 2.13s8.34 3.09 11.41 5.25c3.07 2.15 7.45 5.8 8.67 10.87 0 0 6.09 20.27 6.56 27.44 0.2 3.21-1.24 5.07-1.62 5.75-0.76 1.35-2.1 2.73-3.73 3.53-2.22 1.03-2.62 1.06-5.47 1.38-2.12 0.26-4.97 0.4-7.24 0.4-9.5-0.74-40.82-2.07-76.61-2.71-36.05 0.66-70.07 2.46-79.59 3.21-9.09 0-16.44-6.62-14.83-14.4l6-24.6c1.08-5.1 5.6-8.72 8.67-10.87 3.07-2.16 7.35-4.04 11.41-5.25 4.05-1.21 9.27-2.13 13.95-2.13 14.04 0 13.31-0.86 30.64-0.9zm-74.55 82.84c9.22 0 16.68 7.51 16.68 16.78s-7.46 16.82-16.68 16.82c-9.23-0.01-16.73-7.55-16.73-16.82s7.5-16.78 16.73-16.78zm196.14 0c9.22 0 16.69 7.51 16.69 16.78s-7.47 16.82-16.69 16.82c-9.22-0.01-16.72-7.55-16.72-16.82s7.5-16.78 16.72-16.78zm-101.76 16.03c25.48 0 49.18 1.14 70.37 2.94v7.25h-133.15v-7.94c19.22-1.41 40.38-2.25 62.78-2.25zm-62.78 20.88h133.15v10.15h-133.15v-10.15zm0 21.12h133.15v6c-21.19 1.81-44.89 2.94-70.37 2.94-22.4 0-43.56-0.83-62.78-2.25v-6.69z"
+    />
+    <path
+        id="path1011"
+        sodipodi:nodetypes="cccccccccccccccccccccccccccccsc"
+        style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;fill:#000000"
+        d="m366.64 353.36c-17.81-11.19-14.94-12.54-19.52-20.18-4.58-7.63-4.58-17.81-15.78-24.43 4.64-2.47 19.22-1.61 25 0.39 5.6 2.55-4.1-3.62-7.15-13.8-3.06-10.18-2.55-22.21 1.52-27.3 1.74 5.7 5.57 14.76 12.19 19.34 6.61 4.58-2.04-6.11-2.04-15.78s3.06-17.82 3.06-20.87 3.77 9.82 7.33 11.35c2.12-0.1 0.87 0.27 2.91-5.84 2.03-6.11 4.91-7.61 4.91-22.37 2.52 7.2 8.56 15.72 7.54 27.43s-2.91 16.97-5.9 23.02c-4.07 4.07 14.61-10.62 17.22-19.64 2.43 3.22 3.73 22.4-3.48 30.84-0.73 4.12 13.96-2.66 18.03-6.73 0.83 6.54-0.21 22-13.95 33.2-4.93 3.82 11.19 1.01 13.74-2.55 2.54-3.56-3.54 32.25-33.57 34.28 1.68-2.04 6.04-5.71 6.47-9.51-3.71-0.21-5.77 0.9-8.49-0.05 2.5-1.48 9.44-10.43 9.13-12.8-3.19 2.12-4.63 2.54-7.18 2.31 0.83-2.84 5.69-9.05 3.56-19.21-1.33 1.59-4.25 4.16-4.38 3.68-0.94-2.52-2.64-5.7-4.23-7.21-3.85 5.88-6.19 18.04-5.91 24.82-2.52-2.11-2.96-2.41-6.13-2.74 3.29 4.01 4.39 10.96 4.21 14.57-0.11 2.06 0.76 6.04 0.89 5.78z"
+    />
+    <path
+        id="path1012"
+        style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;fill:#000000"
+        d="m402.09 226.81l10.18-14.25 16.28 11.7-5.59 7.64-20.87-5.09z"
+    />
+    <path
+        id="path1013"
+        style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;fill:#000000"
+        d="m345.59 217.65v4.58l7.13 7.63 10.69 1.53-0.51-13.74h-17.31z"
+    />
+    <path
+        id="path1014"
+        style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;fill:#000000"
+        d="m420.92 284.32v7.13h12.22l0.5-6.62-12.72-0.51z"
+    />
+    <path
+        id="path1015"
+        style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;fill:#000000"
+        d="m424.48 264.47l2.04 4.07 71.76-44.79-7.63-9.67-66.17 50.39z"
+    />
+    <path
+        id="path1016"
+        style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;fill:#000000"
+        d="m486.07 254.29l-0.51 17.31 22.39-0.51 0.51-8.14-22.39-8.66z"
+    />
+    <path
+        id="path1017"
+        style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;fill:#000000"
+        d="m522.71 276.69l-92.12 41.73 1.53 7.64 95.68-24.94s-11.7-2.04-9.67-4.07c2.04-2.04 5.09-19.34 4.58-20.36z"
+    />
+    <path
+        id="path1018"
+        style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;fill:#000000"
+        d="m501.85 338.78l2.54 9.67-72.27 7.13v-6.11l69.73-10.69z"
+    />
+    <path
+        id="path1019"
+        style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;fill:#000000"
+        d="m408.71 349.47l5.59-5.09 5.6 4.58-5.09 6.62-6.1-6.11z"
+    />
+    <path
+        id="path1020"
+        style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;fill:#000000"
+        d="m229.55 349.98l67.69 7.13 4.07-3.57-58.53-15.78 2.04 5.6-15.27 6.62z"
+    />
+    <path
+        id="path1021"
+        style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;fill:#000000"
+        d="m251.43 307.74h13.74v-7.13l54.46 38.17-3.56 5.6-64.64-36.64z"
+    />
+    <path
+        id="path1022"
+        style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;fill:#000000"
+        d="m239.73 298.57l-23.93-24.94 12.73-10.68 17.81 29.01-6.61 6.61z"
+    />
+    <path
+        id="path1023"
+        style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;fill:#000000"
+        d="m242.78 258.87l11.71-8.14 70.23 57.01-5.09 6.61-76.85-55.48z"
+    />
+    <path
+        id="path1024"
+        style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;fill:#000000"
+        d="m271.79 218.16l17.31 8.65 1.52-8.15 32.58 64.64-5.09 2.04-46.32-67.18z"
+    />
+    <path
+        id="path1025"
+        style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;fill:#000000"
+        d="m328.8 357.11l-5.6-3.57 6.61-4.58 19.85 0.51 4.08 3.56-5.09 3.57-19.85 0.51z"
+    />
+  </g
+  >
+  
+  
+    <rdf:RDF
+      >
+      <cc:Work
+        >
+        <dc:format
+          >image/svg+xml</dc:format
+        >
+        <dc:type
+            rdf:resource="http://purl.org/dc/dcmitype/StillImage"
+        />
+        <cc:license
+            rdf:resource="http://creativecommons.org/licenses/publicdomain/"
+        />
+        <dc:publisher
+          >
+          <cc:Agent
+              rdf:about="http://openclipart.org/"
+            >
+            <dc:title
+              >Openclipart</dc:title
+            >
+          </cc:Agent
+          >
+        </dc:publisher
+        >
+        <dc:title
+          >Roadsign Kaboom</dc:title
+        >
+        <dc:date
+          >2009-11-02T08:18:07</dc:date
+        >
+        <dc:description
+          >Roadsign with an exploding car by John Cliff. From OCAL 0.18 release.</dc:description
+        >
+        <dc:source
+          >https://openclipart.org/detail/28015/roadsign-kaboom-by-anonymous</dc:source
+        >
+        <dc:creator
+          >
+          <cc:Agent
+            >
+            <dc:title
+              >Anonymous</dc:title
+            >
+          </cc:Agent
+          >
+        </dc:creator
+        >
+        <dc:subject
+          >
+          <rdf:Bag
+            >
+            <rdf:li
+              >car</rdf:li
+            >
+            <rdf:li
+              >danger</rdf:li
+            >
+            <rdf:li
+              >explosion</rdf:li
+            >
+            <rdf:li
+              >explosive</rdf:li
+            >
+            <rdf:li
+              >forbidden</rdf:li
+            >
+            <rdf:li
+              >prohibited</rdf:li
+            >
+            <rdf:li
+              >roadsign</rdf:li
+            >
+            <rdf:li
+              >sign</rdf:li
+            >
+            <rdf:li
+              >vehicle</rdf:li
+            >
+          </rdf:Bag
+          >
+        </dc:subject
+        >
+      </cc:Work
+      >
+      <cc:License
+          rdf:about="http://creativecommons.org/licenses/publicdomain/"
+        >
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#Reproduction"
+        />
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#Distribution"
+        />
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#DerivativeWorks"
+        />
+      </cc:License
+      >
+    </rdf:RDF
+    >
+  </metadata
+  >
+</svg
+>
