@@ -1,6 +1,7 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
 @{
     ViewBag.Title = "Forbidden";
+    Response.StatusCode = (int)HttpStatusCode.Forbidden;
 }
 <div align="center">
     <br />

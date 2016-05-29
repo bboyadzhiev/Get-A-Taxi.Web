@@ -10,7 +10,7 @@ namespace Get_A_Taxi.Web.Areas
     public class ErrorController : Controller
     {
       
-        public ActionResult PageNotFound()
+        public ActionResult NotFound()
         {
             Response.StatusCode = (int)HttpStatusCode.NotFound;
             return View();
@@ -24,17 +24,17 @@ namespace Get_A_Taxi.Web.Areas
 
         public ActionResult Unauthorized()
         {
-            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             return View();
         }
 
         public ActionResult Forbidden()
         {
-            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            Response.StatusCode = (int)HttpStatusCode.Forbidden;
             return View();
         }
 
-        public ActionResult CustomError()
+        public ActionResult ServerError()
         {
             Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             return View();

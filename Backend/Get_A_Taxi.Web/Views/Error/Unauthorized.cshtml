@@ -1,6 +1,7 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
 @{
     ViewBag.Title = "Unauthorized";
+    Response.StatusCode = (int)HttpStatusCode.Unauthorized;
 }
 <div align="center">
     <br />

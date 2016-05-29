@@ -7,7 +7,7 @@ namespace Get_A_Taxi.Web
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+          //  filters.Add(new HandleErrorAttribute());
         }
     }
 }

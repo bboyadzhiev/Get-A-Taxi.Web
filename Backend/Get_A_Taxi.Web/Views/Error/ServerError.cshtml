@@ -1,6 +1,7 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
 @{
     ViewBag.Title = "Internal Server Error";
+    Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 }
 <div align="center">
     <br />

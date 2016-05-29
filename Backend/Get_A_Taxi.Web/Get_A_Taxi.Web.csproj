@@ -529,7 +529,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
@@ -570,11 +569,11 @@
     <Content Include="Views\Shared\_UserSearchPartialView.cshtml" />
     <Content Include="Views\Shared\_OperatorPartial.cshtml" />
     <Content Include="Views\Shared\_LocalizationPartial.cshtml" />
-    <Content Include="Views\Error\PageNotFound.cshtml" />
-    <Content Include="Views\Error\CustomError.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\Unauthorized.cshtml" />
     <Content Include="Views\Error\BadRequest.cshtml" />
     <Content Include="Views\Error\Forbidden.cshtml" />
+    <Content Include="Views\Error\ServerError.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

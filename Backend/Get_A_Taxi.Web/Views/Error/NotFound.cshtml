@@ -1,6 +1,7 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
 @{
     ViewBag.Title = "Page Not Found";
+    Response.StatusCode = (int)HttpStatusCode.NotFound;
 }
 <div align="center">
     <br />

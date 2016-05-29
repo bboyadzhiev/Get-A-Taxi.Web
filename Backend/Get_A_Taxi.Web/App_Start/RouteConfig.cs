@@ -13,6 +13,18 @@ namespace Get_A_Taxi.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //routes.MapRoute(
+            //    "Error - 404",
+            //    "NotFound",
+            //    new { controller = "Error", action = "NotFound" }
+            //    );
+
+            //routes.MapRoute(
+            //    "Error - 500",
+            //    "ServerError",
+            //    new { controller = "Error", action = "ServerError" }
+            //    );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

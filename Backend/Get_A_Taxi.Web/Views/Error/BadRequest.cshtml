@@ -1,6 +1,7 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
 @{
     ViewBag.Title = "Bad Request";
+    Response.StatusCode = (int)HttpStatusCode.BadRequest;
 }
 <div align="center">
     <br />

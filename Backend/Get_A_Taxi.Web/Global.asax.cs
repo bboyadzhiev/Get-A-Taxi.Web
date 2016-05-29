@@ -33,6 +33,13 @@ namespace Get_A_Taxi.Web
 
         protected void Application_Error(object sender, EventArgs e)
         {
+            if (Context.IsCustomErrorEnabled)
+                ShowCustomErrorPage(sender, e);
+        }
+
+
+        private void ShowCustomErrorPage(object sender, EventArgs e)
+        {
             System.Diagnostics.Trace.WriteLine("Enter - Application_Error");
 
             var httpContext = ((MvcApplication)sender).Context;
@@ -71,7 +78,7 @@ namespace Get_A_Taxi.Web
 
             var controller = new ErrorController();
             var routeData = new RouteData();
-            var action = "CustomError";
+            var action = "ServerError";
             var statusCode = 500;
 
             if (ex is HttpException)
@@ -94,15 +101,15 @@ namespace Get_A_Taxi.Web
                         break;
 
                     case 404:
-                        action = "PageNotFound";
+                        action = "NotFound";
                         break;
 
                     case 500:
-                        action = "CustomError";
+                        action = "ServerError";
                         break;
 
                     default:
-                        action = "CustomError";
+                        action = "ServerError";
                         break;
                 }
             }
@@ -113,7 +120,7 @@ namespace Get_A_Taxi.Web
             }
             else
             {
-                action = "CustomError";
+                action = "ServerError";
                 statusCode = 500;
             }
 
