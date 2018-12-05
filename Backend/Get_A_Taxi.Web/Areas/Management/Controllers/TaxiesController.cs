@@ -13,6 +13,8 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using System.Net;
 using Get_A_Taxi.Web.Infrastructure.Services;
+using System.IO;
+using System.Drawing;
 
 namespace Get_A_Taxi.Web.Areas.Management.Controllers
 {
@@ -179,6 +181,16 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
                 return HttpNotFound();
             }
             var accountInfoVM = result.Project().To<UserDetailsVM>().FirstOrDefault();
+            // Photo sizes
+            if(accountInfoVM.Photo.Content.Length>0)
+            {
+                using (var ms = new MemoryStream(accountInfoVM.Photo.Content))
+                {
+                    Image img = Image.FromStream(ms);
+                    accountInfoVM.Photo.Width = img.Width;
+                    accountInfoVM.Photo.Height = img.Height;
+                }
+            }
             return PartialView("_UserInfoPartialView", accountInfoVM);
         }
 
@@ -319,6 +331,11 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
                 if (ModelState.IsValid)
                 {
                     var taxi = this.Data.Taxies.Find(taxiDetailsVM.TaxiId);
+                    if(taxi.Status != TaxiStatus.Unassigned || taxi.Status != TaxiStatus.Decommissioned)
+                    {
+                        TempData["Error"] = "Taxi should be Unassigned or Decommissioned to be changed!";
+                        return PartialView("Edit", taxiDetailsVM);
+                    }
                     taxi.Plate = taxiDetailsVM.Plate;
                     taxi.Seats = taxiDetailsVM.Seats;
                     taxi.Luggage = taxiDetailsVM.Luggage;

@@ -208,7 +208,7 @@ namespace Get_A_Taxi.Web.Areas.Operator.Controllers
                         break;
                     case OrderStatus.Waiting:
                         break;
-                    case OrderStatus.InProgress: return ErrorResult("Order cannot be cancelled!");
+                    case OrderStatus.InProgress: return ErrorResult("Order in progress cannot be cancelled!");
                     case OrderStatus.Finished: return ErrorResult("Order is already finished!");
                     case OrderStatus.Cancelled: return ErrorResult("Order is already cancelled!");
                     default:

@@ -43,7 +43,7 @@ namespace Get_A_Taxi.Web.ViewModels
         public IEnumerable<SelectListItem> DistrictsList { get; set; }
 
         [Display(Name = "UserPhoto", ResourceType = typeof(Resource))]
-        public Photo Photo { get; set; }
+        public PhotoVM Photo { get; set; }
 
         [Required]
         [Display(Name = "employee role")]

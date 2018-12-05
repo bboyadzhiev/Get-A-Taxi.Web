@@ -47,7 +47,11 @@ namespace Get_A_Taxi.Web.ViewModels
                         Email = x.Driver.Email,
                         FullName = x.Driver.FirstName + " " + x.Driver.LastName,
                         PhoneNumber = x.Driver.PhoneNumber,
-                        Photo = x.Driver.Photo
+                        Photo = new PhotoVM()
+                        {
+                           Content =  x.Driver.Photo.Content,
+                           FileExtension = x.Driver.Photo.FileExtension
+                        }
                     }));
         }
 

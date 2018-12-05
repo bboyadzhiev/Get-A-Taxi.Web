@@ -254,6 +254,7 @@
     </Compile>
     <Compile Include="Infrastructure\Security\RequireHttpsMVC.cs" />
     <Compile Include="Infrastructure\Security\RequireHttpsWebAPI.cs" />
+    <Compile Include="ViewModels\PhotoVM.cs" />
     <Compile Include="WebAPI\IRESTController.cs" />
     <Compile Include="Areas\Administration\Controllers\RolesController.cs" />
     <Compile Include="Areas\Administration\Controllers\TaxiStandsController.cs" />
@@ -578,7 +579,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
