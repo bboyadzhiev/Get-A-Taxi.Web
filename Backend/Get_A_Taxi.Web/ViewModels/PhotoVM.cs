@@ -13,6 +13,23 @@ namespace Get_A_Taxi.Web.ViewModels
         [Required]
         public byte[] Content { get; set; }
 
+        public string GetImageContent()
+        {
+            if(this.Content.Length > 0)
+            {
+                try
+                {
+                    return System.Text.Encoding.Unicode.GetString(Content, 0, Content.Length);
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+            }
+            return "";
+        }
+
         [Required]
         [StringLength(4)]
         public string FileExtension { get; set; }

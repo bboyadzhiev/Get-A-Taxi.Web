@@ -181,17 +181,26 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
                 return HttpNotFound();
             }
             var accountInfoVM = result.Project().To<UserDetailsVM>().FirstOrDefault();
+
             // Photo sizes
-            if(accountInfoVM.Photo.Content.Length>0)
-            {
-                using (var ms = new MemoryStream(accountInfoVM.Photo.Content))
-                {
-                    Image img = Image.FromStream(ms);
-                    accountInfoVM.Photo.Width = img.Width;
-                    accountInfoVM.Photo.Height = img.Height;
-                }
-            }
+            accountInfoVM.Photo.Width = 240;
+            accountInfoVM.Photo.Height = 320;
             return PartialView("_UserInfoPartialView", accountInfoVM);
+        }
+
+        private Image ConvertByteArrayToImage(byte[] bytes)
+        {
+            Image image;
+
+            using (MemoryStream ms = new MemoryStream(bytes, true))
+            {
+                ms.Position = 0;
+
+                ms.Write(bytes, 0, bytes.Length);
+                image = Image.FromStream(ms);
+            }
+
+            return image;
         }
 
         [HttpPost]

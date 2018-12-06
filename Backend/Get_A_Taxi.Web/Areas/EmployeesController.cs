@@ -196,6 +196,12 @@ namespace Get_A_Taxi.Web.Areas
                     return RedirectToAction("Index");
                 }
 
+                if (UserManager.IsInRole(id, UserRoles.Driver.ToString()) && this.Data.Taxies.All().Any(t => t.Driver.Id == id))
+                {
+                    TempData["Error"] = "This is a driver that is assigned to a taxi and cannot be edited right now!";
+                    return RedirectToAction("Index");
+                }
+
                 employee.Roles.Clear();
                 UpdateUserRoles(userDetailsVM.SelectedRoleIds, id);
                 UpdateUserDistrict(userDetailsVM.DistritId, id);

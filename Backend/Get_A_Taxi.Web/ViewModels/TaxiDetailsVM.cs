@@ -50,7 +50,9 @@ namespace Get_A_Taxi.Web.ViewModels
                         Photo = new PhotoVM()
                         {
                            Content =  x.Driver.Photo.Content,
-                           FileExtension = x.Driver.Photo.FileExtension
+                           FileExtension = x.Driver.Photo.FileExtension,
+                           Height = 240,
+                           Width = 180
                         }
                     }));
         }

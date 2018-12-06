@@ -5,12 +5,22 @@
     ViewBag.Title = Resource.Edit;
 }
 
-<h2>ViewBag.Title</h2>
+<h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
+    <div>
+        @if (Model.Photo != null)
+        {
+            string imageSrc = string.Format("data:image/{0};base64,{1}", Model.Photo.FileExtension, Model.Photo.GetImageContent());
+            <img src="@imageSrc" width="@Model.Photo.Width.ToString()" height="@Model.Photo.Height.ToString()" />
+        }
+        else
+        {
+            <img src="~/Content/Images/person.png" />
+        }
+    </div>
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -79,7 +89,7 @@
                 @Html.ValidationMessageFor(model => model.SelectedRoleIds, "", new { @class = "text-danger" })
             </div>
         </div>
-        
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="@Resource.Save" class="btn btn-default" />

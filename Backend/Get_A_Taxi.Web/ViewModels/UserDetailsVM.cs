@@ -68,7 +68,14 @@ namespace Get_A_Taxi.Web.ViewModels
             configuration.CreateMap<ApplicationUser, UserDetailsVM>()
                 .ForMember(m => m.FullName, opt => opt.MapFrom(t => t.FirstName + " " + t.MiddleName + " " + t.LastName))
                 .ForMember(m => m.District, opt => opt.MapFrom(t => t.District != null ? t.District.Title : null))
-                .ForMember(vm => vm.DistritId, opt => opt.MapFrom(m => m.District != null ? m.District.DistrictId : -1));
+                .ForMember(vm => vm.DistritId, opt => opt.MapFrom(m => m.District != null ? m.District.DistrictId : -1))
+                .ForMember(vm => vm.Photo, opt => opt.MapFrom(m => m.Photo != null ? new PhotoVM
+                {
+                    Content = m.Photo.Content,
+                    FileExtension = m.Photo.FileExtension,
+                    Height = 320,
+                    Width = 240
+                } : null));
         }
     }
 }

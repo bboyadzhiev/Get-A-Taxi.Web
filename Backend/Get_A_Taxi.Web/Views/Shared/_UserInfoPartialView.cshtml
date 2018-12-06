@@ -2,11 +2,10 @@
 @using Get_A_Taxi.Web.Infrastructure.LocalResource
 <fieldset>
     <legend>@Resource.Details</legend>
-    <div style="float:left">
+    <div style="float:left; padding-right:10px;">
         @if (Model.Photo != null)
         {
-            string imageBase64 = Convert.ToBase64String(Model.Photo.Content);
-            string imageSrc = string.Format("data:image/{0};base64,{1}", Model.Photo.FileExtension, imageBase64);
+            string imageSrc = string.Format("data:image/{0};base64,{1}", Model.Photo.FileExtension, Model.Photo.GetImageContent());
             <img src="@imageSrc" width="@Model.Photo.Width.ToString()" height="@Model.Photo.Height.ToString()" />
         }
         else

@@ -8,82 +8,95 @@
 
 <h2>@Resource.Details</h2>
 
-<div>
+<div style="display: inline-flex;">
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
+    <div style="padding-right:10px;">
+        @if (Model.Photo != null)
+        {
+            string imageSrc = string.Format("data:image/{0};base64,{1}", Model.Photo.FileExtension, Model.Photo.GetImageContent());
+            <img src="@imageSrc" width="@Model.Photo.Width.ToString()" height="@Model.Photo.Height.ToString()" />
+        }
+        else
+        {
+            <img src="~/Content/Images/person.png" />
+        }
+    </div>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MiddleName)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.MiddleName)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.MiddleName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.MiddleName)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.LastName)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DefaultAddress)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.DefaultAddress)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DefaultAddress)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.DefaultAddress)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.District)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.District)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.District)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.District)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FullName)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.FullName)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.FullName)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.District)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.District)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.District)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.District)
+            </dd>
 
-    </dl>
+        </dl>
+    </div>
 </div>
 <p>
     @if (User.IsInRole(UserRoles.Manager.ToString()))
