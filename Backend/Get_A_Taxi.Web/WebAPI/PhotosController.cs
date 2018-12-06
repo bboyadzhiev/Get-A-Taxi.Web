@@ -127,10 +127,10 @@ namespace Get_A_Taxi.Web.WebAPI
         }
 
         /// <summary>
-        /// 
+        /// Updates user photo
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        /// <param name="model">The updated photo's data model</param>
+        /// <returns>The updated photo's ID</returns>
         [HttpPut]
         public IHttpActionResult Put([FromBody]PhotoDTO model)
         {

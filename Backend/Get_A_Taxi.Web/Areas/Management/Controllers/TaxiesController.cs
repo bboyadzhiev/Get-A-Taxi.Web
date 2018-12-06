@@ -188,21 +188,6 @@ namespace Get_A_Taxi.Web.Areas.Management.Controllers
             return PartialView("_UserInfoPartialView", accountInfoVM);
         }
 
-        private Image ConvertByteArrayToImage(byte[] bytes)
-        {
-            Image image;
-
-            using (MemoryStream ms = new MemoryStream(bytes, true))
-            {
-                ms.Position = 0;
-
-                ms.Write(bytes, 0, bytes.Length);
-                image = Image.FromStream(ms);
-            }
-
-            return image;
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AssignDriver(string userId, int taxiId)
